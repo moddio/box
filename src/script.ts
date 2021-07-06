@@ -1,10 +1,13 @@
 //styles import
 import "./style.scss";
+
+//import modules
 import * as THREE from "three";
-import { menuHelper } from "./components/button-actions";
+import { menuHelper } from "./ui/button-actions";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { box } from "./components/box";
 import { plane } from "./components/plane";
+import { getFramePerSecond } from "./utils/utils";
 
 //menu helper
 menuHelper();
@@ -29,7 +32,12 @@ scene.add(mesh);
 scene.add(plane());
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000);
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  1,
+  1000
+);
 camera.position.z = 3;
 camera.lookAt(mesh.position);
 scene.add(camera);
@@ -69,15 +77,29 @@ window.addEventListener("dblclick", () => {
   }
 });
 
+let counterTick = 0;
+let totalSecond = 0;
 // Animate
 const animate = () => {
   controls.update();
 
   // Render
   renderer.render(scene, camera);
+  const start = window.performance.now();
 
   // Call tick again on the next frame
   window.requestAnimationFrame(animate);
+
+  const end = window.performance.now();
+
+  //Calling function with counter ticker
+  if (counterTick >= 60) {
+    getFramePerSecond(totalSecond);
+    counterTick = 0;
+    totalSecond = 0;
+  }
+  counterTick++;
+  totalSecond += end - start;
 };
 
 animate();

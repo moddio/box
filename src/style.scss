@@ -40,7 +40,8 @@ body {
         background-color: rgb(221, 221, 221);
         padding: 0.5rem;
         font-weight: bold;
-        box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px,
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
+          rgba(17, 17, 26, 0.1) 0px 16px 56px,
           rgba(17, 17, 26, 0.1) 0px 24px 80px;
         border-radius: 5px;
       }
@@ -63,4 +64,8 @@ body {
       display: none;
     }
   }
+}
+.frame {
+  color: red;
+  font-size: 20px;
 }

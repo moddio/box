@@ -4,8 +4,10 @@ export const menuHelper = () => {
   let state: boolean = true;
 
   button.addEventListener("click", () => {
-    const buttonClose: HTMLButtonElement = document.querySelector(".button_close");
-    const buttonHelp: HTMLButtonElement = document.querySelector(".button_help");
+    const buttonClose: HTMLButtonElement =
+      document.querySelector(".button_close");
+    const buttonHelp: HTMLButtonElement =
+      document.querySelector(".button_help");
     const helper: HTMLDivElement = document.querySelector(".helper");
 
     // open helper
