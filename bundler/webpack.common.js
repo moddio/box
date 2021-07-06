@@ -39,10 +39,9 @@ module.exports = {
       },
       // CSS
       {
-        test: /\.css$/,
-        use: [MiniCSSExtractPlugin.loader, "css-loader"],
+        test: /\.(scss|css)$/,
+        use: [MiniCSSExtractPlugin.loader, "css-loader", "sass-loader"],
       },
-
       // Images
       {
         test: /\.(jpg|png|gif|svg)$/,
