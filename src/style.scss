@@ -40,8 +40,7 @@ body {
         background-color: rgb(221, 221, 221);
         padding: 0.5rem;
         font-weight: bold;
-        box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
-          rgba(17, 17, 26, 0.1) 0px 16px 56px,
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px,
           rgba(17, 17, 26, 0.1) 0px 24px 80px;
         border-radius: 5px;
       }
@@ -54,10 +53,11 @@ body {
       padding: 7px;
       color: green;
       cursor: pointer;
+      opacity: 0.7;
+      transition: all 0.5s ease-in-out;
       &:hover {
-        transform: scale(1.1);
-        opacity: 0.8;
-        transition: all 0.5s;
+        transform: scale(1.02);
+        opacity: 1;
       }
     }
     &_close {
@@ -68,4 +68,6 @@ body {
 .frame {
   color: red;
   font-size: 20px;
+  margin: 0.3rem 0;
+  display: inline-block;
 }

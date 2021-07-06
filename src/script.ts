@@ -3,6 +3,7 @@ import "./style.scss";
 
 //import modules
 import * as THREE from "three";
+// import * as CANNON from "cannon";
 import { menuHelper } from "./ui/button-actions";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { box } from "./components/box";
@@ -32,12 +33,7 @@ scene.add(mesh);
 scene.add(plane());
 
 // Camera
-const camera = new THREE.PerspectiveCamera(
-  75,
-  sizes.width / sizes.height,
-  1,
-  1000
-);
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000);
 camera.position.z = 3;
 camera.lookAt(mesh.position);
 scene.add(camera);
@@ -65,7 +61,7 @@ window.addEventListener("resize", () => {
 
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
-  renderer.setPixelRatio(0.1);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
 // Full Screen
@@ -82,7 +78,6 @@ let totalSecond = 0;
 // Animate
 const animate = () => {
   controls.update();
-
   // Render
   renderer.render(scene, camera);
   const start = window.performance.now();
