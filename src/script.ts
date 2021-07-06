@@ -1,6 +1,10 @@
 import "./style.scss";
 import * as THREE from "three";
+import { menuHelper } from "./button-actions";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+
+// menu helper
+menuHelper();
 
 // Canvas
 const canvas: HTMLCanvasElement = document.querySelector(".root");
@@ -22,7 +26,12 @@ const mesh = new THREE.Mesh(
 scene.add(mesh);
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000);
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  1,
+  1000
+);
 camera.position.z = 3;
 camera.lookAt(mesh.position);
 scene.add(camera);
