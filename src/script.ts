@@ -1,8 +1,10 @@
 //styles import
 import "./style.scss";
 import * as THREE from "three";
-import { menuHelper } from "./button-actions";
+import { menuHelper } from "./components/button-actions";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { box } from "./components/box";
+import { plane } from "./components/plane";
 
 //menu helper
 menuHelper();
@@ -19,20 +21,15 @@ const sizes = {
 // Scene
 const scene = new THREE.Scene();
 
-// Object
-const mesh = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
-  new THREE.MeshBasicMaterial({ color: 0xff0000 })
-);
+// Mesh
+const mesh = box();
 scene.add(mesh);
 
+// Plane
+scene.add(plane());
+
 // Camera
-const camera = new THREE.PerspectiveCamera(
-  75,
-  sizes.width / sizes.height,
-  1,
-  1000
-);
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000);
 camera.position.z = 3;
 camera.lookAt(mesh.position);
 scene.add(camera);

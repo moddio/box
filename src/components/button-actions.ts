@@ -1,12 +1,12 @@
 export const menuHelper = () => {
-  const button: any = document.querySelector(".button");
+  const button: HTMLButtonElement = document.querySelector(".button");
 
   let state: boolean = true;
 
   button.addEventListener("click", () => {
-    const buttonClose: any = document.querySelector(".button_close");
-    const buttonHelp: any = document.querySelector(".button_help");
-    const helper: any = document.querySelector(".helper");
+    const buttonClose: HTMLButtonElement = document.querySelector(".button_close");
+    const buttonHelp: HTMLButtonElement = document.querySelector(".button_help");
+    const helper: HTMLDivElement = document.querySelector(".helper");
 
     // open helper
     buttonClose.style.display = state ? "inherit" : "none";

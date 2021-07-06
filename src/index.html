@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mode Game</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mode Game</title>
-</head>
-
-<body>
-  <div class='helper'>
-    <h1> Press One of the button to move : </h1>
-    <div class="helper_options">
-      <h1> ⬅️</h1>
-      <div>
-        <h1>⬆️ </h1>
-        <h1>⬇️ </h1>
+  <body>
+    <div class="gui">
+      <div class="helper">
+        <h2>Press one of the buttons to move:</h2>
+        <div class="helper_options">
+          <span class="move-top">&uarr; W</span>
+          <span class="move-left">&larr; A</span>
+          <span class="move-bottom">&darr; S</span>
+          <span class="move-right">&rarr; D</span>
+          <span>Jump : (SPACE)</span>
+        </div>
       </div>
-      <h1> ➡️</h1>
-      <span>Jump : (SPACE)</span>
+      <div class="button">
+        <button class="button_help">HELP</button>
+        <button class="button_close">CLOSE</button>
+      </div>
     </div>
-  </div>
-  <div class="button">
-    <button class="button_help">HELP</button>
-    <button class="button_close">CLOSE</button>
-  </div>
-  <canvas class="root"></canvas>
-</body>
-
+    <canvas class="root"></canvas>
+  </body>
 </html>
