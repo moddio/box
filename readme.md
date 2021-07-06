@@ -14,4 +14,6 @@ yarn start
 
 # Build for production in the dist/ directory
 yarn build
+
+# Double click to enter the Fullscreen mode
 ```
