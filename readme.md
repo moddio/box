@@ -17,3 +17,6 @@ yarn build
 
 # Double click to enter the Fullscreen mode
 ```
+
+## options 
+- Double click on the mouse to get FULL SCREEN mode.
