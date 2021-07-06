@@ -7,11 +7,11 @@ Run this followed commands:
 
 ```bash
 # Install dependencies (only the first time)
-npm install
+yarn
 
 # Run the local server at localhost:8000
-npm start
+yarn start
 
 # Build for production in the dist/ directory
-npm run build
+yarn build
 ```
