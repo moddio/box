@@ -1,4 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@100;200;300;400;500;600;700&display=swap");
+html,
+body,
+.root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* prevent overflow*/
+  background: #272727;
+}
 .helper {
   display: none;
   z-index: 10;
@@ -17,7 +33,7 @@
     & > span {
       font-size: 15px;
       font-weight: bold;
-      color: rgb(71, 70, 70);
+      color: rgb(184, 166, 166);
     }
     & > * {
       padding: 5px;
@@ -26,9 +42,8 @@
   }
 }
 .button {
+  padding: 4px;
   z-index: 10;
-  margin-top: -40px;
-  padding: 40px;
   & > * {
     padding: 7px;
     color: green;
