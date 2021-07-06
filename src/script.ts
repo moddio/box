@@ -65,7 +65,7 @@ window.addEventListener("resize", () => {
 
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(0.1);
 });
 
 // Full Screen
