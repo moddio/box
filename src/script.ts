@@ -1,100 +1,82 @@
 //styles import
 import "./style.scss";
 
-//import modules
 import * as THREE from "three";
-// import * as CANNON from "cannon";
 import { menuHelper } from "./ui/button-actions";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { box } from "./components/box";
-import { plane } from "./components/plane";
-import { getFramePerSecond } from "./utils/utils";
+import { voxelMap } from "./components/voxelMap";
+// import { getFramePerSecond } from "./utils/utils";
 
 //menu helper
 menuHelper();
 
+// Scene
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x222222);
+
 // Canvas
 const canvas: HTMLCanvasElement = document.querySelector(".root");
 
+// The cell sizes
+const cellSize: number = 150;
+
 // Sizes
-const sizes = {
+const sizes: {
+  width: number;
+  height: number;
+} = {
   width: window.innerWidth,
   height: window.innerHeight,
 };
 
-// Scene
-const scene = new THREE.Scene();
-
-// Mesh
-const mesh = box();
-scene.add(mesh);
-
-// Plane
-scene.add(plane());
+const fov: number = 75;
+const aspect: number = sizes.width / sizes.height;
+const near: number = 0.1;
+const far: number = 500;
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000);
-camera.position.z = 3;
-camera.lookAt(mesh.position);
+const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+camera.position.set(-cellSize * 0.3, cellSize * 0.8, -cellSize * 0.3);
 scene.add(camera);
 
-// Controls
+// Controles
 const controls = new OrbitControls(camera, canvas);
-// controls.target.y = 2
-controls.enableDamping = true;
+// controls.enableDamping = true;
+controls.target.set(cellSize / 2, cellSize / 3, cellSize / 2);
+controls.update();
 
-// Renderer
-const renderer = new THREE.WebGLRenderer({
-  canvas: canvas,
-});
+// Add the Voxel Map
+voxelMap(scene, cellSize);
+
+// Light
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(-1, 2, 4);
+scene.add(light);
+
+const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.render(scene, camera);
 
 // Responsive
 window.addEventListener("resize", () => {
+  // Update sizes
   sizes.width = window.innerWidth;
   sizes.height = window.innerHeight;
 
-  // Upadte the camera
+  // Update camera
   camera.aspect = sizes.width / sizes.height;
   camera.updateProjectionMatrix();
 
-  // Update renderer
+  // Update Renderer
   renderer.setSize(sizes.width, sizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
-// Full Screen
-window.addEventListener("dblclick", () => {
-  if (!document.fullscreenElement) {
-    canvas.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
-});
-
-let counterTick = 0;
-let totalSecond = 0;
-// Animate
-const animate = () => {
-  controls.update();
-  // Render
+const gameloop = () => {
   renderer.render(scene, camera);
-  const start = window.performance.now();
 
-  // Call tick again on the next frame
-  window.requestAnimationFrame(animate);
-
-  const end = window.performance.now();
-
-  //Calling function with counter ticker
-  if (counterTick >= 60) {
-    getFramePerSecond(totalSecond);
-    counterTick = 0;
-    totalSecond = 0;
-  }
-  counterTick++;
-  totalSecond += end - start;
+  window.requestAnimationFrame(gameloop);
 };
 
-animate();
+gameloop();

@@ -2,9 +2,10 @@ import * as THREE from "three";
 
 export const plane = () => {
   const geometry = new THREE.PlaneBufferGeometry(50, 50);
-  const material = new THREE.MeshBasicMaterial({
+  const material = new THREE.MeshStandardMaterial({
     color: 0xffffff,
     side: THREE.DoubleSide,
+    wireframe: false,
   });
   const plane = new THREE.Mesh(geometry, material);
 
