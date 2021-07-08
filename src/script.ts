@@ -20,6 +20,9 @@ scene.background = new THREE.Color("lightblue");
 
 // Canvas
 const canvas: HTMLCanvasElement = document.querySelector(".root");
+let y: any = 0;
+let z: any = 0;
+let x: any = 0;
 
 // The cell sizes
 const cellSize: number = 150;
@@ -76,9 +79,19 @@ function setupEventHandlers() {
 function handleKeyDown(e: any) {
   let keyCode = e.keyCode;
 
+  // Fix Problem orbital control
+  controls.target.set(
+    boxPlayer.position.x,
+    boxPlayer.position.y,
+    boxPlayer.position.z
+  );
+  controls.update();
+
   switch (keyCode) {
     case 87: //W: FORWARD
       moveDirection.forward = 1;
+      y--;
+      x = 1000;
       break;
 
     case 83: //S: BACK
@@ -96,6 +109,13 @@ function handleKeyDown(e: any) {
 }
 
 function handleKeyUp(e: any) {
+  // Fix Problem orbital control
+  controls.target.set(
+    boxPlayer.position.x,
+    boxPlayer.position.y,
+    boxPlayer.position.z
+  );
+  controls.update();
   let keyCode = e.keyCode;
 
   switch (keyCode) {
