@@ -1,3 +1,6 @@
+//@types/ammo
+///<reference path="./ammo/ammo.d.ts"/>
+
 //styles import
 import "./style.scss";
 
