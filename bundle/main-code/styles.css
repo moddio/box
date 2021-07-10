@@ -1,0 +1,16 @@
+.game_build {
+  position: absolute;
+  top: 85vh;
+  z-index: 10;
+  background-color: brown;
+  margin-left: 1000px;
+}
+.game_build-blocks {
+  width: 100%;
+}
+.game_build-water {
+  width: 100%;
+}
+.game_build-pause {
+  width: 100%;
+}
