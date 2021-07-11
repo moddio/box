@@ -1,11 +1,21 @@
-const gameBuild = () => {
-  const water = document.querySelector(".game_build-water");
-  const blocks = document.querySelector(".game_build-blocks");
-  let clickedEvent;
-  water.addEventListener("click", () => (clickedEvent = "water"));
-  blocks.addEventListener("click", () => (clickedEvent = "blocks"));
+import { textures } from "../utils/textures";
 
-  return clickedEvent;
+export const guiBuild = () => {
+  const blocks = document.querySelector(".game_build_textures");
+  textures.map((texture) => {
+    const block = document.createElement("img");
+    block.src = texture;
+    blocks.appendChild(block);
+  });
 };
 
-export default gameBuild;
+/**
+ * export const gameBuild = () => {
+  const createdBlocks = Array.from(document.querySelectorAll(".game_build_textures img"));
+  createdBlocks.map((block) => {
+    block.addEventListener("click", () => {
+      return block.src
+    });
+  });
+};
+ */

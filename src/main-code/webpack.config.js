@@ -1,4 +1,5 @@
 var path = require("path");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 var buildPath = path.resolve("..", "..", "bundle", "main-code");
 
 module.exports = (env) => ({
@@ -26,6 +27,11 @@ module.exports = (env) => ({
     modules: false,
   },
   devtool: "source-map",
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [{ from: path.resolve(__dirname, "../static") }],
+    }),
+  ],
   devServer: {
     contentBase: buildPath,
     inline: true,

@@ -7,12 +7,15 @@ import "@babylonjs/core/Meshes/Builders/boxBuilder";
 // code import
 import "./utils/state.min.js";
 import { config } from "./config/config";
-import gameBuild from "./ui/game-build.js";
+import { guiBuild } from "./ui/game-build.js";
 import { newPlayer } from "./players/players.js";
 import genWorld from "./ui/genWorld.js";
 import eventPlayer from "./utils/eventHandler.js";
 
 const noa = new Engine(config);
+
+// Build texures
+guiBuild();
 
 const socket = io("http://localhost:3000");
 
@@ -41,6 +44,3 @@ noa.entities.addComponent(player, noa.entities.names.mesh, {
 // Multiplayer logic
 
 eventPlayer(noa);
-
-// Event listner for changing build materials
-gameBuild();

@@ -1,4 +1,4 @@
-import { water, blocks, tree } from "../config/urls";
+import { waterTexture, grassTexture } from "../utils/textures";
 import getVoxelID from "../utils/getVoxel-id";
 
 const genWorld = (noa) => {
@@ -6,11 +6,11 @@ const genWorld = (noa) => {
   noa.camera.zoomDistance = 10;
 
   // Init texture for the map
-  noa.registry.registerMaterial("dirt", null, water);
-  noa.registry.registerMaterial("grass", null, blocks);
-  noa.registry.registerMaterial("tree", null, tree);
+  noa.registry.registerMaterial("dirt", null, waterTexture);
+  noa.registry.registerMaterial("grass", null, grassTexture);
 
   // Save texture inside register Block
+
   const waterID = noa.registry.registerBlock(1, { material: "dirt" });
   const blocksID = noa.registry.registerBlock(2, { material: "grass" });
 
