@@ -7,13 +7,25 @@
   background-color: rgb(0, 9, 49);
   padding: 1rem;
   max-width: 450px;
+  width: max-content;
   overflow: hidden;
 }
 .game_build-blocks {
   width: 100%;
 }
+.game_build_textures {
+  display: flex;
+}
+
 .game_build_textures img {
   width: 40px;
   height: 40px;
   object-fit: cover;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+.game_build_textures img:hover,
+.game_build_textures img:active {
+  border: 2px solid white;
 }
