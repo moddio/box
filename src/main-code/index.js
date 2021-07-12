@@ -29,20 +29,30 @@ noa.entities.addComponent(player, noa.entities.names.mesh, {
 var playerPosition = [0, 10, 0];
 var playerName;
 
+var allPlayers = [];
+var numberOfPlayer = 1;
+
 const socket = io("http://localhost:3000");
 
 socket.on("connect", () => {
   playerName = socket.id.toString();
+  // listening for player change
+  socket.on("players", ({ data }) => {
+    allPlayers = [...data];
+    // Count number of player
+    while (numberOfPlayer <= allPlayers.length - 1) {
+      numberOfPlayer++;
+    }
+    console.log("allPlayers", allPlayers);
+    console.log("number of players", numberOfPlayer);
+  });
 
-  // emit your data to to the server socket
+  // Emit your data to to the server socket
   socket.emit("players", {
     name: playerName,
     position: [...playerPosition],
   });
 });
-
-// listening for player change
-socket.on("players", (players) => console.log("client players", players));
 
 // Multiplayer logic
 eventPlayer(noa);

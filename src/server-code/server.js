@@ -12,8 +12,9 @@ const io = new Server(server, {
 const players = [];
 
 io.on("connection", (socket) => {
-  // emit player data
+  // Emit player data
   socket.emit("players", { data: players });
+  socket.broadcast.emit("players", { data: players });
 
   // listen for position change or new player added
   socket.on("players", ({ name: playerName, position }) => {
@@ -25,6 +26,8 @@ io.on("connection", (socket) => {
           name: playerName,
           position: position,
         });
+
+    socket.broadcast.emit("players", { data: players });
 
     console.log("players online", players);
   });
