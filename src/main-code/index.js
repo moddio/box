@@ -1,4 +1,5 @@
 // engine import
+import * as BABYLON from "@babylonjs/core";
 import { Engine } from "noa-engine";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { io } from "socket.io-client";
@@ -7,7 +8,7 @@ import "@babylonjs/core/Meshes/Builders/boxBuilder";
 // code import
 import "./utils/state.min.js";
 import { config } from "./config/config";
-import { newPlayer } from "./players/players.js";
+import { shootBouncyBall } from "./fireball/fireball";
 import genWorld from "./ui/genWorld.js";
 import eventPlayer from "./utils/eventHandler.js";
 
@@ -16,6 +17,9 @@ const noa = new Engine(config);
 // Generate the world
 genWorld(noa);
 const scene = noa.rendering.getScene();
+
+//enable physics in the scene
+scene.enablePhysics(new BABYLON.Vector3(0, -9.8, 0), new BABYLON.AmmoJSPlugin());
 
 // Player Setup
 let player = noa.playerEntity;
@@ -56,6 +60,20 @@ socket.on("connect", () => {
 
 // Multiplayer logic
 eventPlayer(noa);
+
+noa.inputs.bind("shoot", "1");
+var shoot = () => shootBouncyBall(noa, mesh);
+var interval, timeout;
+noa.inputs.down.on("shoot", function () {
+  shoot();
+  timeout = setTimeout(() => {
+    interval = setInterval(shoot, 50);
+  }, 400);
+});
+noa.inputs.up.on("shoot", function () {
+  clearTimeout(timeout);
+  clearInterval(interval);
+});
 
 window.addEventListener("keypress", () => {
   // Get player Position
