@@ -13,29 +13,51 @@ import eventPlayer from "./utils/eventHandler.js";
 
 const noa = new Engine(config);
 
-const socket = io("http://localhost:3000");
-
-socket.emit("player", "clicoder");
-
-let player1En = newPlayer(noa);
-let player2En = newPlayer(noa);
-
-socket.on("All players data", ({ player1, player2 }) => {
-  player1.length <= 0 ? "" : player1En.applyImpulse([...player1]);
-  player2.length <= 0 ? "" : player2En.applyImpulse([...player2]);
-});
-
 // Generate the world
 genWorld(noa);
 const scene = noa.rendering.getScene();
 
 // Player Setup
-const player = noa.playerEntity;
+let player = noa.playerEntity;
 const mesh = Mesh.CreateBox("player-mesh", 1, scene);
 noa.entities.addComponent(player, noa.entities.names.mesh, {
   mesh,
   offset: [0, 0.5, 0],
 });
 
+// initital player postion
+var playerPosition = [0, 10, 0];
+var playerName;
+
+const socket = io("http://localhost:3000");
+
+socket.on("connect", () => {
+  playerName = socket.id.toString();
+
+  // emit your data to to the server socket
+  socket.emit("players", {
+    name: playerName,
+    position: [...playerPosition],
+  });
+});
+
+// listening for player change
+socket.on("players", (players) => console.log("client players", players));
+
 // Multiplayer logic
 eventPlayer(noa);
+
+window.addEventListener("keypress", () => {
+  // Get player Position
+  var ents = noa.entities;
+  var playPos = ents.getPosition(noa.playerEntity);
+  playerPosition = [playPos[0], playPos[1] + 0.5, playPos[2]];
+
+  // Emit position change to the server
+  socket.emit("players", {
+    name: playerName,
+    position: playerPosition,
+  });
+
+  return;
+});

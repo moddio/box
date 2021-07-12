@@ -9,15 +9,25 @@ const io = new Server(server, {
   },
 });
 
+const players = [];
+
 io.on("connection", (socket) => {
-  console.log("a player connected");
-  socket.on("disconnect", () => {
-    console.log("player disconnected");
+  // emit player data
+  socket.emit("players", { data: players });
+
+  // listen for position change or new player added
+  socket.on("players", ({ name: playerName, position }) => {
+    const idPlayer = (element) => element.name === playerName;
+    const indx = players.findIndex(idPlayer);
+    indx !== -1
+      ? (players[indx].position = position)
+      : players.push({
+          name: playerName,
+          position: position,
+        });
+
+    console.log("players online", players);
   });
-  socket.on("player", (msg) => {
-    console.log("player login: " + msg);
-  });
-  socket.emit("All players data", { player1: [1, 0, 0], player2: [] });
 });
 
 server.listen(3000, () => {

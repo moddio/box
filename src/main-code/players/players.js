@@ -2,13 +2,13 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import "@babylonjs/core/Meshes/Builders/boxBuilder";
 import "@babylonjs/core/Meshes/Builders/sphereBuilder";
 
-export const newPlayer = (noa) => {
+export const newPlayer = (noa, position) => {
   const ents = noa.entities;
 
   const boxMesh = Mesh.CreateBox("player-mesh", 1);
 
   const playPos = ents.getPosition(noa.playerEntity);
-  const pos = [playPos[0], playPos[1], playPos[2]];
+  const pos = [...position];
   const width = 2;
   const height = 2;
 
