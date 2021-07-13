@@ -7,8 +7,15 @@ export const shootBouncyBall = (noa, player) => {
   let collideHandler, removeComp, fireBallClone;
 
   //create a fireBall template to clone from, set it's visibility to off.
-  const fireBall = BABYLON.MeshBuilder.CreateSphere("fireBall", { diameter: radius }, scene);
-  const fireBallMaterial = new BABYLON.StandardMaterial("fireBallMaterial", scene);
+  const fireBall = BABYLON.MeshBuilder.CreateSphere(
+    "fireBall",
+    { diameter: radius },
+    scene
+  );
+  const fireBallMaterial = new BABYLON.StandardMaterial(
+    "fireBallMaterial",
+    scene
+  );
   fireBallMaterial.diffuseColor = BABYLON.Color3.Black();
   fireBallMaterial.specularPower = 256;
   fireBall.material = fireBallMaterial;

@@ -20,8 +20,10 @@ genWorld(noa);
 const scene = noa.rendering.getScene();
 
 //enable physics in the scene
-
-scene.enablePhysics(new BABYLON.Vector3(0, -9.8, 0), new BABYLON.AmmoJSPlugin());
+scene.enablePhysics(
+  new BABYLON.Vector3(0, -9.8, 0),
+  new BABYLON.AmmoJSPlugin()
+);
 
 // Player Setup
 let player = noa.playerEntity;
@@ -31,19 +33,15 @@ noa.entities.addComponent(player, noa.entities.names.mesh, {
   offset: [0, 0.5, 0],
 });
 
-// initital player postion
+// Initital player postion
 var playerPosition = [0, 10, 0];
 var playerName;
-
 var allPlayers = [];
 var numberOfPlayer = 1;
+var numberOfBuild = 0;
 
 const socket = io("http://localhost:3000");
-
 const waterID = noa.registry.registerBlock(1, { material: "water" });
-
-var numberOfBuild = 0;
-var databuild = [];
 
 socket.on("connect", () => {
   playerName = socket.id.toString();
@@ -71,7 +69,7 @@ socket.on("connect", () => {
       numberOfBuild++;
     }
 
-    console.log("dataxxxxxxxx", build);
+    console.log("Build data", build);
   });
 });
 
