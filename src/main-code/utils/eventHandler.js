@@ -1,8 +1,5 @@
 import { diamond, gold, tree, dirt } from "./textures";
-<<<<<<< HEAD
 
-const eventPlayer = (noa) => {
-=======
 import { filterData } from "./filterData";
 
 import { io } from "socket.io-client";
@@ -11,7 +8,7 @@ const eventPlayer = (noa) => {
   const socket = io("http://localhost:3000");
 
   const build = [];
->>>>>>> c210e1d8be5145a4a9e605113991421270d7683f
+
   // Event handlers
   const waterEvent = document.querySelector(".game_build-water");
   const blocksEvent = document.querySelector(".game_build-blocks");
@@ -39,12 +36,10 @@ const eventPlayer = (noa) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(dirtID, pos[0], pos[1], pos[2]);
-<<<<<<< HEAD
-=======
+
         filterData(build, { dirt: [pos[0], pos[1], pos[2]] }, "dirt")
           ? build.push({ dirt: [pos[0], pos[1], pos[2]] })
           : "";
->>>>>>> c210e1d8be5145a4a9e605113991421270d7683f
       }
     });
   });
@@ -53,12 +48,10 @@ const eventPlayer = (noa) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(diamondID, pos[0], pos[1], pos[2]);
-<<<<<<< HEAD
-=======
+
         filterData(build, { diamond: [pos[0], pos[1], pos[2]] }, "diamond")
           ? build.push({ diamond: [pos[0], pos[1], pos[2]] })
           : "";
->>>>>>> c210e1d8be5145a4a9e605113991421270d7683f
       }
     });
   });
@@ -67,12 +60,10 @@ const eventPlayer = (noa) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(goldID, pos[0], pos[1], pos[2]);
-<<<<<<< HEAD
-=======
+
         filterData(build, { gold: [pos[0], pos[1], pos[2]] }, "gold")
           ? build.push({ gold: [pos[0], pos[1], pos[2]] })
           : "";
->>>>>>> c210e1d8be5145a4a9e605113991421270d7683f
       }
     });
   });
@@ -81,10 +72,8 @@ const eventPlayer = (noa) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(waterID, pos[0], pos[1], pos[2]);
-<<<<<<< HEAD
-=======
+
         socket.emit("build", { data: { water: [pos[0], pos[1], pos[2]] } });
->>>>>>> c210e1d8be5145a4a9e605113991421270d7683f
       }
     });
   });
@@ -93,12 +82,10 @@ const eventPlayer = (noa) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(blocksID, pos[0], pos[1], pos[2]);
-<<<<<<< HEAD
-=======
+
         filterData(build, { block: [pos[0], pos[1], pos[2]] }, "block")
           ? build.push({ block: [pos[0], pos[1], pos[2]] })
           : "";
->>>>>>> c210e1d8be5145a4a9e605113991421270d7683f
       }
     });
   });
