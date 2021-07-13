@@ -5,12 +5,13 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { io } from "socket.io-client";
 import "@babylonjs/core/Meshes/Builders/boxBuilder";
 
-// code import
 import "./utils/state.min.js";
 import { config } from "./config/config";
 import { shootBouncyBall } from "./fireball/fireball";
 import genWorld from "./ui/genWorld.js";
 import eventPlayer from "./utils/eventHandler.js";
+
+import { diamond, gold, tree, dirt } from "./utils/textures";
 
 const noa = new Engine(config);
 
@@ -19,6 +20,7 @@ genWorld(noa);
 const scene = noa.rendering.getScene();
 
 //enable physics in the scene
+
 scene.enablePhysics(new BABYLON.Vector3(0, -9.8, 0), new BABYLON.AmmoJSPlugin());
 
 // Player Setup
@@ -38,6 +40,11 @@ var numberOfPlayer = 1;
 
 const socket = io("http://localhost:3000");
 
+const waterID = noa.registry.registerBlock(1, { material: "water" });
+
+var numberOfBuild = 0;
+var databuild = [];
+
 socket.on("connect", () => {
   playerName = socket.id.toString();
   // listening for player change
@@ -55,6 +62,16 @@ socket.on("connect", () => {
   socket.emit("players", {
     name: playerName,
     position: [...playerPosition],
+  });
+
+  socket.on("getbuild", ({ build }) => {
+    while (numberOfBuild <= build.length - 1) {
+      const pos = [...build[numberOfBuild].water];
+      noa.setBlock(waterID, pos[0], pos[1], pos[2]);
+      numberOfBuild++;
+    }
+
+    console.log("dataxxxxxxxx", build);
   });
 });
 

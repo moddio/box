@@ -10,6 +10,10 @@ const io = new Server(server, {
 });
 
 const players = [];
+<<<<<<< HEAD
+=======
+let build = [];
+>>>>>>> c210e1d8be5145a4a9e605113991421270d7683f
 
 io.on("connection", (socket) => {
   // Emit player data
@@ -31,6 +35,15 @@ io.on("connection", (socket) => {
 
     console.log("players online", players);
   });
+<<<<<<< HEAD
+=======
+
+  socket.on("build", ({ data }) => {
+    build = [...build, data];
+    console.log("buildData", build);
+    socket.broadcast.emit("getbuild", { build });
+  });
+>>>>>>> c210e1d8be5145a4a9e605113991421270d7683f
 });
 
 server.listen(3000, () => {
