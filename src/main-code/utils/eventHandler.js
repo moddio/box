@@ -73,7 +73,11 @@ const eventPlayer = (noa) => {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(waterID, pos[0], pos[1], pos[2]);
 
-        socket.emit("build", { data: { water: [pos[0], pos[1], pos[2]] } });
+        socket.emit("build", {
+          data: {
+            water: [pos[0], pos[1], pos[2]],
+          },
+        });
       }
     });
   });
@@ -98,6 +102,7 @@ const eventPlayer = (noa) => {
     if (noa.targetedBlock) {
       let pos = noa.targetedBlock.position;
       noa.setBlock(0, pos[0], pos[1], pos[2]);
+      socket.emit("removeBuild", { data: { water: [pos[0], pos[1], pos[2]] } });
     }
   });
 };
