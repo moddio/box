@@ -1,92 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="styles.css" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-  </head>
 
-  <body>
-    <div class="game_build">
-      <div class="game_build_textures">
-        <div class="game_build-blocks">
-          <img
-            src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/65/Moss_Block_%28texture%29_JE1.png"
-            alt="block"
-          />
-        </div>
-        <div class="game_build-water">
-          <img
-            src="https://images.unsplash.com/photo-1562016600-ece13e8ba570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=678&q=80"
-            alt="water"
-          />
-        </div>
-        <div class="game_build-gold">
-          <img
-            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpreview.redd.it%2F5uug6uxn31i31.png%3Fauto%3Dwebp%26s%3De72abef9315a5edca95e787690c294af6d4220a1&f=1&nofb=1"
-            alt="gold"
-          />
-        </div>
-        <div class="game_build-diamond">
-          <img
-            src="https://i.pinimg.com/favicons/30e25fd93c41f5ba737371e7ba6d1e3265e0cf63d76b80129496ae79.jpg?c5ffee4d8ce4309897d5e2f0378d9a73"
-            alt="flower"
-          />
-        </div>
-        <div class="game_build-dirt">
-          <img
-            src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fvignette3.wikia.nocookie.net%2Fminecraft%2Fimages%2F5%2F50%2FWiki-background%2Frevision%2F20150401213801&f=1&nofb=1"
-            alt="water"
-          />
-        </div>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+</head>
+
+<body>
+  <div class="game_build">
+    <div class="game_build_textures">
+      <div class="game_build-blocks">
+        <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/65/Moss_Block_%28texture%29_JE1.png"
+          alt="block" />
       </div>
-      <div class="game_build-pause">
-        <button>Pause / play</button>
-        <button class="players">number of players connected 0</button>
+      <div class="game_build-water">
+        <img
+          src="https://images.unsplash.com/photo-1562016600-ece13e8ba570?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=678&q=80"
+          alt="water" />
+      </div>
+      <div class="game_build-gold">
+        <img
+          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpreview.redd.it%2F5uug6uxn31i31.png%3Fauto%3Dwebp%26s%3De72abef9315a5edca95e787690c294af6d4220a1&f=1&nofb=1"
+          alt="gold" />
+      </div>
+      <div class="game_build-diamond">
+        <img
+          src="https://i.pinimg.com/favicons/30e25fd93c41f5ba737371e7ba6d1e3265e0cf63d76b80129496ae79.jpg?c5ffee4d8ce4309897d5e2f0378d9a73"
+          alt="flower" />
+      </div>
+      <div class="game_build-dirt">
+        <img
+          src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fvignette3.wikia.nocookie.net%2Fminecraft%2Fimages%2F5%2F50%2FWiki-background%2Frevision%2F20150401213801&f=1&nofb=1"
+          alt="water" />
       </div>
     </div>
-    <div id="reticle">+</div>
-    <ul class="player_table">
-      <!-- Loop over the data in JS and desplay it as follow -->
-      <!--- 1 - Create a Div container element with class (player) -->
-      <li class="player">
-        <!--- 1 - Create a Div contain the index and name of player with class (left) -->
-        <div class="left">
-          <!--- 1 - Get the index from the array length + 1 -->
-          <span class="player_index">1.</span>
-          <span class="player_name">YoussefHoum</span>
-        </div>
-        <!--- 1 - Create a Div contain the score of player with class (right) -->
-        <div class="right">
-          <!---! 1 - I'm not sure if we need the score  -->
-          <span class="player_score">3</span>
-        </div>
-      </li>
-      <li class="player">
-        <div class="left">
-          <span class="player_index">2.</span>
-          <span class="player_name">John Doe</span>
-        </div>
-        <div class="right">
-          <span class="player_score">1</span>
-        </div>
-      </li>
-      <li class="player">
-        <div class="left">
-          <span class="player_index">3.</span>
-          <span class="player_name">BadrEddin</span>
-        </div>
-        <div class="right">
-          <span class="player_score">5</span>
-        </div>
-      </li>
-    </ul>
+    <div class="game_build-pause">
+      <button>Pause / play</button>
+      <button class="players">number of players connected 0</button>
+    </div>
+  </div>
+  <div id="reticle">+</div>
+  <ul class="player_table">
 
-    <script type="text/javascript" src="https://cdn.babylonjs.com/ammo.js"></script>
-    <script type="text/javascript" src="babylon.js"></script>
-    <script type="text/javascript" src="bundle.js"></script>
-  </body>
+
+  </ul>
+
+  <script type="text/javascript" src="https://cdn.babylonjs.com/ammo.js"></script>
+  <script type="text/javascript" src="babylon.js"></script>
+  <script type="text/javascript" src="bundle.js"></script>
+</body>
+
 </html>

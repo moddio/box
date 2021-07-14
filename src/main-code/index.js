@@ -19,7 +19,10 @@ genWorld(noa);
 const scene = noa.rendering.getScene();
 
 //enable physics in the scene
-scene.enablePhysics(new BABYLON.Vector3(0, -9.8, 0), new BABYLON.AmmoJSPlugin());
+scene.enablePhysics(
+  new BABYLON.Vector3(0, -9.8, 0),
+  new BABYLON.AmmoJSPlugin()
+);
 
 // Player Setup
 let player = noa.playerEntity;
@@ -40,6 +43,8 @@ const socket = io("http://localhost:3000");
 const waterID = noa.registry.registerBlock(1, { material: "water" });
 const playersCount = document.querySelector(".players");
 
+const playerEvent = document.querySelector(".player_table");
+
 socket.on("connect", () => {
   playerName = socket.id.toString();
 
@@ -55,6 +60,22 @@ socket.on("connect", () => {
     allPlayers = [...data];
     // Count number of player
     while (numberOfPlayer <= allPlayers.length - 1) {
+      playerEvent.innerHTML +=
+        '<li class="player">' +
+        '      <div class="left">' +
+        '        <span class="player_index">' +
+        numberOfPlayer +
+        "</span>" +
+        '        <span class="player_name">' +
+        allPlayers[numberOfPlayer].name +
+        "</span>" +
+        "      </div>" +
+        '      <div class="right">' +
+        '        <span class="player_score"> ' +
+        allPlayers[numberOfPlayer].position +
+        "</span>" +
+        "      </div>" +
+        "    </li>";
       numberOfPlayer++;
     }
     playersCount.innerHTML = `Number of players connected ${numberOfPlayer}`;
