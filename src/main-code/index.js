@@ -47,9 +47,11 @@ socket.on("connect", () => {
   playerName = socket.id.toString();
 
   // logging offline players
-  socket.on("removePlayer", (playerName) =>
-    console.log(`player ${playerName} is offline`)
-  );
+  socket.on("removePlayer", (playerName) => {
+    numberOfPlayer--;
+    playersCount.innerHTML = `Number of players connected ${numberOfPlayer}`;
+    console.log(`player ${playerName} is offline`);
+  });
 
   // listening for player change
   socket.on("players", ({ data }) => {
@@ -86,8 +88,9 @@ socket.on("connect", () => {
 
   socket.on("removeBuild", (water) => {
     console.log("waterremove", water);
-    let pos = [...water];
+    const pos = [...water];
     noa.setBlock(0, pos[0], pos[1], pos[2]);
+    numberOfBuild--;
   });
 
   // Emit your data to to the server socket
