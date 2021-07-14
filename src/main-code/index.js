@@ -19,10 +19,7 @@ genWorld(noa);
 const scene = noa.rendering.getScene();
 
 //enable physics in the scene
-scene.enablePhysics(
-  new BABYLON.Vector3(0, -9.8, 0),
-  new BABYLON.AmmoJSPlugin()
-);
+scene.enablePhysics(new BABYLON.Vector3(0, -9.8, 0), new BABYLON.AmmoJSPlugin());
 
 // Player Setup
 let player = noa.playerEntity;
@@ -114,6 +111,7 @@ noa.inputs.down.on("shoot", function () {
 });
 noa.inputs.up.on("shoot", function () {
   clearTimeout(timeout);
+  clearInterval(interval);
 });
 
 window.addEventListener("keypress", () => {
