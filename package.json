@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "description": "Starter code",
   "scripts": {
-    "start": "cd src/main-code && webpack serve",
-    "build": "rm -f docs/main-code/*.js*; cd src/main-code && webpack --env prod"
+    "start": "cd src/core && webpack serve",
+    "build": "rm -f docs/core/*.js*; cd src/core && webpack --env prod"
   },
   "author": "mod3d",
   "dependencies": {

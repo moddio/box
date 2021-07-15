@@ -1,15 +1,16 @@
 import { diamond, gold, tree, dirt } from "./textures";
 
-import { filterData } from "./filterData";
+// firball import
+//import { shootBouncyBall } from "../fireball/fireball";
 
+//Socket import
+import { playersDataEvent } from "../socket/players";
 import { io } from "socket.io-client";
 
 const eventPlayer = (noa) => {
   const socket = io("http://localhost:3000");
 
-  const build = [];
-
-  // Event handlers
+  //Event handlers
   const waterEvent = document.querySelector(".game_build-water");
   const blocksEvent = document.querySelector(".game_build-blocks");
   const pauseEvent = document.querySelector(".game_build-pause");
@@ -17,7 +18,7 @@ const eventPlayer = (noa) => {
   const diamondEvent = document.querySelector(".game_build-diamond");
   const dirtEvent = document.querySelector(".game_build-dirt");
 
-  //register texture in memory
+  //Register texture in memory
   noa.registry.registerMaterial("tree", null, tree);
   noa.registry.registerMaterial("dirt", null, dirt);
   noa.registry.registerMaterial("gold", null, gold);
@@ -36,10 +37,6 @@ const eventPlayer = (noa) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(dirtID, pos[0], pos[1], pos[2]);
-
-        filterData(build, { dirt: [pos[0], pos[1], pos[2]] }, "dirt")
-          ? build.push({ dirt: [pos[0], pos[1], pos[2]] })
-          : "";
       }
     });
   });
@@ -48,10 +45,6 @@ const eventPlayer = (noa) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(diamondID, pos[0], pos[1], pos[2]);
-
-        filterData(build, { diamond: [pos[0], pos[1], pos[2]] }, "diamond")
-          ? build.push({ diamond: [pos[0], pos[1], pos[2]] })
-          : "";
       }
     });
   });
@@ -60,10 +53,6 @@ const eventPlayer = (noa) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(goldID, pos[0], pos[1], pos[2]);
-
-        filterData(build, { gold: [pos[0], pos[1], pos[2]] }, "gold")
-          ? build.push({ gold: [pos[0], pos[1], pos[2]] })
-          : "";
       }
     });
   });
@@ -73,7 +62,7 @@ const eventPlayer = (noa) => {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(waterID, pos[0], pos[1], pos[2]);
 
-        socket.emit("build", {
+        socket.emit("createBlock", {
           data: {
             water: [pos[0], pos[1], pos[2]],
           },
@@ -86,13 +75,42 @@ const eventPlayer = (noa) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(blocksID, pos[0], pos[1], pos[2]);
-
-        filterData(build, { block: [pos[0], pos[1], pos[2]] }, "block")
-          ? build.push({ block: [pos[0], pos[1], pos[2]] })
-          : "";
       }
     });
   });
+  window.addEventListener("keypress", () => {
+    // Get player Position
+    var ents = noa.entities;
+    var playPos = ents.getPosition(noa.playerEntity);
+    // Emit your data to to the server socket
+    socket.emit(
+      "players",
+      playersDataEvent(socket.id, [playPos[0], playPos[1] + 0.5, playPos[2]])
+    );
+    return;
+  });
+
+  // code written by badr please refactor this
+
+  /**
+ // Ball shoot events
+  const mesh = Mesh.CreateBox("player-mesh", 1, scene);
+  noa.inputs.bind("shoot", "5");
+  var shoot = () => shootBouncyBall(noa, mesh);
+  var interval, timeout;
+  noa.inputs.down.on("shoot", function () {
+    shoot();
+    timeout = setTimeout(() => {
+      interval = setInterval(shoot, 800);
+    }, 400);
+  });
+  noa.inputs.up.on("shoot", function () {
+    clearTimeout(timeout);
+    clearInterval(interval);
+  });
+   */
+
+  // Pause event
   let paused = false;
   pauseEvent.addEventListener("click", () => {
     paused = !paused;
@@ -102,7 +120,8 @@ const eventPlayer = (noa) => {
     if (noa.targetedBlock) {
       let pos = noa.targetedBlock.position;
       noa.setBlock(0, pos[0], pos[1], pos[2]);
-      socket.emit("removeBuild", { data: { water: [pos[0], pos[1], pos[2]] } });
+      console.log("fired");
+      socket.emit("removeBlock", { data: { water: [pos[0], pos[1], pos[2]] } });
     }
   });
 };

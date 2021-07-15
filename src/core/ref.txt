@@ -1,0 +1,32 @@
+server-code -> server
+main-code -> core
+typo: palyer-instance
+index.js -> client.js
+have world.js
+
+remove fireball.js and use entity.js instead.
+entity.js should extend noa's entity class
+
+player.js
+    class variables:
+        name
+        id (use socketID)
+        this.unit = new entity()
+        controllerComponent (for later)
+
+entity.js
+    class variables:
+        positions
+        streaming state (is it streaming? not streaming? client-side predicted?)
+        other attributes (HP, items, speed, etc)
+        physics body
+
+dont have files that are just functions. instead, create a class that contains functions
+    for example: 
+        world.generateWorld()
+        var myPlayer = new Player();
+        var myUnit = new Entity()
+
+never use name for reference. use ID, or socketID (e.g. dont use player name in conditions)
+socket.on("build", ({ data }) => { -> socket.on("createBlock", ({ data }) => {
+removeBuild -> removeBlock

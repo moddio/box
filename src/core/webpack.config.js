@@ -1,11 +1,11 @@
 var path = require("path");
 // const CopyWebpackPlugin = require("copy-webpack-plugin");
-var buildPath = path.resolve("..", "..", "bundle", "main-code");
+var buildPath = path.resolve("..", "..", "bundle", "core");
 
 module.exports = (env) => ({
   mode: env && env.prod ? "production" : "development",
 
-  entry: "./index.js",
+  entry: "./client.js",
   output: {
     path: buildPath,
     filename: "bundle.js",
