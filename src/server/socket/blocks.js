@@ -6,6 +6,7 @@ const returnCurrentBlocks = () => ({
 });
 
 const createBlockSocket = (data, socket) => {
+  console.log("datablock", data);
   blocks = [...blocks, data];
   // Emit Blocks for new player joining the session
   socket.emit("createBlock", { blocks });
@@ -15,21 +16,21 @@ const createBlockSocket = (data, socket) => {
   console.log("createBlock", blocks);
 };
 
-const removeBlockSocket = (water, socket) => {
+const removeBlockSocket = (position, socket) => {
   for (var i = 0; i < blocks.length; i++) {
-    // Removing water blcoks from the data (blocks)
+    // Removing position blcoks from the data (blocks)
     if (
-      water[0] === blocks[i].water[0] &&
-      water[1] === blocks[i].water[1] &&
-      water[2] === blocks[i].water[2]
+      position[0] === blocks[i].position[0] &&
+      position[1] === blocks[i].position[1] &&
+      position[2] === blocks[i].position[2]
     ) {
       blocks.splice(i, 1);
     }
   }
   console.log("remove blocks", blocks);
-  socket.emit("removeBlock", water);
+  socket.emit("removeBlock", position);
   // Brodcast the new blocks data to logged in user
-  socket.broadcast.emit("removeBlock", water);
+  socket.broadcast.emit("removeBlock", position);
 };
 
 module.exports = { createBlockSocket, removeBlockSocket, returnCurrentBlocks };

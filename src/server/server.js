@@ -35,9 +35,9 @@ io.on("connection", (socket) => {
     createBlockSocket(data, socket);
   });
   // Listen for blocks removal
-  socket.on("removeBlock", ({ data: { water } }) => {
-    removedBlocks.push(water);
-    removeBlockSocket(water, socket);
+  socket.on("removeBlock", ({ data: { position } }) => {
+    removedBlocks.push(position);
+    removeBlockSocket(position, socket);
   });
 });
 
