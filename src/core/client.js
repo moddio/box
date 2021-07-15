@@ -8,7 +8,7 @@ import "@babylonjs/core/Meshes/Builders/boxBuilder";
 // Files
 import "./utils/state.min.js";
 import { config } from "./config/config";
-import genWorld from "./world.js";
+import generateWorld from "./world.js";
 import eventPlayer from "./utils/eventHandler.js";
 
 // Socket
@@ -22,10 +22,10 @@ import { removeBlockEvent, createBlockEvent } from "./socket/blocks.js";
 const noa = new Engine(config);
 
 // Generate the world
-genWorld(noa);
+generateWorld(noa);
 const scene = noa.rendering.getScene();
 
-//Enable physics in the scene
+// Enable physics in the scene
 scene.enablePhysics(
   new BABYLON.Vector3(0, -9.8, 0),
   new BABYLON.AmmoJSPlugin()

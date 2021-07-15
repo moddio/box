@@ -1,5 +1,6 @@
 let blocks = [];
 
+// return  block data
 const returnCurrentBlocks = () => ({
   blocks,
 });
@@ -27,7 +28,7 @@ const removeBlockSocket = (water, socket) => {
   }
   console.log("remove blocks", blocks);
   socket.emit("removeBlock", water);
-  // brodcast the new blocks data to logged in user
+  // Brodcast the new blocks data to logged in user
   socket.broadcast.emit("removeBlock", water);
 };
 
