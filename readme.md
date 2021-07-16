@@ -2,22 +2,17 @@
 
 ## Setup
 
-Download [Node.js](https://nodejs.org/en/download/).
-Run this followed commands:
-
 ```bash
 # Install dependencies (only the first time)
-yarn
+yarn install
 
-# Run the local server at localhost:8000
-yarn start
+# Run the local server
+yarn server
 
-# Build for production in the dist/ directory
-yarn build
-
-# Double click to enter the Fullscreen mode
-```
+# Run the client server
+yarn client
 
 ## options
 
 - Working on it...
+```
