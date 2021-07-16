@@ -114,27 +114,6 @@ const eventPlayer = (noa) => {
     );
     return;
   });
-
-  // code written by badr please refactor this
-
-  /**
- // Ball shoot events
-  const mesh = Mesh.CreateBox("player-mesh", 1, scene);
-  noa.inputs.bind("shoot", "5");
-  var shoot = () => shootBouncyBall(noa, mesh);
-  var interval, timeout;
-  noa.inputs.down.on("shoot", function () {
-    shoot();
-    timeout = setTimeout(() => {
-      interval = setInterval(shoot, 800);
-    }, 400);
-  });
-  noa.inputs.up.on("shoot", function () {
-    clearTimeout(timeout);
-    clearInterval(interval);
-  });
-   */
-
   // Pause event
   let paused = false;
   pauseEvent.addEventListener("click", () => {
