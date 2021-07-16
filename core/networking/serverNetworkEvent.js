@@ -10,7 +10,7 @@ const createBlockSocket = (data, socket) => {
   blocks = [...blocks, data];
   // Emit Blocks for new player joining the session
   socket.emit("createBlock", { blocks });
-  // Brodacast the blocks to all logged in user
+  // Brodacast the blocks to all logged in user5
   socket.broadcast.emit("createBlock", { blocks });
 
   console.log("createBlock", blocks);
@@ -44,6 +44,7 @@ const playersSocket = (playerID, position, socket) => {
     socket.broadcast.emit("removePlayer", playerID);
     console.log(`player disconnected ${playerID} / players array `);
   });
+
   const idPlayer = (element) => element.ID === playerID;
   const indx = players.findIndex(idPlayer);
   indx !== -1

@@ -5,10 +5,10 @@ import { diamond, gold, tree, dirt } from "./textures";
 
 //Socket import
 import { playersDataEvent } from "../networking/clientNetworkEvent";
-import { io } from "socket.io-client";
+//import { io } from "socket.io-client";
 
-const eventPlayer = (noa) => {
-  const socket = io("http://localhost:3000");
+const eventPlayer = (noa, socket) => {
+  //const socket = io("http://localhost:3000");
 
   //Event handlers
   const waterEvent = document.querySelector(".game_build-water");

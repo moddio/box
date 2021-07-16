@@ -56,4 +56,4 @@ socket.on("connect", () => {
 });
 
 // Event listener for input of the user (createBlock, edit, movement)
-eventPlayer(noa);
+eventPlayer(noa, socket);
