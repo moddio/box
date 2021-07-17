@@ -1,7 +1,7 @@
 import { diamond, gold, tree, dirt } from "./textures";
 
 // firball import
-//import { shootBouncyBall } from "../fireball/fireball";
+import { shootBouncyBall } from "../entities";
 
 //Socket import
 import { playersDataEvent } from "../networking/clientNetworkEvent";

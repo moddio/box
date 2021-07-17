@@ -6,7 +6,7 @@ export const createBlockEvent = ({ blocks }) => {
   const dirtID = noa.registry.registerBlock(5, { material: "dirt" });
   const grassID = noa.registry.registerBlock(2, { material: "grass" });
 
-  while (numberOfblocks <= blocks.length - 1) {
+  while (numberOfblocks < blocks.length - 1) {
     if (blocks[numberOfblocks].id === "water") {
       const pos = [...blocks[numberOfblocks].position];
       noa.setBlock(waterID, pos[0], pos[1], pos[2]);

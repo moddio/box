@@ -10,6 +10,7 @@ import "../core/utils/state.min.js";
 import { config } from "../core/config/config";
 import generateWorld from "../core/world.js";
 import eventPlayer from "../core/utils/eventHandler.js";
+import { playerEntity, shootBouncyBall } from "../core/entities";
 
 // Socket
 import {
@@ -19,6 +20,7 @@ import {
   removeBlockEvent,
   createBlockEvent,
 } from "../core/networking/clientNetworkEvent";
+import { Sound } from "@babylonjs/core";
 
 const noa = new Engine(config);
 
@@ -32,12 +34,45 @@ scene.enablePhysics(
   new BABYLON.AmmoJSPlugin()
 );
 
-// Player Setup
-let player = noa.playerEntity;
-const mesh = Mesh.CreateBox("player-mesh", 1, scene);
-noa.entities.addComponent(player, noa.entities.names.mesh, {
-  mesh,
-  offset: [0, 0.5, 0],
+// initial player position to check for movement
+let playerPositionChecker = [...noa.entities.getPosition(1)];
+let snapshot = [];
+
+// player entity
+playerEntity(noa);
+
+// Adding player entity to snapshot
+snapshot.push({ id: 1, position: [] });
+
+// shoot ball entity in the scene
+window.addEventListener("keypress", (e) => {
+  if (e.key === "o") {
+    let id = shootBouncyBall(noa);
+    //snapshot = [...snapshot, noa.entities._storage.position.hash.position];
+    snapshot.push({ id, position: [] });
+    console.log(snapshot);
+  }
+});
+
+// Traverse all entities on each tick
+noa.on("tick", () => {
+  for (let elem in snapshot) {
+    // Get the position of each entity
+    noa.entities.getPosition(snapshot[elem].id);
+    if (snapshot[elem].id === 1) {
+      // if the id is the player entity id
+      let playerPosition = noa.entities.getPosition(1);
+      for (let elem in playerPosition) {
+        // check if the player has moved
+        if (playerPositionChecker[elem] !== playerPosition[elem]) {
+          playerPositionChecker = [...playerPosition];
+          // update the snapshot with new player position
+          snapshot[0].position = [...playerPosition];
+          console.log("the player of the entity with id === 1 has moved");
+        }
+      }
+    }
+  }
 });
 
 // Client side server logic for socket
