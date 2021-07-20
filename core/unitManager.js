@@ -67,6 +67,7 @@ class UnitManager {
     for (let i = 0; i < 3; i++) imp[i] = 5 * dir[i];
     imp[1] += 1;
     body.applyImpulse(imp);
+    console.log("body", { ...body });
 
     if (!collideHandler)
       collideHandler = (id, other) => {

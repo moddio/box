@@ -1,13 +1,10 @@
-import { diamond, gold, tree, dirt } from "./textures";
-
-// firball import
-import { shootBouncyBall } from "../entities";
+import { diamond, gold, tree, dirt } from "../../../utils/textures";
 
 //Socket import
-import { playersDataEvent } from "../networking/clientNetworkEvent";
+import { playersDataEvent } from "../../../networking/clientNetworkEvent";
 //import { io } from "socket.io-client";
 
-const eventPlayer = (noa, socket) => {
+const blockSelector = (noa, socket) => {
   //const socket = io("http://localhost:3000");
 
   //Event handlers
@@ -133,4 +130,4 @@ const eventPlayer = (noa, socket) => {
   });
 };
 
-export default eventPlayer;
+export default blockSelector;

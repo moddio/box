@@ -8,7 +8,7 @@ import "@babylonjs/core/Meshes/Builders/boxBuilder";
 import "../core/utils/state.min.js";
 import { config } from "../core/config/config";
 import generateWorld from "../core/world.js";
-import eventPlayer from "../core/utils/eventHandler.js";
+import blockSelector from "../core/component/editor/ui/blockSelector";
 import PlayerManager from "../core/playerManager";
 import Player from "../core/player";
 
@@ -47,13 +47,23 @@ const playerEvent = new Player(noa, player);
 // init event listener
 playerEvent.playerEvent();
 
-console.log("noa", noa.entities);
+console.log("noa lookup", noa);
 
 // Adding player entity to snapshot
 snapshot.push({ id: 1, position: [] });
 
 // Traverse all entities on each tick
+let rotation = 0;
 noa.on("tick", () => {
+  let current = noa.camera.getDirection()[0];
+  let persistanceRot = 0.01;
+  if (current > 0 && rotation !== current) {
+    player.rotatePOV(0, persistanceRot + 0.01, 0);
+  }
+  if (current < 0 && rotation !== current) {
+    player.rotatePOV(0, -persistanceRot - 0.01, 0);
+  }
+  rotation = current;
   for (let elem in snapshot) {
     // Get the position of each entity
     noa.entities.getPosition(snapshot[elem].id);
@@ -93,4 +103,4 @@ socket.on("connect", () => {
 });
 
 // Event listener for input of the user (createBlock, edit, movement)
-eventPlayer(noa, socket);
+blockSelector(noa, socket);
