@@ -4,7 +4,7 @@
   "description": "Starter code",
   "scripts": {
     "client": " webpack serve",
-    "server": "nodemon server/server.js",
+    "server": "nodemon core/networking/serverNetworkEvent.js",
     "build": "rm -f docs/core/*.js*; cd src/core && webpack --env prod"
   },
   "author": "mod3d",

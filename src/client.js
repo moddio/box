@@ -1,7 +1,6 @@
 // Engine
 import * as BABYLON from "@babylonjs/core";
 import { Engine } from "noa-engine";
-import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { io } from "socket.io-client";
 import "@babylonjs/core/Meshes/Builders/boxBuilder";
 
@@ -10,7 +9,8 @@ import "../core/utils/state.min.js";
 import { config } from "../core/config/config";
 import generateWorld from "../core/world.js";
 import eventPlayer from "../core/utils/eventHandler.js";
-import { playerEntity, shootBouncyBall } from "../core/entities";
+import PlayerManager from "../core/playerManager";
+import Player from "../core/player";
 
 // Socket
 import {
@@ -20,7 +20,6 @@ import {
   removeBlockEvent,
   createBlockEvent,
 } from "../core/networking/clientNetworkEvent";
-import { Sound } from "@babylonjs/core";
 
 const noa = new Engine(config);
 
@@ -39,20 +38,19 @@ let playerPositionChecker = [...noa.entities.getPosition(1)];
 let snapshot = [];
 
 // player entity
-playerEntity(noa);
+const playerManager = new PlayerManager(noa);
+// creating the player with id === 1
+const player = playerManager.createPlayer(1);
+
+//player
+const playerEvent = new Player(noa, player);
+// init event listener
+playerEvent.playerEvent();
+
+console.log("noa", noa.entities);
 
 // Adding player entity to snapshot
 snapshot.push({ id: 1, position: [] });
-
-// shoot ball entity in the scene
-window.addEventListener("keypress", (e) => {
-  if (e.key === "o") {
-    let id = shootBouncyBall(noa);
-    //snapshot = [...snapshot, noa.entities._storage.position.hash.position];
-    snapshot.push({ id, position: [] });
-    console.log(snapshot);
-  }
-});
 
 // Traverse all entities on each tick
 noa.on("tick", () => {
@@ -76,7 +74,7 @@ noa.on("tick", () => {
 });
 
 // Client side server logic for socket
-const socket = io("http://localhost:3000");
+export const socket = io("http://localhost:3000");
 socket.on("connect", () => {
   // Logging out offline players
   socket.on("removePlayer", removePlayerEvent);
@@ -88,6 +86,10 @@ socket.on("connect", () => {
   socket.on("removeBlock", removeBlockEvent);
   // Emit your your ID and your initial position to the server
   socket.emit("players", playersDataEvent(socket.id, [0, 10, 0]));
+  socket.on("ballshoot", (position) => {
+    console.log("ball shoot data", position);
+    playerEvent.playerShootBall(position);
+  });
 });
 
 // Event listener for input of the user (createBlock, edit, movement)
