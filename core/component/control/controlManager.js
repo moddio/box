@@ -1,6 +1,6 @@
 import Unit from "../../unit";
 import UnitManager from "../../unitManager";
-import { socket } from "../../../src/client";
+import { socket } from "../../../src/client1";
 
 //const body = unitManager.shootBall();
 // unit init
@@ -19,14 +19,14 @@ class ControlManager {
       case "h":
         let arr = this.unitManager.shootBall();
         this.body = arr[0];
-        this.unit = new Unit(this.noa, this.body);
+        //this.unit = new Unit(this.noa, this.body);
         socket.emit("ballshoot", { position: arr[1] });
     }
   }
   playerShootBall(position) {
     console.log("position", position);
     this.body = this.unitManager.shootBall(position);
-    this.unit = new Unit(this.noa, this.body);
+    //this.unit = new Unit(this.noa, this.body);
   }
 }
 

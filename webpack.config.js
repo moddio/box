@@ -5,7 +5,7 @@ var buildPath = path.resolve("bundle", "core");
 module.exports = (env) => ({
   mode: env && env.prod ? "production" : "development",
 
-  entry: "./src/client.js",
+  entry: "./core/engine.js",
   output: {
     path: buildPath,
     filename: "bundle.js",
