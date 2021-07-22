@@ -3,10 +3,11 @@ import * as BABYLON from "@babylonjs/core";
 import { Engine as NoaEngine } from "noa-engine";
 import { io } from "socket.io-client";
 import "@babylonjs/core/Meshes/Builders/boxBuilder";
+import {} from '../src/client'
 
 // Files
 import "./utils/state.min.js";
-import { config } from "./config/config";
+import { config } from "../config/config";
 import generateWorld from "./world.js";
 //import blockSelector from "../core/component/editor/ui/blockSelector";
 //import Player from "../core/player";
@@ -15,27 +16,22 @@ import generateWorld from "./world.js";
 //import ControlManager from "../core/component/control/controlManager.js";
 import UnitManager from "./unitManager.js";
 import PlayerManager from "./playerManager";
+import ClientNetworkManager from "./components/network/clientNetworkComponent.js";
+import ServerNetworkManager from "./components/network/serverNetworkComponent.js";
 
-// Socket
-import {
-  playersDataEvent,
-  playersEvent,
-  removePlayerEvent,
-  removeBlockEvent,
-  createBlockEvent,
-} from "./networking/clientNetworkEvent";
 
 const noa = new NoaEngine(config);
 // noa.addComponent(tickComponent) <- make this work somehow lol
 
 // we can't use engine as keyword class because is reserved for noa Engine
-class Engine {
+export class Engine extends Entity {
+
   constructor() {
     this.unitManager = new UnitManager(noa);
     this.playerManager = new PlayerManager(noa);
     this.noa = noa;
 
-    if (isServer) {
+    if (serverType === 'server') {
       this.serverNetworkManager = new ServerNetworkManager();
     } else {
       this.clientNetworkManager = new ClientNetworkManager();
@@ -61,6 +57,8 @@ class Engine {
     );
 
     noa.on("tick", () => this.engineStep.bind(this)());
+
+    // noa.addComponent()
     noa.on("entityTick", (entity) => {
       if (entity.category == "unit") {
         entity.tick();
@@ -73,14 +71,18 @@ class Engine {
 
     // I don't know how to do this in noa...
 
-    if (isServer) {
+    if (global.isServer) {
       this.serverNetworkManager.streamSnapshot();
     }
   }
+
+  addComponent(componentName) {
+    
+  }
+
 }
 
-const engine = new ModEngine(noa);
-engine.start();
+
 /**
  //player
 const playerEvent = new Player(noa, player);

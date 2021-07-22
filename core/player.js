@@ -1,6 +1,6 @@
 import ControlManager from "./component/control/controlManager";
 
-class Player {
+class Player extends Entity {
   constructor(engine, player) {
     this.isMe = false;
     this.engine = engine;

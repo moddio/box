@@ -1,47 +1,49 @@
-class Unit {
-  constructor(engine, body) {
+"use strict";
+
+//this class needs to extend entity
+import "@babylonjs/core/Meshes/Builders/boxBuilder";
+import "@babylonjs/core/Meshes/Builders/sphereBuilder";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
+var Entity = require("./entity");
+
+class Unit extends Entity {
+  constructor(engine) {
     this.engine = engine;
-
-    // create entity in noa
-    let ent = this.engine.noa.createEntity("idont know how this works?!~");
-    ent.category = "unit";
-
-    this.body = this.createBody();
-    this.rotation = 0;
-    this.ownerPlayer = undefined;
   }
 
-  createBody() {
-    // create actual physical body
-    let body = this.engine.noa.createBody("idont know how this works?!~");
-    return body;
+  shootBouncyBall() {
+    const ents = noa.entities;
+
+    let ballMesh = Mesh.CreateSphere("ball", 1, 1, noa.rendering.getScene());
+
+    const playerPosition = ents.getPosition(noa.playerEntity);
+    const pos = [
+      playerPosition[0] + 1,
+      playerPosition[1] + 0.5,
+      playerPosition[2] + 1,
+    ];
+    const width = 1;
+    const height = 1;
+
+    const mesh = ballMesh.createInstance("ball_instance");
+    const meshOffset = [0, 1, 0];
+    const doPhysics = true;
+
+    const id = noa.entities.add(
+      pos,
+      width,
+      height, // required
+      mesh,
+      meshOffset,
+      doPhysics
+    );
+
+    return id;
   }
 
-  moveBall() {
-    this.body.applyImpulse([1, 0, 7]);
-  }
+  pickupItem() {}
 
-  getOwner() {
-    return this.ownerPlayer;
-  }
+  dropItem() {}
 
-  setOwner(player) {
-    this.ownerPlayer = player;
-  }
-
-  tick() {
-    if (isClient && this.getOwner().isMe) {
-      let current = noa.camera.getDirection()[0];
-      let persistanceRot = 0.01;
-      if (current > 0 && this.rotation !== current) {
-        this.body.rotatePOV(0, persistanceRot + 0.01, 0);
-      }
-      if (current < 0 && this.rotation !== current) {
-        this.body.rotatePOV(0, -persistanceRot - 0.01, 0);
-      }
-      this.rotation = current;
-    }
-  }
+  destroy() {}
 }
-
-export default Unit;
