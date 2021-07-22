@@ -1,7 +1,6 @@
-import {Engine} from '../core/engine'
+require("../core/engine.js");
 
-
-console.log("isServer",isServer)
+console.log("isServer", isServer);
 
 // 1. CLIENT: connect to server
 // 2. SERVER: serverNetworkEvent will register "playerConnect" event. create a player in server (playerManager.createPlayer()), and send "createPlayer" event to the client
@@ -9,5 +8,5 @@ console.log("isServer",isServer)
 // 4. CLIENT: once "createPlayer" is received, run playerManager.createPlayer()
 // set player.isMe = true
 
-const engine = new Engine('client');
+const engine = new Engine("client");
 engine.start();
