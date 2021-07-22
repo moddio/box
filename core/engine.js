@@ -1,6 +1,6 @@
 // Engine
 import * as BABYLON from "@babylonjs/core";
-import { Engine } from "noa-engine";
+import { Engine as NoaEngine } from "noa-engine";
 import { io } from "socket.io-client";
 import "@babylonjs/core/Meshes/Builders/boxBuilder";
 
@@ -25,22 +25,31 @@ import {
   createBlockEvent,
 } from "./networking/clientNetworkEvent";
 
-const noa = new Engine(config);
+const noa = new NoaEngine(config);
+// noa.addComponent(tickComponent) <- make this work somehow lol
 
 // we can't use engine as keyword class because is reserved for noa Engine
-class ModEngine {
+class Engine {
   constructor() {
     this.unitManager = new UnitManager(noa);
     this.playerManager = new PlayerManager(noa);
-    this.body;
+    this.noa = noa;
+
+    if (isServer) {
+      this.serverNetworkManager = new ServerNetworkManager();
+    } else {
+      this.clientNetworkManager = new ClientNetworkManager();
+    }
+
     this.snapshot = [{ id: 1, position: [] }];
-    this.rotation = 0;
   }
+
   start() {
     console.log("starting the noa engine...");
 
     // on connection the player will be created
     this.body = this.playerManager.createPlayer(1);
+
     // Generate the world
     generateWorld(noa);
     const scene = noa.rendering.getScene();
@@ -50,35 +59,22 @@ class ModEngine {
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
+
     noa.on("tick", () => this.engineStep.bind(this)());
+    noa.on("entityTick", (entity) => {
+      if (entity.category == "unit") {
+        entity.tick();
+      }
+    });
   }
+
   engineStep() {
     let playerPositionChecker = [...noa.entities.getPosition(1)];
-    let current = noa.camera.getDirection()[0];
-    let persistanceRot = 0.01;
-    if (current > 0 && this.rotation !== current) {
-      this.body.rotatePOV(0, persistanceRot + 0.01, 0);
-    }
-    if (current < 0 && this.rotation !== current) {
-      this.body.rotatePOV(0, -persistanceRot - 0.01, 0);
-    }
-    this.rotation = current;
-    for (let elem in this.snapshot) {
-      // Get the position of each entity
-      noa.entities.getPosition(this.snapshot[elem].id);
-      if (this.snapshot[elem].id === 1) {
-        // if the id is the player entity id
-        let playerPosition = noa.entities.getPosition(1);
-        for (let elem in playerPosition) {
-          // check if the player has moved
-          if (playerPositionChecker[elem] !== playerPosition[elem]) {
-            playerPositionChecker = [...playerPosition];
-            // update the snapshot with new player position
-            this.snapshot[0].position = [...playerPosition];
-            console.log("the player of the entity with id === 1 has moved");
-          }
-        }
-      }
+
+    // I don't know how to do this in noa...
+
+    if (isServer) {
+      this.serverNetworkManager.streamSnapshot();
     }
   }
 }

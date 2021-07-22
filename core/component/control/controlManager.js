@@ -1,6 +1,6 @@
 import Unit from "../../unit";
 import UnitManager from "../../unitManager";
-import { socket } from "../../../src/client1";
+import { socket } from "../../../src/test";
 
 //const body = unitManager.shootBall();
 // unit init

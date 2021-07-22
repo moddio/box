@@ -1,9 +1,15 @@
 import * as BABYLON from "@babylonjs/core";
 class UnitManager {
-  constructor(noa, player) {
-    this.noa = noa;
+  constructor(engine, player) {
+    this.engine = engine;
     this.player = player;
   }
+
+  createUnit() {
+    let unit = new Unit();
+    return unit;
+  }
+
   shootBall(playerPosition = false) {
     const ents = this.noa.entities;
     const radius = 0.3;
