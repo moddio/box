@@ -7,7 +7,7 @@ class ServerNetworkManager {
 
   // queueData() {}
 
-  //createSnapshot() {}
+  //streamSnapshot() {}
 
   createSnapshot(body) {
     // rotation will be moved in playerManager (Just to keep track of the code logic)

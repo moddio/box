@@ -32,7 +32,7 @@ export class Engine {
     this.noa.on("tick", () => this.engineStep.bind(this)());
   }
   engineStep() {
-    this.serverNetworkManager.createSnapshot(this.body);
+    !global.isServer ? this.serverNetworkManager.createSnapshot(this.body) : "";
   }
 }
 
