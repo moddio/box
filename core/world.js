@@ -52,7 +52,9 @@ const generateWorld = (noa) => {
         }
       }
     }
+    // if (engine.isClient) {
     noa.world.setChunkData(id, data);
+    // }
   });
 };
 

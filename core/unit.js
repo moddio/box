@@ -1,15 +1,12 @@
-export class Unit {
-  constructor(noa, body) {
-    this.noa = noa;
-    this.body = body;
-  }
+export class Unit extends Entity {
+  constructor() {}
 
-  Ball(playerPosition = false) {
-    const ents = this.noa.entities;
+  shootBall(playerPosition = false) {
+    const ents = engine.noa.entities;
     const radius = 0.3;
     // syntatic sugar for creating a default entity
     if (!playerPosition) {
-      var playPos = ents.getPosition(this.noa.playerEntity);
+      var playPos = ents.getPosition(engine.noa.playerEntity);
     } else {
       var playPos = playerPosition;
     }
@@ -22,16 +19,48 @@ export class Unit {
     const doPhysics = true;
     const shadow = true;
 
-    var id = this.noa.entities.add(
+    let params = [
       pos,
       width,
       height, // required
       mesh,
       meshOffset,
       doPhysics,
-      shadow // optional
-    );
-    return id;
+      shadow, // optional
+    ];
+
+    let ball = new Projectile();
+    ball.createBody(...params);
+    const id = ball.Ball(playerPosition);
+
+    // adjust physics body
+    const body = ents.getPhysicsBody(id);
+    body.restitution = 0.8;
+    body.friction = 0.6;
+    body.mass = 0.5;
+    const dir = engine.noa.camera.getDirection();
+    let imp = [];
+    for (let i = 0; i < 3; i++) imp[i] = 5 * dir[i];
+    imp[1] += 1;
+    body.applyImpulse(imp);
+    console.log("body", { ...body });
+
+    if (!collideHandler)
+      collideHandler = (id, other) => {
+        const p1 = ents.getPosition(id);
+        const p2 = ents.getPosition(other);
+
+        let imp = [];
+        for (let i = 0; i < 3; i++) imp[i] = 3 * (p1[i] - p2[i]);
+        const b = ents.getPhysicsBody(id);
+        b.applyImpulse(imp);
+      };
+
+    ents.addComponent(id, ents.names.collideEntities, {
+      cylinder: true,
+      callback: (other) => collideHandler(id, other),
+    });
+    return [body, ents.getPosition(engine.noa.playerEntity)];
   }
 }
 
