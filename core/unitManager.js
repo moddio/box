@@ -1,67 +1,13 @@
-import * as BABYLON from "@babylonjs/core";
+import { Unit } from "./unit";
+
 class UnitManager {
-  constructor(engine, player) {
-    this.engine = engine;
+  constructor(noa, player) {
+    this.noa = noa;
     this.player = player;
   }
-
-  createUnit() {
-    let unit = new Unit();
-    return unit;
-  }
-
-  shootBall(playerPosition = false) {
-    const ents = this.noa.entities;
-    const radius = 0.3;
-
-    let collideHandler, removeComp, fireBallClone;
-
-    //create a fireBall template to clone from, set it's visibility to off.
-    const fireBall = BABYLON.MeshBuilder.CreateSphere(
-      "fireBall",
-      { diameter: radius },
-      scene
-    );
-    const fireBallMaterial = new BABYLON.StandardMaterial(
-      "fireBallMaterial",
-      scene
-    );
-    fireBallMaterial.diffuseColor = BABYLON.Color3.Black();
-    fireBallMaterial.specularPower = 256;
-    fireBall.material = fireBallMaterial;
-    fireBall.visibility = false;
-
-    if (!fireBallClone) {
-      fireBallClone = fireBall.clone("fireBallClone");
-      fireBallClone.visibility = 1;
-      fireBallClone.position = this.player.absolutePosition;
-      console.log("playerPosition", this.player.absolutePosition);
-    }
-
-    // syntatic sugar for creating a default entity
-    if (!playerPosition) {
-      var playPos = ents.getPosition(this.noa.playerEntity);
-    } else {
-      var playPos = playerPosition;
-    }
-    const pos = [playPos[0], playPos[1] + 0.6, playPos[2]];
-    const width = radius;
-    const height = radius;
-
-    const mesh = fireBallClone.createInstance("ball_instance");
-    const meshOffset = [0, radius - 0.1, 0];
-    const doPhysics = true;
-    const shadow = true;
-
-    var id = this.noa.entities.add(
-      pos,
-      width,
-      height, // required
-      mesh,
-      meshOffset,
-      doPhysics,
-      shadow // optional
-    );
+  shootBall(playerPosition = false, noa) {
+    this.ballUnit = new Unit(noa);
+    const id = this.ballUnit.Ball(playerPosition);
 
     // adjust physics body
     const body = ents.getPhysicsBody(id);
@@ -79,6 +25,7 @@ class UnitManager {
       collideHandler = (id, other) => {
         const p1 = ents.getPosition(id);
         const p2 = ents.getPosition(other);
+
         let imp = [];
         for (let i = 0; i < 3; i++) imp[i] = 3 * (p1[i] - p2[i]);
         const b = ents.getPhysicsBody(id);

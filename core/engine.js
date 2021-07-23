@@ -1,91 +1,73 @@
 // Engine
 import * as BABYLON from "@babylonjs/core";
-import { Engine as NoaEngine } from "noa-engine";
-import { io } from "socket.io-client";
+import PlayerManager from "./playerManager.js";
 import "@babylonjs/core/Meshes/Builders/boxBuilder";
-import {} from '../src/client'
 
 // Files
 import "./utils/state.min.js";
-import { config } from "../config/config";
 import generateWorld from "./world.js";
-//import blockSelector from "../core/component/editor/ui/blockSelector";
-//import Player from "../core/player";
-
-// engine import
-//import ControlManager from "../core/component/control/controlManager.js";
 import UnitManager from "./unitManager.js";
-import PlayerManager from "./playerManager";
-import ClientNetworkManager from "./components/network/clientNetworkComponent.js";
-import ServerNetworkManager from "./components/network/serverNetworkComponent.js";
 
-
-const noa = new NoaEngine(config);
-// noa.addComponent(tickComponent) <- make this work somehow lol
-
-// we can't use engine as keyword class because is reserved for noa Engine
-export class Engine extends Entity {
-
-  constructor() {
-    this.unitManager = new UnitManager(noa);
-    this.playerManager = new PlayerManager(noa);
+// we can't use engine as keyword class because is reserved for this.noa Engine
+export class Engine {
+  constructor(noa) {
     this.noa = noa;
-
-    if (serverType === 'server') {
-      this.serverNetworkManager = new ServerNetworkManager();
-    } else {
-      this.clientNetworkManager = new ClientNetworkManager();
-    }
-
+    this.unitManager = new UnitManager(this.noa);
+    this.playerManager = new PlayerManager(this.noa);
+    this.body;
     this.snapshot = [{ id: 1, position: [] }];
+    this.rotation = 0;
   }
-
   start() {
-    console.log("starting the noa engine...");
+    console.log("isServer", global.isServer);
+    console.log("starting the this.noa engine...");
+    console.log("noa lookup", this.noa);
 
-    // on connection the player will be created
-    this.body = this.playerManager.createPlayer(1);
-
-    // Generate the world
-    generateWorld(noa);
-    const scene = noa.rendering.getScene();
-
+    generateWorld(this.noa);
+    const scene = this.noa.rendering.getScene();
     // Enable physics in the scene
     scene.enablePhysics(
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
+    this.body = this.playerManager.createPlayer(1);
 
-    noa.on("tick", () => this.engineStep.bind(this)());
-
-    // noa.addComponent()
-    noa.on("entityTick", (entity) => {
-      if (entity.category == "unit") {
-        entity.tick();
-      }
-    });
+    this.noa.on("tick", () => this.engineStep.bind(this)());
   }
-
   engineStep() {
-    let playerPositionChecker = [...noa.entities.getPosition(1)];
-
-    // I don't know how to do this in noa...
-
-    if (global.isServer) {
-      this.serverNetworkManager.streamSnapshot();
+    let playerPositionChecker = [...this.noa.entities.getPosition(1)];
+    let current = this.noa.camera.getDirection()[0];
+    let persistanceRot = 0.01;
+    if (current > 0 && this.rotation !== current) {
+      this.body.rotatePOV(0, persistanceRot + 0.01, 0);
+    }
+    if (current < 0 && this.rotation !== current) {
+      this.body.rotatePOV(0, -persistanceRot - 0.01, 0);
+    }
+    this.rotation = current;
+    for (let elem in this.snapshot) {
+      // Get the position of each entity
+      this.noa.entities.getPosition(this.snapshot[elem].id);
+      if (this.snapshot[elem].id === 1) {
+        // if the id is the player entity id
+        let playerPosition = this.noa.entities.getPosition(1);
+        for (let elem in playerPosition) {
+          // check if the player has moved
+          if (playerPositionChecker[elem] !== playerPosition[elem]) {
+            playerPositionChecker = [...playerPosition];
+            // update the snapshot with new player position
+            this.snapshot[0].position = [...playerPosition];
+            console.log("the player of the entity with id === 1 has moved");
+          }
+        }
+      }
     }
   }
-
-  addComponent(componentName) {
-    
-  }
-
 }
-
 
 /**
  //player
-const playerEvent = new Player(noa, player);
+const playerEvent = new Player(this.noa, player);
 // init event listener
 playerEvent.playerEvent();
  */
@@ -113,4 +95,4 @@ socket.on("connect", () => {
 **/
 
 // Event listener for input of the user (createBlock, edit, movement)
-//blockSelector(noa, socket);
+//blockSelector(this.noa, socket);

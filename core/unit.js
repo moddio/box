@@ -1,49 +1,38 @@
-"use strict";
-
-//this class needs to extend entity
-import "@babylonjs/core/Meshes/Builders/boxBuilder";
-import "@babylonjs/core/Meshes/Builders/sphereBuilder";
-import { Mesh } from "@babylonjs/core/Meshes/mesh";
-var Entity = require("./entity");
-
-class Unit extends Entity {
-  constructor(engine) {
-    this.engine = engine;
+export class Unit {
+  constructor(noa, body) {
+    this.noa = noa;
+    this.body = body;
   }
 
-  shootBouncyBall() {
-    const ents = noa.entities;
+  Ball(playerPosition = false) {
+    const ents = this.noa.entities;
+    const radius = 0.3;
+    // syntatic sugar for creating a default entity
+    if (!playerPosition) {
+      var playPos = ents.getPosition(this.noa.playerEntity);
+    } else {
+      var playPos = playerPosition;
+    }
+    const pos = [playPos[0], playPos[1] + 0.6, playPos[2]];
+    const width = radius;
+    const height = radius;
 
-    let ballMesh = Mesh.CreateSphere("ball", 1, 1, noa.rendering.getScene());
-
-    const playerPosition = ents.getPosition(noa.playerEntity);
-    const pos = [
-      playerPosition[0] + 1,
-      playerPosition[1] + 0.5,
-      playerPosition[2] + 1,
-    ];
-    const width = 1;
-    const height = 1;
-
-    const mesh = ballMesh.createInstance("ball_instance");
-    const meshOffset = [0, 1, 0];
+    const mesh = fireBallClone.createInstance("ball_instance");
+    const meshOffset = [0, radius - 0.1, 0];
     const doPhysics = true;
+    const shadow = true;
 
-    const id = noa.entities.add(
+    var id = this.noa.entities.add(
       pos,
       width,
       height, // required
       mesh,
       meshOffset,
-      doPhysics
+      doPhysics,
+      shadow // optional
     );
-
     return id;
   }
-
-  pickupItem() {}
-
-  dropItem() {}
-
-  destroy() {}
 }
+
+export default Unit;

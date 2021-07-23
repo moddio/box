@@ -7,7 +7,7 @@ class PlayerManager {
   createPlayer(id) {
     // Player Setup
     let player = id;
-    const mesh = Mesh.CreateBox("player-mesh", 1, scene);
+    const mesh = Mesh.CreateBox("player-mesh", 1);
     const a = this.noa.entities.addComponent(
       player,
       this.noa.entities.names.mesh,

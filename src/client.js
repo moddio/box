@@ -1,12 +1,12 @@
-require("../core/engine.js");
+import { Engine as noaEngine } from "noa-engine";
+import { Engine } from "../core/engine";
+import { config } from "../core/config/config";
 
+// global variables
+global.isServer = false;
+
+const noa = new noaEngine(config);
 console.log("isServer", isServer);
-
-// 1. CLIENT: connect to server
-// 2. SERVER: serverNetworkEvent will register "playerConnect" event. create a player in server (playerManager.createPlayer()), and send "createPlayer" event to the client
-// 3. CLIENT: once connected wait for server to send "createPlayer" event
-// 4. CLIENT: once "createPlayer" is received, run playerManager.createPlayer()
-// set player.isMe = true
-
-const engine = new Engine("client");
+console.log("this is a noa object", noa);
+const engine = new Engine(noa);
 engine.start();
