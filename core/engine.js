@@ -11,9 +11,9 @@ import PlayerManager from "./playerManager.js";
 import ServerNetworkManager from "./networking/serverNetworkManager.js";
 import { config } from "../core/config/config";
 
-class Engine extends noaEngine {
+class Engine {
   constructor() {
-    //this.noa = new noaEngine(config);
+    this.noa = new noaEngine(config);
   }
   start() {
     console.log("starting the this.noa engine...");
@@ -27,10 +27,10 @@ class Engine extends noaEngine {
     this.body = this.playerManager.createPlayer(1);
     this.noa.on("tick", () => this.engineStep.bind(this)());
   }
-  loadComponents() {
+  async loadComponents() {
     this.unit = new Unit();
-    //this.playerManager = new PlayerManager(this.noa);
-    //this.serverNetworkManager = new ServerNetworkManager(this.noa);
+    this.playerManager = new PlayerManager();
+    // this.serverNetworkManager = new ServerNetworkManager(this.noa);
   }
   engineStep() {
     !global.isServer ? this.serverNetworkManager.createSnapshot(this.body) : "";
@@ -46,7 +46,7 @@ class Engine extends noaEngine {
   }
 }
 
-export const engine = new Engine();
+const engine = new Engine();
 
 /**
  //player

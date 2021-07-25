@@ -1,12 +1,10 @@
 import { Projectile } from "./projectile";
-import clientEngine from "../src/client";
 
-console.log("unit engine", clientEngine);
 const projectile = new Projectile();
 
 export class Unit {
   constructor() {
-    this.engine = clientEngine;
+    this.engine = global.engine;
     this.bodyID = projectile.id;
   }
   shootBall() {
