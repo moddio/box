@@ -1,12 +1,9 @@
-import { Projectile } from "./projectile";
-
-const projectile = new Projectile();
-
 export class Unit {
   constructor() {
     this.bodyID = projectile.id;
     this.rotation = [0,0,0]
   }
+  
   shootBall() {
     // adjust physics body
     const body = ents.getPhysicsBody(this.bodyID);

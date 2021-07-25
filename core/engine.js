@@ -1,15 +1,19 @@
 // Engine
-import * as BABYLON from "@babylonjs/core";
-import { Engine as noaEngine } from "noa-engine";
-import "@babylonjs/core/Meshes/Builders/boxBuilder";
+import * as BABYLON from "../node_modules/@babylonjs";
+import { Engine as noaEngine } from "../node_modules/noa-engine";
 
 // Files
 import "./utils/state.min.js";
 import generateWorld from "./world.js";
-import { Unit } from "./unit";
-import PlayerComponent from "./playerComponent.js";
-import ServerNetworkComponent from "./networking/serverNetworkComponent.js";
-import { config } from "../config/config";
+import { Unit } from "./unit.js";
+import { Projectile } from "./projectile.js";
+import { Player } from "./player.js";
+
+import playerManager from "./playerManager.js";
+import ServerNetworkComponent from "./components/network/serverNetworkComponent.js";
+import { config } from "../config/config.js";
+
+
 
 class Engine {
   constructor() {
@@ -18,35 +22,40 @@ class Engine {
   start() {
     console.log("starting the this.noa engine...");
 
+    global.engine = this;
+    // determine if engine's being ran from server/client
+    if (window == undefined) {
+      console.log("engine's running on server")
+      global.isServer = true;
+      global.isClient = false;
+    } else {
+      console.log("engine's running on client")
+      global.isServer = false;
+      global.isClient = true;
+    }
+
     generateWorld(this.noa);
     const scene = this.noa.rendering.getScene();
     scene.enablePhysics(
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
-    this.body = this.playerComponent.createPlayer(1);
+    this.body = this.playerManager.createPlayer(1);
     this.noa.on("tick", () => this.engineStep.bind(this)());
   }
-  async loadComponents() {
+  loadComponents() {
     this.unit = new Unit();
-    this.playerComponent = new PlayerComponent(this);
+    this.playerManager = new playerManager(this);
     // this.serverNetworkComponent = new ServerNetworkComponent(this);
   }
   engineStep() {
-    !global.isServer ? this.serverNetworkComponent.createSnapshot(this.body) : "";
-  }
-  setAsServer() {
-    this.isServer = true;
-    this.isClient = false;
-  }
-
-  setAsClient() {
-    this.isServer = false;
-    this.isClient = true;
-  }
+    if (global.isServer) {
+      this.serverNetworkComponent.createSnapshot(this.body);
+    } 
+  }  
 }
 
-const engine = new Engine();
+export default Engine;
 
 /**
  //player

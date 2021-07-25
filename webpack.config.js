@@ -1,6 +1,6 @@
 var path = require("path");
 // const CopyWebpackPlugin = require("copy-webpack-plugin");
-var buildPath = path.resolve("src");
+var buildPath = path.resolve("");
 
 module.exports = (env) => ({
   mode: env && env.prod ? "production" : "development",

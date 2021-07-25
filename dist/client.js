@@ -1,2 +1,4 @@
-import { engine } from "../core/engine";
-console.log("engine", engine);
+import { Engine } from "../core/engine";
+
+
+var engine = Engine();
