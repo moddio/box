@@ -7,9 +7,9 @@ import "@babylonjs/core/Meshes/Builders/boxBuilder";
 import "./utils/state.min.js";
 import generateWorld from "./world.js";
 import { Unit } from "./unit";
-import PlayerManager from "./playerManager.js";
-import ServerNetworkManager from "./networking/serverNetworkManager.js";
-import { config } from "../core/config/config";
+import PlayerComponent from "./playerComponent.js";
+import ServerNetworkComponent from "./networking/serverNetworkComponent.js";
+import { config } from "../config/config";
 
 class Engine {
   constructor() {
@@ -24,16 +24,16 @@ class Engine {
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
-    this.body = this.playerManager.createPlayer(1);
+    this.body = this.playerComponent.createPlayer(1);
     this.noa.on("tick", () => this.engineStep.bind(this)());
   }
   async loadComponents() {
     this.unit = new Unit();
-    this.playerManager = new PlayerManager();
-    // this.serverNetworkManager = new ServerNetworkManager(this.noa);
+    this.playerComponent = new PlayerComponent(this);
+    // this.serverNetworkComponent = new ServerNetworkComponent(this);
   }
   engineStep() {
-    !global.isServer ? this.serverNetworkManager.createSnapshot(this.body) : "";
+    !global.isServer ? this.serverNetworkComponent.createSnapshot(this.body) : "";
   }
   setAsServer() {
     this.isServer = true;

@@ -4,8 +4,8 @@ const projectile = new Projectile();
 
 export class Unit {
   constructor() {
-    this.engine = global.engine;
     this.bodyID = projectile.id;
+    this.rotation = [0,0,0]
   }
   shootBall() {
     // adjust physics body
@@ -13,7 +13,7 @@ export class Unit {
     body.restitution = 0.8;
     body.friction = 0.6;
     body.mass = 0.5;
-    const dir = this.engine.noa.camera.getDirection();
+    const dir = this.rotation;
     let imp = [];
     for (let i = 0; i < 3; i++) imp[i] = 5 * dir[i];
     imp[1] += 1;
