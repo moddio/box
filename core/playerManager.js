@@ -1,17 +1,22 @@
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 
 class PlayerManager {
-  constructor() {
-    this.players = {};
+  constructor(engine) {
+    this.engine = engine;
   }
-
-  createPlayer() {
+  createPlayer(id) {
     // Player Setup
     let player = id;
-  }
-
-  getPlayer(id) {
-    return this.players[id];
+    const mesh = Mesh.CreateBox("player-mesh", 1);
+    const a = this.noa.entities.addComponent(
+      player,
+      this.noa.entities.names.mesh,
+      {
+        mesh,
+        offset: [0, 0.5, 0],
+      }
+    );
+    return mesh;
   }
 }
 

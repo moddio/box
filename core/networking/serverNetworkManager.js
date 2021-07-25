@@ -1,18 +1,4 @@
-const express = require("express");
-const app = express();
-const http = require("http");
-const server = http.createServer(app);
-export const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
-});
-
-server.listen(3000, () => {
-  console.log("listening on *:3000");
-});
-
-class ServerNetworkComponent {
+class ServerNetworkManager {
   constructor(noa) {
     this.noa = noa;
     this.snapshot = [{ id: 1, position: [] }];
@@ -56,4 +42,4 @@ class ServerNetworkComponent {
   }
 }
 
-export default ServerNetworkComponent;
+export default ServerNetworkManager;

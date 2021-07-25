@@ -1,8 +1,7 @@
-import { Engine } from "../core/engine";
+import { engine } from "../core/engine";
 
-// global variables
-global.isServer = false;
-
-export const engine = new Engine();
-engine.setAsClient();
+global.engine = engine;
+console.log("engine", engine.noa.camera);
+engine.loadComponents();
 engine.start();
+engine.setAsClient();

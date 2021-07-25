@@ -1,25 +1,24 @@
 // Engine
-import { Engine as noaEngine } from "noa-engine";
-import { config } from "../core/config/config";
 import * as BABYLON from "@babylonjs/core";
+import { Engine as noaEngine } from "noa-engine";
 import "@babylonjs/core/Meshes/Builders/boxBuilder";
 
 // Files
 import "./utils/state.min.js";
 import generateWorld from "./world.js";
-
-import UnitManager from "./unitManager.js";
+import { Unit } from "./unit";
 import PlayerManager from "./playerManager.js";
-import ServerNetworkComponent from "./network/serverNetworkComponent.js";
+import ServerNetworkManager from "./networking/serverNetworkManager.js";
+import { config } from "../core/config/config";
 
-// we can't use engine as keyword class because is reserved for this.noa Engine
-export class Engine {
-  constructor() {}
-
+class Engine extends noaEngine {
+  constructor() {
+    //this.noa = new noaEngine(config);
+  }
   start() {
-    console.log("loading components");
-    this.loadComponents();
-    generateWorld(this.noa); // this needs to be refactored
+    console.log("starting the this.noa engine...");
+
+    generateWorld(this.noa);
     const scene = this.noa.rendering.getScene();
     scene.enablePhysics(
       new BABYLON.Vector3(0, -9.8, 0),
@@ -28,20 +27,14 @@ export class Engine {
     this.body = this.playerManager.createPlayer(1);
     this.noa.on("tick", () => this.engineStep.bind(this)());
   }
-
   loadComponents() {
-    this.noa = new noaEngine(config);
-    this.unitManager = new UnitManager(this.noa);
-    this.playerManager = new PlayerManager(this.noa);
-    this.serverNetworkComponent = new ServerNetworkComponent(this.noa);
+    this.unit = new Unit();
+    //this.playerManager = new PlayerManager(this.noa);
+    //this.serverNetworkManager = new ServerNetworkManager(this.noa);
   }
-
   engineStep() {
-    if (this.isServer) {
-      this.serverNetworkComponent.createSnapshot(this.body);
-    }
+    !global.isServer ? this.serverNetworkManager.createSnapshot(this.body) : "";
   }
-
   setAsServer() {
     this.isServer = true;
     this.isClient = false;
@@ -52,6 +45,8 @@ export class Engine {
     this.isClient = true;
   }
 }
+
+export const engine = new Engine();
 
 /**
  //player

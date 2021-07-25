@@ -1,44 +1,21 @@
-export class Unit extends Entity {
-  constructor() {}
+import { Projectile } from "./projectile";
+import clientEngine from "../src/client";
 
-  shootBall(playerPosition = false) {
-    const ents = engine.noa.entities;
-    const radius = 0.3;
-    // syntatic sugar for creating a default entity
-    if (!playerPosition) {
-      var playPos = ents.getPosition(engine.noa.playerEntity);
-    } else {
-      var playPos = playerPosition;
-    }
-    const pos = [playPos[0], playPos[1] + 0.6, playPos[2]];
-    const width = radius;
-    const height = radius;
+console.log("unit engine", clientEngine);
+const projectile = new Projectile();
 
-    const mesh = fireBallClone.createInstance("ball_instance");
-    const meshOffset = [0, radius - 0.1, 0];
-    const doPhysics = true;
-    const shadow = true;
-
-    let params = [
-      pos,
-      width,
-      height, // required
-      mesh,
-      meshOffset,
-      doPhysics,
-      shadow, // optional
-    ];
-
-    let ball = new Projectile();
-    ball.createBody(...params);
-    const id = ball.Ball(playerPosition);
-
+export class Unit {
+  constructor() {
+    this.engine = clientEngine;
+    this.bodyID = projectile.id;
+  }
+  shootBall() {
     // adjust physics body
-    const body = ents.getPhysicsBody(id);
+    const body = ents.getPhysicsBody(this.bodyID);
     body.restitution = 0.8;
     body.friction = 0.6;
     body.mass = 0.5;
-    const dir = engine.noa.camera.getDirection();
+    const dir = this.engine.noa.camera.getDirection();
     let imp = [];
     for (let i = 0; i < 3; i++) imp[i] = 5 * dir[i];
     imp[1] += 1;
@@ -60,7 +37,7 @@ export class Unit extends Entity {
       cylinder: true,
       callback: (other) => collideHandler(id, other),
     });
-    return [body, ents.getPosition(engine.noa.playerEntity)];
+    return [body, ents.getPosition(this.engine.noa.playerEntity)];
   }
 }
 
