@@ -1,92 +1,69 @@
 // Engine
-import * as BABYLON from "../node_modules/@babylonjs";
-import { Engine as noaEngine } from "../node_modules/noa-engine";
+import * as BABYLON from "@babylonjs/core";
+import { Engine as noaEngine } from "noa-engine";
 
 // Files
 import "./utils/state.min.js";
+import { config } from "../config/config";
 import generateWorld from "./world.js";
-import { Unit } from "./unit.js";
-import { Projectile } from "./projectile.js";
-import { Player } from "./player.js";
-import { config } from "../config/config.js";
+import { Player } from "./player";
+import { Unit } from "./unit";
 
-
-import ServerNetworkComponent from "./components/network/serverNetworkComponent.js";
-
-
-
-class Engine {
+export class Engine {
   constructor() {
     this.noa = new noaEngine(config);
-    this.entities = {}
+    this.entities = {};
   }
   start() {
-    console.log("starting the this.noa engine...");
+    console.log("starting the noa engine...");
 
-    // determine if engine's being ran from server/client
-    if (window == undefined) {
-      console.log("engine's running on server")
-      global.isServer = true;
-      global.isClient = false;
-    } else {
-      console.log("engine's running on client")
-      global.isServer = false;
-      global.isClient = true;
-    }
-
+    // Generate the world
     generateWorld(this.noa);
     const scene = this.noa.rendering.getScene();
+
+    // Enable physics in the scene
     scene.enablePhysics(
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
-    this.body = this.playerManager.createPlayer(1);
-    this.noa.on("tick", () => this.engineStep.bind(this)());
   }
   loadComponents() {
-    this.unit = new Unit();
-    this.playerManager = new playerManager(this);
-    // this.serverNetworkComponent = new ServerNetworkComponent(this);
+    this.unit = new Unit(this.noa);
   }
-  
   engineStep() {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);
-    } 
-  }  
-
+    }
+  }
   createEntity(entityType, data) {
-    switch(entityType) {
-      case 'player':
-        let player = new Player()
-        this.entities[player.id()] = player
+    const { id, position } = data;
+    switch (entityType) {
+      case "unit":
+        this.unit = new Unit(this.noa);
+        let body = this.unit.createBody(id, position);
+        this.entities[id] = body;
+      case "player":
+        let player = new Player(id);
+        this.entities[id] = player;
         break;
-      case 'unit':
-        let unit = new Unit()
-        this.entities[unit.id()] = unit
+      case "item":
+        let item = new Item();
+        this.entities[item.id()] = item;
         break;
-      case 'item':
-        let item = new Item()
-        this.entities[item.id()] = item
-        break;
-      case 'projectile':
-        let projectile = new Projectile()
-        this.entities[projectile.id()] = projectile
+      case "projectile":
+        let projectile = new Projectile();
+        this.entities[projectile.id()] = projectile;
         break;
     }
   }
-
   destroyEntity(entityId) {
-    delete this.entities[entityId]
+    delete this.entities[entityId];
   }
-
 }
-
-export default Engine;
 
 /**
  //player
-const playerEvent = new Player(this.noa, player);
+const playerEvent = new Player(noa, player);
 // init event listener
 playerEvent.playerEvent();
  */
@@ -114,4 +91,4 @@ socket.on("connect", () => {
 **/
 
 // Event listener for input of the user (createBlock, edit, movement)
-//blockSelector(this.noa, socket);
+//blockSelector(noa, socket);

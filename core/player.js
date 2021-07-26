@@ -1,20 +1,18 @@
-class Player extends Entity{
-    constructor() {
-        
-        // add client's control for my player only
-        if (global.isClient && engine.myPlayer == this) {
-            this.addComponent("controlComponent")
-        } else { // all server players have controlComponent
-            this.addComponent("controlComponent")
-        }
-    }
+import { ControlComponent } from "../core/components/control/controlComponent";
 
-    setMainUnit(unit) {
-        this.mainUnit = unit;
+export class Player {
+  constructor(id) {
+    if (global.isServer) {
+      // add other player controls
+    } else {
+      this.control = new ControlComponent(id);
     }
+  }
+  setMainUnit(unit) {
+    this.mainUnit = unit;
+  }
 
-    getMainUnit() {
-        return this.mainUnit;
-    }
-
+  getMainUnit() {
+    return this.mainUnit;
+  }
 }

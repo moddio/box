@@ -27,7 +27,6 @@ const getVoxelID = (x, y, z, { waterID, blocksID }) => {
 };
 
 const generateWorld = (noa) => {
-  console.log(noa, "noa");
   // 3D person perspective camera
   noa.camera.zoomDistance = 8;
 

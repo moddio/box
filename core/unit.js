@@ -1,29 +1,17 @@
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
+
 export class Unit {
-  constructor() {
-    this.engine = clientEngine;
-    this.bodyID = projectile.id;
-    this.rotation = [1,2,3];
-    this.position = [1,2,3];
-
-    this.addComponent("./components/animationComponent")
-
+  constructor(noa) {
+    this.noa = noa;
   }
-
-  createBody() {
-    import { Mesh } from "@babylonjs/core/Meshes/mesh";
-    let player = id;
+  createBody(id, offset) {
     const mesh = Mesh.CreateBox("player-mesh", 1);
-    const a = this.noa.entities.addComponent(
-      player,
-      this.noa.entities.names.mesh,
-      {
-        mesh,
-        offset: [0, 0.5, 0],
-      }
-    );
+    this.noa.entities.addComponent(id, this.noa.entities.names.mesh, {
+      mesh,
+      offset,
+    });
     return mesh;
   }
-
   shootBall() {
     // adjust physics body
     const body = ents.getPhysicsBody(this.bodyID);

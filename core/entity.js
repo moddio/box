@@ -13,36 +13,46 @@
            }
        }
    */
+
+import "../core/components/control/controlComponent";
 export class Entity {
+  contructor() {
+    this._components = {};
+    //this.id = automatically generated id
+    console("also called here");
+  }
 
-    contructor() {
-        this._components = {}
-        //this.id = automatically generated id
-        console("also called here")
+  id() {
+    return this.id;
+  }
+
+  addComponent(componentName) {
+    // create a new instance of the component's class
+    switch (componentName) {
+      case "ControlComponent":
+        import("../core/components/control/controlComponent").then((module) => {
+          this._components = new module[componentName]();
+          console.log("this component", this._components);
+        });
+        break;
+      case "ServerNetworkComponent":
+        import("../core/components/network/ServerNetworkComponent").then(
+          (module) => {
+            this._components = new module[componentName]();
+            //console.log("this component", this._components);
+          }
+        );
+        break;
     }
+  }
 
-    id() {
-        return this.id;
-    }
+  removeComponent(componentName) {}
 
-    addComponent(componentName) {
-        // create a new instance of the component's class
-        this._components[componentName] = new {componentName}() 
-    }
+  setState(stateId) {}
 
-    removeComponent(componentName) {
-        
-    }
+  setStreamMode(mode) {}
 
-    setState(stateId) {
-
-    }
-
-    setStreamMode(mode) {
-
-    }
-
-    tick() {
-        // for each this._components, run their tick
-    }
+  tick() {
+    // for each this._components, run their tick
+  }
 }

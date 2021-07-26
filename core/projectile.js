@@ -1,7 +1,3 @@
-import clientEngine from "../src/client";
-
-console.log("unit engine", clientEngine);
-
 export class Projectile {
   constructor(playerPosition = false) {
     const ents = global.engine.noa.entities;

@@ -8,7 +8,7 @@ module.exports = (env) => ({
   entry: "./src/client.js",
   output: {
     path: buildPath,
-    filename: "bundle.js",
+    filename: "client.js",
   },
 
   resolve: {

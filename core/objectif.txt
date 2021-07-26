@@ -1,4 +1,0 @@
-engine.isClient and engine.isServer work
-by having engine as global variable. don't use global.engine.
-try getting the game running again. without networking
-then implement websocket
