@@ -7,14 +7,18 @@ const { Engine: noaEngine } = require("noa-engine");
 import "./utils/state.min.js";
 import { config } from "../config/config";
 import generateWorld from "./world.js";
+import { Entity } from "./entity";
 import { Player } from "./player";
 import { Unit } from "./unit";
 
-var engine = {
+export class Engine extends Entity {
   constructor() {
     this.noa = new noaEngine(config);
     this.entities = {};
+    box = this;
+    this.loadComponents();
   }
+
   start() {
     console.log("starting the noa engine...");
 
@@ -27,6 +31,7 @@ var engine = {
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
+    
   }
 
   loadComponents() {
