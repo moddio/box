@@ -14,14 +14,14 @@ export class ControlComponent {
   }
 
   keyPress(key) {
-    if (global.isClient) {
+    if (engine.isClient) {
       switch (key) {
         case "h":
           let arr = this.unitManager.shootBall();
           this.body = arr[0];
           socket.emit("ballshoot", { position: arr[1] });
       }
-    } else if (global.isServer) {
+    } else if (engine.isServer) {
       switch (key) {
         case "h":
           this.body = engine.createEntity("projectile", {

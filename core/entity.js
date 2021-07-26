@@ -14,7 +14,6 @@
        }
    */
 
-import "../core/components/control/controlComponent";
 export class Entity {
   contructor() {
     this._components = {};
@@ -28,22 +27,8 @@ export class Entity {
 
   addComponent(componentName) {
     // create a new instance of the component's class
-    switch (componentName) {
-      case "ControlComponent":
-        import("../core/components/control/controlComponent").then((module) => {
-          this._components = new module[componentName]();
-          console.log("this component", this._components);
-        });
-        break;
-      case "ServerNetworkComponent":
-        import("../core/components/network/ServerNetworkComponent").then(
-          (module) => {
-            this._components = new module[componentName]();
-            //console.log("this component", this._components);
-          }
-        );
-        break;
-    }
+    this._components = new componentName();
+    console.log("this component", this._components);
   }
 
   removeComponent(componentName) {}

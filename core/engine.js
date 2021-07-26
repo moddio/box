@@ -10,7 +10,7 @@ import generateWorld from "./world.js";
 import { Player } from "./player";
 import { Unit } from "./unit";
 
-export class Engine {
+var engine = {
   constructor() {
     this.noa = new noaEngine(config);
     this.entities = {};
@@ -28,9 +28,17 @@ export class Engine {
       new BABYLON.AmmoJSPlugin()
     );
   }
+
   loadComponents() {
     this.unit = new Unit(this.noa);
+
+    /*
+      iterate through all component files inside config/components.json
+      and do require(). these components are accessible globally,
+      so in any file, we can do var component = new ComponentName()
+    */
   }
+
   engineStep() {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);
