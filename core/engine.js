@@ -1,38 +1,22 @@
 // Engine
-import * as BABYLON from "../node_modules/@babylonjs";
-import { Engine as noaEngine } from "../node_modules/noa-engine";
+import * as BABYLON from "@babylonjs/core";
+import { Engine as noaEngine } from "noa-engine";
+import "@babylonjs/core/Meshes/Builders/boxBuilder";
 
 // Files
 import "./utils/state.min.js";
 import generateWorld from "./world.js";
-import { Unit } from "./unit.js";
-import { Projectile } from "./projectile.js";
-import { Player } from "./player.js";
+import { Unit } from "./unit";
+import PlayerManager from "./playerManager.js";
+import ServerNetworkManager from "./networking/serverNetworkManager.js";
+import { config } from "../core/config/config";
 
-import playerManager from "./playerManager.js";
-import ServerNetworkComponent from "./components/network/serverNetworkComponent.js";
-import { config } from "../config/config.js";
-
-
-
-class Engine {
+class Engine extends noaEngine {
   constructor() {
-    this.noa = new noaEngine(config);
+    //this.noa = new noaEngine(config);
   }
   start() {
     console.log("starting the this.noa engine...");
-
-    global.engine = this;
-    // determine if engine's being ran from server/client
-    if (window == undefined) {
-      console.log("engine's running on server")
-      global.isServer = true;
-      global.isClient = false;
-    } else {
-      console.log("engine's running on client")
-      global.isServer = false;
-      global.isClient = true;
-    }
 
     generateWorld(this.noa);
     const scene = this.noa.rendering.getScene();
@@ -45,17 +29,24 @@ class Engine {
   }
   loadComponents() {
     this.unit = new Unit();
-    this.playerManager = new playerManager(this);
-    // this.serverNetworkComponent = new ServerNetworkComponent(this);
+    //this.playerManager = new PlayerManager(this.noa);
+    //this.serverNetworkManager = new ServerNetworkManager(this.noa);
   }
   engineStep() {
-    if (global.isServer) {
-      this.serverNetworkComponent.createSnapshot(this.body);
-    } 
-  }  
+    !global.isServer ? this.serverNetworkManager.createSnapshot(this.body) : "";
+  }
+  setAsServer() {
+    this.isServer = true;
+    this.isClient = false;
+  }
+
+  setAsClient() {
+    this.isServer = false;
+    this.isClient = true;
+  }
 }
 
-export default Engine;
+export const engine = new Engine();
 
 /**
  //player

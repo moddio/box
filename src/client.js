@@ -1,2 +1,7 @@
-import { Engine } from "../core/engine.js";
-console.log("engine", engine);
+import { engine } from "../core/engine";
+
+global.engine = engine;
+console.log("engine", engine.noa.camera);
+engine.loadComponents();
+engine.start();
+engine.setAsClient();

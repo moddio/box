@@ -1,16 +1,21 @@
+import { Projectile } from "./projectile";
+import clientEngine from "../src/client";
+
+console.log("unit engine", clientEngine);
+const projectile = new Projectile();
+
 export class Unit {
   constructor() {
+    this.engine = clientEngine;
     this.bodyID = projectile.id;
-    this.rotation = [0,0,0]
   }
-  
   shootBall() {
     // adjust physics body
     const body = ents.getPhysicsBody(this.bodyID);
     body.restitution = 0.8;
     body.friction = 0.6;
     body.mass = 0.5;
-    const dir = this.rotation;
+    const dir = this.engine.noa.camera.getDirection();
     let imp = [];
     for (let i = 0; i < 3; i++) imp[i] = 5 * dir[i];
     imp[1] += 1;

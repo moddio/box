@@ -10,7 +10,7 @@ class PlayerManager {
     const mesh = Mesh.CreateBox("player-mesh", 1);
     const a = this.noa.entities.addComponent(
       player,
-      this.engine.noa.entities.names.mesh,
+      this.noa.entities.names.mesh,
       {
         mesh,
         offset: [0, 0.5, 0],
