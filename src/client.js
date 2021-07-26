@@ -4,4 +4,3 @@ global.engine = engine;
 console.log("engine", engine.noa.camera);
 engine.loadComponents();
 engine.start();
-engine.setAsClient();
