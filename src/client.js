@@ -1,10 +1,11 @@
 import { Engine } from "../core/engine";
 import { Entity } from "../core/entity";
 
+console.log("hello");
 const engine = new Engine();
 
 global.engine = engine;
-global.isServer = "false";
+global.isServer = false;
 
 engine.start();
 engine.loadComponents();

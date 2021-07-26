@@ -1,6 +1,7 @@
 // Engine
 import * as BABYLON from "@babylonjs/core";
-import { Engine as noaEngine } from "noa-engine";
+const { Engine: noaEngine } = require("noa-engine");
+//import { Engine as noaEngine } from "noa-engine";
 
 // Files
 import "./utils/state.min.js";
