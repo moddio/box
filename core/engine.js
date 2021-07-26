@@ -7,18 +7,23 @@ const { Engine: noaEngine } = require("noa-engine");
 import "./utils/state.min.js";
 import { config } from "../config/config";
 import generateWorld from "./world.js";
-import { Entity } from "./entity";
 import { Player } from "./player";
 import { Unit } from "./unit";
+import { Entity } from "./entity.js";
+import * as components from "../config/components.json";
 
 export class Engine extends Entity {
   constructor() {
+    super();
     this.noa = new noaEngine(config);
     this.entities = {};
-    box = this;
-    this.loadComponents();
+    this.box = this;
+    if (window === undefined) {
+      this.isServer = true;
+    } else {
+      this.isServer = false;
+    }
   }
-
   start() {
     console.log("starting the noa engine...");
 
@@ -31,19 +36,18 @@ export class Engine extends Entity {
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
-    
   }
-
+  loadComponentModules() {
+    let modulesComponent = [];
+    for (let key of Object.keys(components)) {
+      console.log(key + " -> " + components[key]);
+      //loading json data
+      // modulesComponent.push(require(components[key]));
+    }
+  }
   loadComponents() {
     this.unit = new Unit(this.noa);
-
-    /*
-      iterate through all component files inside config/components.json
-      and do require(). these components are accessible globally,
-      so in any file, we can do var component = new ComponentName()
-    */
   }
-
   engineStep() {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);

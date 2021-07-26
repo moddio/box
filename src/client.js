@@ -1,20 +1,27 @@
+import { Engine } from "../core/engine";
+import { Entity } from "../core/entity";
+
 console.log("hello");
 const engine = new Engine();
 
-box = null;
+//box = null;
 
 global.engine = engine;
 global.isServer = false;
 
-box.start();
+engine.start();
+engine.loadComponents();
+engine.loadComponentModules();
+
+//box.start();
 
 // position is offest in noa
 const unit = engine.createEntity("unit", { id: 1, position: [0, 0.5, 0] });
 const player = engine.createEntity("player", { id: 1, position: [0, 0.5, 0] });
 
 // dynamic  import using add component DEMO
-const ent = new Entity();
-ent.addComponent("ControlComponent");
+//const ents = new Entity();
+//ents.addComponent("ControlComponent");
 
 // this line does not make sence for me and for javascript LOL
 //player.setMainUnit(unit);

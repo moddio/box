@@ -1,4 +1,4 @@
 {
-  "ControlComponent": "../core/components/control/controlComponent",
-  "ServerNetworkComponent": "~/core/components/network/serverNetworkComponent.js"
+  "ControlComponent": "./components/control/controlComponent.js",
+  "ServerNetworkComponent": "./components/network/serverNetworkComponent.js"
 }

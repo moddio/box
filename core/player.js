@@ -1,3 +1,5 @@
+import { ControlComponent } from "../core/components/control/controlComponent";
+
 export class Player {
   constructor(id) {
     if (global.isServer) {

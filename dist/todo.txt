@@ -1,3 +1,0 @@
-1. all components must be loaded using loader.js
-2. can add components into entity with entity.addComponent(componentName)
-3. make client work with the current structure
