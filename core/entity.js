@@ -13,4 +13,36 @@
            }
        }
    */
-export class Entity {}
+export class Entity {
+
+    contructor() {
+        this._components = {}
+        //this.id = automatically generated id
+        console("also called here")
+    }
+
+    id() {
+        return this.id;
+    }
+
+    addComponent(componentName) {
+        // create a new instance of the component's class
+        this._components[componentName] = new {componentName}() 
+    }
+
+    removeComponent(componentName) {
+        
+    }
+
+    setState(stateId) {
+
+    }
+
+    setStreamMode(mode) {
+
+    }
+
+    tick() {
+        // for each this._components, run their tick
+    }
+}

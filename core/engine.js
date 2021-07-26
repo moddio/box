@@ -8,21 +8,21 @@ import generateWorld from "./world.js";
 import { Unit } from "./unit.js";
 import { Projectile } from "./projectile.js";
 import { Player } from "./player.js";
-
-import playerManager from "./playerManager.js";
-import ServerNetworkComponent from "./components/network/serverNetworkComponent.js";
 import { config } from "../config/config.js";
+
+
+import ServerNetworkComponent from "./components/network/serverNetworkComponent.js";
 
 
 
 class Engine {
   constructor() {
     this.noa = new noaEngine(config);
+    this.entities = {}
   }
   start() {
     console.log("starting the this.noa engine...");
 
-    global.engine = this;
     // determine if engine's being ran from server/client
     if (window == undefined) {
       console.log("engine's running on server")
@@ -48,11 +48,38 @@ class Engine {
     this.playerManager = new playerManager(this);
     // this.serverNetworkComponent = new ServerNetworkComponent(this);
   }
+  
   engineStep() {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);
     } 
   }  
+
+  createEntity(entityType, data) {
+    switch(entityType) {
+      case 'player':
+        let player = new Player()
+        this.entities[player.id()] = player
+        break;
+      case 'unit':
+        let unit = new Unit()
+        this.entities[unit.id()] = unit
+        break;
+      case 'item':
+        let item = new Item()
+        this.entities[item.id()] = item
+        break;
+      case 'projectile':
+        let projectile = new Projectile()
+        this.entities[projectile.id()] = projectile
+        break;
+    }
+  }
+
+  destroyEntity(entityId) {
+    delete this.entities[entityId]
+  }
+
 }
 
 export default Engine;

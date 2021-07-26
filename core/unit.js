@@ -1,21 +1,36 @@
-import { Projectile } from "./projectile";
-import clientEngine from "../src/client";
-
-console.log("unit engine", clientEngine);
-const projectile = new Projectile();
-
 export class Unit {
   constructor() {
     this.engine = clientEngine;
     this.bodyID = projectile.id;
+    this.rotation = [1,2,3];
+    this.position = [1,2,3];
+
+    this.addComponent("./components/animationComponent")
+
   }
+
+  createBody() {
+    import { Mesh } from "@babylonjs/core/Meshes/mesh";
+    let player = id;
+    const mesh = Mesh.CreateBox("player-mesh", 1);
+    const a = this.noa.entities.addComponent(
+      player,
+      this.noa.entities.names.mesh,
+      {
+        mesh,
+        offset: [0, 0.5, 0],
+      }
+    );
+    return mesh;
+  }
+
   shootBall() {
     // adjust physics body
     const body = ents.getPhysicsBody(this.bodyID);
     body.restitution = 0.8;
     body.friction = 0.6;
     body.mass = 0.5;
-    const dir = this.engine.noa.camera.getDirection();
+    const dir = this.rotation;
     let imp = [];
     for (let i = 0; i < 3; i++) imp[i] = 5 * dir[i];
     imp[1] += 1;
