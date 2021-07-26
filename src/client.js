@@ -1,6 +1,6 @@
-import { engine } from "../core/engine";
+import { Engine } from "../core/engine";
 
-global.engine = engine;
+var engine = Engine;
 console.log("engine", engine.noa.camera);
 engine.loadComponents();
 engine.start();
