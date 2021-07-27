@@ -1,21 +1,19 @@
-import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { Entity } from "./entity";
 
 export class Unit extends Entity {
-  constructor() {
-    
+  constructor(noa) {
+    super();
+    console.log("this is a glob", global.Mesh);
+    this.noa = noa;
   }
-  
-  createBody(id, offset) {    
-
-    // if you create a new entity with an id = 1, then it's automatically assigned as my player with input-bind
-    const mesh = Mesh.CreateBox("player-mesh", 1);
-    engine.noa.entities.addComponent(id, engine.noa.entities.names.mesh, {
+  createBody(id, offset) {
+    const mesh = global.Mesh.CreateBox("player-mesh", 1);
+    this.noa.entities.addComponent(id, this.noa.entities.names.mesh, {
       mesh,
       offset,
     });
     return mesh;
   }
-  
   shootBall() {
     // adjust physics body
     const body = ents.getPhysicsBody(this.bodyID);

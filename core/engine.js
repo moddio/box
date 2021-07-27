@@ -11,27 +11,22 @@ import { Player } from "./player";
 import { Unit } from "./unit";
 import { Entity } from "./entity.js";
 import * as components from "../config/components.json";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
 
-export class Engine extends Entity {
+global.Mesh = Mesh;
 
+global.Engine = class Engine extends Entity {
   constructor() {
     super();
     this.noa = new noaEngine(config);
     this.entities = {};
-    box = this;
-
+    this.box = this;
     if (window === undefined) {
-      this.isClient = false;
       this.isServer = true;
     } else {
-      this.isClient = true;
       this.isServer = false;
     }
-
-    this.loadComponents()
   }
-
-
   start() {
     console.log("starting the noa engine...");
 
@@ -45,32 +40,31 @@ export class Engine extends Entity {
       new BABYLON.AmmoJSPlugin()
     );
   }
-
-  loadComponents() {
-    let components = [];
+  loadComponentModules() {
+    let modulesComponent = [];
     for (let key of Object.keys(components)) {
       console.log(key + " -> " + components[key]);
       //loading json data
-      // components.push(require(components[key]));
+      // modulesComponent.push(require(components[key]));
     }
   }
-
+  loadComponents() {
+    this.unit = new Unit(this.noa);
+  }
   engineStep() {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);
     }
   }
-
   createEntity(entityType, data) {
     const { id, position } = data;
-    
     switch (entityType) {
       case "unit":
-        this.unit = new Unit();
+        this.unit = new Unit(this.noa);
         let body = this.unit.createBody(id, position);
         this.entities[id] = body;
       case "player":
-        let player = new Player(id);
+        let player = new Player(id, this.noa);
         this.entities[id] = player;
         break;
       case "item":
@@ -83,11 +77,10 @@ export class Engine extends Entity {
         break;
     }
   }
-
   destroyEntity(entityId) {
     delete this.entities[entityId];
   }
-}
+};
 
 /**
  //player

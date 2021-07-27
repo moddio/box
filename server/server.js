@@ -1,4 +1,4 @@
-const Engine = require("../core/engine.js");
+//const Engine = require("../core/engine.js");
 
 // let's do a console.log to keep thinks working
 
@@ -6,6 +6,8 @@ console.log("server in progress");
 
 //global.engine = engine;
 global.isServer = true;
+
+console.log("global test", global);
 
 //we still need a to create logic for server inside engine
 

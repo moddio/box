@@ -4,8 +4,9 @@
 //setTimeout(() => unit.moveBall(), 10000);
 
 export class ControlComponent {
-  constructor(player) {
-    this.player = player;
+  constructor(playerID, noa) {
+    this.playerID = playerID;
+    this.noa = noa;
   }
 
   mouseMove() {
@@ -14,33 +15,26 @@ export class ControlComponent {
   }
 
   keyPress(key) {
-
-    let unit = this.player.getMainUnit()
-    let body = unit.getBody();
-
-    if (global.isClient) {
-      switch (key) {
-        case "w":
-          body.moveForward
-        case "a":
-        case "s":        
-        case "d":        
-        case "h":
-          let arr = this.unitManager.shootBall();
-          
-          // socket.emit("ballshoot", { position: arr[1] });
-      }
-
-      socket.emit("ballshoot", { position: arr[1] });
-
-    } else if (global.isServer) {
-      switch (key) {
-        case "h":
-          this.body = engine.createEntity("projectile", {
-            position: position,
-            velocity: [1, 2, 3],
-          });
-      }
+    const body = this.noa.entities.getPhysicsBody(this.playerID);
+    // testing the control of the player
+    // TODOO : TO STREAM KEY INPUT TO THE SERVER
+    switch (key) {
+      case "w":
+        console.log("kepress", "w");
+        body.applyImpulse([0, 0, 5]);
+        break;
+      case "s":
+        console.log("kepress", "s");
+        body.applyImpulse([0, 0, -5]);
+        break;
+      case "d":
+        console.log("kepress", "d");
+        body.applyImpulse([5, 0, 0]);
+        break;
+      case "a":
+        console.log("kepress", "a");
+        body.applyImpulse([-5, 0, 0]);
+        break;
     }
   }
 }

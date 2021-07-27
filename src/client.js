@@ -1,6 +1,9 @@
-import { Engine } from "../core/engine";
+const { Engine } = global;
 
-console.log("hello");
+const box = new Engine();
+
+//box = null;
+global.isServer = false;
 
 box.start();
 
