@@ -1,21 +1,14 @@
 import { Engine } from "../core/engine";
-import { Entity } from "../core/entity";
 
 console.log("hello");
-const engine = new Engine();
 
-//box = null;
-
-global.engine = engine;
-global.isServer = false;
-
-engine.start();
+box.start();
 
 //box.start();
 
 // position is offest in noa
-const unit = engine.createEntity("unit", { id: 1, position: [0, 0.5, 0] });
-const player = engine.createEntity("player", { id: 1, position: [0, 0.5, 0] });
+const unit = box.createEntity("unit", { id: 1, position: [0, 0.5, 0] });
+const player = box.createEntity("player", { id: 1, position: [0, 0.5, 0] });
 
 // dynamic  import using add component DEMO
 //const ents = new Entity();

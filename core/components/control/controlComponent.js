@@ -14,13 +14,25 @@ export class ControlComponent {
   }
 
   keyPress(key) {
+
+    let unit = this.player.getMainUnit()
+    let body = unit.getBody();
+
     if (global.isClient) {
       switch (key) {
+        case "w":
+          body.moveForward
+        case "a":
+        case "s":        
+        case "d":        
         case "h":
           let arr = this.unitManager.shootBall();
-          this.body = arr[0];
-          socket.emit("ballshoot", { position: arr[1] });
+          
+          // socket.emit("ballshoot", { position: arr[1] });
       }
+
+      socket.emit("ballshoot", { position: arr[1] });
+
     } else if (global.isServer) {
       switch (key) {
         case "h":

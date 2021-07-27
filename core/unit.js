@@ -6,6 +6,8 @@ export class Unit extends Entity {
   }
   
   createBody(id, offset) {    
+
+    // if you create a new entity with an id = 1, then it's automatically assigned as my player with input-bind
     const mesh = Mesh.CreateBox("player-mesh", 1);
     engine.noa.entities.addComponent(id, engine.noa.entities.names.mesh, {
       mesh,
@@ -13,6 +15,7 @@ export class Unit extends Entity {
     });
     return mesh;
   }
+  
   shootBall() {
     // adjust physics body
     const body = ents.getPhysicsBody(this.bodyID);

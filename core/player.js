@@ -1,6 +1,4 @@
-import { ControlComponent } from "../core/components/control/controlComponent";
-
-export class Player {
+export class Player extends Entity {
   constructor(id) {
     if (global.isServer) {
       // add other player controls

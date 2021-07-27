@@ -13,19 +13,25 @@ import { Entity } from "./entity.js";
 import * as components from "../config/components.json";
 
 export class Engine extends Entity {
+
   constructor() {
     super();
     this.noa = new noaEngine(config);
     this.entities = {};
-    this.box = this;
+    box = this;
+
     if (window === undefined) {
+      this.isClient = false;
       this.isServer = true;
     } else {
+      this.isClient = true;
       this.isServer = false;
     }
 
     this.loadComponents()
   }
+
+
   start() {
     console.log("starting the noa engine...");
 
@@ -39,6 +45,7 @@ export class Engine extends Entity {
       new BABYLON.AmmoJSPlugin()
     );
   }
+
   loadComponents() {
     let components = [];
     for (let key of Object.keys(components)) {
@@ -53,8 +60,10 @@ export class Engine extends Entity {
       this.serverNetworkComponent.createSnapshot(this.body);
     }
   }
+
   createEntity(entityType, data) {
     const { id, position } = data;
+    
     switch (entityType) {
       case "unit":
         this.unit = new Unit();
@@ -74,6 +83,7 @@ export class Engine extends Entity {
         break;
     }
   }
+
   destroyEntity(entityId) {
     delete this.entities[entityId];
   }
