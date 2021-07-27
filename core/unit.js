@@ -1,12 +1,13 @@
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 
-export class Unit {
-  constructor(noa) {
-    this.noa = noa;
+export class Unit extends Entity {
+  constructor() {
+    
   }
-  createBody(id, offset) {
+  
+  createBody(id, offset) {    
     const mesh = Mesh.CreateBox("player-mesh", 1);
-    this.noa.entities.addComponent(id, this.noa.entities.names.mesh, {
+    engine.noa.entities.addComponent(id, engine.noa.entities.names.mesh, {
       mesh,
       offset,
     });

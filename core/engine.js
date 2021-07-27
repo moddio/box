@@ -23,6 +23,8 @@ export class Engine extends Entity {
     } else {
       this.isServer = false;
     }
+
+    this.loadComponents()
   }
   start() {
     console.log("starting the noa engine...");
@@ -37,17 +39,15 @@ export class Engine extends Entity {
       new BABYLON.AmmoJSPlugin()
     );
   }
-  loadComponentModules() {
-    let modulesComponent = [];
+  loadComponents() {
+    let components = [];
     for (let key of Object.keys(components)) {
       console.log(key + " -> " + components[key]);
       //loading json data
-      // modulesComponent.push(require(components[key]));
+      // components.push(require(components[key]));
     }
   }
-  loadComponents() {
-    this.unit = new Unit(this.noa);
-  }
+
   engineStep() {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);
@@ -57,7 +57,7 @@ export class Engine extends Entity {
     const { id, position } = data;
     switch (entityType) {
       case "unit":
-        this.unit = new Unit(this.noa);
+        this.unit = new Unit();
         let body = this.unit.createBody(id, position);
         this.entities[id] = body;
       case "player":

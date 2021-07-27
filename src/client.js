@@ -10,8 +10,6 @@ global.engine = engine;
 global.isServer = false;
 
 engine.start();
-engine.loadComponents();
-engine.loadComponentModules();
 
 //box.start();
 
