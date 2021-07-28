@@ -1,18 +1,16 @@
 import { Entity } from "./entity";
 
 export class Player extends Entity {
-  constructor(id, noa) {
+  constructor() { // pass engine
     super();
     //console.log("global", global.ControlComponent);
-    if (global.isServer) {
+    if (box.isServer) {
       // add other player controls
-    } else {
-      this.control = new global.ControlComponent(id, noa);
-      window.addEventListener("keypress", (e) => {
-        this.control.keyPress(e.key);
-      });
+    } else if (box.isClient) {
+      this.addComponent("controlComponent");
     }
   }
+
   setMainUnit(unit) {
     this.mainUnit = unit;
   }

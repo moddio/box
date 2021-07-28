@@ -4,18 +4,29 @@
 //setTimeout(() => unit.moveBall(), 10000);
 
 export class ControlComponent {
-  constructor(playerID, noa) {
-    this.playerID = playerID;
-    this.noa = noa;
+  constructor(player) {
+    this.player = player;
+    this.mainUnit = this.player.getMainUnit();
+
+    window.addEventListener("keypress", (e) => {
+      this.control.keyPress(e.key);
+    });
+
   }
 
   mouseMove() {
     // if this is client and for my player, update unit's rotation upon mousemove.
-    this.player.getMainUnit();
+    
   }
 
   keyPress(key) {
-    const body = this.noa.entities.getPhysicsBody(this.playerID);
+
+    // only apply control my own unit when on client side.
+    if (box.isClient && this.player != box.myPlayer) {
+      return;
+    }
+
+    const body = this.mainUnit.getBody()
     // testing the control of the player
     // TODOO : TO STREAM KEY INPUT TO THE SERVER
     switch (key) {
@@ -34,6 +45,11 @@ export class ControlComponent {
       case "a":
         console.log("kepress", "a");
         body.applyImpulse([-5, 0, 0]);
+        break;
+
+      case "h":
+        console.log("kepress", "h");
+        this.mainUnit.shootBall();
         break;
     }
   }

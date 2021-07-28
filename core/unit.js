@@ -1,18 +1,24 @@
 import { Entity } from "./entity";
 
 export class Unit extends Entity {
-  constructor(noa) {
+  constructor() {
+    this.body = undefined;
     super();
-    this.noa = noa;
   }
+
+  getBody() {
+    return this.body
+  }
+
   createBody(id, offset) {
     const mesh = global.Mesh.CreateBox("player-mesh", 1);
-    this.noa.entities.addComponent(id, this.noa.entities.names.mesh, {
-      mesh,
-      offset,
-    });
+    this.body = box.noa.entities.addComponent(id, box.noa.entities.names.mesh, {
+                                                                              mesh,
+                                                                              offset,
+                                                                            });
     return mesh;
   }
+
   shootBall() {
     // adjust physics body
     const body = ents.getPhysicsBody(this.bodyID);
@@ -41,7 +47,7 @@ export class Unit extends Entity {
       cylinder: true,
       callback: (other) => collideHandler(id, other),
     });
-    return [body, ents.getPosition(this.engine.noa.playerEntity)];
+    return [body, ents.getPosition(box.noa.playerEntity)];
   }
 }
 

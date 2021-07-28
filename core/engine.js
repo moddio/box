@@ -15,15 +15,19 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 
 global.Mesh = Mesh;
 
-global.Engine = class Engine extends Entity {
+var box = class Engine extends Entity {
   constructor() {
     super();
     this.noa = new noaEngine(config);
+    this.noa.inputs.disabled = true // disable default player input built-in noa
+
     this.entities = {};
     this.box = this;
     if (window === undefined) {
+      this.isClient = false;
       this.isServer = true;
     } else {
+      this.isClient = true;
       this.isServer = false;
     }
   }
@@ -61,9 +65,9 @@ global.Engine = class Engine extends Entity {
     const { id, position } = data;
     switch (entityType) {
       case "unit":
-        this.unit = new Unit(this.noa);
-        let body = this.unit.createBody(id, position);
-        this.entities[id] = body;
+        let unit = new Unit();
+        this.unit.createBody(id, position);
+        this.entities[id] = unit;
       case "player":
         let player = new Player(id, this.noa);
         this.entities[id] = player;

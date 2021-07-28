@@ -1,4 +1,7 @@
-export class Projectile {
+import { Entity } from "./entity";
+
+export class Projectile extends Entity {  
+  
   constructor(playerPosition = false) {
     const ents = global.engine.noa.entities;
     const radius = 0.3;
