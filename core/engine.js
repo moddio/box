@@ -1,33 +1,24 @@
 // Engine
 import * as BABYLON from "@babylonjs/core";
-const { Engine: noaEngine } = require("noa-engine");
 //import { Engine as noaEngine } from "noa-engine";
 
 // Files
 import "./utils/state.min.js";
-import { config } from "../config/config";
 import generateWorld from "./world.js";
 import { Player } from "./player";
 import { Unit } from "./unit";
 import { Entity } from "./entity.js";
 import * as components from "../config/components.json";
-import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
 
-global.Mesh = Mesh;
-
-var box = class Engine extends Entity {
+export class Engine extends Entity {
   constructor() {
     super();
-    this.noa = new noaEngine(config);
-    this.noa.inputs.disabled = true // disable default player input built-in noa
-
     this.entities = {};
-    this.box = this;
+    this.Mesh = noaMesh;
     if (window === undefined) {
-      this.isClient = false;
       this.isServer = true;
     } else {
-      this.isClient = true;
       this.isServer = false;
     }
   }
@@ -35,8 +26,8 @@ var box = class Engine extends Entity {
     console.log("starting the noa engine...");
 
     // Generate the world
-    generateWorld(this.noa);
-    const scene = this.noa.rendering.getScene();
+    generateWorld();
+    const scene = box.noa.rendering.getScene();
 
     // Enable physics in the scene
     scene.enablePhysics(
@@ -65,11 +56,11 @@ var box = class Engine extends Entity {
     const { id, position } = data;
     switch (entityType) {
       case "unit":
-        let unit = new Unit();
-        this.unit.createBody(id, position);
-        this.entities[id] = unit;
+        this.unit = new Unit();
+        let body = this.unit.createBody(id, position);
+        this.entities[id] = body;
       case "player":
-        let player = new Player(id, this.noa);
+        let player = new Player(id);
         this.entities[id] = player;
         break;
       case "item":
@@ -85,7 +76,7 @@ var box = class Engine extends Entity {
   destroyEntity(entityId) {
     delete this.entities[entityId];
   }
-};
+}
 
 /**
  //player

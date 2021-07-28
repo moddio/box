@@ -1,13 +1,10 @@
-import { Entity } from "./entity";
-
-export class Projectile extends Entity {  
-  
+export class Projectile {
   constructor(playerPosition = false) {
-    const ents = global.engine.noa.entities;
+    const ents = box.noa.entities;
     const radius = 0.3;
     // syntatic sugar for creating a default entity
     if (!playerPosition) {
-      var playPos = ents.getPosition(global.engine.noa.playerEntity);
+      var playPos = ents.getPosition(box.noa.playerEntity);
     } else {
       var playPos = playerPosition;
     }
@@ -20,7 +17,7 @@ export class Projectile extends Entity {
     const doPhysics = true;
     const shadow = true;
 
-    var id = global.engine.noa.entities.add(
+    var id = box.noa.entities.add(
       pos,
       width,
       height,

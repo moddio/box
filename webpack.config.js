@@ -1,11 +1,18 @@
 var path = require("path");
-// const CopyWebpackPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
 var buildPath = path.resolve("src");
 
 module.exports = (env) => ({
   mode: env && env.prod ? "production" : "development",
 
-  entry: ["./core/engine.js", "./src/client.js"],
+  plugins: [
+    new webpack.ProvidePlugin({
+      box: "box",
+      componentLoader: "componentLoader",
+    }),
+  ],
+
+  entry: ["./src/client.js"],
   output: {
     path: buildPath,
     filename: "client.js",
@@ -14,6 +21,8 @@ module.exports = (env) => ({
   resolve: {
     alias: {
       "@babylonjs": path.resolve("node_modules/@babylonjs"),
+      box: path.resolve(__dirname, "core/box"),
+      componentLoader: path.resolve(__dirname, "core/componentLoader"),
     },
   },
 

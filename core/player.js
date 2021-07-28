@@ -1,16 +1,17 @@
 import { Entity } from "./entity";
 
 export class Player extends Entity {
-  constructor() { // pass engine
+  constructor(id) {
     super();
     //console.log("global", global.ControlComponent);
-    if (box.isServer) {
+    if (box.engine.isServer) {
       // add other player controls
-    } else if (box.isClient) {
-      this.addComponent("controlComponent");
+    } else {
+      //console.log("control tewdwedewdew", controlComponent);
+      //this.control = new controlComponent.ControlComponent(id);
+      this.addComponent("ControlComponent");
     }
   }
-
   setMainUnit(unit) {
     this.mainUnit = unit;
   }

@@ -17,7 +17,14 @@
 export class Entity {
   contructor() {
     this._components = {};
-    //this.id = automatically generated id
+    this.id = Math.random()
+      .toString(36)
+      .split("")
+      .filter((value, index, self) => {
+        return self.indexOf(value) === index;
+      })
+      .join("")
+      .substr(2, 8);
     console("also called here");
   }
 
@@ -26,9 +33,8 @@ export class Entity {
   }
 
   addComponent(componentName) {
-    // create a new instance of the component's class
-    this._components = new componentName();
-    console.log("this component", this._components);
+    console.log("this a test for addComponent", componentLoader[componentName]);
+    this._components = new componentLoader[componentName](1);
   }
 
   removeComponent(componentName) {}

@@ -2,23 +2,16 @@ import { Entity } from "./entity";
 
 export class Unit extends Entity {
   constructor() {
-    this.body = undefined;
     super();
   }
-
-  getBody() {
-    return this.body
-  }
-
   createBody(id, offset) {
-    const mesh = global.Mesh.CreateBox("player-mesh", 1);
-    this.body = box.noa.entities.addComponent(id, box.noa.entities.names.mesh, {
-                                                                              mesh,
-                                                                              offset,
-                                                                            });
+    const mesh = box.engine.Mesh.CreateBox("player-mesh", 1);
+    box.noa.entities.addComponent(id, box.noa.entities.names.mesh, {
+      mesh,
+      offset,
+    });
     return mesh;
   }
-
   shootBall() {
     // adjust physics body
     const body = ents.getPhysicsBody(this.bodyID);

@@ -26,20 +26,24 @@ const getVoxelID = (x, y, z, { waterID, blocksID }) => {
   return 0;
 };
 
-const generateWorld = (noa) => {
+const generateWorld = () => {
   // 3D person perspective camera
-  noa.camera.zoomDistance = 8;
+  box.noa.camera.zoomDistance = 8;
 
   // Init texture for the map
-  noa.registry.registerMaterial("water", null, water);
-  noa.registry.registerMaterial("grass", null, blocks);
+  box.noa.registry.registerMaterial("water", null, water);
+  box.noa.registry.registerMaterial("grass", null, blocks);
 
   // Save texture inside register Block
-  const waterID = noa.registry.registerBlock(1, { material: "water" });
-  const blocksID = noa.registry.registerBlock(2, { material: "grass" });
+  const waterID = box.noa.registry.registerBlock(1, {
+    material: "water",
+  });
+  const blocksID = box.noa.registry.registerBlock(2, {
+    material: "grass",
+  });
 
   // Generate the map randomly
-  noa.world.on("worldDataNeeded", (id, data, x, y, z) => {
+  box.noa.world.on("worldDataNeeded", (id, data, x, y, z) => {
     for (let i = 0; i < data.shape[0]; i++) {
       for (let j = 0; j < data.shape[1]; j++) {
         for (let k = 0; k < data.shape[2]; k++) {
@@ -51,7 +55,7 @@ const generateWorld = (noa) => {
         }
       }
     }
-    noa.world.setChunkData(id, data);
+    box.noa.world.setChunkData(id, data);
   });
 };
 
