@@ -4,8 +4,8 @@ export class Unit extends Entity {
   constructor() {
     super();
   }
-  createBody(id, offset) {
-    const mesh = box.engine.Mesh.CreateBox("player-mesh", 1);
+  createBody(offset) {
+    const mesh = box.engine.Mesh.CreateBox("player-mesh", this.id);
     box.noa.entities.addComponent(id, box.noa.entities.names.mesh, {
       mesh,
       offset,

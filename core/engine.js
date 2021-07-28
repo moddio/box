@@ -17,8 +17,11 @@ export class Engine extends Entity {
     this.entities = {};
     this.Mesh = noaMesh;
     if (window === undefined) {
+      this.isClient = false;
+      this.myPlayer = undefined;
       this.isServer = true;
     } else {
+      this.isClient = true;
       this.isServer = false;
     }
   }
@@ -75,6 +78,10 @@ export class Engine extends Entity {
   }
   destroyEntity(entityId) {
     delete this.entities[entityId];
+  }
+
+  setMyPlayer(player) {
+    this.myPlayer = player
   }
 }
 
