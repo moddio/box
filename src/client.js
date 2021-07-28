@@ -6,6 +6,7 @@ const box = new Engine();
 global.isServer = false;
 
 box.start();
+box.loadComponents();
 
 //box.start();
 

@@ -3,7 +3,6 @@ import { Entity } from "./entity";
 export class Unit extends Entity {
   constructor(noa) {
     super();
-    console.log("this is a glob", global.Mesh);
     this.noa = noa;
   }
   createBody(id, offset) {

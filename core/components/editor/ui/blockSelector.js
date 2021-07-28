@@ -1,7 +1,7 @@
 import { diamond, gold, tree, dirt } from "../../../utils/textures";
 
 //Socket import
-import { playersDataEvent } from "../../../networking/clientNetworkEvent";
+//import { playersDataEvent } from "../../../networking/clientNetworkEvent";
 //import { io } from "socket.io-client";
 
 const blockSelector = (noa, socket) => {

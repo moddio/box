@@ -40,16 +40,17 @@ global.Engine = class Engine extends Entity {
       new BABYLON.AmmoJSPlugin()
     );
   }
-  loadComponentModules() {
-    let modulesComponent = [];
+  loadComponents() {
     for (let key of Object.keys(components)) {
       console.log(key + " -> " + components[key]);
+      // ... and putting modules inside global object
       //loading json data
+      if (key === "ControlComponent") {
+        const { ControlComponent } = require("" + components[key].toString());
+        global[key] = ControlComponent;
+      }
       // modulesComponent.push(require(components[key]));
     }
-  }
-  loadComponents() {
-    this.unit = new Unit(this.noa);
   }
   engineStep() {
     if (global.isServer) {
