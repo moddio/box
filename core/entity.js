@@ -36,8 +36,8 @@ export class Entity {
   }
 
   addComponent(componentName) {
-    console.log("this a test for addComponent", componentLoader[componentName]);
-    this._components = new componentLoader[componentName](1);
+    console.log("this a test for addComponent", components[componentName]);
+    this.components[componentName] = new components[componentName](1);
   }
 
   removeComponent(componentName) {}
@@ -58,6 +58,6 @@ export class Entity {
   }
 
   tick() {
-    // for each this._components, run their tick
+    // for each this.components, run their tick
   }
 }

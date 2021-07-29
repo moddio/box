@@ -8,7 +8,7 @@ module.exports = (env) => ({
   plugins: [
     new webpack.ProvidePlugin({
       box: "box",
-      componentLoader: "componentLoader",
+      loader: "loader",
     }),
   ],
 
@@ -22,7 +22,7 @@ module.exports = (env) => ({
     alias: {
       "@babylonjs": path.resolve("node_modules/@babylonjs"),
       box: path.resolve(__dirname, "core/box"),
-      componentLoader: path.resolve(__dirname, "core/componentLoader"),
+      components: path.resolve(__dirname, "core/loader"),
     },
   },
 

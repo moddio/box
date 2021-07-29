@@ -17,16 +17,16 @@ export class Engine extends Entity {
     this.entities = {};
     this.Mesh = noaMesh;
     if (window === undefined) {
-      this.isClient = false;
-      this.myPlayer = undefined;
+      this.isClient = false;      
       this.isServer = true;
+      this.myPlayer = undefined;      
     } else {
       this.isClient = true;
       this.isServer = false;
     }
   }
   start() {
-    console.log("starting the noa engine...");
+    console.log("starting the box engine...");
 
     // Generate the world
     generateWorld();
@@ -38,17 +38,9 @@ export class Engine extends Entity {
       new BABYLON.AmmoJSPlugin()
     );
   }
-  loadComponents() {
-    for (let key of Object.keys(components)) {
-      console.log(key + " -> " + components[key]);
-      // ... and putting modules inside global object
-      //loading json data
-      if (key === "ControlComponent") {
-        const { ControlComponent } = require("" + components[key].toString());
-        global[key] = ControlComponent;
-      }
-      // modulesComponent.push(require(components[key]));
-    }
+
+  loadMap(mapData) {
+
   }
   engineStep() {
     if (global.isServer) {

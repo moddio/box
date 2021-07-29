@@ -15,6 +15,10 @@ export class ControlComponent {
   mouseMove() {
     // if this is client and for my player, update unit's rotation upon mousemove.
   }
+  
+  mouseButtonPress(button) {
+
+  }
 
   keyPress(key) {
     const body = box.noa.entities.getPhysicsBody(this.player);
@@ -42,5 +46,9 @@ export class ControlComponent {
         this.mainUnit.shootBall();
         break;
     }
+  }
+  
+  keyRelease(key) {
+    
   }
 }
