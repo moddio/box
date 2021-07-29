@@ -1,11 +1,11 @@
 import { Entity } from "./entity";
-
 export class Unit extends Entity {
   constructor() {
     super();
   }
-  createBody(offset) {
-    const mesh = box.engine.Mesh.CreateBox("player-mesh", this.id);
+  createBody(id, offset) {
+    const { Box } = box;
+    const mesh = Box.Mesh.CreateBox("player-mesh", 1);
     box.noa.entities.addComponent(id, box.noa.entities.names.mesh, {
       mesh,
       offset,

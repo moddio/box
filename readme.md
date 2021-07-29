@@ -1,4 +1,4 @@
-# box game engine
+# mod3d 🎲
 
 ## Setup
 

@@ -17,16 +17,13 @@ export class Engine extends Entity {
     this.entities = {};
     this.Mesh = noaMesh;
     if (window === undefined) {
-      this.isClient = false;      
       this.isServer = true;
-      this.myPlayer = undefined;      
     } else {
-      this.isClient = true;
       this.isServer = false;
     }
   }
   start() {
-    console.log("starting the box engine...");
+    console.log("starting the noa engine...");
 
     // Generate the world
     generateWorld();
@@ -38,25 +35,21 @@ export class Engine extends Entity {
       new BABYLON.AmmoJSPlugin()
     );
   }
-
-  loadMap(mapData) {
-
-  }
+  loadMap(mapData) {}
   engineStep() {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);
     }
   }
-  createEntity(entityType, data) {
-    const { id, position } = data;
+  createEntity(entityType, data = null) {
     switch (entityType) {
       case "unit":
         this.unit = new Unit();
-        let body = this.unit.createBody(id, position);
-        this.entities[id] = body;
+        let body = this.unit.createBody(data.id, data.position);
+        this.entities[data.id] = body;
       case "player":
-        let player = new Player(id);
-        this.entities[id] = player;
+        let player = new Player();
+        this.entities[1] = player;
         break;
       case "item":
         let item = new Item();
@@ -70,10 +63,6 @@ export class Engine extends Entity {
   }
   destroyEntity(entityId) {
     delete this.entities[entityId];
-  }
-
-  setMyPlayer(player) {
-    this.myPlayer = player
   }
 }
 

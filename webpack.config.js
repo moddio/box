@@ -22,7 +22,7 @@ module.exports = (env) => ({
     alias: {
       "@babylonjs": path.resolve("node_modules/@babylonjs"),
       box: path.resolve(__dirname, "core/box"),
-      components: path.resolve(__dirname, "core/loader"),
+      loader: path.resolve(__dirname, "core/loader"),
     },
   },
 

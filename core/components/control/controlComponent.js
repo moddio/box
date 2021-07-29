@@ -3,7 +3,7 @@
 //const unit = new Unit(noa, body);
 //setTimeout(() => unit.moveBall(), 10000);
 
-export class ControlComponent {
+class ControlComponent {
   constructor(player) {
     this.player = player;
     //this.mainUnit = this.player.getMainUnit();
@@ -14,10 +14,6 @@ export class ControlComponent {
 
   mouseMove() {
     // if this is client and for my player, update unit's rotation upon mousemove.
-  }
-  
-  mouseButtonPress(button) {
-
   }
 
   keyPress(key) {
@@ -47,8 +43,6 @@ export class ControlComponent {
         break;
     }
   }
-  
-  keyRelease(key) {
-    
-  }
 }
+
+export default ControlComponent;

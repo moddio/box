@@ -16,35 +16,28 @@
 
 export class Entity {
   contructor() {
-    this._components = {};
-    this.id = generateId();
-    this.body = undefined;
-    console("also called here");
-  }
-
-  id() {
-    return this.id;
-  }
-
-  createBody(offset) {
-    const mesh = box.engine.Mesh.CreateBox("player-mesh", this.id);
-    box.noa.entities.addComponent(id, box.noa.entities.names.mesh, {
-      mesh,
-      offset,
-    });
-    return mesh;
+    this._components;
+    this.id;
   }
 
   addComponent(componentName) {
-    console.log("this a test for addComponent", components[componentName]);
-    this.components[componentName] = new components[componentName](1);
+    this.id = this.generateId();
+    !this._components
+      ? (this._components = [
+          {
+            [componentName]: new loader[componentName](1),
+            id: this.id,
+          },
+        ])
+      : this._components.push({
+          [componentName]: new loader[componentName](1),
+          id: this.id,
+        });
   }
 
   removeComponent(componentName) {}
 
   setState(stateId) {}
-
-  setStreamMode(mode) {}
 
   generateId() {
     return Math.random()
@@ -57,7 +50,9 @@ export class Entity {
       .substr(2, 8);
   }
 
+  setStreamMode(mode) {}
+
   tick() {
-    // for each this.components, run their tick
+    // for each this._components, run their tick
   }
 }
