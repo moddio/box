@@ -25,12 +25,12 @@ export class Entity {
     !this._components
       ? (this._components = [
           {
-            [componentName]: new loader[componentName](1),
+            [componentName]: new loader.loadedComponents[componentName](1),
             id: this.id,
           },
         ])
       : this._components.push({
-          [componentName]: new loader[componentName](1),
+          [componentName]: new loader.loadedComponents[componentName](1),
           id: this.id,
         });
   }
