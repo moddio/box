@@ -23,9 +23,5 @@ console.log("player has joined the game");
 const unit = Box.createEntity("unit", { id: 1, position: [0, 0.5, 0] });
 const player = Box.createEntity("player");
 
-// dynamic  import using add component DEMO
-//const ents = new Entity();
-//ents.addComponent("ControlComponent");
-
 // this line does not make sence for me and for javascript LOL
 //player.setMainUnit(unit);

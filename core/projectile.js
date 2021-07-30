@@ -1,22 +1,32 @@
-export class Projectile {
+import Unit from "./unit";
+
+export class Projectile extends Unit {
   constructor(playerPosition = false) {
-    const ents = box.noa.entities;
-    const radius = 0.3;
-    // syntatic sugar for creating a default entity
+    super();
+    var ents = box.noa.entities;
+    var radius = 0.2;
+
     if (!playerPosition) {
       var playPos = ents.getPosition(box.noa.playerEntity);
     } else {
       var playPos = playerPosition;
     }
-    const pos = [playPos[0], playPos[1] + 0.6, playPos[2]];
-    const width = radius;
-    const height = radius;
 
-    const mesh = fireBallClone.createInstance("ball_instance");
-    const meshOffset = [0, radius - 0.1, 0];
-    const doPhysics = true;
-    const shadow = true;
+    const ballMesh = box.Mesh.CreateSphere(
+      "ball",
+      6,
+      2 * radius,
+      noa.rendering.getScene()
+    );
 
+    var pos = [playPos[0], playPos[1] + 0.5, playPos[2]];
+    var width = 2 * radius;
+    var height = 2 * radius;
+
+    var mesh = ballMesh.createInstance("ball_instance");
+    var meshOffset = [0, radius, 0];
+    var doPhysics = true;
+    var shadow = true;
     var id = box.noa.entities.add(
       pos,
       width,
@@ -27,6 +37,6 @@ export class Projectile {
       shadow
     );
 
-    this.id = id;
+    this.shootBall(id, ents);
   }
 }

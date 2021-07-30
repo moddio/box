@@ -7,15 +7,13 @@ import "./utils/state.min.js";
 import generateWorld from "./world.js";
 import { Player } from "./player";
 import { Unit } from "./unit";
+import { Projectile } from "./projectile";
 import { Entity } from "./entity.js";
-import * as components from "../config/components.json";
-import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
 
 export class Engine extends Entity {
   constructor() {
     super();
     this.entities = {};
-    this.Mesh = noaMesh;
     if (window === undefined) {
       this.isServer = true;
     } else {
@@ -57,7 +55,7 @@ export class Engine extends Entity {
         break;
       case "projectile":
         let projectile = new Projectile();
-        this.entities[projectile.id()] = projectile;
+        //this.entities[projectile.id()] = projectile;
         break;
     }
   }

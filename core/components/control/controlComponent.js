@@ -1,11 +1,7 @@
-//const body = unitManager.shootBall();
-// unit init
-//const unit = new Unit(noa, body);
-//setTimeout(() => unit.moveBall(), 10000);
-
 class ControlComponent {
   constructor(player) {
     this.player = player;
+    this.mouseClick();
     //this.mainUnit = this.player.getMainUnit();
     var lastUpdate = new Date().getTime();
     window.addEventListener("keypress", (e) => {
@@ -20,9 +16,25 @@ class ControlComponent {
     // if this is client and for my player, update unit's rotation upon mousemove.
   }
 
-  keyPress(key) {
-    const body = box.noa.entities.getPhysicsBody(this.player);
+  // Simple demo of removing blocks and adding blocks we don't want to do this here
+  mouseClick() {
+    box.noa.inputs.down.on("fire", () => {
+      if (noa.targetedBlock) {
+        var pos = noa.targetedBlock.position;
+        noa.setBlock(0, pos[0], pos[1], pos[2]);
+      }
+    });
+    box.noa.inputs.down.on("alt-fire", function () {
+      if (noa.targetedBlock) {
+        var pos = noa.targetedBlock.adjacent;
+        noa.addBlock(1, pos[0], pos[1], pos[2]);
+      }
+    });
+  }
 
+  keyPress(key) {
+    var { Box } = box;
+    const body = box.noa.entities.getPhysicsBody(this.player);
     // testing the control of the player
     // TODOO : TO STREAM KEY INPUT TO THE SERVER
     switch (key) {
@@ -44,7 +56,8 @@ class ControlComponent {
         break;
       case "h":
         console.log("kepress", "h");
-        this.mainUnit.shootBall();
+        Box.createEntity("projectile");
+        //this.mainUnit.shootBall();
         break;
     }
   }

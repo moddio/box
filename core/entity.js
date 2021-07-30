@@ -16,23 +16,16 @@
 
 export class Entity {
   contructor() {
-    this._components;
+    this.components;
     this.id;
   }
 
   addComponent(componentName) {
     this.id = this.generateId();
-    !this._components
-      ? (this._components = [
-          {
-            [componentName]: new loader.loadedComponents[componentName](1),
-            id: this.id,
-          },
-        ])
-      : this._components.push({
-          [componentName]: new loader.loadedComponents[componentName](1),
-          id: this.id,
-        });
+    this.components = {
+      [componentName]: new loader.loadedComponents[componentName](1),
+      id: this.id,
+    };
   }
 
   removeComponent(componentName) {}

@@ -1,15 +1,44 @@
-//const Engine = require("../core/engine.js");
+var BABYLON = require("babylonjs");
 
-// let's do a console.log to keep thinks working
+var engine = new BABYLON.NullEngine();
+var scene = new BABYLON.Scene(engine);
 
-console.log("server in progress");
+global.XMLHttpRequest = require("xhr2").XMLHttpRequest;
 
-//global.engine = engine;
-global.isServer = true;
+var engine = new BABYLON.NullEngine();
+var scene = new BABYLON.Scene(engine);
 
-console.log("global test", global);
+var light = new BABYLON.PointLight(
+  "Omni",
+  new BABYLON.Vector3(20, 20, 100),
+  scene
+);
 
-//we still need a to create logic for server inside engine
+var camera = new BABYLON.ArcRotateCamera(
+  "Camera",
+  0,
+  0.8,
+  100,
+  BABYLON.Vector3.Zero(),
+  scene
+);
 
-//const engine = new Engine();
-//engine.start();
+BABYLON.SceneLoader.ImportMesh(
+  "",
+  "https://playground.babylonjs.com/scenes/",
+  "skull.babylon",
+  scene,
+  function (newMeshes) {
+    camera.target = newMeshes[0];
+
+    console.log("Meshes loaded from babylon file: " + newMeshes.length);
+    for (var index = 0; index < newMeshes.length; index++) {
+      console.log(newMeshes[index].toString());
+    }
+
+    console.log("render started");
+    engine.runRenderLoop(function () {
+      scene.render();
+    });
+  }
+);
