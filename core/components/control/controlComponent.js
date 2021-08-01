@@ -33,7 +33,6 @@ class ControlComponent {
   }
 
   keyPress(key) {
-    var { Box } = box;
     const body = box.noa.entities.getPhysicsBody(this.player);
     // testing the control of the player
     // TODOO : TO STREAM KEY INPUT TO THE SERVER

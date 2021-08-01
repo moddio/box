@@ -1,29 +1,30 @@
 var path = require("path");
 const webpack = require("webpack");
-var buildPath = path.resolve("src");
+var distPath = path.resolve("dist");
+var devPath = path.resolve("src");
 
 module.exports = (env) => ({
   mode: env && env.prod ? "production" : "development",
 
+  resolve: {
+    alias: {
+      "@babylonjs": path.resolve("node_modules/@babylonjs"),
+      engine: path.resolve(__dirname, "core/engine"),
+      loader: path.resolve(__dirname, "core/loader"),
+    },
+  },
+
   plugins: [
     new webpack.ProvidePlugin({
-      box: "box",
+      Engine: "engine",
       loader: "loader",
     }),
   ],
 
   entry: ["./src/client.js"],
   output: {
-    path: buildPath,
-    filename: "client.js",
-  },
-
-  resolve: {
-    alias: {
-      "@babylonjs": path.resolve("node_modules/@babylonjs"),
-      box: path.resolve(__dirname, "core/box"),
-      loader: path.resolve(__dirname, "core/loader"),
-    },
+    path: distPath,
+    filename: "bundle.js",
   },
 
   performance: {
@@ -37,7 +38,7 @@ module.exports = (env) => ({
   },
   devtool: "source-map",
   devServer: {
-    contentBase: buildPath,
+    contentBase: devPath,
     inline: true,
     host: "127.0.0.1",
     stats: "minimal",
