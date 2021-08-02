@@ -5,20 +5,14 @@ export class Unit extends Entity {
     this.id = data.owner;
     this.moveDirection = [0, 0, 0]; // x, y, z rotations
     //this.body = box.noa.entities.getPhysicsBody(this.id);
-  }
-  createBody(offset) {
-    const mesh = box.Engine.Mesh.CreateBox("player-mesh", 1);
-    box.Engine.noa.entities.addComponent(
-      this.id,
-      box.Engine.noa.entities.names.mesh,
-      {
-        mesh,
-        offset,
-      }
-    );
-    return mesh;
-  }
 
+    box.Engine.noa.entities.addComponent(
+      unit.noaEntityId,
+      box.Engine.boxTickComponentName
+    );
+
+  }
+  
   tick() {
     // if this.moveDirection != [0, 0, 0], then move unit towards that direction
     this.body.applyImpulse("some values about direction and power");

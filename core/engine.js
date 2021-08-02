@@ -13,16 +13,53 @@ export class Engine extends Entity {
   constructor() {
     super();
     this.noa = new noaEngine(config);
-    this.noa.inputs.unbind("forward");
-    this.noa.inputs.unbind("left");
-    this.noa.inputs.unbind("backward");
-    this.noa.inputs.unbind("right");
+    // this.noa.inputs.unbind("forward");
+    // this.noa.inputs.unbind("left");
+    // this.noa.inputs.unbind("backward");
+    // this.noa.inputs.unbind("right");
+
+    
     this.Mesh = noaMesh;
     this.entities = {};
-    if (box.isClient) {
-      this.myPlayer = undefined;
+
+    if (box.isClient) {      
+
+      // create a component inside Noa that will call boxEntitiy.tick()
+      this.boxTickComponentName = this.noa.entities.createComponent({
+        system: boxTick() // calls boxEntity
+      });
+
+      // noa create a new unit immeidately after noa engine is initiated, therefore, create player & entity inside box engine as well,
+      // and make references to the noa engine's entity
+      this.myPlayer = new box.Player({
+                              name: "john"
+                            });
+      let unit = new box.Unit({ owner: player });
+      unit.noaEntityId = this.noa.playerEntity;
+      
+      // Asign the offset to the created body
+      // unit.createBody([0, 0.5, 0]);
+      
+      const mesh = this.Mesh.CreateBox("player-mesh", 1);
+      this.noa.entities.addComponent(
+        unit.noaEntityId,
+        this.noa.entities.names.mesh,
+        {
+          mesh,
+          offset,
+        }
+      );
     }
+
+    this.noa.on("tick", function() {
+      this.engineStep();
+    })
+    
   }
+
+  /*
+    connect to the game server. once successful, create my player's entity
+  */
   start() {
     console.log("starting the noa engine...");
 

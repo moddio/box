@@ -6,8 +6,8 @@ let mapData = [
 let scriptData = {};
 
 console.log("hello", box.isClient);
-
-box.Engine.start();
+var options = {}
+box.Engine.start(options);
 
 /**
  
@@ -22,11 +22,3 @@ Box.loadScript(scriptData);
 
 console.log("player has joined the game");
 
-let player = new box.Player({
-  name: "john",
-  player: box.Engine.noa.playerEntity,
-});
-let unit = new box.Unit({ owner: player.getMainUnit() });
-
-// Asign the offset to the created body
-unit.createBody([0, 0.5, 0]);

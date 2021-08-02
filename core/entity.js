@@ -18,6 +18,7 @@ export class Entity {
   contructor() {
     this.components;
     this.id;
+    this.noaEntityId;
   }
 
   addComponent(componentName) {
@@ -26,6 +27,10 @@ export class Entity {
       [componentName]: new loader.loadedComponents[componentName](1),
       id: this.id,
     };
+  }
+
+  createBody(data) {
+    
   }
 
   removeComponent(componentName) {}

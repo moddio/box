@@ -6,7 +6,6 @@ class ControlComponent {
     //this.mainUnit = this.player.getMainUnit();
     var lastUpdate = new Date().getTime();
 
-    /**
        window.addEventListener("keypress", (e) => {
       if (new Date().getTime() > lastUpdate + 100) {
         this.keyPress(e.key);
@@ -15,40 +14,38 @@ class ControlComponent {
     });
 
 
-
-     */
     /**
       ------Testing game input library-------
      */
     // bind movement keys to WASD and arrow keys
-    inputs.bind("move-up", "W", "<up>");
-    inputs.bind("move-left", "A", "<left>");
-    inputs.bind("move-down", "S", "<up>");
-    inputs.bind("move-right", "D", "<left>");
+    // inputs.bind("move-up", "W", "<up>");
+    // inputs.bind("move-left", "A", "<left>");
+    // inputs.bind("move-down", "S", "<up>");
+    // inputs.bind("move-right", "D", "<left>");
 
-    var body = box.Engine.noa.entities.getPhysicsBody(this.player);
-    console.log("look into method inside body", body);
+    // var body = box.Engine.noa.entities.getPhysicsBody(this.player);
+    // console.log("look into method inside body", body);
 
-    var lastUpdate = new Date().getTime();
-    box.Engine.noa.on("tick", () => {
-      if (new Date().getTime() > lastUpdate + 95) {
-        if (inputs.state["move-left"]) {
-          body.applyImpulse([-5, 0, 0]);
-        }
-        if (inputs.state["move-right"]) {
-          body.applyImpulse([5, 0, 0]);
-        }
-        if (inputs.state["move-up"]) {
-          body.applyImpulse([0, 0, 5]);
-        }
-        if (inputs.state["move-down"]) {
-          body.applyImpulse([0, 0, -5]);
-        }
-        lastUpdate = new Date().getTime();
-      }
+    // var lastUpdate = new Date().getTime();
+    // box.Engine.noa.on("tick", () => {
+    //   if (new Date().getTime() > lastUpdate + 95) {
+    //     if (inputs.state["move-left"]) {
+    //       body.applyImpulse([-5, 0, 0]);
+    //     }
+    //     if (inputs.state["move-right"]) {
+    //       body.applyImpulse([5, 0, 0]);
+    //     }
+    //     if (inputs.state["move-up"]) {
+    //       body.applyImpulse([0, 0, 5]);
+    //     }
+    //     if (inputs.state["move-down"]) {
+    //       body.applyImpulse([0, 0, -5]);
+    //     }
+    //     lastUpdate = new Date().getTime();
+    //   }
 
-      inputs.tick();
-    });
+    //   inputs.tick();
+    // });
   }
 
   mouseMove() {
@@ -95,7 +92,8 @@ class ControlComponent {
       case "h":
         console.log("kepress", "h");
         const projectile = new box.Projectile({ width: 2, height: 2 });
-        projectile.shootBall();
+        // apply impulse to the projectile
+        projectile.applyImpulse(blahblah)
         break;
     }
   }
