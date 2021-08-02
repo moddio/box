@@ -2,7 +2,7 @@ class ControlComponent {
   constructor(player) {
     this.player = player;
     this.mouseClick();
-    //this.mainUnit = this.player.getMainUnit();
+    this.mainUnit = this.player.getMainUnit();
     var lastUpdate = new Date().getTime();
     window.addEventListener("keypress", (e) => {
       if (new Date().getTime() > lastUpdate + 100) {
@@ -33,32 +33,75 @@ class ControlComponent {
   }
 
   keyPress(key) {
-    var { Box } = box;
-    const body = box.noa.entities.getPhysicsBody(this.player);
+    
     // testing the control of the player
     // TODOO : TO STREAM KEY INPUT TO THE SERVER
     switch (key) {
       case "w":
-        console.log("kepress", "w");
-        body.applyImpulse([0, 0, 2.5]);
+        console.log("kepress", "w");        
+        // body.applyImpulse([0, 0, 2.5]);
+
+        // update this.mainUnit's direction. you may need to use SIN/COS
         break;
       case "s":
         console.log("kepress", "s");
-        body.applyImpulse([0, 0, -2.5]);
+        // body.applyImpulse([0, 0, -2.5]);
+
+        // update this.mainUnit's direction
         break;
       case "d":
         console.log("kepress", "d");
-        body.applyImpulse([2.5, 0, 0]);
+        // body.applyImpulse([2.5, 0, 0]);
+
+        // update this.mainUnit's direction
         break;
       case "a":
         console.log("kepress", "a");
-        body.applyImpulse([-2.5, 0, 0]);
+        // body.applyImpulse([-2.5, 0, 0]);
+
+        // update this.mainUnit's direction
         break;
       case "h":
         console.log("kepress", "h");
-        Box.createEntity("projectile");
-        //this.mainUnit.shootBall();
+        var projectile = new box.Projectile({
+                                    position: this.player.position,
+                                    width: 5,
+                                    height: 5
+                                  });
+        projectile.applyImpulse("blahblah")
         break;
+    }
+  }
+
+  keyRelease(key) {    
+    // testing the control of the player
+    // TODOO : TO STREAM KEY INPUT TO THE SERVER
+    switch (key) {
+      case "w":
+        console.log("kepress", "w");        
+        // body.applyImpulse([0, 0, 2.5]);
+
+        // update this.mainUnit's direction
+        break;
+      case "s":
+        console.log("kepress", "s");
+        // body.applyImpulse([0, 0, -2.5]);
+
+        // update this.mainUnit's direction
+        break;
+      case "d":
+        console.log("kepress", "d");
+        // body.applyImpulse([2.5, 0, 0]);
+
+        // update this.mainUnit's direction
+        break;
+      case "a":
+        console.log("kepress", "a");
+        // body.applyImpulse([-2.5, 0, 0]);
+
+        // update this.mainUnit's direction
+        break;
+      
     }
   }
 }

@@ -1,6 +1,6 @@
-import Unit from "./unit";
+import Entity from "./entity";
 
-export class Projectile extends Unit {
+export class Projectile extends Entity {
   constructor(playerPosition = false) {
     super();
     var ents = box.noa.entities;
@@ -37,6 +37,6 @@ export class Projectile extends Unit {
       shadow
     );
 
-    this.shootBall(id, ents);
+    // this.shootBall(id, ents);
   }
 }

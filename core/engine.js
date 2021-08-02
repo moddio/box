@@ -4,7 +4,7 @@ import * as BABYLON from "@babylonjs/core";
 import { Engine as noaEngine } from "noa-engine";
 export const noa = new noaEngine(config);
 import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
-
+export const Mesh = noaMesh;
 //import { Engine as noaEngine } from "noa-engine";
 
 // Files
