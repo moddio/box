@@ -1,12 +1,10 @@
-
-import { Engine as noaEngine } from "noa-engine";
-import { config } from "../config/config";
-import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
-
-export const Mesh = noaMesh;
-
 // Engine
 import * as BABYLON from "@babylonjs/core";
+
+import { Engine as noaEngine } from "noa-engine";
+export const noa = new noaEngine(config);
+import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
+
 //import { Engine as noaEngine } from "noa-engine";
 
 // Files
@@ -17,22 +15,16 @@ import { Unit } from "./unit";
 import { Projectile } from "./projectile";
 import { Entity } from "./entity.js";
 
-export default class Engine extends Entity {
-
+export class Engine extends Entity {
   constructor() {
     super();
-    
-    this.noa = new noaEngine(config);
     this.entities = {};
     if (window === undefined) {
-      this.isClient = false;
       this.isServer = true;
     } else {
-      this.isClient = true;
       this.isServer = false;
     }
   }
-
   start() {
     console.log("starting the noa engine...");
 

@@ -5,10 +5,9 @@ let mapData = [
 ];
 let scriptData = {};
 
-import Engine from "../core/engine";
-box = new Engine();
-console.log(box)
-box.start();
+const { Box } = box;
+
+Box.start();
 
 /**
  
@@ -21,8 +20,8 @@ Box.loadScript(scriptData);
 // when player joins the game, create a unit, and assign that unit to that player.
 // box.onEvent("playerJoin", function (player) {
 console.log("player has joined the game");
-const unit = box.createEntity("unit", { id: 1, position: [0, 0.5, 0] });
-const player = box.createEntity("player");
+const unit = Box.createEntity("unit", { id: 1, position: [0, 0.5, 0] });
+const player = Box.createEntity("player");
 
 // this line does not make sence for me and for javascript LOL
 //player.setMainUnit(unit);
