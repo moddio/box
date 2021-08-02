@@ -1,22 +1,15 @@
-import Entity from "./entity";
-
-export class Projectile extends Entity {
-  constructor(playerPosition = false) {
-    super();
-    var ents = box.noa.entities;
+export class Projectile {
+  constructor() {}
+  shootBall() {
+    var ents = box.Engine.noa.entities;
     var radius = 0.2;
+    var playPos = ents.getPosition(box.Engine.noa.playerEntity);
 
-    if (!playerPosition) {
-      var playPos = ents.getPosition(box.noa.playerEntity);
-    } else {
-      var playPos = playerPosition;
-    }
-
-    const ballMesh = box.Mesh.CreateSphere(
+    const ballMesh = box.Engine.Mesh.CreateSphere(
       "ball",
       6,
       2 * radius,
-      noa.rendering.getScene()
+      box.Engine.noa.rendering.getScene()
     );
 
     var pos = [playPos[0], playPos[1] + 0.5, playPos[2]];
@@ -27,7 +20,7 @@ export class Projectile extends Entity {
     var meshOffset = [0, radius, 0];
     var doPhysics = true;
     var shadow = true;
-    var id = box.noa.entities.add(
+    var id = box.Engine.noa.entities.add(
       pos,
       width,
       height,
@@ -36,7 +29,16 @@ export class Projectile extends Entity {
       doPhysics,
       shadow
     );
-
-    // this.shootBall(id, ents);
+    const body = ents.getPhysicsBody(id);
+    body.restitution = 0.8;
+    body.friction = 0.6;
+    body.mass = 0.5;
+    const dir = box.Engine.noa.camera.getDirection();
+    let imp = [];
+    for (let i = 0; i < 3; i++) imp[i] = 5 * dir[i];
+    imp[1] += 1;
+    body.applyImpulse(imp);
+    console.log("body", { ...body });
+    return [body, ents.getPosition(box.Engine.noa.playerEntity)];
   }
 }

@@ -5,17 +5,9 @@ let mapData = [
 ];
 let scriptData = {};
 
-import * as Box from 'box.js';
+console.log("hello", box.isClient);
 
-// The application will create a renderer using WebGL, if possible,
-// with a fallback to a canvas render. It will also setup the ticker
-// and the root stage PIXI.Container
-const engine = new Box.Engine();
-
-let playerA = new Box.Player({name: "john"}); // first created player is my player
-// let playerB = new Box.Player({name: "jef"});
-// let playerC = new Box.Player({name: "corbin"});
-let unit = new Box.Unit({owner: playerA}); // if this is playerA's first unit, then this unit automatically becomes playerA's main unit.
+box.Engine.start();
 
 /**
  
@@ -24,3 +16,12 @@ Box.loadMap(mapData);
 Box.loadScript(scriptData);
 
  */
+
+// when player joins the game, create a unit, and assign that unit to that player.
+// box.onEvent("playerJoin", function (player) {
+console.log("player has joined the game");
+let player = new box.Player({ name: "john", id: 1 });
+let unit = new box.Unit(player.getMainUnit());
+unit.createBody([0, 0.5, 0]);
+// this line does not make sence for me and for javascript LOL
+//player.setMainUnit(unit);

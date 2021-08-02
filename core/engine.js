@@ -1,35 +1,32 @@
 // Engine
 import * as BABYLON from "@babylonjs/core";
-
 import { Engine as noaEngine } from "noa-engine";
-export const noa = new noaEngine(config);
 import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
-export const Mesh = noaMesh;
-//import { Engine as noaEngine } from "noa-engine";
+import { config } from "../config/config";
 
 // Files
 import "./utils/state.min.js";
 import generateWorld from "./world.js";
-import { Player } from "./player";
-import { Unit } from "./unit";
-import { Projectile } from "./projectile";
 import { Entity } from "./entity.js";
 
 export class Engine extends Entity {
   constructor() {
     super();
+    this.noa = new noaEngine(config);
+    this.Mesh = noaMesh;
     this.entities = {};
-    if (box.isClient) {
-      this.myPlayer = undefined;
+    if (window === undefined) {
+      this.isServer = true;
+    } else {
+      this.isServer = false;
     }
   }
-  
   start() {
     console.log("starting the noa engine...");
 
     // Generate the world
     generateWorld();
-    const scene = box.noa.rendering.getScene();
+    const scene = this.noa.rendering.getScene();
 
     // Enable physics in the scene
     scene.enablePhysics(
@@ -42,10 +39,6 @@ export class Engine extends Entity {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);
     }
-  }
-
-  setMyPlayer(player) {
-    this.myPlayer = player;
   }
   destroyEntity(entityId) {
     delete this.entities[entityId];
