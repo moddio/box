@@ -1,13 +1,13 @@
 import { Entity } from "./entity";
 
 export class Player extends Entity {
-  constructor() {
+  constructor(data) {
     super();
-    const { Box } = box;
+
     //console.log("global", global.ControlComponent);
-    if (Box.isServer) {
+    if (box.isServer) {
       // add other player controls
-    } else {
+    } else (box.isClient && data.isMyPlayer == this){
       //console.log("control tewdwedewdew", controlComponent);
       //this.control = new controlComponent.ControlComponent(id);
       this.addComponent("ControlComponent");

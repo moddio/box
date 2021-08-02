@@ -19,12 +19,11 @@ export class Engine extends Entity {
   constructor() {
     super();
     this.entities = {};
-    if (window === undefined) {
-      this.isServer = true;
-    } else {
-      this.isServer = false;
+    if (box.isClient) {
+      this.myPlayer = undefined;
     }
   }
+  
   start() {
     console.log("starting the noa engine...");
 
@@ -44,25 +43,9 @@ export class Engine extends Entity {
       this.serverNetworkComponent.createSnapshot(this.body);
     }
   }
-  createEntity(entityType, data = null) {
-    switch (entityType) {
-      case "unit":
-        this.unit = new Unit();
-        let body = this.unit.createBody(data.id, data.position);
-        this.entities[data.id] = body;
-      case "player":
-        let player = new Player();
-        this.entities[1] = player;
-        break;
-      case "item":
-        let item = new Item();
-        this.entities[item.id()] = item;
-        break;
-      case "projectile":
-        let projectile = new Projectile();
-        //this.entities[projectile.id()] = projectile;
-        break;
-    }
+
+  setMyPlayer(player) {
+    this.myPlayer = player;
   }
   destroyEntity(entityId) {
     delete this.entities[entityId];
