@@ -1,8 +1,8 @@
 import { Entity } from "./entity";
 export class Unit extends Entity {
-  constructor(player) {
+  constructor(data) {
     super();
-    this.id = player;
+    this.id = data.owner;
     this.moveDirection = [0, 0, 0]; // x, y, z rotations
     //this.body = box.noa.entities.getPhysicsBody(this.id);
   }

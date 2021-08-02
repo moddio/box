@@ -1,14 +1,53 @@
+var inputs = require("game-inputs")();
 class ControlComponent {
   constructor(player) {
     this.player = player;
     this.mouseClick();
     //this.mainUnit = this.player.getMainUnit();
     var lastUpdate = new Date().getTime();
-    window.addEventListener("keypress", (e) => {
+
+    /**
+       window.addEventListener("keypress", (e) => {
       if (new Date().getTime() > lastUpdate + 100) {
         this.keyPress(e.key);
         lastUpdate = new Date().getTime();
       }
+    });
+
+
+
+     */
+    /**
+      ------Testing game input library-------
+     */
+    // bind movement keys to WASD and arrow keys
+    inputs.bind("move-up", "W", "<up>");
+    inputs.bind("move-left", "A", "<left>");
+    inputs.bind("move-down", "S", "<up>");
+    inputs.bind("move-right", "D", "<left>");
+
+    var body = box.Engine.noa.entities.getPhysicsBody(this.player);
+    console.log("look into method inside body", body);
+
+    var lastUpdate = new Date().getTime();
+    box.Engine.noa.on("tick", () => {
+      if (new Date().getTime() > lastUpdate + 95) {
+        if (inputs.state["move-left"]) {
+          body.applyImpulse([-5, 0, 0]);
+        }
+        if (inputs.state["move-right"]) {
+          body.applyImpulse([5, 0, 0]);
+        }
+        if (inputs.state["move-up"]) {
+          body.applyImpulse([0, 0, 5]);
+        }
+        if (inputs.state["move-down"]) {
+          body.applyImpulse([0, 0, -5]);
+        }
+        lastUpdate = new Date().getTime();
+      }
+
+      inputs.tick();
     });
   }
 
@@ -55,7 +94,7 @@ class ControlComponent {
         break;
       case "h":
         console.log("kepress", "h");
-        const projectile = new box.Projectile();
+        const projectile = new box.Projectile({ width: 2, height: 2 });
         projectile.shootBall();
         break;
     }

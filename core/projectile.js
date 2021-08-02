@@ -1,29 +1,32 @@
 export class Projectile {
-  constructor() {}
+  constructor(data) {
+    // Default radius
+    this.radius = 0.2;
+
+    this.width = data.width * this.radius;
+    this.height = data.height * this.radius;
+  }
   shootBall() {
     var ents = box.Engine.noa.entities;
-    var radius = 0.2;
     var playPos = ents.getPosition(box.Engine.noa.playerEntity);
 
     const ballMesh = box.Engine.Mesh.CreateSphere(
       "ball",
       6,
-      2 * radius,
+      this.height * this.radius,
       box.Engine.noa.rendering.getScene()
     );
 
     var pos = [playPos[0], playPos[1] + 0.5, playPos[2]];
-    var width = 2 * radius;
-    var height = 2 * radius;
 
     var mesh = ballMesh.createInstance("ball_instance");
-    var meshOffset = [0, radius, 0];
+    var meshOffset = [0, this.radius, 0];
     var doPhysics = true;
     var shadow = true;
     var id = box.Engine.noa.entities.add(
       pos,
-      width,
-      height,
+      this.width,
+      this.height,
       mesh,
       meshOffset,
       doPhysics,

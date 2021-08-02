@@ -13,12 +13,14 @@ export class Engine extends Entity {
   constructor() {
     super();
     this.noa = new noaEngine(config);
+    this.noa.inputs.unbind("forward");
+    this.noa.inputs.unbind("left");
+    this.noa.inputs.unbind("backward");
+    this.noa.inputs.unbind("right");
     this.Mesh = noaMesh;
     this.entities = {};
-    if (window === undefined) {
-      this.isServer = true;
-    } else {
-      this.isServer = false;
+    if (box.isClient) {
+      this.myPlayer = undefined;
     }
   }
   start() {

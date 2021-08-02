@@ -4,7 +4,7 @@ export class Player extends Entity {
   constructor(data) {
     super();
     this.name = data.name;
-    this.mainUnit = data.id;
+    this.mainUnit = data.player;
     //console.log("global", global.ControlComponent);
     if (box.isServer) {
       // add other player controls

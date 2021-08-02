@@ -1388,6 +1388,14 @@ game-inputs@^0.4.0:
   dependencies:
     vkey "^1.0.0"
 
+game-inputs@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/game-inputs/-/game-inputs-0.4.1.tgz#b7f4e45ea0756270938a4055e639cf3d6b049d3b"
+  integrity sha512-3Vk1ucKpSjLkxnF9s6sNSx3aTDg2spynV+KJgEpJlHRiHg7FWvH0H3wxT56VxwhhMTldMaNHCIt2dG/m45N9DQ==
+  dependencies:
+    events "^3.2.0"
+    vkey "^1.0.0"
+
 get-caller-file@^2.0.1:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
