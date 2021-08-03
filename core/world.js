@@ -1,5 +1,7 @@
 import { water, blocks } from "./utils/textures";
 import { io } from "socket.io-client";
+import map from "./assets/map.json";
+import loadMap from "./mapLoader";
 
 const socket = io("http://localhost:3000");
 
@@ -57,6 +59,14 @@ const generateWorld = () => {
     }
     box.Engine.noa.world.setChunkData(id, data);
   });
+
+  /*if (box.noa.targetedBlock) {
+
+  }*/
+
+  setTimeout(() => {
+    loadMap(map, blocksID, waterID);
+  }, 1000);
 };
 
 export default generateWorld;

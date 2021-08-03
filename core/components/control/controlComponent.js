@@ -6,6 +6,9 @@ class ControlComponent {
     //this.mainUnit = this.player.getMainUnit();
     var lastUpdate = new Date().getTime();
 
+    /**
+     
+     */
     window.addEventListener("keypress", (e) => {
       if (new Date().getTime() > lastUpdate + 100) {
         this.keyPress(e.key);
@@ -25,8 +28,7 @@ class ControlComponent {
     var body = box.Engine.noa.entities.getPhysicsBody(this.player);
     console.log("look into method inside body", body);
 
-    /**
-     var lastUpdate = new Date().getTime();
+    var lastUpdate = new Date().getTime();
     box.Engine.noa.on("tick", () => {
       if (new Date().getTime() > lastUpdate + 95) {
         if (inputs.state["move-left"]) {
@@ -46,9 +48,6 @@ class ControlComponent {
 
       inputs.tick();
     });
-
-
-     */
   }
 
   mouseMove() {
@@ -73,25 +72,7 @@ class ControlComponent {
 
   keyPress(key) {
     const body = box.Engine.noa.entities.getPhysicsBody(this.player);
-    // testing the control of the player
-    // TODOO : TO STREAM KEY INPUT TO THE SERVER
     switch (key) {
-      case "w":
-        console.log("kepress", "w");
-        body.applyImpulse([0, 0, 2.5]);
-        break;
-      case "s":
-        console.log("kepress", "s");
-        body.applyImpulse([0, 0, -2.5]);
-        break;
-      case "d":
-        console.log("kepress", "d");
-        body.applyImpulse([2.5, 0, 0]);
-        break;
-      case "a":
-        console.log("kepress", "a");
-        body.applyImpulse([-2.5, 0, 0]);
-        break;
       case "h":
         console.log("kepress", "h");
         const projectile = new box.Projectile({ width: 2, height: 2 });
@@ -99,36 +80,7 @@ class ControlComponent {
         break;
     }
   }
-  keyRelease(key) {
-    // testing the control of the player
-    // TODOO : TO STREAM KEY INPUT TO THE SERVER
-    switch (key) {
-      case "w":
-        console.log("kepress", "w");
-        // body.applyImpulse([0, 0, 2.5]);
-
-        // update this.mainUnit's direction
-        break;
-      case "s":
-        console.log("kepress", "s");
-        // body.applyImpulse([0, 0, -2.5]);
-
-        // update this.mainUnit's direction
-        break;
-      case "d":
-        console.log("kepress", "d");
-        // body.applyImpulse([2.5, 0, 0]);
-
-        // update this.mainUnit's direction
-        break;
-      case "a":
-        console.log("kepress", "a");
-        // body.applyImpulse([-2.5, 0, 0]);
-
-        // update this.mainUnit's direction
-        break;
-    }
-  }
+  keyRelease(key) {}
 }
 
 export default ControlComponent;

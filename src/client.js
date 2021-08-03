@@ -34,7 +34,7 @@ let unit = new box.Unit({ owner: player.getMainUnit() });
 // Asign the offset to the created body
 unit.createBody([0, 0.5, 0], { type: "mesh" });
 
-// Adding ticks to player component
+// Adding ticks to player component to be moved latter in engine js
 
 var ents = box.Engine.noa.entities;
 
@@ -43,7 +43,7 @@ const test = ents.createComponent({
   system: (dt, states) => {
     var p1 = ents.getPosition(noa.playerEntity);
     states.forEach((state) => {
-      console.log("this is the player comoponent ticks using noa", state);
+      //console.log("this is the player comoponent ticks using noa", state);
       var p2 = ents.getPosition(state.__id);
       var dist = 0;
       for (var i = 0; i < 3; i++) dist += Math.abs(p1[i] - p2[i]);
