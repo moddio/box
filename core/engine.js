@@ -2,12 +2,17 @@
 import * as BABYLON from "@babylonjs/core";
 import { Engine as noaEngine } from "noa-engine";
 import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
-import { config } from "../config/config";
+import config from "../config/config.json";
 
 // Files
 import "./utils/state.min.js";
 import generateWorld from "./world.js";
 import { Entity } from "./entity.js";
+
+// loading map imports
+import { water, blocks } from "./utils/textures";
+import map from "../config/map/map.json";
+import loadMap from "./components/map/tiledLoader";
 
 export class Engine extends Entity {
   constructor() {
@@ -28,6 +33,26 @@ export class Engine extends Entity {
 
     // Generate the world
     generateWorld();
+    //////////////////// same code in generateWorld function
+
+    // Init texture for the map
+    box.Engine.noa.registry.registerMaterial("water", null, water);
+    box.Engine.noa.registry.registerMaterial("grass", null, blocks);
+
+    // Save texture inside register Block
+    const waterID = box.Engine.noa.registry.registerBlock(1, {
+      material: "water",
+    });
+    const blocksID = box.Engine.noa.registry.registerBlock(2, {
+      material: "grass",
+    });
+
+    //Loading tiled map from map.json
+    setTimeout(() => {
+      loadMap(map, blocksID, waterID);
+    }, 1000);
+
+    ////////////////
     const scene = this.noa.rendering.getScene();
 
     // Enable physics in the scene

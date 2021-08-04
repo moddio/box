@@ -1,7 +1,7 @@
 import { water, blocks } from "./utils/textures";
 import { io } from "socket.io-client";
-import map from "./assets/map.json";
-import loadMap from "./mapLoader";
+//import map from "../config/map/map.json";
+//import loadMap from "./components/map/tiledLoader";
 
 const socket = io("http://localhost:3000");
 
@@ -64,9 +64,9 @@ const generateWorld = () => {
 
   }*/
 
-  setTimeout(() => {
+  /*setTimeout(() => {
     loadMap(map, blocksID, waterID);
-  }, 1000);
+  }, 1000);*/
 };
 
 export default generateWorld;
