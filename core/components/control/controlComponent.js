@@ -3,34 +3,20 @@ class ControlComponent {
   constructor(player) {
     this.player = player;
     this.mouseClick();
-    //this.mainUnit = this.player.getMainUnit();
-    var lastUpdate = new Date().getTime();
-
-    /**
-     
-     */
-    window.addEventListener("keypress", (e) => {
-      if (new Date().getTime() > lastUpdate + 100) {
-        this.keyPress(e.key);
-        lastUpdate = new Date().getTime();
-      }
-    });
-
-    /**
-      ------Testing game input library-------
-     */
-    // bind movement keys to WASD and arrow keys
     inputs.bind("move-up", "W", "<up>");
     inputs.bind("move-left", "A", "<left>");
     inputs.bind("move-down", "S", "<up>");
     inputs.bind("move-right", "D", "<left>");
+    inputs.bind("shoot-ball", "Y", "<left>");
 
     var body = box.Engine.noa.entities.getPhysicsBody(this.player);
-    console.log("look into method inside body", body);
-
     var lastUpdate = new Date().getTime();
     box.Engine.noa.on("tick", () => {
       if (new Date().getTime() > lastUpdate + 95) {
+        if (inputs.state["shoot-ball"]) {
+          const projectile = new box.Projectile({ width: 10, height: 10 });
+          projectile.shootProjectile();
+        }
         if (inputs.state["move-left"]) {
           body.applyImpulse([-5, 0, 0]);
         }
@@ -71,16 +57,53 @@ class ControlComponent {
   }
 
   keyPress(key) {
-    const body = box.Engine.noa.entities.getPhysicsBody(this.player);
     switch (key) {
+      case "w":
+        console.log("kepress", "w");
+        break;
+      case "s":
+        console.log("kepress", "s");
+        break;
+      case "d":
+        console.log("kepress", "d");
+        break;
+      case "a":
+        console.log("kepress", "a");
+        break;
       case "h":
-        console.log("kepress", "h");
-        const projectile = new box.Projectile({ width: 2, height: 2 });
-        projectile.shootProjectile();
         break;
     }
   }
-  keyRelease(key) {}
+  keyRelease(key) {
+    // testing the control of the player
+    // TODOO : TO STREAM KEY INPUT TO THE SERVER
+    switch (key) {
+      case "w":
+        console.log("kepress", "w");
+        // body.applyImpulse([0, 0, 2.5]);
+
+        // update this.mainUnit's direction
+        break;
+      case "s":
+        console.log("kepress", "s");
+        // body.applyImpulse([0, 0, -2.5]);
+
+        // update this.mainUnit's direction
+        break;
+      case "d":
+        console.log("kepress", "d");
+        // body.applyImpulse([2.5, 0, 0]);
+
+        // update this.mainUnit's direction
+        break;
+      case "a":
+        console.log("kepress", "a");
+        // body.applyImpulse([-2.5, 0, 0]);
+
+        // update this.mainUnit's direction
+        break;
+    }
+  }
 }
 
 export default ControlComponent;

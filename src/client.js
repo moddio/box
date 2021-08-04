@@ -32,9 +32,9 @@ let player = new box.Player({
 let unit = new box.Unit({ owner: player.getMainUnit() });
 
 // Asign the offset to the created body
-unit.createBody([0, 0.5, 0], { type: "mesh" });
+unit.createBody({ offset: [0, 0.5, 0], type: "mesh" });
 
-// Adding ticks to player component to be moved latter in engine js
+// Adding ticks to player component
 
 var ents = box.Engine.noa.entities;
 

@@ -5,7 +5,7 @@ export class Entity {
     this.id;
   }
 
-  createBody(offset, data) {
+  createBody(data) {
     if (data.type === "sphere") {
       this.ents = box.Engine.noa.entities;
       // getting the player position
@@ -22,9 +22,8 @@ export class Entity {
       // Ball setting
       var pos = [playPos[0], playPos[1] + 0.5, playPos[2]];
       var mesh = ballMesh.createInstance("ball_instance");
-      var meshOffset = [0, this.radius, 0];
+      //var meshOffset = [0, this.radius, 0];
       var doPhysics = true;
-      var shadow = true;
 
       // Getting the entity id && adding
       var id = this.ents.add(
@@ -32,9 +31,8 @@ export class Entity {
         this.width,
         this.height,
         mesh,
-        meshOffset,
-        doPhysics,
-        shadow
+        data.offset,
+        doPhysics
       );
       return id;
     } else {
@@ -47,7 +45,7 @@ export class Entity {
         box.Engine.noa.entities.names.mesh,
         {
           mesh,
-          offset,
+          offset: data.offset,
         }
       );
       return mesh;

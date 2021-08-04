@@ -11,7 +11,7 @@ export class Projectile extends Entity {
   }
   shootProjectile() {
     // creating the physics body
-    const id = this.createBody(null, { type: "sphere" });
+    const id = this.createBody({ offset: [0, 0.2, 0], type: "sphere" });
     const body = this.ents.getPhysicsBody(id);
 
     // adding params to applyImpulse based on camera direction
