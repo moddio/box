@@ -35,6 +35,14 @@ export class Engine extends Entity {
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
+    let player = new box.Player({
+      name: "john",
+      player: box.Engine.noa.playerEntity,
+    });
+    let unit = new box.Unit({ owner: player.getMainUnit() });
+
+    // Asign the offset to the created body
+    unit.createBody({ offset: [0, 0.5, 0], type: "mesh" });
   }
   loadMap(mapData) {}
   engineStep() {

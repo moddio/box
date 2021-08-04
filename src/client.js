@@ -25,19 +25,12 @@ console.log("player has joined the game");
 // when player joins the game, create a unit, and assign that unit to that player.
 // box.onEvent("playerJoin", function (player) {
 
-let player = new box.Player({
-  name: "john",
-  player: box.Engine.noa.playerEntity,
-});
-let unit = new box.Unit({ owner: player.getMainUnit() });
-
-// Asign the offset to the created body
-unit.createBody({ offset: [0, 0.5, 0], type: "mesh" });
-
 // Adding ticks to player component
 
-var ents = box.Engine.noa.entities;
+// Demo of tick system
 
+/**
+var ents = box.Engine.noa.entities;
 const test = ents.createComponent({
   name: "player",
   system: (dt, states) => {
@@ -52,3 +45,5 @@ const test = ents.createComponent({
   },
 });
 ents.addComponent(1, test);
+
+ */

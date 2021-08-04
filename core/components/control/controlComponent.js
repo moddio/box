@@ -7,15 +7,15 @@ class ControlComponent {
     inputs.bind("move-left", "A", "<left>");
     inputs.bind("move-down", "S", "<up>");
     inputs.bind("move-right", "D", "<left>");
-    inputs.bind("shoot-ball", "Y", "<left>");
+    inputs.bind("shoot-ball", "H", "<left>");
 
     var body = box.Engine.noa.entities.getPhysicsBody(this.player);
     var lastUpdate = new Date().getTime();
     box.Engine.noa.on("tick", () => {
       if (new Date().getTime() > lastUpdate + 95) {
         if (inputs.state["shoot-ball"]) {
-          const projectile = new box.Projectile({ width: 10, height: 10 });
-          projectile.shootProjectile();
+          const unit = new box.Unit({ owner: 1, width: 7, height: 7 });
+          unit.shootProjectile();
         }
         if (inputs.state["move-left"]) {
           body.applyImpulse([-5, 0, 0]);
