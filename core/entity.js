@@ -84,25 +84,9 @@ export class Entity {
   }
   playerTick() {
     // A rotation of mesh demo, still need some logic in it
-    let rotation = 0;
     box.Engine.noa.on("tick", () => {
-      let current = box.Engine.noa.camera.getDirection()[0];
-
-      if (rotation !== current) {
-        console.log("rotation", rotation, "current", current);
-        if (current > 0.9 || current < -0.9) {
-          rotation = current;
-          return;
-        }
-        if (rotation < current) {
-          this.mesh.rotatePOV(0, 0.06, 0);
-        }
-        if (rotation > current) {
-          this.mesh.rotatePOV(0, -0.06, 0);
-        }
-      }
-
-      rotation = current;
+      let current = box.Engine.noa.camera.heading;
+      this.mesh.rotation.y = current;
     });
   }
 }
