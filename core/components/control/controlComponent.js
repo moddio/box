@@ -1,4 +1,5 @@
 var inputs = require("game-inputs")();
+
 class ControlComponent {
   constructor(player) {
     this.player = player;
@@ -8,6 +9,8 @@ class ControlComponent {
     inputs.bind("move-down", "S", "<up>");
     inputs.bind("move-right", "D", "<left>");
     inputs.bind("shoot-ball", "H", "<left>");
+
+    // movement in the scene using ticks
 
     var body = box.Engine.noa.entities.getPhysicsBody(this.player);
     var lastUpdate = new Date().getTime();
@@ -74,6 +77,7 @@ class ControlComponent {
         break;
     }
   }
+
   keyRelease(key) {
     // testing the control of the player
     // TODOO : TO STREAM KEY INPUT TO THE SERVER

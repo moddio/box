@@ -60,6 +60,8 @@ export class Engine extends Entity {
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
+
+    // setting the player Unit as main unit
     let player = new box.Player({
       name: "john",
       player: box.Engine.noa.playerEntity,
@@ -68,13 +70,19 @@ export class Engine extends Entity {
 
     // Asign the offset to the created body
     unit.createBody({ offset: [0, 0.5, 0], type: "mesh" });
+
+    // Run player ticks for rotation
+    unit.playerTick();
   }
+
   loadMap(mapData) {}
+
   engineStep() {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);
     }
   }
+
   destroyEntity(entityId) {
     delete this.entities[entityId];
   }

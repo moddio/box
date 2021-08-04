@@ -48,20 +48,7 @@ export class Entity {
           offset: data.offset,
         }
       );
-      let rotation = 0;
-      box.Engine.noa.on("tick", () => {
-        let current = box.Engine.noa.camera.getDirection()[0];
-        let persistanceRot = 0.01;
-        if (current > 0 && rotation !== current) {
-          mesh.rotatePOV(0, persistanceRot + 0.01, 0);
-        }
-        if (current < 0 && rotation !== current) {
-          mesh.rotatePOV(0, -persistanceRot - 0.01, 0);
-        }
-
-        rotation = current;
-      });
-
+      this.mesh = mesh;
       return mesh;
     }
   }
@@ -93,5 +80,22 @@ export class Entity {
 
   tick() {
     // for each this._components, run their tick
+    return "working";
+  }
+  playerTick() {
+    // A rotation of mesh demo, still need some logic in it
+    let rotation = 0;
+    box.Engine.noa.on("tick", () => {
+      let current = box.Engine.noa.camera.getDirection()[0];
+      let persistanceRot = 0.01;
+      if (current > 0 && rotation !== current) {
+        this.mesh.rotatePOV(0, persistanceRot + 0.01, 0);
+      }
+      if (current < 0 && rotation !== current) {
+        this.mesh.rotatePOV(0, -persistanceRot - 0.01, 0);
+      }
+
+      rotation = current;
+    });
   }
 }
