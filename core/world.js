@@ -1,7 +1,7 @@
 import { water, blocks } from "./utils/textures";
 import { io } from "socket.io-client";
-//import map from "../config/map/map.json";
-//import loadMap from "./components/map/tiledLoader";
+import map from "../config/map/map.json";
+import loadMap from "./components/map/tiledLoader";
 
 const socket = io("http://localhost:3000");
 
@@ -45,7 +45,7 @@ const generateWorld = () => {
   });
 
   // Generate the map randomly
-  box.Engine.noa.world.on("worldDataNeeded", (id, data, x, y, z) => {
+  /*box.Engine.noa.world.on("worldDataNeeded", (id, data, x, y, z) => {
     for (let i = 0; i < data.shape[0]; i++) {
       for (let j = 0; j < data.shape[1]; j++) {
         for (let k = 0; k < data.shape[2]; k++) {
@@ -58,15 +58,19 @@ const generateWorld = () => {
       }
     }
     box.Engine.noa.world.setChunkData(id, data);
+  });*/
+
+  var check = 0;
+  // Loading tiled map from map.json
+  box.Engine.noa.world.on("worldDataNeeded", (id, data) => {
+
+    if (check > 0) return;
+    check++;
+    loadMap(map, data, blocksID, waterID)
+
+    box.Engine.noa.world.setChunkData(id, data);
+    return;
   });
-
-  /*if (box.noa.targetedBlock) {
-
-  }*/
-
-  /*setTimeout(() => {
-    loadMap(map, blocksID, waterID);
-  }, 1000);*/
 };
 
 export default generateWorld;
