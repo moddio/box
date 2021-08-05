@@ -9,4 +9,5 @@ export const Projectile = importProjectile;
 export const Engine = new boxEngine();
 export const Player = importedPlayer;
 export const Unit = importedUnit;
+export const edgeMap = { width: 20, height: 20 };
 export const inputs = require("game-inputs")();

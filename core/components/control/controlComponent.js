@@ -22,7 +22,6 @@ class ControlComponent {
       if (box.inputs.state["add-block"]) {
         if (box.Engine.noa.targetedBlock) {
           var pos = box.Engine.noa.targetedBlock.position;
-          console.log("testttttttt", box.Engine.noa);
           box.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
         }
       }

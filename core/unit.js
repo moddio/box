@@ -30,8 +30,26 @@ export class Unit extends Entity {
   tick() {
     var body = box.Engine.noa.entities.getPhysicsBody(1);
     var lastUpdate = new Date().getTime();
+    // initial position of the player
+    var initialPosPlayer = [10, 10, 10];
+    body.setPosition(initialPosPlayer);
 
     box.Engine.noa.on("tick", () => {
+      // width height edges chaker TEMP SOLUTION
+      console.log("player position", body.getPosition());
+      if (
+        body.getPosition()[0] <= 0 ||
+        body.getPosition()[0] >= box.edgeMap.width ||
+        body.getPosition()[2] <= 0 ||
+        body.getPosition()[2] >= box.edgeMap.height
+      ) {
+        body.setPosition([10, 10, 10]);
+      }
+      if (new Date().getTime() > lastUpdate + 97) {
+        let current = box.Engine.noa.camera.heading;
+        this.moveDirection = current;
+        this.mesh.rotation.y = current;
+      }
       if (new Date().getTime() > lastUpdate + 95) {
         if (inputs.state["shoot-ball"]) {
           this.owner = 1;
@@ -59,9 +77,6 @@ export class Unit extends Entity {
         }
         lastUpdate = new Date().getTime();
       }
-      let current = box.Engine.noa.camera.heading;
-      this.moveDirection = current;
-      this.mesh.rotation.y = current;
       // this.body.applyImpulse("some values about direction and power");
 
       inputs.tick();

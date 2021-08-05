@@ -1,5 +1,5 @@
 var numberOfblocks = 0;
-export const createBlockEvent = ({ blocks }) => {
+const createBlockEvent = ({ blocks }) => {
   const waterID = noa.registry.registerBlock(1, { material: "water" });
   const goldID = noa.registry.registerBlock(3, { material: "gold" });
   const diamondID = noa.registry.registerBlock(4, { material: "diamond" });
@@ -36,7 +36,7 @@ export const createBlockEvent = ({ blocks }) => {
   console.log("blocks data", blocks, "numberofblocks", numberOfblocks);
 };
 
-export const removeBlockEvent = (position) => {
+const removeBlockEvent = (position) => {
   const pos = [...position];
   noa.setBlock(0, pos[0], pos[1], pos[2]);
   numberOfblocks--;
@@ -44,16 +44,16 @@ export const removeBlockEvent = (position) => {
 
 var allPlayers = [];
 var numberOfPlayer = 0;
-const playersCount = document.querySelector(".players");
-const playerEvent = document.querySelector(".player_table");
+//const playersCount = document.querySelector(".players");
+//const playerEvent = document.querySelector(".player_table");
 
-export const removePlayerEvent = (playerID) => {
+const removePlayerEvent = (playerID) => {
   numberOfPlayer--;
   playersCount.innerHTML = `Number of players connected ${numberOfPlayer}`;
   console.log(`player ${playerID} is offline`);
 };
 
-export const playersEvent = ({ data }) => {
+const playersEvent = ({ data }) => {
   allPlayers = [...data];
   // Count number of player
   while (numberOfPlayer <= allPlayers.length - 1) {
@@ -80,7 +80,15 @@ export const playersEvent = ({ data }) => {
   console.log("number of players", numberOfPlayer);
 };
 
-export const playersDataEvent = (socketID, playerPosition) => ({
+const playersDataEvent = (socketID, playerPosition) => ({
   ID: socketID,
   position: playerPosition,
 });
+
+module.exports = {
+  playersDataEvent,
+  playersEvent,
+  removeBlockEvent,
+  createBlockEvent,
+  removePlayerEvent,
+};
