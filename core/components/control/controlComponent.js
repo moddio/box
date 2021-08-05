@@ -20,17 +20,23 @@ class ControlComponent {
           const unit = new box.Unit({ owner: 1, width: 7, height: 7 });
           unit.shootProjectile();
         }
+
+        let angle = box.Engine.noa.camera.heading;
+        let force = 5;
+        let y = force * Math.cos(angle);
+        let x = force * Math.sin(angle);
+
         if (inputs.state["move-left"]) {
-          body.applyImpulse([-5, 0, 0]);
+          body.applyImpulse([-y, 0, x]);
         }
         if (inputs.state["move-right"]) {
-          body.applyImpulse([5, 0, 0]);
+          body.applyImpulse([y, 0, -x]);
         }
         if (inputs.state["move-up"]) {
-          body.applyImpulse([0, 0, 5]);
+          body.applyImpulse([x, 0, y]);
         }
         if (inputs.state["move-down"]) {
-          body.applyImpulse([0, 0, -5]);
+          body.applyImpulse([-x, 0, -y]);
         }
         lastUpdate = new Date().getTime();
       }
