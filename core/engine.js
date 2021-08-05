@@ -9,11 +9,6 @@ import "./utils/state.min.js";
 import generateWorld from "./world.js";
 import { Entity } from "./entity.js";
 
-// loading map imports
-import { water, blocks } from "./utils/textures";
-import map from "../config/map/map.json";
-import loadMap from "./components/map/tiledLoader";
-
 export class Engine extends Entity {
   constructor() {
     super();
@@ -42,6 +37,15 @@ export class Engine extends Entity {
       new BABYLON.AmmoJSPlugin()
     );
 
+    box.inputs.bind("move-up", "W", "<up>");
+    box.inputs.bind("move-left", "A", "<left>");
+    box.inputs.bind("move-down", "S", "<up>");
+    box.inputs.bind("move-right", "D", "<left>");
+    box.inputs.bind("shoot-ball", "H", "<left>");
+    box.inputs.bind("change-material", "P", "<left>");
+    box.inputs.bind("add-block", "L", "<left>");
+    box.inputs.bind("remove-block", "K", "<left>");
+
     // setting the player Unit as main unit
     let player = new box.Player({
       name: "john",
@@ -52,8 +56,8 @@ export class Engine extends Entity {
     // Asign the offset to the created body
     unit.createBody({ offset: [0, 0.5, 0], type: "mesh" });
 
-    // Run player ticks for rotation
-    unit.playerTick();
+    // run unit ticks
+    unit.tick();
   }
 
   loadMap(mapData) {}

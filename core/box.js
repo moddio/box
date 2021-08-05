@@ -9,3 +9,4 @@ export const Projectile = importProjectile;
 export const Engine = new boxEngine();
 export const Player = importedPlayer;
 export const Unit = importedUnit;
+export const inputs = require("game-inputs")();

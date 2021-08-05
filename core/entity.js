@@ -78,15 +78,10 @@ export class Entity {
 
   setStreamMode(mode) {}
 
+  /**
   tick() {
     // for each this._components, run their tick
     return "working";
   }
-  playerTick() {
-    // A rotation of mesh demo, still need some logic in it
-    box.Engine.noa.on("tick", () => {
-      let current = box.Engine.noa.camera.heading;
-      this.mesh.rotation.y = current;
-    });
-  }
+   */
 }

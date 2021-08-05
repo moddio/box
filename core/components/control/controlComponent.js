@@ -1,48 +1,8 @@
-var inputs = require("game-inputs")();
-
 class ControlComponent {
   constructor(player) {
     this.player = player;
     this.mouseClick();
-    inputs.bind("move-up", "W", "<up>");
-    inputs.bind("move-left", "A", "<left>");
-    inputs.bind("move-down", "S", "<up>");
-    inputs.bind("move-right", "D", "<left>");
-    inputs.bind("shoot-ball", "H", "<left>");
-
-    // movement in the scene using ticks
-
-    var body = box.Engine.noa.entities.getPhysicsBody(this.player);
-    var lastUpdate = new Date().getTime();
-    box.Engine.noa.on("tick", () => {
-      if (new Date().getTime() > lastUpdate + 95) {
-        if (inputs.state["shoot-ball"]) {
-          const unit = new box.Unit({ owner: 1, width: 7, height: 7 });
-          unit.shootProjectile();
-        }
-
-        let angle = box.Engine.noa.camera.heading;
-        let force = 5;
-        let y = force * Math.cos(angle);
-        let x = force * Math.sin(angle);
-
-        if (inputs.state["move-left"]) {
-          body.applyImpulse([-y, 0, x]);
-        }
-        if (inputs.state["move-right"]) {
-          body.applyImpulse([y, 0, -x]);
-        }
-        if (inputs.state["move-up"]) {
-          body.applyImpulse([x, 0, y]);
-        }
-        if (inputs.state["move-down"]) {
-          body.applyImpulse([-x, 0, -y]);
-        }
-        lastUpdate = new Date().getTime();
-      }
-
-      inputs.tick();
-    });
+    this.keyPress();
   }
 
   mouseMove() {
@@ -50,67 +10,45 @@ class ControlComponent {
   }
 
   // Simple demo of removing blocks and adding blocks we don't want to do this here
-  mouseClick() {
-    box.Engine.noa.inputs.down.on("fire", () => {
-      if (noa.targetedBlock) {
-        var pos = noa.targetedBlock.position;
-        noa.setBlock(0, pos[0], pos[1], pos[2]);
-      }
-    });
-    box.Engine.noa.inputs.down.on("alt-fire", function () {
-      if (noa.targetedBlock) {
-        var pos = noa.targetedBlock.adjacent;
-        noa.addBlock(1, pos[0], pos[1], pos[2]);
-      }
-    });
-  }
+  mouseClick() {}
 
-  keyPress(key) {
-    switch (key) {
-      case "w":
-        console.log("kepress", "w");
-        break;
-      case "s":
-        console.log("kepress", "s");
-        break;
-      case "d":
-        console.log("kepress", "d");
-        break;
-      case "a":
-        console.log("kepress", "a");
-        break;
-      case "h":
-        break;
-    }
+  keyPress() {
+    let materialType = 1;
+    window.addEventListener("keypress", () => {
+      if (box.inputs.state["change-material"]) {
+        materialType === 1 ? (materialType = 2) : (materialType = 1);
+      }
+
+      if (box.inputs.state["add-block"]) {
+        if (box.Engine.noa.targetedBlock) {
+          var pos = box.Engine.noa.targetedBlock.position;
+          console.log("testttttttt", box.Engine.noa);
+          box.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
+        }
+      }
+
+      if (box.inputs.state["remove-block"]) {
+        if (box.Engine.noa.targetedBlock) {
+          var pos = box.Engine.noa.targetedBlock.adjacent;
+          box.Engine.noa.addBlock(materialType, pos[0], pos[1], pos[2]);
+        }
+      }
+    });
   }
 
   keyRelease(key) {
-    // testing the control of the player
-    // TODOO : TO STREAM KEY INPUT TO THE SERVER
     switch (key) {
       case "w":
         console.log("kepress", "w");
-        // body.applyImpulse([0, 0, 2.5]);
-
-        // update this.mainUnit's direction
         break;
       case "s":
         console.log("kepress", "s");
-        // body.applyImpulse([0, 0, -2.5]);
-
-        // update this.mainUnit's direction
         break;
       case "d":
         console.log("kepress", "d");
-        // body.applyImpulse([2.5, 0, 0]);
-
-        // update this.mainUnit's direction
         break;
       case "a":
         console.log("kepress", "a");
-        // body.applyImpulse([-2.5, 0, 0]);
-
-        // update this.mainUnit's direction
         break;
     }
   }
