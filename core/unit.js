@@ -12,7 +12,7 @@ export class Unit extends Entity {
     this.height = data.height * this.radius;
     this.moveDirection; // x, y, z rotations
 
-    //this.prevPosition;
+    this.prevPosition;
 
   }
   shootProjectile() {
@@ -37,14 +37,13 @@ export class Unit extends Entity {
     var initialPosPlayer = [10, 10, 10];
     body.setPosition(initialPosPlayer);
 
+    
+
     box.Engine.noa.on("tick", () => {
-      if (body.getPosition()[0] <= 0) body.setPosition([1, body.getPosition()[1] + 1, body.getPosition()[2]]);
-        if (body.getPosition()[0] >= box.edgeMap.width) body.setPosition([box.edgeMap.width - 1, body.getPosition()[1]+ 1, body.getPosition()[2]]);
-        if (body.getPosition()[2] <= 0) body.setPosition([body.getPosition()[0], body.getPosition()[1]+ 1, 1]);
-        if (body.getPosition()[2] >= box.edgeMap.height) body.setPosition([body.getPosition()[0], body.getPosition()[1]+ 1, box.edgeMap.height - 1]);
+      
       // width height edges chaker TEMP SOLUTION
       //console.log("player position", body.getPosition());
-      console.log("player position");
+      //console.log("player position");
       
       if (new Date().getTime() > lastUpdate + 97) {
         let current = box.Engine.noa.camera.heading;
@@ -64,6 +63,8 @@ export class Unit extends Entity {
         let y = force * Math.cos(angle);
         let x = force * Math.sin(angle);
 
+        this.prevPosition = body.getPosition();
+
         if (box.inputs.state["move-left"]) {
           body.applyImpulse([-y, 0, x]);
         }
@@ -77,7 +78,30 @@ export class Unit extends Entity {
           body.applyImpulse([-x, 0, -y]);
         }
 
-        
+        if (body.getPosition()[0] <= 0) {
+          console.log(this.prevPosition);
+          console.log("player position changed from:", body.getPosition());
+          body.setPosition([1, this.prevPosition[1] + 1, this.prevPosition[2]]);
+          console.log("player position changed too:", body.getPosition());
+        }
+        if (body.getPosition()[0] >= box.edgeMap.width) {
+          console.log(this.prevPosition);
+          console.log("player position changed from:", body.getPosition());
+          body.setPosition([box.edgeMap.width - 1, this.prevPosition[1]+ 1, this.prevPosition[2]]);
+          console.log("player position changed too:", body.getPosition());
+        }
+        if (body.getPosition()[2] <= 0) {
+          console.log(this.prevPosition);
+          console.log("player position changed from:", body.getPosition());
+          body.setPosition([this.prevPosition[0], this.prevPosition[1]+ 1, 1]);
+          console.log("player position changed too:", body.getPosition());
+        }
+        if (body.getPosition()[2] >= box.edgeMap.height) {
+          console.log(this.prevPosition);
+          console.log("player position changed from:", body.getPosition());
+          body.setPosition([this.prevPosition[0], this.prevPosition[1]+ 1, box.edgeMap.height - 1]);
+          console.log("player position changed too:", body.getPosition());
+        }
 
         /*if (
           body.getPosition()[0] <= 0 ||
