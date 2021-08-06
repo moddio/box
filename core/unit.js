@@ -11,6 +11,9 @@ export class Unit extends Entity {
     this.width = data.width * this.radius;
     this.height = data.height * this.radius;
     this.moveDirection; // x, y, z rotations
+
+    //this.prevPosition;
+
   }
   shootProjectile() {
     // Creating the physics body
@@ -35,16 +38,14 @@ export class Unit extends Entity {
     body.setPosition(initialPosPlayer);
 
     box.Engine.noa.on("tick", () => {
+      if (body.getPosition()[0] <= 0) body.setPosition([1, body.getPosition()[1] + 1, body.getPosition()[2]]);
+        if (body.getPosition()[0] >= box.edgeMap.width) body.setPosition([box.edgeMap.width - 1, body.getPosition()[1]+ 1, body.getPosition()[2]]);
+        if (body.getPosition()[2] <= 0) body.setPosition([body.getPosition()[0], body.getPosition()[1]+ 1, 1]);
+        if (body.getPosition()[2] >= box.edgeMap.height) body.setPosition([body.getPosition()[0], body.getPosition()[1]+ 1, box.edgeMap.height - 1]);
       // width height edges chaker TEMP SOLUTION
-      console.log("player position", body.getPosition());
-      if (
-        body.getPosition()[0] <= 0 ||
-        body.getPosition()[0] >= box.edgeMap.width ||
-        body.getPosition()[2] <= 0 ||
-        body.getPosition()[2] >= box.edgeMap.height
-      ) {
-        body.setPosition([10, 10, 10]);
-      }
+      //console.log("player position", body.getPosition());
+      console.log("player position");
+      
       if (new Date().getTime() > lastUpdate + 97) {
         let current = box.Engine.noa.camera.heading;
         this.moveDirection = current;
@@ -75,6 +76,20 @@ export class Unit extends Entity {
         if (box.inputs.state["move-down"]) {
           body.applyImpulse([-x, 0, -y]);
         }
+
+        
+
+        /*if (
+          body.getPosition()[0] <= 0 ||
+          body.getPosition()[0] >= box.edgeMap.width ||
+          body.getPosition()[2] <= 0 ||
+          body.getPosition()[2] >= box.edgeMap.height
+        ) {
+          body.setPosition(this.prevPosition);
+        }*/
+
+        //this.prevPosition = body.getPosition();
+
         lastUpdate = new Date().getTime();
       }
       // this.body.applyImpulse("some values about direction and power");
