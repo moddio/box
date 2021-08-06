@@ -45,10 +45,10 @@ export class Unit extends Entity {
       ) {
         body.setPosition([10, 10, 10]);
       }
-      if (new Date().getTime() > lastUpdate + 97) {
+      if (new Date().getTime() > lastUpdate + 98) {
         let current = box.Engine.noa.camera.heading;
-        this.moveDirection = current;
-        this.mesh.rotation.y = current;
+        this.moveDirection = Math.round(current);
+        this.mesh.rotation.y = Math.round(current);
       }
       if (new Date().getTime() > lastUpdate + 95) {
         if (inputs.state["shoot-ball"]) {
