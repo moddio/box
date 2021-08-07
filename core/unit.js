@@ -15,6 +15,8 @@ export class Unit extends Entity {
   shootProjectile() {
     // Creating the physics body
     const id = this.createBody({ offset: [0, 0.5, 0], type: "sphere" });
+    // call tick for the entity
+    box.Engine.noa.entities.addComponent(id, box.entityTicks);
     const body = this.ents.getPhysicsBody(id);
 
     // Adding params to applyImpulse based on camera direction

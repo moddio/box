@@ -10,4 +10,11 @@ export const Engine = new boxEngine();
 export const Player = importedPlayer;
 export const Unit = importedUnit;
 export const edgeMap = { width: 20, height: 20 };
+export const entityTicks = box.Engine.noa.entities.createComponent({
+  name: "entityTicks",
+  system: (dt, states) => {
+    // Tick state
+    console.log("this is a state", states);
+  },
+});
 export const inputs = require("game-inputs")();

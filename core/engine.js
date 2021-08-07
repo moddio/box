@@ -56,6 +56,8 @@ export class Engine extends Entity {
     // Asign the offset to the created body
     unit.createBody({ offset: [0, 0.5, 0], type: "mesh" });
 
+    this.noa.entities.addComponent(1, box.entityTicks);
+
     // run unit ticks
     unit.tick();
   }
