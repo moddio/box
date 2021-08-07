@@ -3,6 +3,7 @@ import * as BABYLON from "@babylonjs/core";
 import { Engine as noaEngine } from "noa-engine";
 import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
 import config from "../config/config.json";
+import { movementComp } from "../core/components/movement";
 
 // Files
 import "./utils/state.min.js";
@@ -56,7 +57,15 @@ export class Engine extends Entity {
     // Asign the offset to the created body
     unit.createBody({ offset: [0, 0.5, 0], type: "mesh" });
 
-    this.noa.entities.addComponent(1, box.entityTicks);
+    // creating a tick component
+    const movement = box.entityTicks(
+      movementComp.name,
+      movementComp.state,
+      movementComp.system
+    );
+
+    // adding tick component in noa
+    this.noa.entities.addComponent(1, movement);
 
     // run unit ticks
     unit.tick();

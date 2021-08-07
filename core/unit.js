@@ -15,8 +15,6 @@ export class Unit extends Entity {
   shootProjectile() {
     // Creating the physics body
     const id = this.createBody({ offset: [0, 0.5, 0], type: "sphere" });
-    // call tick for the entity
-    box.Engine.noa.entities.addComponent(id, box.entityTicks);
     const body = this.ents.getPhysicsBody(id);
 
     // Adding params to applyImpulse based on camera direction
@@ -30,7 +28,9 @@ export class Unit extends Entity {
     body.applyImpulse(imp);
   }
   tick() {
-    var body = box.Engine.noa.entities.getPhysicsBody(1);
+    /**
+  
+ var body = box.Engine.noa.entities.getPhysicsBody(1);
     var lastUpdate = new Date().getTime();
     // initial position of the player
     var initialPosPlayer = [10, 10, 10];
@@ -83,6 +83,9 @@ export class Unit extends Entity {
 
       inputs.tick();
     });
+
+
+     */
   }
 }
 
