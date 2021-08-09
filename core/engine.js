@@ -33,6 +33,9 @@ export class Engine extends Entity {
 
     const scene = this.noa.rendering.getScene();
 
+    this.noa.camera.sensitivityX = 5;
+    this.noa.camera.sensitivityY = 5;
+
     // Enable physics in the scene
     scene.enablePhysics(
       new BABYLON.Vector3(0, -9.8, 0),

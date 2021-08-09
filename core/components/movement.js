@@ -4,12 +4,15 @@ const state = {
   jumpping: false,
   maxVelocity: 7,
 };
-
+var checker = 0;
+for (let i = 0; i <= 18; i++) timer.push("rot");
 const system = (dt, states) => {
   var bodyPlayer = box.Engine.noa.entities.getPhysicsBody(1);
+  var meshData = box.Engine.noa.entities.getMeshData(1);
   var playerPos = box.Engine.noa.entities.getPosition(1);
-  bodyPlayer.friction = 2;
   for (let elem in states) {
+    bodyPlayer.friction = 2;
+    bodyPlayer.gravityMultiplier = 2;
     Math.abs(bodyPlayer.velocity[0]) > states[elem]["maxVelocity"] ||
     Math.abs(bodyPlayer.velocity[1]) > states[elem]["maxVelocity"] ||
     Math.abs(bodyPlayer.velocity[2]) > states[elem]["maxVelocity"]
@@ -30,31 +33,60 @@ const system = (dt, states) => {
     }
 
     if (states[elem]["__id"] === 1) {
+      bodyPlayer.gravityMultiplier = 2;
       if (box.inputs.state["shoot-ball"]) {
         /*
         this.shootProjectile();
         **/
       }
 
+      let current = box.Engine.noa.camera.heading;
+      // console.log("logging state ", box.Engine.noa.entities);
+
+      if (checker > current) {
+        // ------------- rotation LOG ---------------------
+        console.log("log the issue", checker - current);
+        meshData.mesh.rotatePOV(0, (checker - current) * -1, 0);
+        // meshData.mesh.rotation.y = current;
+      }
+      if (checker < current) {
+        // ------------- rotation LOG ---------------------
+        console.log("log the issue", checker - current);
+        meshData.mesh.rotatePOV(0, (checker - current) * -1, 0);
+        // meshData.mesh.rotation.y = current;
+      }
+      checker = current;
+
+      //idex--;
+
+      // handle physics boundary
+
       let angle = box.Engine.noa.camera.heading;
       let force = 2;
       let y = force * Math.cos(angle);
       let x = force * Math.sin(angle);
 
-      if (playerPos[0] <= 1) {
-        //left
-        bodyPlayer.applyImpulse([y, 0, -x]);
+      //console.log("player position", meshData.mesh.rotatePOV(0, current, 0));
+      if (playerPos[0] <= 0.9 && states[elem]["velocity"] > 3) {
+        bodyPlayer.friction = 1000;
+        bodyPlayer.gravityMultiplier = 1000;
       }
-      if (playerPos[0] >= 19) {
-        bodyPlayer.applyImpulse([-y, 0, x]);
+      if (playerPos[0] >= 19.1 && states[elem]["velocity"] > 3) {
+        bodyPlayer.friction = 1000;
+        bodyPlayer.gravityMultiplier = 1000;
       }
-      if (playerPos[2] >= 19) {
-        bodyPlayer.applyImpulse([-x, 0, -y]);
+      if (playerPos[2] <= 0.9 && states[elem]["velocity"] > 3) {
+        bodyPlayer.friction = 1000;
+        bodyPlayer.gravityMultiplier = 1000;
       }
-      if (playerPos[2] <= 1) {
-        bodyPlayer.applyImpulse([x, 0, y]);
+      //
+      if (playerPos[2] >= 19.1 && states[elem]["velocity"] > 3) {
+        bodyPlayer.friction = 1000;
+        bodyPlayer.gravityMultiplier = 1000;
       }
 
+      bodyPlayer.friction = 2;
+      bodyPlayer.gravityMultiplier = 2;
       if (
         box.inputs.state["jump"] &&
         playerPos[1] <= 7 &&
@@ -91,6 +123,8 @@ const system = (dt, states) => {
       ) {
         bodyPlayer.applyImpulse([-x, 0, -y]);
       }
+      box.inputs.state.dy = 0;
+      box.inputs.state.dx = 0;
     }
   }
 };
