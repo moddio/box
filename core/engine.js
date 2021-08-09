@@ -17,6 +17,7 @@ export class Engine extends Entity {
     this.noa.inputs.unbind("forward");
     this.noa.inputs.unbind("left");
     this.noa.inputs.unbind("backward");
+    this.noa.inputs.unbind("jump");
     this.noa.inputs.unbind("right");
     this.Mesh = noaMesh;
     this.entities = {};
@@ -42,6 +43,7 @@ export class Engine extends Entity {
     box.inputs.bind("move-left", "A", "<left>");
     box.inputs.bind("move-down", "S", "<up>");
     box.inputs.bind("move-right", "D", "<left>");
+    box.inputs.bind("jump", "<space>");
     box.inputs.bind("shoot-ball", "H", "<left>");
     box.inputs.bind("change-material", "P", "<left>");
     box.inputs.bind("add-block", "L", "<left>");

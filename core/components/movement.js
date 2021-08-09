@@ -2,7 +2,7 @@ const state = {
   initPlayerPos: true,
   playerMovingFaster: false,
   jumpping: false,
-  maxVelocity: 6,
+  maxVelocity: 7,
 };
 
 const system = (dt, states) => {
@@ -18,9 +18,11 @@ const system = (dt, states) => {
 
     states[elem]["jumpping"] = bodyPlayer.atRestY() < 0 ? true : false;
 
-    states[elem]["jumpping"]
-      ? (states[elem]["maxVelocity"] = 6)
-      : (states[elem]["maxVelocity"] = 1);
+    /**
+        states[elem]["jumpping"]
+      ? (states[elem]["maxVelocity"] = 7)
+      : (states[elem]["maxVelocity"] = 0.5);
+     */
 
     if (states[elem]["initPlayerPos"]) {
       bodyPlayer.setPosition([10, 10, 10]);
@@ -33,35 +35,58 @@ const system = (dt, states) => {
         this.shootProjectile();
         **/
       }
+
       let angle = box.Engine.noa.camera.heading;
       let force = 2;
       let y = force * Math.cos(angle);
       let x = force * Math.sin(angle);
 
+      if (playerPos[0] <= 1) {
+        //left
+        bodyPlayer.applyImpulse([y, 0, -x]);
+      }
+      if (playerPos[0] >= 19) {
+        bodyPlayer.applyImpulse([-y, 0, x]);
+      }
+      if (playerPos[2] >= 19) {
+        bodyPlayer.applyImpulse([-x, 0, -y]);
+      }
+      if (playerPos[2] <= 1) {
+        bodyPlayer.applyImpulse([x, 0, y]);
+      }
+
+      if (
+        box.inputs.state["jump"] &&
+        playerPos[1] <= 7 &&
+        !states[elem]["faster"]
+      ) {
+        bodyPlayer.applyImpulse([0, 7, 0]);
+      }
+
       if (
         box.inputs.state["move-left"] &&
-        playerPos[0] >= 4 &&
+        playerPos[0] >= 1 &&
         !states[elem]["faster"]
       ) {
         bodyPlayer.applyImpulse([-y, 0, x]);
       }
       if (
         box.inputs.state["move-right"] &&
-        playerPos[0] <= 17 &&
+        playerPos[0] <= 19 &&
         !states[elem]["faster"]
       ) {
         bodyPlayer.applyImpulse([y, 0, -x]);
       }
       if (
         box.inputs.state["move-up"] &&
-        playerPos[2] <= 17 &&
+        playerPos[2] <= 19 &&
         !states[elem]["faster"]
       ) {
         bodyPlayer.applyImpulse([x, 0, y]);
       }
       if (
         box.inputs.state["move-down"] &&
-        playerPos[2] >= 4 &&
+        playerPos[2] >= 1 &&
         !states[elem]["faster"]
       ) {
         bodyPlayer.applyImpulse([-x, 0, -y]);
