@@ -36,7 +36,7 @@ export class Unit extends Entity {
 
     box.Engine.noa.on("tick", () => {
       // width height edges chaker TEMP SOLUTION
-      console.log("player position", body.getPosition());
+      //console.log("player position", body.getPosition());
       if (
         body.getPosition()[0] <= 0 ||
         body.getPosition()[0] >= box.edgeMap.width ||

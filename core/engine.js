@@ -27,10 +27,10 @@ export class Engine extends Entity {
     console.log("starting the noa engine...");
 
     // Generate the world
-    generateWorld();
+    
 
     const scene = this.noa.rendering.getScene();
-
+    generateWorld();
     // Enable physics in the scene
     scene.enablePhysics(
       new BABYLON.Vector3(0, -9.8, 0),
