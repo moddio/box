@@ -57,28 +57,11 @@ export class Engine extends Entity {
       name: "john",
       player: box.Engine.noa.playerEntity,
     });
-    let unit = new box.Unit({ owner: player.getMainUnit() });
+    let unit = new box.Unit({ owner: player.getMainUnit(), id: 1}); // Noa engine reserves id: 1 for my player
 
-    // creating a tick component
-    // const movement = box.createNoaComponent(
-    //                                     movementComp.name,
-    //                                     movementComp.state,
-    //                                     movementComp.system
-    //                                   );
-
-   
-    /**
-    
-    const entityTick = this.noa.entities.createComponent({
-                                          name: "entityTick", 
-                                          states: {},
-                                          system: this.entityTick
-                                        });
-
-     */
     // adding tick component in noa 
-    //let noaEntityId = 1; // my player's unit
-    //this.noa.entities.addComponent(noaEntityId, entityTick);
+    let noaEntityId = 1; // my player's unit
+
 
     // run unit ticks
     //unit.tick();

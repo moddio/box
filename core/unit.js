@@ -3,7 +3,9 @@ import { Entity } from "./entity";
 
 export class Unit extends Entity {
   constructor(data) {
-    super(); // run Entity's constructor
+    // run Entity's constructor
+    super(data?data.id:undefined); 
+    
     this.id = data.owner;
     // Default radius
     this.radius = 0.2;
@@ -38,9 +40,31 @@ export class Unit extends Entity {
   }
 
   tick() {
-    
+    // console.log("testing unit tick")
+    super.tick() // call Entity.tick()
+
+    let angle = box.Engine.noa.camera.heading;
+    let force = 2;
+    let y = force * Math.cos(angle);
+    let x = force * Math.sin(angle);
+
+    if (box.inputs.state["move-left"]) {
+      this.body.applyImpulse([-y, 0, x]);
+    }
+    if (box.inputs.state["move-right"]) {
+      this.body.applyImpulse([y, 0, -x]);
+    }
+    if (box.inputs.state["move-up"]) {
+      this.body.applyImpulse([x, 0, y]);
+    }
+    if (box.inputs.state["move-down"]) {
+      this.body.applyImpulse([-x, 0, -y]);
+    }
     /**
   
+
+
+    
  var body = box.Engine.noa.entities.getPhysicsBody(1);
     var lastUpdate = new Date().getTime();
     // initial position of the player

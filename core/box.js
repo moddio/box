@@ -39,9 +39,9 @@ export const movementComp = box.Engine.noa.entities.createComponent({
 
  */
 
-
-    // const entityTick = this.noa.entities.createComponent({
-    //                                       name: "entityTick", 
-    //                                       states: {},
-    //                                       system: this.entityTick
-    //                                     });
+export const entityTick = Engine.noa.entities.createComponent({
+                                          name: "entityTick", 
+                                          order: 1,
+                                          states: {},
+                                          system: Engine.entityTick
+                                        });

@@ -9,7 +9,6 @@ var checker = 0;
 
 const system = (dt, states) => {
 
-  this.entity.tick();
 
   // var bodyPlayer = box.Engine.noa.entities.getPhysicsBody(1);
   // var meshData = box.Engine.noa.entities.getMeshData(1);

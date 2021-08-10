@@ -1,21 +1,19 @@
-import { prototype } from "copy-webpack-plugin";
 
 export class Entity {
-  contructor() {
+  
+  contructor(id) {
     this.components;
     this.body;
     this.mesh;
-    this.id;
-
+    this.id = id || this.generateId();
   }
 
   createBody(data) {
     
     // Creating a player mesh
-    const mesh = box.Engine.Mesh.CreateBox("player-mesh", 1);
+    const mesh = box.Engine.Mesh.CreateBox("player-mesh", this.id);
     
-
-    // Adding entity using noa
+    // Adding mesh body in noa
     box.Engine.noa.entities.addComponent(
       this.id,
       box.Engine.noa.entities.names.mesh,
@@ -24,16 +22,18 @@ export class Entity {
         offset: data.offset,
       }
     );
-    this.mesh = mesh;
-    this.body = box.Engine.noa.entities.getPhysicsBody(1);
 
-    return mesh;
-  
+    // add entityTick
+    box.Engine.noa.entities.addComponent(this.id, box.entityTick);
     
+    this.mesh = mesh;
+    this.body = box.Engine.noa.entities.getPhysicsBody(this.id);
+    this.body.boxEntity = this;
+
+    return mesh;    
   }
 
   addComponent(componentName) {
-    this.id = this.generateId();
     this.components = {
       [componentName]: new loader.loadedComponents[componentName](1),
       id: this.id,
@@ -59,8 +59,16 @@ export class Entity {
 
   
   tick() {
-    // for each this._components, run their tick
-    //Object.prototype.tick();
+    // console.log("testing entity tick")
+    
+    let pos = this.body.getPosition()
+    this.body.setPosition([
+      Math.max(1, Math.min(pos[0], 19)),
+      pos[1],
+      Math.max(1, Math.min(pos[2], 19))
+    ])
+    
+    console.log(pos, this.body.getPosition())
   }
   
 
