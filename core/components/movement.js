@@ -5,7 +5,6 @@ const state = {
   maxVelocity: 7,
 };
 var checker = 0;
-for (let i = 0; i <= 18; i++) timer.push("rot");
 const system = (dt, states) => {
   var bodyPlayer = box.Engine.noa.entities.getPhysicsBody(1);
   var meshData = box.Engine.noa.entities.getMeshData(1);
