@@ -20,8 +20,9 @@ export class Unit extends Entity {
   }
   shootProjectile() {
     // Creating the physics body
-    const id = this.createBody({ offset: [0, 0.5, 0], type: "sphere" });
-    const body = this.ents.getPhysicsBody(id);
+    let body = this.createBody({ offset: [0, 0.5, 0], type: "sphere" });
+
+    console.log("this is a body mesh", body);
 
     // Adding params to applyImpulse based on camera direction
     body.restitution = 0.8;
@@ -40,6 +41,7 @@ export class Unit extends Entity {
 
   tick() {
     // console.log("testing unit tick")
+
     super.tick(); // call Entity.tick()
 
     let angle = box.Engine.noa.camera.heading;
@@ -47,6 +49,14 @@ export class Unit extends Entity {
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
 
+    // rotation
+    let current = box.Engine.noa.camera.heading;
+    this.mesh.rotation.y = current;
+
+    // movement
+    if (box.inputs.state["jump"]) {
+      this.body.applyImpulse([0, 2, 0]);
+    }
     if (box.inputs.state["move-left"]) {
       this.body.applyImpulse([-y, 0, x]);
     }

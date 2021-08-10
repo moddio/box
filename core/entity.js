@@ -67,9 +67,9 @@ export class Entity {
     ]);
      */
 
-    box.Engine.noa.setBlock(0, 1, 1);
+    //box.Engine.noa.setBlock(0, 1, 1);
 
-    console.log(pos, this.body.getPosition());
+    // console.log(pos, this.body.getPosition());
   }
 
   // if (data.type === "sphere") {

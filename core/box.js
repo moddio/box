@@ -19,6 +19,7 @@ export const edgeMap = {
   minHeight: 0,
   minWidth: 0,
 };
+
 export const inputs = require("game-inputs")();
 /**
 
