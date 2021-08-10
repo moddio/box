@@ -44,6 +44,7 @@ const generateWorld = () => {
 
   var createAtlas = require('babylon-atlas');
   var atlas = createAtlas('tilesheet_complete.png', 'tilesheet_complete.json', scene, BABYLON);
+  //var atlas = createAtlas('sprites.png', 'sprites.json', scene, BABYLON);
   
   tileMaterial.diffuseTexture = atlas.makeSpriteTexture('frame_001');
   console.log(tileMaterial.diffuseTexture)
