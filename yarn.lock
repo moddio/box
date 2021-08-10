@@ -451,6 +451,11 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
+babylon-atlas@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/babylon-atlas/-/babylon-atlas-0.6.0.tgz#80bb85f1cb0c499e76b9f3015017a54fb37b3fa9"
+  integrity sha512-EWgmnKEjlf2t5pksu4FV4DryW0N9OlR4jttn8ZSBiNEB892XKqQFtDnW667piAgfTsPZuRC19/uVqXksPdU1+w==
+
 babylonjs-gltf2interface@4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/babylonjs-gltf2interface/-/babylonjs-gltf2interface-4.2.0.tgz#b0ef1e11e3574cf2c6f573d0c5c34857a2a7b322"

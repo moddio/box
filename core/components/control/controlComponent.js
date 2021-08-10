@@ -22,7 +22,15 @@ class ControlComponent {
       if (box.inputs.state["add-block"]) {
         if (box.Engine.noa.targetedBlock) {
           var pos = box.Engine.noa.targetedBlock.position;
-          box.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
+
+          pos[0] <= 0 ||
+          pos[0] >= 20 ||
+          pos[1] <= 0 ||
+          pos[1] >= 20 ||
+          pos[2] <= 0 ||
+          pos[2] >= 20
+            ? ""
+            : box.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
         }
       }
 

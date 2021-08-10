@@ -1,4 +1,5 @@
-import { water, blocks } from "./utils/textures";
+import { water, blocks, diamond } from "./utils/textures";
+import * as BABYLON from "@babylonjs/core";
 import { io } from "socket.io-client";
 import map from "../config/map/map.json";
 import loadMap from "./components/map/tiledLoader";
@@ -32,6 +33,43 @@ const generateWorld = () => {
   // 3D person perspective camera
   box.Engine.noa.camera.zoomDistance = 8;
 
+  var scene = box.Engine.noa.rendering.getScene();
+  var tileMaterial = box.Engine.noa.rendering.makeStandardMaterial("");
+
+  var createAtlas = require("babylon-atlas");
+  var atlas = createAtlas(
+    "tilesheet_complete.png",
+    "tilesheet_complete.json",
+    scene,
+    BABYLON
+  );
+
+  tileMaterial.diffuseTexture = atlas.makeSpriteTexture("frame_001");
+  console.log(tileMaterial.diffuseTexture);
+  //tileMaterial.opacityTexture = tileMaterial.diffuseTexture;
+  //atlas.setTextureFrame(tileMaterial.diffuseTexture, 'frame_001');
+
+  console.log("logging", box.Engine.noa.targetedBlock);
+  box.Engine.noa.registry.registerMaterial(
+    "tile",
+    null,
+    null,
+    false,
+    tileMaterial
+  );
+
+  //atlas.setTextureFrame(mat.diffuseTexture, 'player_jump')y
+  //tileMaterial.diffuseTexture = new Texture('./tilesheet_complete.png', scene)
+  //tileMaterial.opacityTexture = tileMaterial.diffuseTexture;
+  //var tileTexture = new BABYLON.Vector4(0, 0, 0, 0);
+  //c * 1/6, r * 1/4, (c + 1) * 1/6, (r + 1) * 1/4
+  //var mat = myExistingMesh.material
+
+  // Save texture inside register Block
+  const invisibleMaterial = box.Engine.noa.registry.registerBlock(3, {
+    material: "tile",
+  });
+
   // Init texture for the map
   box.Engine.noa.registry.registerMaterial("water", null, water);
   box.Engine.noa.registry.registerMaterial("grass", null, blocks);
@@ -63,10 +101,9 @@ const generateWorld = () => {
   var check = 0;
   // Loading tiled map from map.json
   box.Engine.noa.world.on("worldDataNeeded", (id, data) => {
-
     if (check > 0) return;
     check++;
-    loadMap(map, data, blocksID, waterID)
+    loadMap(map, data, blocksID, waterID, invisibleMaterial);
 
     box.Engine.noa.world.setChunkData(id, data);
     return;

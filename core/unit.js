@@ -4,8 +4,8 @@ import { Entity } from "./entity";
 export class Unit extends Entity {
   constructor(data) {
     // run Entity's constructor
-    super(data?data.id:undefined); 
-    
+    super(data ? data.id : undefined);
+
     this.id = data.owner;
     // Default radius
     this.radius = 0.2;
@@ -14,10 +14,9 @@ export class Unit extends Entity {
     this.height = data.height * this.radius;
     this.moveDirection; // x, y, z rotations
 
-    
     // Asign the offset to the created body
-    this.createBody({ offset: [0, 0.5, 0], type: "mesh" });    
-    this.resetPosition()
+    this.createBody({ offset: [0, 0.5, 0], type: "mesh" });
+    this.resetPosition();
   }
   shootProjectile() {
     // Creating the physics body
@@ -41,7 +40,7 @@ export class Unit extends Entity {
 
   tick() {
     // console.log("testing unit tick")
-    super.tick() // call Entity.tick()
+    super.tick(); // call Entity.tick()
 
     let angle = box.Engine.noa.camera.heading;
     let force = 2;

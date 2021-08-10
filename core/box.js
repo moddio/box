@@ -13,7 +13,12 @@ export const Projectile = importProjectile;
 export const Engine = new boxEngine();
 export const Player = importedPlayer;
 export const Unit = importedUnit;
-export const edgeMap = { width: 20, height: 20 };
+export const edgeMap = {
+  maxWidth: 20,
+  maxHeight: 20,
+  minHeight: 0,
+  minWidth: 0,
+};
 export const inputs = require("game-inputs")();
 /**
 
@@ -40,8 +45,8 @@ export const movementComp = box.Engine.noa.entities.createComponent({
  */
 
 export const entityTick = Engine.noa.entities.createComponent({
-                                          name: "entityTick", 
-                                          order: 1,
-                                          states: {},
-                                          system: Engine.entityTick
-                                        });
+  name: "entityTick",
+  order: 1,
+  states: {},
+  system: Engine.entityTick,
+});
