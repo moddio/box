@@ -59,21 +59,29 @@ export class Engine extends Entity {
     });
     let unit = new box.Unit({ owner: player.getMainUnit() });
 
-    // Asign the offset to the created body
-    unit.createBody({ offset: [0, 0.5, 0], type: "mesh" });
-
     // creating a tick component
-    const movement = box.entityTicks(
-      movementComp.name,
-      movementComp.state,
-      movementComp.system
-    );
+    // const movement = box.createNoaComponent(
+    //                                     movementComp.name,
+    //                                     movementComp.state,
+    //                                     movementComp.system
+    //                                   );
 
-    // adding tick component in noa
-    this.noa.entities.addComponent(1, movement);
+   
+    /**
+    
+    const entityTick = this.noa.entities.createComponent({
+                                          name: "entityTick", 
+                                          states: {},
+                                          system: this.entityTick
+                                        });
+
+     */
+    // adding tick component in noa 
+    //let noaEntityId = 1; // my player's unit
+    //this.noa.entities.addComponent(noaEntityId, entityTick);
 
     // run unit ticks
-    unit.tick();
+    //unit.tick();
   }
 
   loadMap(mapData) {}
@@ -81,6 +89,17 @@ export class Engine extends Entity {
   engineStep() {
     if (global.isServer) {
       this.serverNetworkComponent.createSnapshot(this.body);
+    }
+  }
+
+  entityTick(dt, states) {
+    for(let elem in states){
+      let noaEntityId = states[elem].__id;
+      let body = box.Engine.noa.entities.getPhysicsBody(noaEntityId);
+      let boxEntity = body.boxEntity
+      if (boxEntity) {
+        boxEntity.tick();
+      }
     }
   }
 

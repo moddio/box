@@ -3,7 +3,7 @@ import { Entity } from "./entity";
 
 export class Unit extends Entity {
   constructor(data) {
-    super();
+    super(); // run Entity's constructor
     this.id = data.owner;
     // Default radius
     this.radius = 0.2;
@@ -11,6 +11,11 @@ export class Unit extends Entity {
     this.width = data.width * this.radius;
     this.height = data.height * this.radius;
     this.moveDirection; // x, y, z rotations
+
+    
+    // Asign the offset to the created body
+    this.createBody({ offset: [0, 0.5, 0], type: "mesh" });    
+    this.resetPosition()
   }
   shootProjectile() {
     // Creating the physics body
@@ -27,7 +32,13 @@ export class Unit extends Entity {
     imp[1] += 1;
     body.applyImpulse(imp);
   }
+
+  resetPosition() {
+    this.body.setPosition([10, 10, 10]);
+  }
+
   tick() {
+    
     /**
   
  var body = box.Engine.noa.entities.getPhysicsBody(1);
