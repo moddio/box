@@ -1,5 +1,6 @@
-import { water, blocks, diamond } from "./utils/textures";
+import { water, blocks } from "./utils/textures";
 import * as BABYLON from "@babylonjs/core";
+import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { io } from "socket.io-client";
 import map from "../config/map/map.json";
 import loadMap from "./components/map/tiledLoader";
@@ -32,6 +33,9 @@ const getVoxelID = (x, y, z, { waterID, blocksID }) => {
 const generateWorld = () => {
   // 3D person perspective camera
   box.Engine.noa.camera.zoomDistance = 8;
+  box.Engine.noa.registry.registerMaterial("water", null, water);
+  box.Engine.noa.registry.registerMaterial("grass", null, blocks);
+  //box.Engine.noa.registry.registerMaterial("tile", null, './tilesheet_complete.png');
 
   var scene = box.Engine.noa.rendering.getScene();
   var tileMaterial = box.Engine.noa.rendering.makeStandardMaterial("");
@@ -66,21 +70,25 @@ const generateWorld = () => {
   //var mat = myExistingMesh.material
 
   // Save texture inside register Block
-  const invisibleMaterial = box.Engine.noa.registry.registerBlock(3, {
-    material: "tile",
-  });
-
-  // Init texture for the map
-  box.Engine.noa.registry.registerMaterial("water", null, water);
-  box.Engine.noa.registry.registerMaterial("grass", null, blocks);
-
-  // Save texture inside register Block
   const waterID = box.Engine.noa.registry.registerBlock(1, {
-    material: "water",
+    material: "tile",
   });
   const blocksID = box.Engine.noa.registry.registerBlock(2, {
     material: "grass",
   });
+  const invisibleMaterial = box.Engine.noa.registry.registerBlock(3, {
+    material: "tile",
+  });
+
+  // Save texture inside register Block
+  /*
+  const waterID = box.Engine.noa.registry.registerBlock(1, {
+    material: "water",
+  });
+    const blocksID = box.Engine.noa.registry.registerBlock(2, {
+    material: "grass",
+  });
+  **/
 
   // Generate the map randomly
   /*box.Engine.noa.world.on("worldDataNeeded", (id, data, x, y, z) => {
@@ -106,6 +114,8 @@ const generateWorld = () => {
     loadMap(map, data, blocksID, waterID, invisibleMaterial);
 
     box.Engine.noa.world.setChunkData(id, data);
+    box.Engine.noa.setBlock(waterID, 11, 10, 11);
+
     return;
   });
 };
