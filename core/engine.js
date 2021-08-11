@@ -80,7 +80,7 @@ export class Engine extends Entity {
       let body = box.Engine.noa.entities.getPhysicsBody(noaEntityId);
       let boxEntity = body.boxEntity;
       if (boxEntity) {
-        boxEntity.tick();
+        boxEntity.tick(dt, states);
       }
     }
   }

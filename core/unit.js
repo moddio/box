@@ -13,26 +13,38 @@ export class Unit extends Entity {
     this.width = data.width * this.radius;
     this.height = data.height * this.radius;
     this.moveDirection; // x, y, z rotations
+    inputs.down.on("shoot-ball", () => this.shootBouncyBall());
 
     // Asign the offset to the created body
     this.createBody({ offset: [0, 0.5, 0], type: "mesh" });
     this.resetPosition();
   }
-  shootProjectile() {
-    // Creating the physics body
-    let body = this.createBody({ offset: [0, 0.5, 0], type: "sphere" });
+  shootBouncyBall() {
+    const { body, id } = this.createBody({
+      offset: [0, 0.5, 0],
+      type: "sphere",
+    });
 
-    console.log("this is a body mesh", body);
-
-    // Adding params to applyImpulse based on camera direction
     body.restitution = 0.8;
-    body.friction = 0.6;
-    body.mass = 0.5;
-    const dir = box.Engine.noa.camera.getDirection();
-    let imp = [];
-    for (let i = 0; i < 3; i++) imp[i] = 5 * dir[i];
-    imp[1] += 1;
-    body.applyImpulse(imp);
+    body.friction = 0.7;
+
+    const direction = box.Engine.noa.camera.getDirection();
+    var impulse = [];
+    for (let i = 0; i < 3; i++) {
+      impulse[i] = 5 * direction[i];
+      impulse[1] += 1;
+    }
+    body.applyImpulse(impulse);
+
+    // adding component for collision (Fake physics)
+    box.Engine.noa.entities.addComponent(
+      id,
+      box.Engine.noa.entities.names.collideEntities,
+      {
+        cylinder: true,
+        callback: (otherEntsId) => box.collision(id, otherEntsId),
+      }
+    );
   }
 
   resetPosition() {
@@ -48,7 +60,6 @@ export class Unit extends Entity {
     let force = 2;
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
-
     // rotation
     let current = box.Engine.noa.camera.heading;
     this.mesh.rotation.y = current;
@@ -74,13 +85,13 @@ export class Unit extends Entity {
 
 
     
- var body = box.Engine.noa.entities.getPhysicsBody(1);
+ var body = box.Engine.box.Engine.noa.entities.getPhysicsBody(1);
     var lastUpdate = new Date().getTime();
     // initial position of the player
     var initialPosPlayer = [10, 10, 10];
     body.setPosition(initialPosPlayer);
 
-    box.Engine.noa.on("tick", () => {
+    box.Engine.box.Engine.noa.on("tick", () => {
       // width height edges chaker TEMP SOLUTION
       //console.log("player position", body.getPosition());
       if (
@@ -92,7 +103,7 @@ export class Unit extends Entity {
         body.setPosition([10, 10, 10]);
       }
       if (new Date().getTime() > lastUpdate + 98) {
-        let current = box.Engine.noa.camera.heading;
+        let current = box.Engine.box.Engine.noa.camera.heading;
         this.moveDirection = Math.round(current);
         this.mesh.rotation.y = Math.round(current);
       }
@@ -104,7 +115,7 @@ export class Unit extends Entity {
           this.shootProjectile();
         }
 
-        let angle = box.Engine.noa.camera.heading;
+        let angle = box.Engine.box.Engine.noa.camera.heading;
         let force = 5;
         let y = force * Math.cos(angle);
         let x = force * Math.sin(angle);
