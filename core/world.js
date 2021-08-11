@@ -15,7 +15,7 @@ socket.on("mapBlockState", (removedBlocks) => {
 });
 
 // Function that return random material using a sin and cos graph
-const getVoxelID = (x, y, z, { waterID, blocksID }) => {
+const getVoxelID = (x, y, z, { waterBlock, grassBlock }) => {
   for (let elem in blocksState) {
     if (
       blocksState[elem][0] === x &&
@@ -24,43 +24,45 @@ const getVoxelID = (x, y, z, { waterID, blocksID }) => {
     )
       return false;
   }
-  if (y < -3) return waterID;
+  if (y < -3) return waterBlock;
   var height = 2 * Math.sin(x / 10) + 3 * Math.cos(z / 20);
-  if (y < height) return blocksID;
+  if (y < height) return grassBlock;
   return 0;
 };
 
 const generateWorld = () => {
-  // 3D person perspective camera
-  box.Engine.noa.camera.zoomDistance = 8;
-  box.Engine.noa.registry.registerMaterial("water", null, water);
-  box.Engine.noa.registry.registerMaterial("grass", null, blocks);
-  //box.Engine.noa.registry.registerMaterial("tile", null, './tilesheet_complete.png');
 
-  var scene = box.Engine.noa.rendering.getScene();
-  var tileMaterial = box.Engine.noa.rendering.makeStandardMaterial("");
-
-  var createAtlas = require("babylon-atlas");
-  var atlas = createAtlas(
+  const scene = box.Engine.noa.rendering.getScene();
+  const createAtlas = require("babylon-atlas");
+  const atlas = createAtlas(
     "tilesheet_complete.png",
     "tilesheet_complete.json",
     scene,
     BABYLON
   );
 
+  // 3D person perspective camera
+  box.Engine.noa.camera.zoomDistance = 8;
+
+  // register materials
+  box.Engine.noa.registry.registerMaterial("water", null, water);
+  box.Engine.noa.registry.registerMaterial("grass", null, blocks);
+  //box.Engine.noa.registry.registerMaterial("tile", null, './tilesheet_complete.png');
+
+  const invisibleMaterial = box.Engine.noa.rendering.makeStandardMaterial("invisible");
+  invisibleMaterial.diffuseTexture = atlas.makeSpriteTexture("frame_000");
+  box.Engine.noa.registry.registerMaterial("invisible", null, null, false, invisibleMaterial);
+
+  const tileMaterial = box.Engine.noa.rendering.makeStandardMaterial("tile");
   tileMaterial.diffuseTexture = atlas.makeSpriteTexture("frame_001");
-  console.log(tileMaterial.diffuseTexture);
+  box.Engine.noa.registry.registerMaterial("tile", null, null, false, tileMaterial);
+  
+  //console.log(tileMaterial.diffuseTexture);
   //tileMaterial.opacityTexture = tileMaterial.diffuseTexture;
   //atlas.setTextureFrame(tileMaterial.diffuseTexture, 'frame_001');
 
   console.log("logging", box.Engine.noa.targetedBlock);
-  box.Engine.noa.registry.registerMaterial(
-    "tile",
-    null,
-    null,
-    false,
-    tileMaterial
-  );
+  
 
   //atlas.setTextureFrame(mat.diffuseTexture, 'player_jump')y
   //tileMaterial.diffuseTexture = new Texture('./tilesheet_complete.png', scene)
@@ -70,25 +72,18 @@ const generateWorld = () => {
   //var mat = myExistingMesh.material
 
   // Save texture inside register Block
-  const waterID = box.Engine.noa.registry.registerBlock(1, {
-    material: "tile",
-  });
-  const blocksID = box.Engine.noa.registry.registerBlock(2, {
-    material: "grass",
-  });
-  const invisibleMaterial = box.Engine.noa.registry.registerBlock(3, {
-    material: "tile",
-  });
-
-  // Save texture inside register Block
-  /*
-  const waterID = box.Engine.noa.registry.registerBlock(1, {
+  const waterBlock = box.Engine.noa.registry.registerBlock(1, {
     material: "water",
   });
-    const blocksID = box.Engine.noa.registry.registerBlock(2, {
+  const grassBlock = box.Engine.noa.registry.registerBlock(2, {
     material: "grass",
   });
-  **/
+  const tileBlock = box.Engine.noa.registry.registerBlock(1, {
+    material: "tile",
+  });
+  const invisibleBlock = box.Engine.noa.registry.registerBlock(3, {
+    material: "invisible",
+  });
 
   // Generate the map randomly
   /*box.Engine.noa.world.on("worldDataNeeded", (id, data, x, y, z) => {
@@ -96,8 +91,8 @@ const generateWorld = () => {
       for (let j = 0; j < data.shape[1]; j++) {
         for (let k = 0; k < data.shape[2]; k++) {
           let voxelID = getVoxelID(x + i, y + j, z + k, {
-            blocksID,
-            waterID,
+            grassBlock,
+            waterBlock,
           });
           data.set(i, j, k, voxelID);
         }
@@ -106,15 +101,17 @@ const generateWorld = () => {
     box.Engine.noa.world.setChunkData(id, data);
   });*/
 
-  var check = 0;
+  let check = 0;
   // Loading tiled map from map.json
   box.Engine.noa.world.on("worldDataNeeded", (id, data) => {
     if (check > 0) return;
     check++;
-    loadMap(map, data, blocksID, waterID, invisibleMaterial);
+    loadMap(map, data, grassBlock, tileBlock, invisibleBlock);
 
     box.Engine.noa.world.setChunkData(id, data);
-    box.Engine.noa.setBlock(waterID, 11, 10, 11);
+
+    //for texting
+    box.Engine.noa.setBlock(tileBlock, 11, 10, 11);
 
     return;
   });

@@ -1,4 +1,4 @@
-function loadMap(map, data, blocksID, waterID, invisibleMaterial) {
+function loadMap(map, data, blocksID, waterID, invisibleBlock) {
   /*let height = mapData.height;
     let width = mapData.width;
     let layers = mapData.layers.length;*/
@@ -7,14 +7,14 @@ function loadMap(map, data, blocksID, waterID, invisibleMaterial) {
   // border generation
 
   for (let i = 0; i <= 20; i++) {
-    data.set(i, 30, i, invisibleMaterial);
+    data.set(i, 30, i, invisibleBlock);
     let j = 4;
     //data.set(i, 35, i, waterID);
     while (j <= 35) {
-      data.set(i, j, 20, invisibleMaterial);
-      data.set(20, j, i, invisibleMaterial);
-      data.set(0, j, i, invisibleMaterial);
-      data.set(i, j, 0, invisibleMaterial);
+      data.set(i, j, 20, invisibleBlock);
+      data.set(20, j, i, invisibleBlock);
+      data.set(0, j, i, invisibleBlock);
+      data.set(i, j, 0, invisibleBlock);
       j++;
     }
   }
@@ -30,7 +30,7 @@ function loadMap(map, data, blocksID, waterID, invisibleMaterial) {
 
       if (block < 1) data.set(x, z, y, waterID);
       else data.set(x, z, y, blocksID);
-      data.set(x, 30, y, invisibleMaterial);
+      data.set(x, 30, y, invisibleBlock);
 
       //old map creation
       //if (block < 1) box.Engine.noa.setBlock(waterID, x, z, y);
