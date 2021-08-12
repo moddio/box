@@ -51,16 +51,24 @@ export class Unit extends Entity {
     this.body.setPosition([10, 10, 10]);
   }
 
-  tick() {
+  tick(dt, states) {
     // console.log("testing unit tick")
 
     super.tick(); // call Entity.tick()
+
+    // limit player speed
+    Math.abs(this.body.velocity[0]) > 6 ||
+    Math.abs(this.body.velocity[1]) > 6 ||
+    Math.abs(this.body.velocity[2]) > 6
+      ? (states[0]["faster"] = true)
+      : (states[0]["faster"] = false);
 
     let angle = box.Engine.noa.camera.heading;
     let force = 2;
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
-    // rotation
+
+    // Rotation
     let current = box.Engine.noa.camera.heading;
     this.mesh.rotation.y = current;
 
@@ -68,16 +76,16 @@ export class Unit extends Entity {
     if (box.inputs.state["jump"]) {
       this.body.applyImpulse([0, 2, 0]);
     }
-    if (box.inputs.state["move-left"]) {
+    if (box.inputs.state["move-left"] && !states[0]["faster"]) {
       this.body.applyImpulse([-y, 0, x]);
     }
-    if (box.inputs.state["move-right"]) {
+    if (box.inputs.state["move-right"] && !states[0]["faster"]) {
       this.body.applyImpulse([y, 0, -x]);
     }
-    if (box.inputs.state["move-up"]) {
+    if (box.inputs.state["move-up"] && !states[0]["faster"]) {
       this.body.applyImpulse([x, 0, y]);
     }
-    if (box.inputs.state["move-down"]) {
+    if (box.inputs.state["move-down"] && !states[0]["faster"]) {
       this.body.applyImpulse([-x, 0, -y]);
     }
     /**

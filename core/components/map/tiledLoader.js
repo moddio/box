@@ -6,13 +6,13 @@ function loadMap(map, data, blocksID, waterID, invisibleBlock) {
 
   // border generation
 
-  for (let i = 0; i <= 20; i++) {
+  for (let i = 0; i <= 30; i++) {
     data.set(i, 30, i, invisibleBlock);
     let j = 4;
     //data.set(i, 35, i, waterID);
     while (j <= 35) {
-      data.set(i, j, 20, invisibleBlock);
-      data.set(20, j, i, invisibleBlock);
+      data.set(i, j, 30, invisibleBlock);
+      data.set(30, j, i, invisibleBlock);
       data.set(0, j, i, invisibleBlock);
       data.set(i, j, 0, invisibleBlock);
       j++;
@@ -26,7 +26,7 @@ function loadMap(map, data, blocksID, waterID, invisibleBlock) {
       let y = Math.floor(blockIndex / layer.width);
       let z = layerIndex;
 
-      if (x >= layer.width) x = x - y * 20;
+      if (x >= layer.width) x = x - y * 30;
 
       if (block < 1) data.set(x, z, y, waterID);
       else data.set(x, z, y, blocksID);

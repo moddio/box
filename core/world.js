@@ -31,7 +31,6 @@ const getVoxelID = (x, y, z, { waterBlock, grassBlock }) => {
 };
 
 const generateWorld = () => {
-
   const scene = box.Engine.noa.rendering.getScene();
   const createAtlas = require("babylon-atlas");
   const atlas = createAtlas(
@@ -49,20 +48,32 @@ const generateWorld = () => {
   box.Engine.noa.registry.registerMaterial("grass", null, blocks);
   //box.Engine.noa.registry.registerMaterial("tile", null, './tilesheet_complete.png');
 
-  const invisibleMaterial = box.Engine.noa.rendering.makeStandardMaterial("invisible");
+  const invisibleMaterial =
+    box.Engine.noa.rendering.makeStandardMaterial("invisible");
   invisibleMaterial.diffuseTexture = atlas.makeSpriteTexture("frame_000");
-  box.Engine.noa.registry.registerMaterial("invisible", null, null, false, invisibleMaterial);
+  box.Engine.noa.registry.registerMaterial(
+    "invisible",
+    null,
+    null,
+    false,
+    invisibleMaterial
+  );
 
   const tileMaterial = box.Engine.noa.rendering.makeStandardMaterial("tile");
   tileMaterial.diffuseTexture = atlas.makeSpriteTexture("frame_001");
-  box.Engine.noa.registry.registerMaterial("tile", null, null, false, tileMaterial);
-  
+  box.Engine.noa.registry.registerMaterial(
+    "tile",
+    null,
+    null,
+    false,
+    tileMaterial
+  );
+
   //console.log(tileMaterial.diffuseTexture);
   //tileMaterial.opacityTexture = tileMaterial.diffuseTexture;
   //atlas.setTextureFrame(tileMaterial.diffuseTexture, 'frame_001');
 
   console.log("logging", box.Engine.noa.targetedBlock);
-  
 
   //atlas.setTextureFrame(mat.diffuseTexture, 'player_jump')y
   //tileMaterial.diffuseTexture = new Texture('./tilesheet_complete.png', scene)
