@@ -34,7 +34,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
         //console.log("Block placed: ", x, z, y, block);
       }
       if (block !== 0 && block >= 249) {
-        data.set(x, z, y, invisibleBlock);
+        data.set(x, z, y, tiles[42]);
       }
 
       //if (block = 1) ;//data.set(x, z, y, waterID);
