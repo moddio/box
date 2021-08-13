@@ -10,6 +10,7 @@ export class Unit extends Entity {
     this.check = 0;
     // Default radius
     this.radius = 0.2;
+    this.val = 0;
 
     this.width = data.width * this.radius;
     this.height = data.height * this.radius;
@@ -56,26 +57,20 @@ export class Unit extends Entity {
     super.tick(); // call Entity.tick()
 
     // Limit player speed (Dumping)
-    Math.abs(this.body.velocity[0]) > 6 ||
-    Math.abs(this.body.velocity[2]) > 6 ||
-    Math.abs(this.body.velocity[1]) > 1 ||
-    this.check >= 30
-      ? (states[0]["faster"] = true)
-      : (states[0]["faster"] = false);
+    Math.abs(this.body.velocity[0]) > 6 || Math.abs(this.body.velocity[2]) > 6
+      ? (states[0]["Dumping"] = true)
+      : (states[0]["Dumping"] = false);
 
     let angle = box.Engine.noa.camera.heading;
-    let force = 2;
+    let force = Math.abs(this.body.velocity[1]) > 0 ? 0.6 : 2;
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
 
-    // TODO :
-    //make the push force null when player is not in the ground
-
     //console.log(this.body.atRestY());
 
-    this.body.atRestY() === 0 ? this.check++ : (this.check = 0);
+    //this.body.atRestY() === 0 ? this.check++ : (this.check = 0);
 
-    console.log(this);
+    console.log(this.body);
 
     //this.body.friction = 10;
     //this.body.gravityMultiplier = 10000;
@@ -83,24 +78,23 @@ export class Unit extends Entity {
     // Rotation
     let current = box.Engine.noa.camera.heading;
     this.mesh.rotation.y = current;
-
     // Logging friction
     //console.log(this.body.friction);
 
-    // movement
-    if (box.inputs.state["jump"] && this.body.getPosition()[1] <= 9.5) {
-      this.body.applyImpulse([0, 1.5, 0]);
+    // Movement
+    if (box.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
+      this.body.applyImpulse([0, 15, 0]);
     }
-    if (box.inputs.state["move-left"] && !states[0]["faster"]) {
+    if (box.inputs.state["move-left"] && !states[0]["Dumping"]) {
       this.body.applyImpulse([-y, 0, x]);
     }
-    if (box.inputs.state["move-right"] && !states[0]["faster"]) {
+    if (box.inputs.state["move-right"] && !states[0]["Dumping"]) {
       this.body.applyImpulse([y, 0, -x]);
     }
-    if (box.inputs.state["move-up"] && !states[0]["faster"]) {
+    if (box.inputs.state["move-up"] && !states[0]["Dumping"]) {
       this.body.applyImpulse([x, 0, y]);
     }
-    if (box.inputs.state["move-down"] && !states[0]["faster"]) {
+    if (box.inputs.state["move-down"] && !states[0]["Dumping"]) {
       this.body.applyImpulse([-x, 0, -y]);
     }
     /**
