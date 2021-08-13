@@ -6,7 +6,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
 
   // border generation
 
-  /*for (let i = 0; i <= map.height; i++) {
+  for (let i = 0; i <= map.height; i++) {
     data.set(i, 30, i, invisibleBlock);
     let j = 4;
     //data.set(i, 35, i, waterID);
@@ -17,7 +17,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
       data.set(i, j, 0, invisibleBlock);
       j++;
     }
-  }*/
+  }
 
   map.layers.forEach(function (layer, layerIndex) {
     const layerData = layer.data;
