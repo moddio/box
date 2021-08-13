@@ -34,14 +34,10 @@ function loadMap(map, data, tiles, invisibleBlock) {
 
       if (x >= layer.width) x = x - y * 59;
 
-      if (block !== 0 && block < 249) {
+      if (block !== 0) {
         data.set(x, z, y, tiles[block]);
         //console.log("Block placed: ", x, z, y, block);
       }
-      if (block !== 0 && block >= 249) {
-        data.set(x, z, y, tiles[42]);
-      }
-
       //if (block = 1) ;//data.set(x, z, y, waterID);
       //else data.set(x, z, y, blocksID);
       //data.set(x, 30, y, tiles[3]);
