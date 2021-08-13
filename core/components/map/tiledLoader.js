@@ -6,7 +6,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
 
   // border generation
 
-  for (let i = 0; i <= map.height; i++) {
+  /*for (let i = 0; i <= map.height; i++) {
     data.set(i, 30, i, invisibleBlock);
     let j = 4;
     //data.set(i, 35, i, waterID);
@@ -17,18 +17,25 @@ function loadMap(map, data, tiles, invisibleBlock) {
       data.set(i, j, 0, invisibleBlock);
       j++;
     }
-  }
+  }*/
 
-  map.layers.forEach(function (layer, layerIndex) {
+  //map.layers.forEach(function (layer, layerIndex) {
+    const layer = map.layers[0]
     const layerData = layer.data;
     layerData.forEach(function (block, blockIndex) {
       let x = blockIndex;
       let y = Math.floor(blockIndex / layer.width);
-      let z = layerIndex;
+      let z = 0;
 
-      if (x >= layer.width) x = x - y * 30;
+      if (x >= layer.width) x = x - y * 59;
 
-      if (block !== 0 && block < 249) data.set(x, z, y, tiles[block]);
+      if (block !== 0 && block < 249) {
+        data.set(x, z, y, tiles[block]);
+        //console.log("Block placed: ", x, z, y, block);
+      }
+      if (block !== 0 && block >= 249) {
+        data.set(x, z, y, invisibleBlock);
+      }
 
       //if (block = 1) ;//data.set(x, z, y, waterID);
       //else data.set(x, z, y, blocksID);
@@ -39,7 +46,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
       //else box.Engine.noa.setBlock(blocksID, x, z, y);
       //console.log ('block number', blockIndex, 'x', x, 'y', y, 'z', z);
     });
-  });
+  //});
 }
 
 export default loadMap;
