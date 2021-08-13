@@ -16,7 +16,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
       data.set(i, heightBorder, j, invisibleBlock);
       data.set(mapWidth, i, j, invisibleBlock);
       data.set(mapIndex, i, j, invisibleBlock);
-      data.set(j, i, mapHeight, invisibleBlock[42]);
+      data.set(j, i, mapHeight, invisibleBlock);
       data.set(j, i, mapIndex, invisibleBlock);
       j++;
     }

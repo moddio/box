@@ -55,8 +55,15 @@ const generateWorld = () => {
     let tileIndexString = i.toString();
     if (tileIndexString.length < 2) tileIndexString = "00" + tileIndexString;
     if (tileIndexString.length < 3) tileIndexString = "0" + tileIndexString;
-    box.Engine.noa.registry.registerMaterial("material_" + tileIndexString, null, "tilesheet_complete-png-64x64-sprite-png/tile" + tileIndexString + ".png");
-    tiles[tileIndex.toString()] = box.Engine.noa.registry.registerBlock(tileIndex, { material: "material_" + tileIndexString });
+    box.Engine.noa.registry.registerMaterial(
+      "material_" + tileIndexString,
+      null,
+      "tilesheet_complete-png-64x64-sprite-png/tile" + tileIndexString + ".png"
+    );
+    tiles[tileIndex.toString()] = box.Engine.noa.registry.registerBlock(
+      tileIndex,
+      { material: "material_" + tileIndexString }
+    );
   }
 
   const invisibleMaterial =
