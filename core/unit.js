@@ -7,19 +7,20 @@ export class Unit extends Entity {
     super(data ? data.id : undefined);
 
     this.id = data.owner;
+    this.check = 0;
     // Default radius
     this.radius = 0.2;
 
     this.width = data.width * this.radius;
     this.height = data.height * this.radius;
     this.moveDirection; // x, y, z rotations
-    inputs.down.on("shoot-ball", () => this.shootBouncyBall());
+    inputs.down.on("shoot-ball", () => this.shootBall());
 
     // Asign the offset to the created body
     this.createBody({ offset: [0, 0.5, 0], type: "mesh" });
     this.resetPosition();
   }
-  shootBouncyBall() {
+  shootBall() {
     const { body, id } = this.createBody({
       offset: [0, 0.5, 0],
       type: "sphere",
@@ -52,14 +53,13 @@ export class Unit extends Entity {
   }
 
   tick(dt, states) {
-    // console.log("testing unit tick")
-
     super.tick(); // call Entity.tick()
 
-    // limit player speed
+    // Limit player speed (Dumping)
     Math.abs(this.body.velocity[0]) > 6 ||
-    Math.abs(this.body.velocity[1]) > 6 ||
-    Math.abs(this.body.velocity[2]) > 6
+    Math.abs(this.body.velocity[2]) > 6 ||
+    Math.abs(this.body.velocity[1]) > 1 ||
+    this.check >= 30
       ? (states[0]["faster"] = true)
       : (states[0]["faster"] = false);
 
@@ -68,13 +68,28 @@ export class Unit extends Entity {
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
 
+    // TODO :
+    //make the push force null when player is not in the ground
+
+    //console.log(this.body.atRestY());
+
+    this.body.atRestY() === 0 ? this.check++ : (this.check = 0);
+
+    console.log(this);
+
+    //this.body.friction = 10;
+    //this.body.gravityMultiplier = 10000;
+
     // Rotation
     let current = box.Engine.noa.camera.heading;
     this.mesh.rotation.y = current;
 
+    // Logging friction
+    //console.log(this.body.friction);
+
     // movement
-    if (box.inputs.state["jump"]) {
-      this.body.applyImpulse([0, 2, 0]);
+    if (box.inputs.state["jump"] && this.body.getPosition()[1] <= 9.5) {
+      this.body.applyImpulse([0, 1.5, 0]);
     }
     if (box.inputs.state["move-left"] && !states[0]["faster"]) {
       this.body.applyImpulse([-y, 0, x]);

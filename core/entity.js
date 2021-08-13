@@ -60,6 +60,7 @@ export class Entity {
 
       this.mesh = mesh;
       this.body = box.Engine.noa.entities.getPhysicsBody(this.id);
+      // this.body.gravityMultiplier = 10;
       this.body.boxEntity = this;
 
       return mesh;
@@ -94,6 +95,7 @@ export class Entity {
     // console.log("testing entity tick")
 
     let pos = this.body.getPosition();
+    this.body.friction = 0;
 
     /**
       this.body.setPosition([
