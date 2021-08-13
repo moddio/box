@@ -4,20 +4,25 @@ function loadMap(map, data, tiles, invisibleBlock) {
     let layers = mapData.layers.length;*/
   //console.log('Map loading - height:', height, ', width:', width, ', layers:', layers);
 
-  // border generation
-
-  /*for (let i = 0; i <= map.height; i++) {
-    data.set(i, 30, i, invisibleBlock);
-    let j = 4;
-    //data.set(i, 35, i, waterID);
-    while (j <= 35) {
-      data.set(i, j, 30, invisibleBlock);
-      data.set(30, j, i, invisibleBlock);
-      data.set(0, j, i, invisibleBlock);
-      data.set(i, j, 0, invisibleBlock);
+  // Border generation
+  let i = 0;
+  let j = 0;
+  let mapHeight = 55;
+  let mapWidth = 59;
+  let mapIndex = 0;
+  let heightBorder = 50;
+  while (i <= mapWidth) {
+    while (j <= mapWidth) {
+      data.set(i, heightBorder, j, invisibleBlock);
+      data.set(mapWidth, i, j, invisibleBlock);
+      data.set(mapIndex, i, j, invisibleBlock);
+      data.set(j, i, mapHeight, invisibleBlock[42]);
+      data.set(j, i, mapIndex, invisibleBlock);
       j++;
     }
-  }*/
+    j = 0;
+    i++;
+  }
 
   map.layers.forEach(function (layer, layerIndex) {
     //const layer = map.layers[0]
@@ -39,7 +44,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
 
       //if (block = 1) ;//data.set(x, z, y, waterID);
       //else data.set(x, z, y, blocksID);
-      //data.set(x, 30, y, invisibleBlock);
+      //data.set(x, 30, y, tiles[3]);
 
       //old map creation
       //if (block < 1) box.Engine.noa.setBlock(waterID, x, z, y);
