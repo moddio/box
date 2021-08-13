@@ -19,13 +19,13 @@ function loadMap(map, data, tiles, invisibleBlock) {
     }
   }*/
 
-  //map.layers.forEach(function (layer, layerIndex) {
-    const layer = map.layers[0]
+  map.layers.forEach(function (layer, layerIndex) {
+    //const layer = map.layers[0]
     const layerData = layer.data;
     layerData.forEach(function (block, blockIndex) {
       let x = blockIndex;
       let y = Math.floor(blockIndex / layer.width);
-      let z = 0;
+      let z = layerIndex;
 
       if (x >= layer.width) x = x - y * 59;
 
@@ -46,7 +46,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
       //else box.Engine.noa.setBlock(blocksID, x, z, y);
       //console.log ('block number', blockIndex, 'x', x, 'y', y, 'z', z);
     });
-  //});
+  });
 }
 
 export default loadMap;
