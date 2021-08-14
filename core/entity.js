@@ -99,7 +99,7 @@ export class Entity {
     // console.log("testing entity tick")
 
     let pos = this.body.getPosition();
-    this.body.friction = 100;
+    this.body.friction = 0;
 
     /**
       this.body.setPosition([

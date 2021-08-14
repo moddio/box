@@ -62,40 +62,56 @@ export class Unit extends Entity {
       ? (states[0]["Dumping"] = true)
       : (states[0]["Dumping"] = false);
 
+    // Checking if the player is not stuck
+    this.body.atRestY() === 0 && Math.abs(this.body.velocity[1]) <= 0
+      ? (states[0]["stuck"] = true)
+      : (states[0]["stuck"] = false);
+
+    // Getting force value from cos sin
     let angle = box.Engine.noa.camera.heading;
     let force = Math.abs(this.body.velocity[1]) > 0 ? 0.6 : 2;
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
 
-    //console.log(this.body.atRestY());
-
-    //this.body.atRestY() === 0 ? this.check++ : (this.check = 0);
-
-    console.log(this.body);
-
-    //this.body.friction = 10;
-    //this.body.gravityMultiplier = 10000;
+    // Increase gravity when the player is against the floor for now until we figure out why the entity player is stuck on jump
+    states[0]["stuck"]
+      ? (this.body.gravityMultiplier = 32)
+      : (this.body.gravityMultiplier = 2);
 
     // Rotation
     let current = box.Engine.noa.camera.heading;
     this.mesh.rotation.y = current;
-    // Logging friction
-    //console.log(this.body.friction);
 
-    // Movement
+    // Movement Using the state of velocity and dumping the movement when the body goes very fast
     if (box.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
       this.body.applyImpulse([0, 15, 0]);
     }
-    if (box.inputs.state["move-left"] && !states[0]["Dumping"]) {
+    if (
+      box.inputs.state["move-left"] &&
+      !states[0]["Dumping"] &&
+      !states[0]["stuck"]
+    ) {
       this.body.applyImpulse([-y, 0, x]);
     }
-    if (box.inputs.state["move-right"] && !states[0]["Dumping"]) {
+    if (
+      box.inputs.state["move-right"] &&
+      !states[0]["Dumping"] &&
+      !states[0]["stuck"]
+    ) {
       this.body.applyImpulse([y, 0, -x]);
     }
-    if (box.inputs.state["move-up"] && !states[0]["Dumping"]) {
+    if (
+      box.inputs.state["move-up"] &&
+      !states[0]["Dumping"] &&
+      !states[0]["stuck"]
+    ) {
       this.body.applyImpulse([x, 0, y]);
     }
-    if (box.inputs.state["move-down"] && !states[0]["Dumping"]) {
+    if (
+      box.inputs.state["move-down"] &&
+      !states[0]["Dumping"] &&
+      !states[0]["stuck"]
+    ) {
       this.body.applyImpulse([-x, 0, -y]);
     }
     /**
