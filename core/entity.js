@@ -73,7 +73,11 @@ export class Entity {
       id: this.id,
     };
   }
-
+  lifeSpend(id, milisecond) {
+    setTimeout(() => {
+      box.Engine.noa.entities.deleteEntity(id);
+    }, milisecond);
+  }
   removeComponent(componentName) {}
 
   setState(stateId) {}

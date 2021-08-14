@@ -26,6 +26,7 @@ export class Unit extends Entity {
       offset: [0, 0.5, 0],
       type: "sphere",
     });
+    this.lifeSpend(id, 10000);
 
     body.restitution = 0.8;
     body.friction = 0.7;
