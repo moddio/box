@@ -71,7 +71,8 @@ export class Unit extends Entity {
 
     // Getting force value from cos sin
     let angle = box.Engine.noa.camera.heading;
-    let force = Math.abs(this.body.velocity[1]) > 0 ? 0.6 : 2;
+    // jumpping
+    let force = 2;
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
 
@@ -106,32 +107,16 @@ export class Unit extends Entity {
     if (box.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
       this.body.applyImpulse([0, 15, 0]);
     }
-    if (
-      box.inputs.state["move-left"] &&
-      !states[0]["Dumping"] &&
-      !states[0]["stuck"]
-    ) {
+    if (box.inputs.state["move-left"]) {
       this.body.applyImpulse([-y, 0, x]);
     }
-    if (
-      box.inputs.state["move-right"] &&
-      !states[0]["Dumping"] &&
-      !states[0]["stuck"]
-    ) {
+    if (box.inputs.state["move-right"]) {
       this.body.applyImpulse([y, 0, -x]);
     }
-    if (
-      box.inputs.state["move-up"] &&
-      !states[0]["Dumping"] &&
-      !states[0]["stuck"]
-    ) {
+    if (box.inputs.state["move-up"]) {
       this.body.applyImpulse([x, 0, y]);
     }
-    if (
-      box.inputs.state["move-down"] &&
-      !states[0]["Dumping"] &&
-      !states[0]["stuck"]
-    ) {
+    if (box.inputs.state["move-down"]) {
       this.body.applyImpulse([-x, 0, -y]);
     }
     /**
