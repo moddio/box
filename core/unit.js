@@ -22,8 +22,6 @@ export class Unit extends Entity {
     this.resetPosition();
   }
   shootBall() {
-
-
     // if (data.type === "sphere") {
     //   const ballMesh = box.Engine.Mesh.CreateSphere(
     //     "ball",
@@ -98,7 +96,7 @@ export class Unit extends Entity {
     // Getting force value from cos sin
     let angle = box.Engine.noa.camera.heading;
     // jumpping
-    let force = .5;
+    let force = 2;
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
 
