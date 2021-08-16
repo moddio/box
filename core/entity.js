@@ -22,7 +22,7 @@ export class Entity {
       );
 
       // setup params for the ball
-      const pos = [playPos[0], playPos[1] + 0.5, playPos[2]];
+      const pos = [playPos[0] + 0.5, playPos[1] + 0.5, playPos[2]];
       const width = 0.3;
       const height = 0.3;
       const meshOffset = [0, 0.2, 0];
@@ -41,7 +41,8 @@ export class Entity {
       return { body: box.Engine.noa.entities.getPhysicsBody(id), id };
     } else {
       // Creating a player mesh
-      const mesh = box.Engine.Mesh.CreateBox("player-mesh", this.id);
+      //const mesh = box.Engine.Mesh.CreateBox("player-mesh", this.id);
+      const mesh = box.Engine.Mesh.CreateSphere("player-mesh", 1);
       mesh.scaling.x = 0.5;
       mesh.scaling.z = 0.5;
 
@@ -60,6 +61,8 @@ export class Entity {
 
       this.mesh = mesh;
       this.body = box.Engine.noa.entities.getPhysicsBody(this.id);
+
+      this.body.onCollide(100);
       // this.body.gravityMultiplier = 10;
       this.body.boxEntity = this;
 

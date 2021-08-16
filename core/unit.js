@@ -57,6 +57,8 @@ export class Unit extends Entity {
   tick(dt, states) {
     super.tick(); // call Entity.tick()
 
+    console.log("console loggging the friction", this.body.friction);
+
     // Limit player speed (Dumping)
     Math.abs(this.body.velocity[0]) > 6 || Math.abs(this.body.velocity[2]) > 6
       ? (states[0]["Dumping"] = true)
@@ -73,10 +75,28 @@ export class Unit extends Entity {
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
 
+    /**
+     
+     <----- SOLITION 1 ------------>
+        (this.body.getPosition()[0] <= 1 &&
+      Math.abs(this.body.getPosition()[1] >= 1.1)) ||
+    (this.body.getPosition()[2] <= 1 &&
+      Math.abs(this.body.getPosition()[1] >= 1.1)) ||
+    (this.body.getPosition()[2] >= 19 &&
+      Math.abs(this.body.getPosition()[1] >= 1.1)) ||
+    (this.body.getPosition()[0] >= 19 &&
+      Math.abs(this.body.getPosition()[1] >= 1.1))
+      ? (states[0]["stuck"] = true)
+      : (states[0]["stuck"] = false);
+
     // Increase gravity when the player is against the floor for now until we figure out why the entity player is stuck on jump
-    states[0]["stuck"]
-      ? (this.body.gravityMultiplier = 32)
+
+    // <----- SOLITION 2 ------------>
+
+      states[0]["stuck"]
+      ? (this.body.gravityMultiplier = 42)
       : (this.body.gravityMultiplier = 2);
+     */
 
     // Rotation
     let current = box.Engine.noa.camera.heading;

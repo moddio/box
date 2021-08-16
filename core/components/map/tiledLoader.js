@@ -18,6 +18,14 @@ function loadMap(map, data, tiles, invisibleBlock) {
       data.set(mapIndex, i, j, invisibleBlock);
       data.set(j, i, mapHeight, invisibleBlock);
       data.set(j, i, mapIndex, invisibleBlock);
+      // generating map data for border
+      box.mapData.push(
+        [i, heightBorder, j],
+        [mapWidth, i, j],
+        [mapIndex, i, j],
+        [j, i, mapHeight],
+        [j, i, mapIndex]
+      );
       j++;
     }
     j = 0;
