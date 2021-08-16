@@ -22,6 +22,42 @@ export class Unit extends Entity {
     this.resetPosition();
   }
   shootBall() {
+
+
+    // if (data.type === "sphere") {
+    //   const ballMesh = box.Engine.Mesh.CreateSphere(
+    //     "ball",
+    //     6,
+    //     0.4,
+    //     box.Engine.noa.rendering.getScene()
+    //   );
+    //   const ballBody = ballMesh.createInstance("ball_instance");
+
+    //   // getting player position
+    //   var playPos = box.Engine.noa.entities.getPosition(
+    //     box.Engine.noa.playerEntity
+    //   );
+
+    //   // setup params for the ball
+    //   const pos = [playPos[0] + 0.5, playPos[1] + 0.5, playPos[2]];
+    //   const width = 0.3;
+    //   const height = 0.3;
+    //   const meshOffset = [0, 0.2, 0];
+    //   const doPhysics = true;
+
+    //   // adding the entity
+    //   const id = box.Engine.noa.entities.add(
+    //     pos,
+    //     width,
+    //     height, // required
+    //     ballBody,
+    //     meshOffset,
+    //     doPhysics
+    //   );
+
+    //   return { body: box.Engine.noa.entities.getPhysicsBody(id), id };
+    // }
+
     const { body, id } = this.createBody({
       offset: [0, 0.5, 0],
       type: "sphere",
@@ -59,20 +95,10 @@ export class Unit extends Entity {
 
     console.log("console loggging the friction", this.body.friction);
 
-    // Limit player speed (Dumping)
-    Math.abs(this.body.velocity[0]) > 6 || Math.abs(this.body.velocity[2]) > 6
-      ? (states[0]["Dumping"] = true)
-      : (states[0]["Dumping"] = false);
-
-    // Checking if the player is not stuck
-    this.body.atRestY() === 0 && Math.abs(this.body.velocity[1]) <= 0
-      ? (states[0]["stuck"] = true)
-      : (states[0]["stuck"] = false);
-
     // Getting force value from cos sin
     let angle = box.Engine.noa.camera.heading;
     // jumpping
-    let force = 2;
+    let force = .5;
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
 

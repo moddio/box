@@ -7,67 +7,34 @@ export class Entity {
   }
 
   createBody(data) {
-    if (data.type === "sphere") {
-      const ballMesh = box.Engine.Mesh.CreateSphere(
-        "ball",
-        6,
-        0.4,
-        box.Engine.noa.rendering.getScene()
-      );
-      const ballBody = ballMesh.createInstance("ball_instance");
 
-      // getting player position
-      var playPos = box.Engine.noa.entities.getPosition(
-        box.Engine.noa.playerEntity
-      );
+    // Creating a player mesh
+    const mesh = box.Engine.Mesh.CreateBox("player-mesh", this.id);
+    // const mesh = box.Engine.Mesh.CreateSphere("player-mesh", 1);
+    mesh.scaling.x = 0.5;
+    mesh.scaling.z = 0.5;
 
-      // setup params for the ball
-      const pos = [playPos[0] + 0.5, playPos[1] + 0.5, playPos[2]];
-      const width = 0.3;
-      const height = 0.3;
-      const meshOffset = [0, 0.2, 0];
-      const doPhysics = true;
+    // Adding mesh body in noa
+    box.Engine.noa.entities.addComponent(
+      this.id,
+      box.Engine.noa.entities.names.mesh,
+      {
+        mesh,
+        offset: data.offset,
+      }
+    );
 
-      // adding the entity
-      const id = box.Engine.noa.entities.add(
-        pos,
-        width,
-        height, // required
-        ballBody,
-        meshOffset,
-        doPhysics
-      );
+    // add entityTick
+    box.Engine.noa.entities.addComponent(this.id, box.entityTick);
 
-      return { body: box.Engine.noa.entities.getPhysicsBody(id), id };
-    } else {
-      // Creating a player mesh
-      //const mesh = box.Engine.Mesh.CreateBox("player-mesh", this.id);
-      const mesh = box.Engine.Mesh.CreateSphere("player-mesh", 1);
-      mesh.scaling.x = 0.5;
-      mesh.scaling.z = 0.5;
+    this.mesh = mesh;
+    this.body = box.Engine.noa.entities.getPhysicsBody(this.id);
 
-      // Adding mesh body in noa
-      box.Engine.noa.entities.addComponent(
-        this.id,
-        box.Engine.noa.entities.names.mesh,
-        {
-          mesh,
-          offset: data.offset,
-        }
-      );
+    this.body.onCollide(100);
+    // this.body.gravityMultiplier = 10;
+    this.body.boxEntity = this;
 
-      // add entityTick
-      box.Engine.noa.entities.addComponent(this.id, box.entityTick);
-
-      this.mesh = mesh;
-      this.body = box.Engine.noa.entities.getPhysicsBody(this.id);
-
-      this.body.onCollide(100);
-      // this.body.gravityMultiplier = 10;
-      this.body.boxEntity = this;
-
-      return mesh;
-    }
+    return mesh;
   }
 
   addComponent(componentName) {
@@ -102,7 +69,6 @@ export class Entity {
     // console.log("testing entity tick")
 
     let pos = this.body.getPosition();
-    this.body.friction = 0;
 
     /**
       this.body.setPosition([
