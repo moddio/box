@@ -1,22 +1,22 @@
 function loadMap(map, data, tiles, invisibleBlock) {
-  /*let height = mapData.height;
-    let width = mapData.width;
-    let layers = mapData.layers.length;*/
-  //console.log('Map loading - height:', height, ', width:', width, ', layers:', layers);
+  let height = map.height;
+  let width = map.width;
+  let layers = map.layers.length;
+  console.log('Map loading - height:', height, ', width:', width, ', layers:', layers);
 
   // Border generation
   let i = 0;
   let j = 0;
-  let mapHeight = 55;
-  let mapWidth = 59;
+  let mapHeight = map.height;
+  let mapWidth = map.width;
   let mapIndex = 0;
   let heightBorder = 50;
-  while (i <= mapWidth) {
-    while (j <= mapWidth) {
+  while (i <= mapHeight) {
+    while (j <= mapHeight) {
       data.set(i, heightBorder, j, invisibleBlock);
-      data.set(mapWidth, i, j, invisibleBlock);
+      data.set(mapHeight, i, j, invisibleBlock);
       data.set(mapIndex, i, j, invisibleBlock);
-      data.set(j, i, mapHeight, invisibleBlock);
+      data.set(j, i, mapWidth, invisibleBlock);
       data.set(j, i, mapIndex, invisibleBlock);
       j++;
     }
@@ -35,7 +35,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
       if (x >= layer.width) x = x - y * 59;
 
       if (block !== 0) {
-        data.set(x, z, y, tiles[block]);
+        data.set(y, z, x, tiles[block]);
         //console.log("Block placed: ", x, z, y, block);
       }
       //if (block = 1) ;//data.set(x, z, y, waterID);

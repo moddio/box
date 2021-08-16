@@ -55,11 +55,17 @@ const generateWorld = () => {
     let tileIndexString = i.toString();
     if (tileIndexString.length < 2) tileIndexString = "00" + tileIndexString;
     if (tileIndexString.length < 3) tileIndexString = "0" + tileIndexString;
-    box.Engine.noa.registry.registerMaterial(
+
+    const tileMaterial = new BABYLON.StandardMaterial("material_" + tileIndexString, scene);
+    tileMaterial.diffuseTexture = new BABYLON.Texture("tilesheet_complete-png-64x64-sprite-png/tile" + tileIndexString + ".png", scene);
+    tileMaterial.diffuseTexture.wAng = Math.PI/2;
+    box.Engine.noa.registry.registerMaterial("material_" + tileIndexString, null, null, false, tileMaterial);
+
+    /*const registeredMaterial = box.Engine.noa.registry.registerMaterial(
       "material_" + tileIndexString,
       null,
       "tilesheet_complete-png-64x64-sprite-png/tile" + tileIndexString + ".png"
-    );
+    );*/
     tiles[tileIndex.toString()] = box.Engine.noa.registry.registerBlock(
       tileIndex,
       { material: "material_" + tileIndexString }
