@@ -25,7 +25,6 @@ function loadMap(map, data, tiles, invisibleBlock) {
   }
 
   map.layers.forEach(function (layer, layerIndex) {
-    //const layer = map.layers[0]
     const layerData = layer.data;
     layerData.forEach(function (block, blockIndex) {
       let x = blockIndex;
@@ -38,14 +37,6 @@ function loadMap(map, data, tiles, invisibleBlock) {
         data.set(y, z, x, tiles[block]);
         //console.log("Block placed: ", x, z, y, block);
       }
-      //if (block = 1) ;//data.set(x, z, y, waterID);
-      //else data.set(x, z, y, blocksID);
-      //data.set(x, 30, y, tiles[3]);
-
-      //old map creation
-      //if (block < 1) box.Engine.noa.setBlock(waterID, x, z, y);
-      //else box.Engine.noa.setBlock(blocksID, x, z, y);
-      //console.log ('block number', blockIndex, 'x', x, 'y', y, 'z', z);
     });
   });
 }

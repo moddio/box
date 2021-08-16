@@ -50,8 +50,8 @@ const generateWorld = () => {
 
   //generate material for each texture in tile sheet
   let tiles = {};
-  for (let i = 0; i < 540; i++) {
-    const tileIndex = i + 1;
+  for (let i = 1; i < 541; i++) {
+    const tileIndex = i;
     let tileIndexString = i.toString();
     if (tileIndexString.length < 2) tileIndexString = "00" + tileIndexString;
     if (tileIndexString.length < 3) tileIndexString = "0" + tileIndexString;
@@ -147,8 +147,12 @@ const generateWorld = () => {
     box.Engine.noa.world.setChunkData(id, data);
 
     //for testing
-    box.Engine.noa.setBlock(tiles[525], 20, 5, 10);
-    box.Engine.noa.setBlock(tiles[86], 10, 10, 10);
+    //box.Engine.noa.setBlock(tiles[33], 20, 5, 10);  //118 119 145 146
+
+    box.Engine.noa.setBlock(tiles[119], 10, 5, 10);
+    box.Engine.noa.setBlock(tiles[118], 11, 5, 10);
+    box.Engine.noa.setBlock(tiles[119], 10, 5, 9);
+    box.Engine.noa.setBlock(tiles[118], 11, 5, 9);
 
     return;
   });
