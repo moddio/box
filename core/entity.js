@@ -31,6 +31,7 @@ export class Entity {
 
     this.body.onCollide(100);
     this.body.friction = 0;
+    this.body.linearDamping = 1;
     this.body.boxEntity = this;
 
     return mesh;
@@ -68,6 +69,9 @@ export class Entity {
     // console.log("testing entity tick")
 
     let pos = this.body.getPosition();
+
+    // gradually slow down the body to stop using linearDamping
+    // this.body.velocity[0] = Math.max(0, this.body.velocity[0] - this.body.linearDamping);
 
     /**
       this.body.setPosition([
