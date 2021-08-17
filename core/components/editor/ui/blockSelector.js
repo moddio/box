@@ -34,13 +34,8 @@ const blockSelector = (noa, socket) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(dirtID, pos[0], pos[1], pos[2]);
-        socket.emit("createBlock", {
-          data: {
-            id: "dirt",
-            position: [pos[0], pos[1], pos[2]],
-          },
-        });
       }
+      l;
     });
   });
   diamondEvent.addEventListener("click", () => {
@@ -48,12 +43,6 @@ const blockSelector = (noa, socket) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(diamondID, pos[0], pos[1], pos[2]);
-        socket.emit("createBlock", {
-          data: {
-            id: "diamond",
-            position: [pos[0], pos[1], pos[2]],
-          },
-        });
       }
     });
   });
@@ -62,12 +51,6 @@ const blockSelector = (noa, socket) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(goldID, pos[0], pos[1], pos[2]);
-        socket.emit("createBlock", {
-          data: {
-            id: "gold",
-            position: [pos[0], pos[1], pos[2]],
-          },
-        });
       }
     });
   });
@@ -76,13 +59,6 @@ const blockSelector = (noa, socket) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(waterID, pos[0], pos[1], pos[2]);
-
-        socket.emit("createBlock", {
-          data: {
-            id: "water",
-            position: [pos[0], pos[1], pos[2]],
-          },
-        });
       }
     });
   });
@@ -91,12 +67,6 @@ const blockSelector = (noa, socket) => {
       if (noa.targetedBlock) {
         const pos = noa.targetedBlock.adjacent;
         noa.setBlock(grassID, pos[0], pos[1], pos[2]);
-        socket.emit("createBlock", {
-          data: {
-            id: "grass",
-            position: [pos[0], pos[1], pos[2]],
-          },
-        });
       }
     });
   });
@@ -105,10 +75,7 @@ const blockSelector = (noa, socket) => {
     var ents = noa.entities;
     var playPos = ents.getPosition(noa.playerEntity);
     // Emit your data to to the server socket
-    socket.emit(
-      "players",
-      playersDataEvent(socket.id, [playPos[0], playPos[1] + 0.5, playPos[2]])
-    );
+
     return;
   });
 
@@ -123,9 +90,6 @@ const blockSelector = (noa, socket) => {
       let pos = noa.targetedBlock.position;
       noa.setBlock(0, pos[0], pos[1], pos[2]);
       console.log("fired");
-      socket.emit("removeBlock", {
-        data: { position: [pos[0], pos[1], pos[2]] },
-      });
     }
   });
 };

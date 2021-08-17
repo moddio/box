@@ -8,19 +8,17 @@ const io = new Server(server, {
     origin: "*",
   },
 });
-
-var players = [];
-
-io.on("connection", (socket) => {
-  socket.on("new-player", (data) => {
-    players.push(data);
-    console.log(players);
-  });
-});
+const {
+  serverNetworking,
+} = require("../core/components/network/serverNetworkEvent");
 
 server.listen(3000, () => {
   console.log("listening on *:3000");
 });
+
+// start server networking
+console.log("start");
+serverNetworking(io);
 /**
  var BABYLON = require("babylonjs");
 

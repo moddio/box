@@ -17,12 +17,51 @@ export class Unit extends Entity {
     this.moveDirection; // x, y, z rotations
     inputs.down.on("shoot-ball", () => this.shootBall());
 
+    inputs.up.on("move-left", () => {
+      this.body.atRestY()
+        ? this.body.applyForce([
+            this.y * Math.abs(this.body.velocity[0]) * 15,
+            -10,
+            -this.x * Math.abs(this.body.velocity[2]) * 15,
+          ])
+        : "";
+    });
+    inputs.up.on("move-right", () => {
+      this.body.atRestY() !== 0
+        ? this.body.applyForce([
+            -this.y * Math.abs(this.body.velocity[0]) * 15,
+            -10,
+            this.x * Math.abs(this.body.velocity[2]) * 15,
+          ])
+        : "";
+    });
+    inputs.up.on("move-up", () => {
+      this.body.atRestY() !== 0
+        ? this.body.applyForce([
+            -this.x * Math.abs(this.body.velocity[0]) * 15,
+            -10,
+            -this.y * Math.abs(this.body.velocity[2]) * 15,
+          ])
+        : "";
+    });
+    inputs.up.on("move-down", () => {
+      this.body.atRestY() !== 0
+        ? this.body.applyForce([
+            this.x * Math.abs(this.body.velocity[0]) * 15,
+            -10,
+            this.y * Math.abs(this.body.velocity[2]) * 15,
+          ])
+        : "";
+    });
+
     // Asign the offset to the created body
     this.createBody({ offset: [0, 0.5, 0], type: "mesh" });
     this.resetPosition();
   }
+
   shootBall() {
-    const { body, id } = this.createBody({
+    /**
+      const { body, id } = this.createBody({
       offset: [0, 0.5, 0],
       type: "sphere",
     });
@@ -48,6 +87,7 @@ export class Unit extends Entity {
         callback: (otherEntsId) => box.collision(id, otherEntsId),
       }
     );
+     */
   }
 
   resetPosition() {
@@ -63,15 +103,20 @@ export class Unit extends Entity {
       : (states[0]["Dumping"] = false);
 
     // Checking if the player is not stuck
-    this.body.atRestY() === 0 && Math.abs(this.body.velocity[1]) <= 0
-      ? (states[0]["stuck"] = true)
-      : (states[0]["stuck"] = false);
+    /**
+     this.body.atRestY() === 0 && Math.abs(this.body.velocity[1]) <= 0
+      ? (this.body.friction = 0)
+      : (this.body.friction = 2);
+     */
 
     // Getting force value from cos sin
     let angle = box.Engine.noa.camera.heading;
-    let force = Math.abs(this.body.velocity[1]) > 0 ? 0.6 : 2;
+    let force = Math.abs(this.body.velocity[1]) > 0 ? 0.7 : 2;
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
+
+    this.y = y;
+    this.x = x;
 
     // Increase gravity when the player is against the floor for now until we figure out why the entity player is stuck on jump
     states[0]["stuck"]
@@ -82,38 +127,33 @@ export class Unit extends Entity {
     let current = box.Engine.noa.camera.heading;
     this.mesh.rotation.y = current;
 
+    // console.log("logging the velocity state", this.body.velocity);
+
     // Movement Using the state of velocity and dumping the movement when the body goes very fast
     if (box.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
       this.body.applyImpulse([0, 15, 0]);
     }
-    if (
-      box.inputs.state["move-left"] &&
-      !states[0]["Dumping"] &&
-      !states[0]["stuck"]
-    ) {
+    if (box.inputs.state["move-left"] && !states[0]["Dumping"]) {
       this.body.applyImpulse([-y, 0, x]);
     }
-    if (
-      box.inputs.state["move-right"] &&
-      !states[0]["Dumping"] &&
-      !states[0]["stuck"]
-    ) {
+    if (box.inputs.state["move-right"] && !states[0]["Dumping"]) {
       this.body.applyImpulse([y, 0, -x]);
     }
-    if (
-      box.inputs.state["move-up"] &&
-      !states[0]["Dumping"] &&
-      !states[0]["stuck"]
-    ) {
+    if (box.inputs.state["move-up"] && !states[0]["Dumping"]) {
       this.body.applyImpulse([x, 0, y]);
     }
-    if (
-      box.inputs.state["move-down"] &&
-      !states[0]["Dumping"] &&
-      !states[0]["stuck"]
-    ) {
+    if (box.inputs.state["move-down"] && !states[0]["Dumping"]) {
       this.body.applyImpulse([-x, 0, -y]);
     }
+
+    // Using friction when only the player is not moving
+    !box.inputs.state["move-left"] &&
+    !box.inputs.state["move-right"] &&
+    !box.inputs.state["move-up"] &&
+    !box.inputs.state["move-down"] &&
+    !box.inputs.state["jump"]
+      ? (this.body.friction = 2)
+      : (this.body.friction = 0);
     /**
   
 

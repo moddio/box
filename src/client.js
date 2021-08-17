@@ -1,37 +1,17 @@
-import { io } from "socket.io-client";
-
-let mapData = [
-  [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [1, 2, 3, 4, 5, 6, 7, 8, 9],
-];
-let scriptData = {};
+import { clientNetworking } from "../core/components/network/clientNetworkEvent";
 
 console.log("hello", box.isClient);
 
 box.Engine.start();
+// remove inputs component for player and movement component
+box.Engine.noa.entities.deleteComponent("receivesInputs");
+box.Engine.noa.entities.deleteComponent("movement");
 
-/**
- 
-loading map data and loadScript
-Box.loadMap(mapData);
-Box.loadScript(scriptData);
-
- */
-
-// when player joins the game, create a unit, and assign that unit to that player.
-// box.onEvent("playerJoin", function (player) {
-
+// start client networking
 console.log("player has joined the game");
+clientNetworking();
 
-// Client side server logic for socket
-const socket = io("http://localhost:3000");
-
-socket.on("connect", () => {
-  console.log("my socket id is", socket.id);
-});
-
-socket.emit("new-player", { playerID: Math.random() });
+console.log("this the data of the player online", box.playerData);
 
 // when player joins the game, create a unit, and assign that unit to that player.
 // box.onEvent("playerJoin", function (player) {
