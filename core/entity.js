@@ -1,11 +1,9 @@
 export class Entity {
   constructor() {
-    console.log("constructor of entity is running!");
     this.components;
     this.body;
     this.mesh;
     this.id = this.generateId();
-    console.log("generated id", this.id);
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     /**
      if (box.Engine.myUnit?.id === this.id) {
@@ -28,7 +26,7 @@ export class Entity {
     mesh.scaling.z = 0.5;
 
     // Adding mesh body in noa
-    console.log("createBody", this.noaEntityId);
+    //console.log("createBody", this.noaEntityId);
     box.Engine.noa.entities.addComponent(
       this.noaEntityId,
       box.Engine.noa.entities.names.mesh,

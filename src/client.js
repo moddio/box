@@ -1,6 +1,6 @@
 import { clientNetworking } from "../core/components/network/clientNetworkEvent";
 
-console.log("hello", box.isClient);
+//console.log("hello", box.isClient);
 
 box.Engine.start();
 // remove inputs component for player and movement component

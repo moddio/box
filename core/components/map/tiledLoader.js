@@ -5,7 +5,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
   let height = map.height;
   let width = map.width;
   let layers = map.layers.length;
-  console.log('Map loading - height:', height, ', width:', width, ', layers:', layers);
+  //console.log('Map loading - height:', height, ', width:', width, ', layers:', layers);
 
   const savingMap = new tiledSaver(height, width); //map data storage
   SaveMapButton(savingMap);
