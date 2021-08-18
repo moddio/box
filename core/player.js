@@ -4,7 +4,6 @@ export class Player extends Entity {
   constructor(data) {
     super();
     this.name = data.name;
-    this.mainUnit = data.player;
     this.clientId = undefined; // socketId
 
     //console.log("global", global.ControlComponent);
@@ -16,19 +15,12 @@ export class Player extends Entity {
   }
   
   createUnit() {
-    let unit = new box.Unit({ownerPlayer: this}); // Noa engine reserves id: 1 for my player
-    if (this.getMainUnit() == undefined) {
-      this.setMainUnit(unit)
+    let unit = new box.Unit();
+    unit.ownerPlayer = this;
+    if (this.mainUnit == undefined) {
+      this.mainUnit = unit;
     }
   }    
-
-  setMainUnit(unit) {
-    this.mainUnit = unit;
-  }
-
-  getMainUnit() {
-    return this.mainUnit;
-  }
 
   tick() {
     super.tick(); // call Entity.tick()

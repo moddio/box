@@ -57,6 +57,7 @@ export class Engine extends Entity {
     let player = new box.Player({
       name: "john"
     });
+    
     this.myPlayer = player;
     player.createUnit();
 

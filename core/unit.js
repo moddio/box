@@ -6,7 +6,6 @@ export class Unit extends Entity {
     // run Entity's constructor
     super();
 
-    this.ownerPlayer = data.ownerPlayer;
     this.check = 0;
     // Default radius
     this.radius = 0.2;

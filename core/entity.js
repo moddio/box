@@ -21,14 +21,18 @@ export class Entity {
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     var mainUnit = undefined;
     if (box.Engine.myPlayer) {
-      var mainUnit = box.Engine.myPlayer.getMainUnit();
+      mainUnit = box.Engine.myPlayer.mainUnit;
     }    
-    if (mainUnit === this.id) {
+    
+    if (mainUnit && mainUnit.id === this.id) {
       this.noaEntityId = 1;
     } else {
       this.noaEntityId = this.id;
     }
     
+    console.log("myPlayer", box.Engine.myPlayer.name)
+    console.log("mainUnit", box.Engine.myPlayer.mainUnit)
+    console.log("mainUnitId", mainUnit.id, "noaEntityId", this.noaEntityId)
     // Adding mesh body in noa
     console.log("createBody", data);
     box.Engine.noa.entities.addComponent(
