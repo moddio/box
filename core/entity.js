@@ -1,31 +1,34 @@
 export class Entity {
-  
-  contructor() {
-    console.log("constructor of entity is running!")
+  constructor() {
+    console.log("constructor of entity is running!");
     this.components;
     this.body;
     this.mesh;
     this.id = this.generateId();
-    console.log("generated id", this.id)
+    console.log("generated id", this.id);
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
-    if (box.Engine.myUnit.id == this.id) {
-      this.noaEntityId = 1
+    /**
+     if (box.Engine.myUnit?.id === this.id) {
+      this.noaEntityId = 1;
     } else {
       this.noaEntityId = this.id;
     }
+     */
+
+    this.noaEntityId = 1;
   }
 
   createBody(data) {
     // Creating a player mesh
 
     const mesh = box.Engine.Mesh.CreateBox("player-mesh");
-    box.Engine.Mesh.CreateBox()
+    //box.Engine.Mesh.CreateBox()
     // const mesh = box.Engine.Mesh.CreateSphere("player-mesh", 1);
     mesh.scaling.x = 0.5;
     mesh.scaling.z = 0.5;
 
-    // Adding mesh body in noa    
-    console.log("createBody", this.noaEntityId)
+    // Adding mesh body in noa
+    console.log("createBody", this.noaEntityId);
     box.Engine.noa.entities.addComponent(
       this.noaEntityId,
       box.Engine.noa.entities.names.mesh,
@@ -43,7 +46,7 @@ export class Entity {
 
     this.body.onCollide(100);
     this.body.friction = 0;
-    this.body.linearDamping = .5;
+    this.body.linearDamping = 0.5;
     this.body.boxEntity = this;
 
     return mesh;
@@ -85,8 +88,10 @@ export class Entity {
     // gradually slow down the body to stop using linearDamping
     // console.log(this.body.velocity)
 
-    this.body.velocity[0] = this.body.velocity[0] / (1 + this.body.linearDamping)
-    this.body.velocity[2] = this.body.velocity[2] / (1 + this.body.linearDamping)
+    this.body.velocity[0] =
+      this.body.velocity[0] / (1 + this.body.linearDamping);
+    this.body.velocity[2] =
+      this.body.velocity[2] / (1 + this.body.linearDamping);
 
     // this.body.velocity[0] = Math.max(0, this.body.velocity[0] - this.body.linearDamping);
 

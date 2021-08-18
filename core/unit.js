@@ -54,7 +54,7 @@ export class Unit extends Entity {
   }
 
   getOwnerPlayer() {
-    return this.ownerPlayer
+    return this.ownerPlayer;
   }
 
   resetPosition() {
@@ -108,7 +108,6 @@ export class Unit extends Entity {
     if (box.inputs.state["move-down"]) {
       this.body.applyImpulse([-x, 0, -y]);
     }
-
   }
 }
 

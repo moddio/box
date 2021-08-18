@@ -7,6 +7,9 @@ box.Engine.start();
 box.Engine.noa.entities.deleteComponent("receivesInputs");
 box.Engine.noa.entities.deleteComponent("movement");
 
+// USE THIS ON DEBUG MODE ONLY NOT IN PRODUCTION
+global.box = box;
+
 // start client networking
 console.log("player has joined the game");
 clientNetworking();
