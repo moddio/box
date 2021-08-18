@@ -4,6 +4,7 @@ import { Engine as noaEngine } from "noa-engine";
 import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
 import config from "../config/config.json";
 import { movementComp } from "../core/components/movement";
+import SaveMapButton from "./components/editor/ui/mapSaver";
 
 // Files
 import "./utils/state.min.js";

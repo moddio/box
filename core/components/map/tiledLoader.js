@@ -1,8 +1,14 @@
+import { tiledSaver } from "./tiledSaver";
+import SaveMapButton from "../editor/ui/mapSaver";
+
 function loadMap(map, data, tiles, invisibleBlock) {
   let height = map.height;
   let width = map.width;
   let layers = map.layers.length;
   console.log('Map loading - height:', height, ', width:', width, ', layers:', layers);
+
+  const savingMap = new tiledSaver(height, width); //map data storage
+  SaveMapButton(savingMap);
 
   // Border generation
   let i = 0;
@@ -24,21 +30,28 @@ function loadMap(map, data, tiles, invisibleBlock) {
     i++;
   }
 
+  //block placing
   map.layers.forEach(function (layer, layerIndex) {
     const layerData = layer.data;
     layerData.forEach(function (block, blockIndex) {
       let x = blockIndex;
-      let y = Math.floor(blockIndex / layer.width);
+      let y = Math.floor(blockIndex / width);
       let z = layerIndex;
-
-      if (x >= layer.width) x = x - y * 59;
-
+      if (x >= width) x = x - y * width;
+      
+      savingMap.saveBlock(y, z, x, block);  //saving block information for saving map later
       if (block !== 0) {
         data.set(y, z, x, tiles[block]);
         //console.log("Block placed: ", x, z, y, block);
       }
     });
   });
+
+  /*savingMap.saveBlock(0, 0, 0, 0);
+  savingMap.saveBlock(0, 0, 1, 0);
+  savingMap.saveBlock(0, 0, 2, 0);
+  savingMap.saveBlock(0, 0, 3, 0);*/
+
 }
 
 export default loadMap;

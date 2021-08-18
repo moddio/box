@@ -149,8 +149,8 @@ const generateWorld = () => {
     //for testing
     //box.Engine.noa.setBlock(tiles[33], 20, 5, 10);  //118 119 145 146
 
-    box.Engine.noa.setBlock(tiles[119], 10, 5, 10);
-    box.Engine.noa.setBlock(tiles[118], 11, 5, 10);
+    box.Engine.noa.setBlock(tiles[118], 10, 5, 10);
+    box.Engine.noa.setBlock(tiles[119], 11, 5, 10);
     box.Engine.noa.setBlock(tiles[119], 10, 5, 9);
     box.Engine.noa.setBlock(tiles[118], 11, 5, 9);
 
