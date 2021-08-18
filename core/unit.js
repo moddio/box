@@ -6,16 +6,18 @@ export class Unit extends Entity {
     // run Entity's constructor
     super();
 
-    this.ownerPlayer = data.owner;
+    this.ownerPlayer = data.ownerPlayer;
     this.check = 0;
     // Default radius
     this.radius = 0.2;
     this.val = 0;
 
-    this.width = data.width * this.radius;
-    this.height = data.height * this.radius;
+    this.width = 5 * this.radius;
+    this.height = 8 * this.radius;
     this.moveDirection; // x, y, z rotations
-    inputs.down.on("shoot-ball", () => this.shootBall());
+
+    // PUT THIS INSIDE controlComponent!!! not in unit.
+    // inputs.down.on("shoot-ball", () => this.shootBall());
 
     // Asign the offset to the created body
     this.createBody({ offset: [0, 0.5, 0], type: "mesh" });

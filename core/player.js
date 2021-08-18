@@ -14,6 +14,14 @@ export class Player extends Entity {
       this.addComponent("ControlComponent");
     }
   }
+  
+  createUnit() {
+    let unit = new box.Unit({ownerPlayer: this}); // Noa engine reserves id: 1 for my player
+    if (this.getMainUnit() == undefined) {
+      this.setMainUnit(unit)
+    }
+  }    
+
   setMainUnit(unit) {
     this.mainUnit = unit;
   }

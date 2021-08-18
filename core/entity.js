@@ -4,17 +4,10 @@ export class Entity {
     this.body;
     this.mesh;
     this.id = this.generateId();
-    // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
-    /**
-     if (box.Engine.myUnit?.id === this.id) {
-      this.noaEntityId = 1;
-    } else {
-      this.noaEntityId = this.id;
-    }
-     */
+    this.noaEntityId = undefined;
+    console.log("running entity constructor")
 
-    this.noaEntityId = 1;
-  }
+ }
 
   createBody(data) {
     // Creating a player mesh
@@ -25,8 +18,19 @@ export class Entity {
     mesh.scaling.x = 0.5;
     mesh.scaling.z = 0.5;
 
+    // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
+    var mainUnit = undefined;
+    if (box.Engine.myPlayer) {
+      var mainUnit = box.Engine.myPlayer.getMainUnit();
+    }    
+    if (mainUnit === this.id) {
+      this.noaEntityId = 1;
+    } else {
+      this.noaEntityId = this.id;
+    }
+    
     // Adding mesh body in noa
-    //console.log("createBody", this.noaEntityId);
+    console.log("createBody", data);
     box.Engine.noa.entities.addComponent(
       this.noaEntityId,
       box.Engine.noa.entities.names.mesh,
@@ -86,10 +90,8 @@ export class Entity {
     // gradually slow down the body to stop using linearDamping
     // console.log(this.body.velocity)
 
-    this.body.velocity[0] =
-      this.body.velocity[0] / (1 + this.body.linearDamping);
-    this.body.velocity[2] =
-      this.body.velocity[2] / (1 + this.body.linearDamping);
+    this.body.velocity[0] = this.body.velocity[0] / (1 + this.body.linearDamping);
+    this.body.velocity[2] = this.body.velocity[2] / (1 + this.body.linearDamping);
 
     // this.body.velocity[0] = Math.max(0, this.body.velocity[0] - this.body.linearDamping);
 
