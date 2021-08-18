@@ -22,9 +22,7 @@ export class Engine extends Entity {
     this.noa.inputs.unbind("right");
     this.Mesh = noaMesh;
     this.entities = {};
-    if (box.isClient) {
-      this.myPlayer = undefined;
-    }
+    this.myPlayer;
   }
   start() {
     console.log("starting the noa engine...");
@@ -54,12 +52,10 @@ export class Engine extends Entity {
     box.inputs.bind("remove-block", "K", "<left>");
 
     // setting the player Unit as main unit
-    let player = new box.Player({
-      name: "john"
+    this.myPlayer = new box.Player({
+      name: "john",
     });
-    
-    this.myPlayer = player;
-    player.createUnit();
+    this.myPlayer.createUnit();
 
     // run unit ticks
     //unit.tick();
