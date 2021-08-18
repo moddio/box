@@ -17,12 +17,7 @@ socket.on("mapBlockState", (removedBlocks) => {
 // Function that return random material using a sin and cos graph
 const getVoxelID = (x, y, z, { waterBlock, grassBlock }) => {
   for (let elem in blocksState) {
-    if (
-      blocksState[elem][0] === x &&
-      blocksState[elem][1] === y &&
-      blocksState[elem][2] === z
-    )
-      return false;
+    if (blocksState[elem][0] === x && blocksState[elem][1] === y && blocksState[elem][2] === z) return false;
   }
   if (y < -3) return waterBlock;
   var height = 2 * Math.sin(x / 10) + 3 * Math.cos(z / 20);
@@ -33,57 +28,50 @@ const getVoxelID = (x, y, z, { waterBlock, grassBlock }) => {
 const generateWorld = () => {
   const scene = BOX.Engine.noa.rendering.getScene();
   const createAtlas = require("babylon-atlas");
-  const atlas = createAtlas(
-    "tilesheet_complete.png",
-    "tilesheet_complete.json",
-    scene,
-    BABYLON
-  );
+  const atlas = createAtlas("tilesheet_complete.png", "tilesheet_complete.json", scene, BABYLON);
 
   // 3D person perspective camera
   BOX.Engine.noa.camera.zoomDistance = 8;
 
-  // register materials
-  BOX.Engine.noa.registry.registerMaterial("water", null, water);
-  BOX.Engine.noa.registry.registerMaterial("grass", null, blocks);
-  //BOX.Engine.noa.registry.registerMaterial("dirt", null, "tilesheet_complete-png-64x64-sprite-png/tile004.png");
-
   //generate material for each texture in tile sheet
+  const textures = map.textures;
   let tiles = {};
-  for (let i = 1; i < 541; i++) {
+  
+  Object.values(textures).forEach((texture, index) => {
+    index = index + 1;
+
+    const topMaterial = BOX.Engine.noa.registry.registerMaterial("material_top_" + index.toString(), null, texture.top);
+    const bottomMaterial = BOX.Engine.noa.registry.registerMaterial("material_bottom_" + index.toString(), null, texture.buttom);
+    const sideMaterial = BOX.Engine.noa.registry.registerMaterial("material_side_" + index.toString(), null, texture.side);
+    
+    tiles[index.toString()] = BOX.Engine.noa.registry.registerBlock(index, {
+      material: ["material_top_" + index.toString(), "material_bottom_" + index.toString(), "material_side_" + index.toString()],
+    });
+  });
+
+  /*for (let i = 1; i < 541; i++) {
     const tileIndex = i;
     let tileIndexString = i.toString();
     if (tileIndexString.length < 2) tileIndexString = "00" + tileIndexString;
     if (tileIndexString.length < 3) tileIndexString = "0" + tileIndexString;
 
     //old code for rotating textures
-    const tileMaterial = new BABYLON.StandardMaterial("material_" + tileIndexString, scene);
+    /*const tileMaterial = new BABYLON.StandardMaterial("material_" + tileIndexString, scene);
     tileMaterial.diffuseTexture = new BABYLON.Texture("tilesheet_complete-png-64x64-sprite-png/tile" + tileIndexString + ".png", scene);
     tileMaterial.diffuseTexture.wAng = Math.PI/2;
-    BOX.Engine.noa.registry.registerMaterial("material_" + tileIndexString, null, null, false, tileMaterial);
+    box.Engine.noa.registry.registerMaterial("material_" + tileIndexString, null, null, false, tileMaterial);*/
 
     /*const registeredMaterial = BOX.Engine.noa.registry.registerMaterial(
       "material_" + tileIndexString,
       null,
       "tilesheet_complete-png-64x64-sprite-png/tile" + tileIndexString + ".png"
-
-    );*/
-    tiles[tileIndex.toString()] = BOX.Engine.noa.registry.registerBlock(
-      tileIndex,
-      { material: "material_" + tileIndexString }
     );
-  }
+    tiles[tileIndex.toString()] = box.Engine.noa.registry.registerBlock(tileIndex, { material: "material_" + tileIndexString });
+  }*/
 
-  const invisibleMaterial =
-    BOX.Engine.noa.rendering.makeStandardMaterial("invisible");
+  const invisibleMaterial = BOX.Engine.noa.rendering.makeStandardMaterial("invisible");
   invisibleMaterial.diffuseTexture = atlas.makeSpriteTexture("frame_000");
-  BOX.Engine.noa.registry.registerMaterial(
-    "invisible",
-    null,
-    null,
-    false,
-    invisibleMaterial
-  );
+  BOX.Engine.noa.registry.registerMaterial("invisible", null, null, false, invisibleMaterial);
 
   // attempt to load materials from tile sheet
   /*const tileMaterial = BOX.Engine.noa.rendering.makeStandardMaterial("tile");
@@ -110,15 +98,6 @@ const generateWorld = () => {
   //var mat = myExistingMesh.material
 
   // Save texture inside register Block
-  /*const waterBlock = BOX.Engine.noa.registry.registerBlock(1, {
-    material: "water",
-  });*/
-  /*const grassBlock = BOX.Engine.noa.registry.registerBlock(2, {
-    material: "grass",
-  });*/
-  /*const tileBlock = BOX.Engine.noa.registry.registerBlock(1, {
-    material: "dirt",
-  });*/
   const invisibleBlock = BOX.Engine.noa.registry.registerBlock(255, {
     material: "invisible",
   });
@@ -151,11 +130,10 @@ const generateWorld = () => {
     //for testing
     //BOX.Engine.noa.setBlock(tiles[33], 20, 5, 10);  //118 119 145 146
 
-    BOX.Engine.noa.setBlock(tiles[118], 10, 5, 10);
-    BOX.Engine.noa.setBlock(tiles[119], 11, 5, 10);
-    BOX.Engine.noa.setBlock(tiles[119], 10, 5, 9);
-    BOX.Engine.noa.setBlock(tiles[118], 11, 5, 9);
-
+    /*box.Engine.noa.setBlock(tiles[118], 10, 5, 10);
+    box.Engine.noa.setBlock(tiles[119], 11, 5, 10);
+    box.Engine.noa.setBlock(tiles[119], 10, 5, 9);
+    box.Engine.noa.setBlock(tiles[118], 11, 5, 9);*/
     return;
   });
 };

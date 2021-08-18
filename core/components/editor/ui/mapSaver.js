@@ -1,6 +1,6 @@
+import { savingMap } from "../../map/tiledLoader";
 
-
-const saveMapButton = (savingMap) => {
+const saveMapButton = () => {
   const saveMapEvent = document.querySelector(".save-map-button");
 
 var jsonFile = null,

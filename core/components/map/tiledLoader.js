@@ -1,14 +1,16 @@
 import { tiledSaver } from "./tiledSaver";
 import saveMapButton from "../editor/ui/mapSaver";
 
+export let savingMap = {};
+
 function loadMap(map, data, tiles, invisibleBlock) {
   let height = map.height;
   let width = map.width;
   let layers = map.layers.length;
   //console.log('Map loading - height:', height, ', width:', width, ', layers:', layers);
 
-  const savingMap = new tiledSaver(height, width); //map data storage
-  saveMapButton(savingMap);
+  savingMap = new tiledSaver(height, width, map.textures); //map data storage
+  saveMapButton();
 
   // Border generation
   let i = 0;

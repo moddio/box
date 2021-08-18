@@ -1,3 +1,5 @@
+import { savingMap } from "../map/tiledLoader";
+
 class ControlComponent {
   constructor(player) {
     this.player = player;
@@ -33,14 +35,20 @@ class ControlComponent {
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.position;
 
-          pos[0] <= 0 ||
-          pos[0] >= 20 ||
-          pos[1] <= 0 ||
-          pos[1] >= 20 ||
-          pos[2] <= 0 ||
-          pos[2] >= 20
-            ? ""
-            : BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
+          if (pos[0] <= 0 ||
+            pos[0] >= 20 ||
+            pos[1] <= 0 ||
+            pos[1] >= 20 ||
+            pos[2] <= 0 ||
+            pos[2] >= 20) {
+              ""
+          }
+          else {
+            BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
+            savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
+          }
+
+            
         }
       }
 
@@ -48,6 +56,7 @@ class ControlComponent {
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.adjacent;
           BOX.Engine.noa.addBlock(materialType, pos[0], pos[1], pos[2]);
+          savingMap.saveBlock(pos[0], pos[1], pos[2], materialType);
         }
       }
     });
