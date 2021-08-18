@@ -10,6 +10,7 @@ export class Unit extends Entity {
     // Default radius
     this.radius = 0.2;
     this.val = 0;
+    this.type = 'unit';
 
     this.width = 5 * this.radius;
     this.height = 8 * this.radius;
@@ -17,6 +18,14 @@ export class Unit extends Entity {
 
     // PUT THIS INSIDE controlComponent!!! not in unit.
     // inputs.down.on("shoot-ball", () => this.shootBall());
+
+    this.ownerPlayer = data.ownerPlayer;
+    
+    if (this.ownerPlayer) {
+      if (this.ownerPlayer.mainUnit == undefined) {
+        this.ownerPlayer.mainUnit = this;
+      }
+    }    
 
     // Asign the offset to the created body
     this.createBody({ offset: [0, 0.5, 0], type: "mesh" });
@@ -34,7 +43,7 @@ export class Unit extends Entity {
     body.restitution = 0.8;
     body.friction = 0.7;
 
-    const direction = box.Engine.noa.camera.getDirection();
+    const direction = BOX.Engine.noa.camera.getDirection();
     var impulse = [];
     for (let i = 0; i < 3; i++) {
       impulse[i] = 5 * direction[i];
@@ -43,12 +52,12 @@ export class Unit extends Entity {
     body.applyImpulse(impulse);
 
     // adding component for collision (Fake physics)
-    box.Engine.noa.entities.addComponent(
+    BOX.Engine.noa.entities.addComponent(
       id,
-      box.Engine.noa.entities.names.collideEntities,
+      BOX.Engine.noa.entities.names.collideEntities,
       {
         cylinder: true,
-        callback: (otherEntsId) => box.collision(id, otherEntsId),
+        callback: (otherEntsId) => BOX.collision(id, otherEntsId),
       }
     );
      */
@@ -73,7 +82,7 @@ export class Unit extends Entity {
      */
 
     // Getting force value from cos sin
-    let angle = box.Engine.noa.camera.heading;
+    let angle = BOX.Engine.noa.camera.heading;
     let force = 2;
     let y = force * Math.cos(angle);
     let x = force * Math.sin(angle);
@@ -87,26 +96,26 @@ export class Unit extends Entity {
       : (this.body.gravityMultiplier = 2);
 
     // Rotation
-    let current = box.Engine.noa.camera.heading;
+    let current = BOX.Engine.noa.camera.heading;
     this.mesh.rotation.y = current;
 
     // console.log("logging the velocity state", this.body.velocity);
 
     // this has to be fixed
-    if (box.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
+    if (BOX.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
       this.body.applyImpulse([0, 10, 0]);
     }
 
-    if (box.inputs.state["move-left"]) {
+    if (BOX.inputs.state["move-left"]) {
       this.body.applyImpulse([-y, 0, x]);
     }
-    if (box.inputs.state["move-right"]) {
+    if (BOX.inputs.state["move-right"]) {
       this.body.applyImpulse([y, 0, -x]);
     }
-    if (box.inputs.state["move-up"]) {
+    if (BOX.inputs.state["move-up"]) {
       this.body.applyImpulse([x, 0, y]);
     }
-    if (box.inputs.state["move-down"]) {
+    if (BOX.inputs.state["move-down"]) {
       this.body.applyImpulse([-x, 0, -y]);
     }
   }

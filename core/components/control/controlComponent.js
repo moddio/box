@@ -12,16 +12,26 @@ class ControlComponent {
   // Simple demo of removing blocks and adding blocks we don't want to do this here
   mouseClick() {}
 
-  keyPress() {
+  keyPress(key) {
+
+    switch (key) {
+      case "b":
+        let unit = this.player.mainUnit;
+        if (unit) {
+          unit.shootBall();
+        }
+        break;
+    }
+
     let materialType = 1;
     window.addEventListener("keypress", () => {
-      if (box.inputs.state["change-material"]) {
+      if (BOX.inputs.state["change-material"]) {
         materialType === 1 ? (materialType = 2) : (materialType = 1);
       }
 
-      if (box.inputs.state["add-block"]) {
-        if (box.Engine.noa.targetedBlock) {
-          var pos = box.Engine.noa.targetedBlock.position;
+      if (BOX.inputs.state["add-block"]) {
+        if (BOX.Engine.noa.targetedBlock) {
+          var pos = BOX.Engine.noa.targetedBlock.position;
 
           pos[0] <= 0 ||
           pos[0] >= 20 ||
@@ -30,14 +40,14 @@ class ControlComponent {
           pos[2] <= 0 ||
           pos[2] >= 20
             ? ""
-            : box.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
+            : BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
         }
       }
 
-      if (box.inputs.state["remove-block"]) {
-        if (box.Engine.noa.targetedBlock) {
-          var pos = box.Engine.noa.targetedBlock.adjacent;
-          box.Engine.noa.addBlock(materialType, pos[0], pos[1], pos[2]);
+      if (BOX.inputs.state["remove-block"]) {
+        if (BOX.Engine.noa.targetedBlock) {
+          var pos = BOX.Engine.noa.targetedBlock.adjacent;
+          BOX.Engine.noa.addBlock(materialType, pos[0], pos[1], pos[2]);
         }
       }
     });

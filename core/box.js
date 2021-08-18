@@ -21,10 +21,10 @@ export const edgeMap = {
 };
 
 export const collision = (id, otherEntsId) => {
-  let entityOne = box.Engine.noa.entities.getPosition(id);
-  let entityTwo = box.Engine.noa.entities.getPosition(otherEntsId);
-  let bodyPlayer = box.Engine.noa.entities.getPhysicsBody(1);
-  let bodyBall = box.Engine.noa.entities.getPhysicsBody(id);
+  let entityOne = BOX.Engine.noa.entities.getPosition(id);
+  let entityTwo = BOX.Engine.noa.entities.getPosition(otherEntsId);
+  let bodyPlayer = BOX.Engine.noa.entities.getPhysicsBody(1);
+  let bodyBall = BOX.Engine.noa.entities.getPhysicsBody(id);
   var check;
 
   console.log("ball velocity", bodyBall.velocity);
@@ -53,14 +53,14 @@ export const collision = (id, otherEntsId) => {
   // for (let i = 0; i < 3; i++) {
   //   impulse[i] = check * (entityOne[i] - entityTwo[i]);
   // }
-  // let body = box.Engine.noa.entities.getPhysicsBody(id);
+  // let body = BOX.Engine.noa.entities.getPhysicsBody(id);
   // body.applyImpulse(impulse);
 };
 
 export const inputs = require("game-inputs")();
 /**
 
-export const movementComp = box.Engine.noa.entities.createComponent({
+export const movementComp = BOX.Engine.noa.entities.createComponent({
   name: "movemen",
   order: 30,
 
@@ -71,10 +71,10 @@ export const movementComp = box.Engine.noa.entities.createComponent({
   onRemove: null,
 
   system: function movementProcessor(dt, states) {
-    var ents = box.Engine.noa.entities;
+    var ents = BOX.Engine.noa.entities;
     for (var i = 0; i < states.length; i++) {
       var state = states[i];
-      var phys = box.Engine.noa.entities.getPhysics(state.__id);
+      var phys = BOX.Engine.noa.entities.getPhysics(state.__id);
       applyMovementPhysics(dt, state, phys.body);
     }
   },

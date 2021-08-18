@@ -10,9 +10,9 @@ var checker = 0;
 const system = (dt, states) => {
 
 
-  // var bodyPlayer = box.Engine.noa.entities.getPhysicsBody(1);
-  // var meshData = box.Engine.noa.entities.getMeshData(1);
-  // var playerPos = box.Engine.noa.entities.getPosition(1);
+  // var bodyPlayer = BOX.Engine.noa.entities.getPhysicsBody(1);
+  // var meshData = BOX.Engine.noa.entities.getMeshData(1);
+  // var playerPos = BOX.Engine.noa.entities.getPosition(1);
   // for (let elem in states) {
   //   bodyPlayer.friction = 2;
   //   bodyPlayer.gravityMultiplier = 2;
@@ -32,14 +32,14 @@ const system = (dt, states) => {
 
   //   if (states[elem]["__id"] === 1) {
   //     bodyPlayer.gravityMultiplier = 2;
-  //     if (box.inputs.state["shoot-ball"]) {
+  //     if (BOX.inputs.state["shoot-ball"]) {
   //       /*
   //       this.shootProjectile();
   //       **/
   //     }
 
-  //     let current = box.Engine.noa.camera.heading;
-  //     // console.log("logging state ", box.Engine.noa.entities);
+  //     let current = BOX.Engine.noa.camera.heading;
+  //     // console.log("logging state ", BOX.Engine.noa.entities);
 
   //     if (checker > current) {
   //       // ------------- rotation LOG ---------------------
@@ -59,7 +59,7 @@ const system = (dt, states) => {
 
   //     // handle physics boundary
 
-  //     let angle = box.Engine.noa.camera.heading;
+  //     let angle = BOX.Engine.noa.camera.heading;
   //     let force = 2;
   //     let y = force * Math.cos(angle);
   //     let x = force * Math.sin(angle);

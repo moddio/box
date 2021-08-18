@@ -7,7 +7,7 @@ module.exports = (env) => ({
 
   plugins: [
     new webpack.ProvidePlugin({
-      box: "box",
+      BOX: "box",
       loader: "loader",
     }),
   ],

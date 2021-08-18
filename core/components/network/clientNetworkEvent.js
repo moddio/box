@@ -9,7 +9,7 @@ export const clientNetworking = () => {
       console.log(data);
       for (let elem in data) {
         /**
-           var newEnt = new box.Unit({ owner: elem, id: elem });
+           var newEnt = new BOX.Unit({ owner: elem, id: elem });
         newEnt.test();
          */
       }

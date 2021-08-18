@@ -60,7 +60,7 @@ export class tiledSaver {
               create.addEventListener('click', function () {
                 var link = document.createElement('a');
                 link.setAttribute('download', 'info.txt');
-                link.href = makeTextFile(textbox.value);
+                link.href = makeTextFile(textBOX.value);
                 document.body.appendChild(link);
             
                 // wait for the link to be added to the document

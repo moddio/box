@@ -41,18 +41,18 @@ export class Engine extends Entity {
       new BABYLON.AmmoJSPlugin()
     );
 
-    box.inputs.bind("move-up", "W", "<up>");
-    box.inputs.bind("move-left", "A", "<left>");
-    box.inputs.bind("move-down", "S", "<up>");
-    box.inputs.bind("move-right", "D", "<left>");
-    box.inputs.bind("jump", "<space>");
-    box.inputs.bind("shoot-ball", "H", "<left>");
-    box.inputs.bind("change-material", "P", "<left>");
-    box.inputs.bind("add-block", "L", "<left>");
-    box.inputs.bind("remove-block", "K", "<left>");
+    BOX.inputs.bind("move-up", "W", "<up>");
+    BOX.inputs.bind("move-left", "A", "<left>");
+    BOX.inputs.bind("move-down", "S", "<up>");
+    BOX.inputs.bind("move-right", "D", "<left>");
+    BOX.inputs.bind("jump", "<space>");
+    BOX.inputs.bind("shoot-ball", "H", "<left>");
+    BOX.inputs.bind("change-material", "P", "<left>");
+    BOX.inputs.bind("add-block", "L", "<left>");
+    BOX.inputs.bind("remove-block", "K", "<left>");
 
     // setting the player Unit as main unit
-    this.myPlayer = new box.Player({
+    this.myPlayer = new BOX.Player({
       name: "john",
     });
     this.myPlayer.createUnit();
@@ -72,7 +72,7 @@ export class Engine extends Entity {
   entityTick(dt, states) {
     for (let elem in states) {
       let noaEntityId = states[elem].__id;
-      let body = box.Engine.noa.entities.getPhysicsBody(noaEntityId);
+      let body = BOX.Engine.noa.entities.getPhysicsBody(noaEntityId);
       let boxEntity = body.boxEntity;
       if (boxEntity) {
         boxEntity.tick(dt, states);
