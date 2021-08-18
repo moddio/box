@@ -56,6 +56,7 @@ const generateWorld = () => {
     if (tileIndexString.length < 2) tileIndexString = "00" + tileIndexString;
     if (tileIndexString.length < 3) tileIndexString = "0" + tileIndexString;
 
+    //old code for rotating textures
     const tileMaterial = new BABYLON.StandardMaterial("material_" + tileIndexString, scene);
     tileMaterial.diffuseTexture = new BABYLON.Texture("tilesheet_complete-png-64x64-sprite-png/tile" + tileIndexString + ".png", scene);
     tileMaterial.diffuseTexture.wAng = Math.PI/2;
@@ -65,6 +66,7 @@ const generateWorld = () => {
       "material_" + tileIndexString,
       null,
       "tilesheet_complete-png-64x64-sprite-png/tile" + tileIndexString + ".png"
+
     );*/
     tiles[tileIndex.toString()] = box.Engine.noa.registry.registerBlock(
       tileIndex,
