@@ -1,5 +1,5 @@
 import { tiledSaver } from "./tiledSaver";
-import SaveMapButton from "../editor/ui/mapSaver";
+import saveMapButton from "../editor/ui/mapSaver";
 
 function loadMap(map, data, tiles, invisibleBlock) {
   let height = map.height;
@@ -8,7 +8,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
   //console.log('Map loading - height:', height, ', width:', width, ', layers:', layers);
 
   const savingMap = new tiledSaver(height, width); //map data storage
-  SaveMapButton(savingMap);
+  saveMapButton(savingMap);
 
   // Border generation
   let i = 0;

@@ -1,6 +1,6 @@
 
 
-const SaveMapButton = (savingMap) => {
+const saveMapButton = (savingMap) => {
   const saveMapEvent = document.querySelector(".save-map-button");
 
 var jsonFile = null,
@@ -34,4 +34,4 @@ makeJsonFile = function (info) {
   });
 };
 
-export default SaveMapButton;
+export default saveMapButton;
