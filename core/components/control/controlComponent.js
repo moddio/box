@@ -7,6 +7,7 @@ class ControlComponent {
     window.addEventListener("keypress", (e) => {
       this.keyPress(e.key);
     });
+    this.materialType = 1;
   }
 
   mouseMove() {
@@ -17,7 +18,7 @@ class ControlComponent {
   mouseClick() {}
 
   keyPress(key) {
-    var materialType = 1;
+    //var materialType = 1;
     // BOX.inputs.state["move-left"])
     switch (key) {
       // shoot the ball
@@ -28,7 +29,7 @@ class ControlComponent {
         }
         break;
       case "c":
-        materialType === 1 ? (materialType = 2) : (materialType = 1);
+        this.materialType === 1 ? (this.materialType = 2) : (this.materialType = 1);
         break;
       case "l":
         // add block
@@ -54,8 +55,8 @@ class ControlComponent {
         // remove block
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.adjacent;
-          BOX.Engine.noa.addBlock(materialType, pos[0], pos[1], pos[2]);
-          savingMap.saveBlock(pos[0], pos[1], pos[2], materialType);
+          BOX.Engine.noa.addBlock(this.materialType, pos[0], pos[1], pos[2]);
+          savingMap.saveBlock(pos[0], pos[1], pos[2], this.materialType);
         }
         break;
 

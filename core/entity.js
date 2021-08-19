@@ -25,7 +25,9 @@ export class Entity {
       [componentName]: new loader.loadedComponents[componentName](1),
       id: this.id,
     };
+    BOX.Control = this.components;
   }
+  
   lifeSpan(id, milisecond) {
     setTimeout(() => {
       BOX.Engine.noa.entities.deleteEntity(id);
