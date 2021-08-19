@@ -28,20 +28,6 @@ const developerModeButton = () => {
       document.querySelector(".game_build").style.display = "none";
     }
   });
-
-  /*const imageClick = document.querySelector(".block_0");
-
-  // Player Event on keyborad or mouse click
-  imageClick.addEventListener("click", () => {
-    console.log('click block')
-    /*noa.inputs.down.on("fire", () => {
-      if (noa.targetedBlock) {
-        const pos = noa.targetedBlock.adjacent;
-        noa.setBlock(dirtID, pos[0], pos[1], pos[2]);
-      }
-      l;
-    });*/
-  //});
 };
 
 export default developerModeButton;
