@@ -5,6 +5,7 @@ export class Unit extends Entity {
   constructor(data) {
     // run Entity's constructor
     super();
+    BOX.Engine.entities[this.id] = this;
 
     this.check = 0;
     // Default radius

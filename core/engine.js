@@ -20,8 +20,14 @@ export class Engine extends Entity {
     this.Mesh = noaMesh;
     this.entities = {};
     this.myPlayer;
+
+    this.currentTime = 0;
+    this.lastSecond = this.currentTime;
+    this.tickCount = 0;
   }
+
   start() {
+    var self = this;
     console.log("starting the noa engine...");
 
     // Generate the world
@@ -52,6 +58,10 @@ export class Engine extends Entity {
       name: "john",
     });
     this.myPlayer.createUnit();
+    
+    this.noa.on('tick', function() {
+      self.engineStep();
+    })
 
     // run unit ticks
     //unit.tick();
@@ -61,21 +71,39 @@ export class Engine extends Entity {
   loadMap(mapData) {}
 
   engineStep() {
+    let tickStart = Date.now();
+
     if (global.isServer) {
-      this.serverNetworkComponent.createSnapshot(this.body);
+      // this.serverNetworkComponent.createSnapshot(this.body);
     }
+
+    // entity tick
+    for (entityId in this.entities) {
+      let entity = this.entities[entityId]
+      entity.tick();
+    }
+
+    let tickDelta = Date.now() - tickStart;
+    this.currentTime += tickDelta;
+    this.tickCount++;
+    if (this.currentTime - this.lastSecond > 1000) {
+      console.log("engineStep", this.tickCount)
+      this.lastSecond = this.currentTime;
+    }
+    
+
   }
 
-  entityTick(dt, states) {
-    for (let elem in states) {
-      let noaEntityId = states[elem].__id;
-      let body = BOX.Engine.noa.entities.getPhysicsBody(noaEntityId);
-      let boxEntity = body.boxEntity;
-      if (boxEntity) {
-        boxEntity.tick(dt, states);
-      }
-    }
-  }
+  // entityTick(dt, states) {
+  //   for (let elem in states) {
+  //     let noaEntityId = states[elem].__id;
+  //     let body = BOX.Engine.noa.entities.getPhysicsBody(noaEntityId);
+  //     let boxEntity = body.boxEntity;
+  //     if (boxEntity) {
+  //       boxEntity.tick(dt, states);
+  //     }
+  //   }
+  // }
 
   destroyEntity(entityId) {
     delete this.entities[entityId];
@@ -85,7 +113,7 @@ export class Engine extends Entity {
 /**
  //player
 const playerEvent = new Player(noa, player);
-// init event listener
+// init event listenerZN
 playerEvent.playerEvent();
  */
 

@@ -1,4 +1,5 @@
 export class Entity {
+
   constructor() {
     this.components;
     this.body;
@@ -6,6 +7,7 @@ export class Entity {
     this.id = this.generateId();
     this.noaEntityId = undefined;
     this.type = undefined;
+    
     console.log("running entity constructor");
   }
 

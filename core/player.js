@@ -3,10 +3,11 @@ import { Entity } from "./entity";
 export class Player extends Entity {
   constructor(data) {
     super();
-    this.name = data.name;
+    BOX.Engine.entities[this.id] = this;this.name = data.name;
+    
     this.clientId = undefined; // socketId
     this.type = 'player';
-
+    
     //console.log("global", global.ControlComponent);
     if (BOX.isServer) {
       // add other player controls
