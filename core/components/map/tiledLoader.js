@@ -3,7 +3,7 @@ import saveMapButton from "../editor/ui/mapSaver";
 
 export let savingMap = {};
 
-function loadMap(map, data, tiles) {
+function loadMap(map, data, tiles, invisibleBlock) {
   let height = map.height;
   let width = map.width;
   let layers = map.layers.length;
@@ -21,11 +21,11 @@ function loadMap(map, data, tiles) {
   // ---- I added 3 to height and width -----?
   while (i <= mapHeight + 3) {
     while (j <= mapHeight + 3) {
-      data.set(i, heightBorder, j, tiles[1]);
-      data.set(mapHeight, i, j, tiles[1]);
-      data.set(mapIndex, i, j, tiles[1]);
-      data.set(j, i, mapWidth, tiles[1]);
-      data.set(j, i, mapIndex, tiles[1]);
+      data.set(i, heightBorder, j, invisibleBlock);
+      data.set(mapHeight, i, j, invisibleBlock);
+      data.set(mapIndex, i, j, invisibleBlock);
+      data.set(j, i, mapWidth, invisibleBlock);
+      data.set(j, i, mapIndex, invisibleBlock);
       j++;
     }
     j = 0;

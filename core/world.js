@@ -58,7 +58,7 @@ const generateWorld = () => {
     const bottomMaterial = BOX.Engine.noa.registry.registerMaterial(
       "material_bottom_" + index.toString(),
       null,
-      texture.buttom
+      texture.bottom
     );
     const sideMaterial = BOX.Engine.noa.registry.registerMaterial(
       "material_side_" + index.toString(),
@@ -156,7 +156,7 @@ const generateWorld = () => {
   BOX.Engine.noa.world.on("worldDataNeeded", (id, data) => {
     if (check > 0) return;
     check++;
-    loadMap(map, data, tiles);
+    loadMap(map, data, tiles, invisibleBlock);
 
     BOX.Engine.noa.world.setChunkData(id, data);
 

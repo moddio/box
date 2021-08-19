@@ -4,7 +4,9 @@ import { Engine as noaEngine } from "noa-engine";
 import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
 import config from "../config/config.json";
 import { movementComp } from "../core/components/movement";
+
 import SaveMapButton from "./components/editor/ui/mapSaver";
+import developerModeButton from "./components/editor/ui/developerMode";
 
 // Files
 import "./utils/state.min.js";
@@ -58,6 +60,7 @@ export class Engine extends Entity {
 
     // run unit ticks
     //unit.tick();
+    developerModeButton();
   }
 
   loadMap(mapData) {}
