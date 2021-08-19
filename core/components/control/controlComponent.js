@@ -17,6 +17,7 @@ class ControlComponent {
   mouseClick() {}
 
   keyPress(key) {
+    var materialType = 1;
     // BOX.inputs.state["move-left"])
     switch (key) {
       // shoot the ball
@@ -25,12 +26,12 @@ class ControlComponent {
         if (unit) {
           unit.shootBall();
         }
-      /**
-            case "p":
-        let materialType = 1;
+        break;
+      case "c":
         materialType === 1 ? (materialType = 2) : (materialType = 1);
-      // add block
+        break;
       case "l":
+        // add block
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.position;
 
@@ -48,15 +49,16 @@ class ControlComponent {
             savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
           }
         }
-      // Remove the block
+        break;
       case "k":
+        // remove block
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.adjacent;
           BOX.Engine.noa.addBlock(materialType, pos[0], pos[1], pos[2]);
           savingMap.saveBlock(pos[0], pos[1], pos[2], materialType);
         }
-        break
-         */
+        break;
+
       // change the material type
     }
   }
