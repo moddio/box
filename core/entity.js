@@ -11,49 +11,56 @@ export class Entity {
 
   createBody(data) {
     // Creating a player mesh
-
-    const mesh = BOX.Engine.Mesh.CreateBox("player-mesh");
-    //BOX.Engine.Mesh.CreateBox()
-    // const mesh = BOX.Engine.Mesh.CreateSphere("player-mesh", 1);
-    mesh.scaling.x = 0.5;
-    mesh.scaling.z = 0.5;
-
-    console.log("myPlayer", BOX.Engine.myPlayer);
-
-    // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
-    var mainUnit = undefined;
-    if (BOX.Engine.myPlayer) {
-      mainUnit = BOX.Engine.myPlayer.mainUnit;
-    }
-
-    if (mainUnit && mainUnit.id === this.id) {
-      this.noaEntityId = 1;
-    } else {
-      this.noaEntityId = this.id;
-    }
-    console.log("mainUnit", BOX.Engine.myPlayer.mainUnit);
-    console.log("mainUnitId", mainUnit.id, "noaEntityId", this.noaEntityId);
-    // Adding mesh body in noa
-    console.log("createBody", data);
-    BOX.Engine.noa.entities.addComponent(
-      this.noaEntityId,
-      BOX.Engine.noa.entities.names.mesh,
-      {
-        mesh,
-        offset: data.offset,
-      }
+    const mesh = BOX.Engine.Mesh[data.type](
+      data.unitName,
+      data.roundShap[0],
+      data.roundShap[1]
     );
 
-    // add entityTick
-    BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.entityTick);
+    if (data.type === "CreateBox") {
+      //BOX.Engine.Mesh.CreateBox()
+      // const mesh = BOX.Engine.Mesh.CreateSphere("player-mesh", 1);
+      mesh.scaling.x = 0.5;
+      mesh.scaling.z = 0.5;
 
-    this.mesh = mesh;
-    this.body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
+      console.log("myPlayer", BOX.Engine.myPlayer);
 
-    this.body.onCollide(100);
-    this.body.friction = 0;
-    this.body.linearDamping = 0.5;
-    this.body.boxEntity = this;
+      // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
+      var mainUnit = undefined;
+      if (BOX.Engine.myPlayer) {
+        mainUnit = BOX.Engine.myPlayer.mainUnit;
+      }
+
+      if (mainUnit && mainUnit.id === this.id) {
+        this.noaEntityId = 1;
+      } else {
+        this.noaEntityId = this.id;
+      }
+      console.log("mainUnit", BOX.Engine.myPlayer.mainUnit);
+      console.log("mainUnitId", mainUnit.id, "noaEntityId", this.noaEntityId);
+      // Adding mesh body in noa
+      console.log("createBody", data);
+
+      BOX.Engine.noa.entities.addComponent(
+        this.noaEntityId,
+        BOX.Engine.noa.entities.names.mesh,
+        {
+          mesh,
+          offset: data.offset,
+        }
+      );
+
+      // add entityTick
+      BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.entityTick);
+
+      this.mesh = mesh;
+      this.body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
+
+      this.body.onCollide(100);
+      this.body.friction = 0;
+      this.body.linearDamping = 0.5;
+      this.body.boxEntity = this;
+    }
 
     return mesh;
   }

@@ -3,11 +3,10 @@ import saveMapButton from "../editor/ui/mapSaver";
 
 export let savingMap = {};
 
-function loadMap(map, data, tiles, invisibleBlock) {
+function loadMap(map, data, tiles) {
   let height = map.height;
   let width = map.width;
   let layers = map.layers.length;
-  //console.log('Map loading - height:', height, ', width:', width, ', layers:', layers);
 
   savingMap = new tiledSaver(height, width, map.textures); //map data storage
   saveMapButton();
@@ -19,13 +18,14 @@ function loadMap(map, data, tiles, invisibleBlock) {
   let mapWidth = map.width;
   let mapIndex = 0;
   let heightBorder = 50;
-  while (i <= mapHeight) {
-    while (j <= mapHeight) {
-      data.set(i, heightBorder, j, invisibleBlock);
-      data.set(mapHeight, i, j, invisibleBlock);
-      data.set(mapIndex, i, j, invisibleBlock);
-      data.set(j, i, mapWidth, invisibleBlock);
-      data.set(j, i, mapIndex, invisibleBlock);
+  // ---- I added 3 to height and width -----?
+  while (i <= mapHeight + 3) {
+    while (j <= mapHeight + 3) {
+      data.set(i, heightBorder, j, tiles[1]);
+      data.set(mapHeight, i, j, tiles[1]);
+      data.set(mapIndex, i, j, tiles[1]);
+      data.set(j, i, mapWidth, tiles[1]);
+      data.set(j, i, mapIndex, tiles[1]);
       j++;
     }
     j = 0;
@@ -40,8 +40,8 @@ function loadMap(map, data, tiles, invisibleBlock) {
       let y = Math.floor(blockIndex / width);
       let z = layerIndex;
       if (x >= width) x = x - y * width;
-      
-      savingMap.saveBlock(y, z, x, block);  //saving block information for saving map later
+
+      savingMap.saveBlock(y, z, x, block); //saving block information for saving map later
       if (block !== 0) {
         data.set(y, z, x, tiles[block]);
         //console.log("Block placed: ", x, z, y, block);
@@ -53,7 +53,6 @@ function loadMap(map, data, tiles, invisibleBlock) {
   savingMap.saveBlock(0, 0, 1, 0);
   savingMap.saveBlock(0, 0, 2, 0);
   savingMap.saveBlock(0, 0, 3, 0);*/
-
 }
 
 export default loadMap;

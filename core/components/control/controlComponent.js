@@ -4,7 +4,9 @@ class ControlComponent {
   constructor(player) {
     this.player = player;
     this.mouseClick();
-    this.keyPress();
+    window.addEventListener("keypress", (e) => {
+      this.keyPress(e.key);
+    });
   }
 
   mouseMove() {
@@ -15,51 +17,48 @@ class ControlComponent {
   mouseClick() {}
 
   keyPress(key) {
-
+    // BOX.inputs.state["move-left"])
     switch (key) {
+      // shoot the ball
       case "b":
-        let unit = this.player.mainUnit;
+        let unit = BOX.Engine.myPlayer.mainUnit;
         if (unit) {
           unit.shootBall();
         }
-        break;
-    }
-
-    let materialType = 1;
-    window.addEventListener("keypress", () => {
-      if (BOX.inputs.state["change-material"]) {
+      /**
+            case "p":
+        let materialType = 1;
         materialType === 1 ? (materialType = 2) : (materialType = 1);
-      }
-
-      if (BOX.inputs.state["add-block"]) {
+      // add block
+      case "l":
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.position;
 
-          if (pos[0] <= 0 ||
+          if (
+            pos[0] <= 0 ||
             pos[0] >= 20 ||
             pos[1] <= 0 ||
             pos[1] >= 20 ||
             pos[2] <= 0 ||
-            pos[2] >= 20) {
-              ""
-          }
-          else {
+            pos[2] >= 20
+          ) {
+            ("");
+          } else {
             BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
             savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
           }
-
-            
         }
-      }
-
-      if (BOX.inputs.state["remove-block"]) {
+      // Remove the block
+      case "k":
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.adjacent;
           BOX.Engine.noa.addBlock(materialType, pos[0], pos[1], pos[2]);
           savingMap.saveBlock(pos[0], pos[1], pos[2], materialType);
         }
-      }
-    });
+        break
+         */
+      // change the material type
+    }
   }
 
   keyRelease(key) {

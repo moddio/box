@@ -46,7 +46,6 @@ export class Engine extends Entity {
     BOX.inputs.bind("move-down", "S", "<up>");
     BOX.inputs.bind("move-right", "D", "<left>");
     BOX.inputs.bind("jump", "<space>");
-    BOX.inputs.bind("shoot-ball", "H", "<left>");
     BOX.inputs.bind("change-material", "P", "<left>");
     BOX.inputs.bind("add-block", "L", "<left>");
     BOX.inputs.bind("remove-block", "K", "<left>");

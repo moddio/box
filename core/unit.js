@@ -10,7 +10,7 @@ export class Unit extends Entity {
     // Default radius
     this.radius = 0.2;
     this.val = 0;
-    this.type = 'unit';
+    this.type = "unit";
 
     this.width = 5 * this.radius;
     this.height = 8 * this.radius;
@@ -20,24 +20,51 @@ export class Unit extends Entity {
     // inputs.down.on("shoot-ball", () => this.shootBall());
 
     this.ownerPlayer = data.ownerPlayer;
-    
+
     if (this.ownerPlayer) {
       if (this.ownerPlayer.mainUnit == undefined) {
         this.ownerPlayer.mainUnit = this;
       }
-    }    
+    }
 
     // Asign the offset to the created body
-    this.createBody({ offset: [0, 0.5, 0], type: "mesh" });
+    this.createBody({
+      offset: [0, 0.5, 0],
+      type: "CreateBox",
+      unitName: "player",
+      roundShap: [null, null],
+    });
     this.resetPosition();
   }
 
   shootBall() {
-    /**
-      const { body, id } = this.createBody({
+    const mesh = this.createBody({
       offset: [0, 0.5, 0],
-      type: "sphere",
+      type: "CreateSphere",
+      unitName: "ball",
+      roundShap: [6, 0.4],
     });
+    // syntatic sugar for creating a default entity
+    var playPos = BOX.Engine.noa.entities.getPosition(1);
+    var pos = [playPos[0], playPos[1] + 0.5, playPos[2]];
+    var width = 0.1;
+    var height = 0.1;
+
+    //var mesh = ballMesh.createInstance("ball_instance");
+    var meshOffset = [0, 0.2, 0];
+    var doPhysics = true;
+    var shadow = true;
+
+    var id = BOX.Engine.noa.entities.add(
+      pos,
+      width,
+      height, // required
+      mesh,
+      meshOffset,
+      doPhysics,
+      shadow // optional
+    );
+    var body = BOX.Engine.noa.entities.getPhysicsBody(id);
     this.lifeSpend(id, 10000);
 
     body.restitution = 0.8;
@@ -60,7 +87,6 @@ export class Unit extends Entity {
         callback: (otherEntsId) => BOX.collision(id, otherEntsId),
       }
     );
-     */
   }
 
   getOwnerPlayer() {
