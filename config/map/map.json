@@ -82,6 +82,16 @@
       "top": "textures/grass_top.png",
       "bottom": "textures/dirt.png",
       "side": "textures/dirt_grass.png"
+    },
+    "2": {
+      "top": "textures/sand.png",
+      "bottom": "textures/dirt.png",
+      "side": "textures/dirt_sand.png"
+    },
+    "3": {
+      "top": "textures/snow.png",
+      "bottom": "textures/dirt.png",
+      "side": "textures/dirt_snow.png"
     }
   }
 }

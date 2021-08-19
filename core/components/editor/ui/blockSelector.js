@@ -16,17 +16,17 @@ const blockSelector = (noa, socket) => {
   const dirtEvent = document.querySelector(".game_build-dirt");
 
   //Register texture in memory
-  noa.registry.registerMaterial("tree", null, tree);
+  /*noa.registry.registerMaterial("tree", null, tree);
   noa.registry.registerMaterial("dirt", null, dirt);
   noa.registry.registerMaterial("gold", null, gold);
-  noa.registry.registerMaterial("diamond", null, diamond);
+  noa.registry.registerMaterial("diamond", null, diamond);*/
 
   // Save texture inside register Block
-  const waterID = noa.registry.registerBlock(1, { material: "water" });
+  /*const waterID = noa.registry.registerBlock(1, { material: "water" });
   const grassID = noa.registry.registerBlock(2, { material: "grass" });
   const goldID = noa.registry.registerBlock(3, { material: "gold" });
   const diamondID = noa.registry.registerBlock(4, { material: "diamond" });
-  const dirtID = noa.registry.registerBlock(5, { material: "dirt" });
+  const dirtID = noa.registry.registerBlock(5, { material: "dirt" });*/
 
   // Player Event on keyborad or mouse click
   dirtEvent.addEventListener("click", () => {
