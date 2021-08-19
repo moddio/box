@@ -3,11 +3,6 @@ import { savingMap } from "../map/tiledLoader";
 class ControlComponent {
   constructor(player) {
     this.player = player;
-    this.noa.inputs.unbind("forward");
-    this.noa.inputs.unbind("left");
-    this.noa.inputs.unbind("backward");
-    this.noa.inputs.unbind("jump");
-    this.noa.inputs.unbind("right");
     this.mouseClick();
     window.addEventListener("keypress", (e) => {
       this.keyPress(e.key);
