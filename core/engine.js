@@ -17,11 +17,6 @@ export class Engine extends Entity {
   constructor() {
     super();
     this.noa = new noaEngine(config);
-    this.noa.inputs.unbind("forward");
-    this.noa.inputs.unbind("left");
-    this.noa.inputs.unbind("backward");
-    this.noa.inputs.unbind("jump");
-    this.noa.inputs.unbind("right");
     this.Mesh = noaMesh;
     this.entities = {};
     this.myPlayer;

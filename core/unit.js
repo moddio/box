@@ -28,13 +28,60 @@ export class Unit extends Entity {
     }
 
     // Asign the offset to the created body
-    this.createBody({
+    this.playerUnit();
+  }
+
+  playerUnit() {
+    const mesh = this.createBody({
       offset: [0, 0.5, 0],
       type: "CreateBox",
       unitName: "player",
       roundShap: [null, null],
     });
+    //BOX.Engine.Mesh.CreateBox()
+    // const mesh = BOX.Engine.Mesh.CreateSphere("player-mesh", 1);
+    mesh.scaling.x = 0.6;
+    mesh.scaling.z = 0.6;
+
+    console.log("myPlayer", BOX.Engine.myPlayer);
+
+    // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
+    var mainUnit = undefined;
+    if (BOX.Engine.myPlayer) {
+      mainUnit = BOX.Engine.myPlayer.mainUnit;
+    }
+
+    if (mainUnit && mainUnit.id === this.id) {
+      this.noaEntityId = 1;
+    } else {
+      this.noaEntityId = this.id;
+    }
+    //console.log("mainUnit", BOX.Engine.myPlayer.mainUnit);
+    //console.log("mainUnitId", mainUnit.id, "noaEntityId", this.noaEntityId);
+    // Adding mesh body in noa
+    //console.log("createBody", data);
+
+    BOX.Engine.noa.entities.addComponent(
+      this.noaEntityId,
+      BOX.Engine.noa.entities.names.mesh,
+      {
+        mesh,
+        offset: [0, 0.5, 0],
+      }
+    );
+
+    // add entityTick
+    BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.entityTick);
+
+    this.mesh = mesh;
+    this.body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
+
     this.resetPosition();
+
+    this.body.onCollide(100);
+    this.body.friction = 0;
+    this.body.linearDamping = 0.5;
+    this.body.boxEntity = this;
   }
 
   shootBall() {
@@ -46,9 +93,9 @@ export class Unit extends Entity {
     });
     // syntatic sugar for creating a default entity
     var playPos = BOX.Engine.noa.entities.getPosition(1);
-    var pos = [playPos[0], playPos[1] + 0.5, playPos[2]];
-    var width = 0.1;
-    var height = 0.1;
+    var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
+    var width = 0.7;
+    var height = 0.7;
 
     //var mesh = ballMesh.createInstance("ball_instance");
     var meshOffset = [0, 0.2, 0];
@@ -61,11 +108,10 @@ export class Unit extends Entity {
       height, // required
       mesh,
       meshOffset,
-      doPhysics,
-      shadow // optional
+      doPhysics
     );
     var body = BOX.Engine.noa.entities.getPhysicsBody(id);
-    this.lifeSpend(id, 10000);
+    this.lifeSpan(id, 10000000);
 
     body.restitution = 0.8;
     body.friction = 0.7;
@@ -73,12 +119,12 @@ export class Unit extends Entity {
     const direction = BOX.Engine.noa.camera.getDirection();
     var impulse = [];
     for (let i = 0; i < 3; i++) {
-      impulse[i] = 5 * direction[i];
+      impulse[i] = 2 * direction[i];
       impulse[1] += 1;
     }
     body.applyImpulse(impulse);
 
-    // adding component for collision (Fake physics)
+    // adding component for collision
     BOX.Engine.noa.entities.addComponent(
       id,
       BOX.Engine.noa.entities.names.collideEntities,
