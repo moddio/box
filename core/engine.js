@@ -60,12 +60,9 @@ export class Engine extends Entity {
       this.engineTime = Math.round(new Date() - this.startTime);
       this.numberOfTicks++;
 
-      for (let entity in this.entities) {
-        if (entity.id === 1) {
-          this.body = this.noa.entities.getPhysicsBody(1);
-          this.mesh = this.noa.entities.getMeshData(1).mesh;
-          entity.tick();
-        }
+      for (let id in this.entities) {
+        let entity = this.entities[id]
+        entity.tick();
       }
     });
   }

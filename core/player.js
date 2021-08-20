@@ -20,8 +20,6 @@ export class Player extends Entity {
   
   createUnit() {
     BOX.Engine.addEntity({type:'Unit', ownerPlayer: this})
-    // let unit = new BOX.Unit({ownerPlayer: this});
-    // BOX.Engine.addEntity(unit)
   }
 
   tick() {
