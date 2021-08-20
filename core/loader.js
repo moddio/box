@@ -8,11 +8,14 @@ for (let elem in components) {
     : "";
 }
 
+
+
 // Loading modules from component data
 var loadedComponents = {};
 for (let elem in loading) {
   loadedComponents[elem] = require(loading[elem] + "").default;
 }
+
 
 // Loading all component in components.json file
 export { loadedComponents };

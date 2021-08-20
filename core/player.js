@@ -12,7 +12,10 @@ export class Player extends Entity {
       // add other player controls
     } else {
       this.addComponent("ControlComponent");
+      this.addComponent("DeveloperMode");
     }
+
+    
   }
   
   createUnit() {

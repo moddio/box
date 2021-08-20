@@ -19,6 +19,7 @@ export const edgeMap = {
   minHeight: 0,
   minWidth: 0,
 };
+export const control = {};
 
 export const collision = (id, otherEntsId) => {
   let entityOne = BOX.Engine.noa.entities.getPosition(id);
