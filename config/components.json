@@ -1,4 +1,5 @@
 {
   "ControlComponent": "./components/control/controlComponent.js",
+  "DeveloperMode": "./components/editor/ui/developerMode.js",
   "ServerNetworkComponent": "./components/network/serverNetworkComponent.js"
 }

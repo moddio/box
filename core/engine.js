@@ -55,7 +55,7 @@ export class Engine extends Entity {
 
     // run unit ticks
     //unit.tick();
-    developerModeButton();
+    //developerModeButton();
   }
 
   loadMap(mapData) {}

@@ -1,6 +1,6 @@
 export class Entity {
   constructor() {
-    this.components;
+    this.components = [];
     this.body;
     this.mesh;
     this.id = this.generateId();
@@ -21,10 +21,16 @@ export class Entity {
   }
 
   addComponent(componentName) {
-    this.components = {
+    /*this.components = {
       [componentName]: new loader.loadedComponents[componentName](1),
       id: this.id,
-    };
+    };*/
+    this.components.push({
+      [componentName]: new loader.loadedComponents[componentName](1),
+      id: this.id,
+    })
+    if (componentName === "DeveloperMode") this.components[1].DeveloperMode.developerModeButton(this.components[0].ControlComponent);
+    console.log('comp', this.components)
     BOX.Control = this.components;
   }
   
