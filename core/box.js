@@ -1,6 +1,7 @@
 import { Engine as boxEngine } from "./engine";
 import { Player as importedPlayer } from "./player";
 import { Unit as importedUnit } from "./unit";
+import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
 import { Projectile as importProjectile } from "./projectile";
 import {
   MovementState,
@@ -8,6 +9,7 @@ import {
 } from "../core/components/movement";
 
 export var isClient = window ? true : false;
+export const Mesh = noaMesh;
 export var isServer = !isClient;
 export const Projectile = importProjectile;
 export const Engine = new boxEngine();

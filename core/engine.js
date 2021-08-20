@@ -1,7 +1,6 @@
 // Engine
 import * as BABYLON from "@babylonjs/core";
 import { Engine as noaEngine } from "noa-engine";
-import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
 import config from "../config/config.json";
 import { movementComp } from "../core/components/movement";
 
@@ -17,11 +16,10 @@ export class Engine extends Entity {
   constructor() {
     super();
     this.noa = new noaEngine(config);
-    this.Mesh = noaMesh;
     this.entities = [];
     this.myPlayer;
-    this.engineTime = 0;
     this.numberOfTicks = 0;
+    this.startTime = new Date();
   }
   start() {
     console.log("starting the noa engine...");
@@ -39,15 +37,6 @@ export class Engine extends Entity {
       new BABYLON.Vector3(0, -9.8, 0),
       new BABYLON.AmmoJSPlugin()
     );
-
-    BOX.inputs.bind("move-up", "W", "<up>");
-    BOX.inputs.bind("move-left", "A", "<left>");
-    BOX.inputs.bind("move-down", "S", "<up>");
-    BOX.inputs.bind("move-right", "D", "<left>");
-    BOX.inputs.bind("jump", "<space>");
-    BOX.inputs.bind("change-material", "P", "<left>");
-    BOX.inputs.bind("add-block", "L", "<left>");
-    BOX.inputs.bind("remove-block", "K", "<left>");
 
     // setting the player Unit as main unit
     this.myPlayer = new BOX.Player({
@@ -71,13 +60,11 @@ export class Engine extends Entity {
       //Loop over all entities
       for (let elem in this.entities) {
         // Call ticks only on player for now (Because it has movement)
-        if (this.entities[elem] === 1) {
+        if (this.entities[elem].id === 1) {
           this.body = this.noa.entities.getPhysicsBody(1);
-          console.log("this is the body", this.noa.entities);
           this.mesh = this.noa.entities.getMeshData(1).mesh;
           this.tick();
         }
-        console.log(this.entities[elem]);
       }
     });
   }

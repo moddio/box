@@ -11,7 +11,7 @@ export class Entity {
 
   createBody(data) {
     // Creating a player mesh
-    const mesh = BOX.Engine.Mesh[data.type](
+    const mesh = BOX.Mesh[data.type](
       data.unitName,
       data.roundShap[0],
       data.roundShap[1]
@@ -28,14 +28,23 @@ export class Entity {
     this.components.push({
       [componentName]: new loader.loadedComponents[componentName](1),
       id: this.id,
-    })
-    if (componentName === "DeveloperMode") this.components[1].DeveloperMode.developerModeButton(this.components[0].ControlComponent);
+    });
+    if (componentName === "DeveloperMode")
+      this.components[1].DeveloperMode.developerModeButton(
+        this.components[0].ControlComponent
+      );
   }
-  
-  lifeSpan(id, milisecond) {
-    setTimeout(() => {
-      BOX.Engine.noa.entities.deleteEntity(id);
-    }, milisecond);
+
+  lifeSpan() {
+    for (let elem in this.entities) {
+      if (
+        this.entities[elem].lifeSpan <= BOX.Engine.engineTime &&
+        this.entities[elem].lifeSpan
+      ) {
+        BOX.Engine.noa.entities.deleteEntity(this.entities[elem].id);
+        this.entities[elem].lifeSpan = false;
+      }
+    }
   }
   removeComponent(componentName) {}
 
@@ -55,7 +64,8 @@ export class Entity {
   setStreamMode(mode) {}
 
   tick() {
-    console.log("running xxxxxxxxxxxxxxxxxxxxxxxxxx");
+    this.lifeSpan();
+
     // console.log("testing entity tick")
 
     //let pos = this.body.getPosition();
@@ -86,7 +96,6 @@ export class Entity {
     if (BOX.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
       this.body.applyImpulse([0, 10, 0]);
     }
-    console.log("running zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
     if (BOX.inputs.state["move-left"]) {
       this.body.applyImpulse([-y, 0, x]);
     }

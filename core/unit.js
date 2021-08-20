@@ -70,7 +70,11 @@ export class Unit extends Entity {
       }
     );
 
-    BOX.Engine.entities.push(this.noaEntityId);
+    BOX.Engine.entities.push({
+      id: this.noaEntityId,
+      creationTime: false,
+      lifeSpan: false,
+    });
 
     // add entityTick
     //BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.entityTick);
@@ -112,9 +116,12 @@ export class Unit extends Entity {
       meshOffset,
       doPhysics
     );
-    BOX.Engine.entities.push(id);
+    BOX.Engine.entities.push({
+      id,
+      creationTime: BOX.Engine.engineTime,
+      lifeSpan: 10000 + BOX.Engine.engineTime,
+    });
     var body = BOX.Engine.noa.entities.getPhysicsBody(id);
-    this.lifeSpan(id, 10000000);
 
     body.restitution = 0.8;
     body.friction = 0.7;
