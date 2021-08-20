@@ -6,7 +6,6 @@ for (let elem in components) {
   typeof components[elem] === "string"
     ? (loading[elem] = components[elem])
     : "";
-    console.log('loading', components[elem]);
 }
 
 
@@ -15,7 +14,6 @@ for (let elem in components) {
 var loadedComponents = {};
 for (let elem in loading) {
   loadedComponents[elem] = require(loading[elem] + "").default;
-  console.log('load', loadedComponents[elem]);
 }
 
 

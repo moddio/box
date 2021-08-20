@@ -30,8 +30,6 @@ export class Entity {
       id: this.id,
     })
     if (componentName === "DeveloperMode") this.components[1].DeveloperMode.developerModeButton(this.components[0].ControlComponent);
-    console.log('comp', this.components)
-    BOX.Control = this.components;
   }
   
   lifeSpan(id, milisecond) {

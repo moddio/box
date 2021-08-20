@@ -6,7 +6,6 @@ class DeveloperMode {
 
   }
   developerModeButton (ControlComponent) {
-    console.log ('developer mode !!!!!!!!!!!!', ControlComponent)
     //go through map.json textures and make interface image for each type of block
     Object.values(map.textures).forEach((texture, index) => {
       const img = new Image();
@@ -17,7 +16,7 @@ class DeveloperMode {
       // Player Event on mouse click 
       const imageClick = document.querySelector(".block_" + index.toString());
       imageClick.addEventListener("click", () => {
-        /*BOX.Control.*/ControlComponent.materialType = index + 1;
+        ControlComponent.materialType = index + 1;
   
       });
     })
