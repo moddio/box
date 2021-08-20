@@ -42,6 +42,10 @@ export class Entity {
     BOX.Engine.removeEntity(this.id)
   }
 
+  lifeSpan(time) {
+    this.lifeSpan = time;
+  }
+
   removeComponent(componentName) {}
 
   setState(stateId) {}
@@ -60,7 +64,7 @@ export class Entity {
   setStreamMode(mode) {}
 
   tick() {
-    if (this.lifeSpan + this.createdAt > Date.now()) {
+    if (this.lifeSpan != undefined && this.lifeSpan + this.createdAt > Date.now()) {
       this.destroy();
     }
 
