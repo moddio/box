@@ -1,10 +1,10 @@
 export class Entity {
-  constructor() {
+  constructor(data = {}) {
     this.components = [];
     this.body;
     this.mesh;
     this.id = this.generateId();
-    this.noaEntityId = undefined;
+    this.noaEntityId = data.noaEntityId;
     this.type = undefined;
     this.lifeSpan = undefined;
     this.createdAt = Date.now();
@@ -13,6 +13,7 @@ export class Entity {
   }
 
   createBody(data) {
+
     // Creating a player mesh
     const mesh = BOX.Mesh[data.type](
       data.unitName,

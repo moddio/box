@@ -51,7 +51,7 @@ export class Engine extends Entity {
   }
 
   loadMap(mapData) {
-    
+
   }
 
   engineStep() {
@@ -61,7 +61,7 @@ export class Engine extends Entity {
       this.numberOfTicks++;
 
       for (let entity in this.entities) {
-        if (this.entities[elem].id === 1) {
+        if (entity.id === 1) {
           this.body = this.noa.entities.getPhysicsBody(1);
           this.mesh = this.noa.entities.getMeshData(1).mesh;
           entity.tick();

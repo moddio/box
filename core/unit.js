@@ -27,11 +27,18 @@ export class Unit extends Entity {
       }
     }
 
-    // Asign the offset to the created body
-    this.playerUnit();
-  }
+    // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
+    var mainUnit = undefined;
+    if (BOX.Engine.myPlayer) {
+      mainUnit = BOX.Engine.myPlayer.mainUnit;
+    }
 
-  playerUnit() {
+    if (mainUnit && mainUnit.id === this.id) {
+      this.noaEntityId = 1;
+    } else {
+      this.noaEntityId = this.id;
+    }
+
     const mesh = this.createBody({
       offset: [0, 0.5, 0],
       type: "CreateBox",
@@ -45,17 +52,7 @@ export class Unit extends Entity {
 
     console.log("myPlayer", BOX.Engine.myPlayer);
 
-    // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
-    var mainUnit = undefined;
-    if (BOX.Engine.myPlayer) {
-      mainUnit = BOX.Engine.myPlayer.mainUnit;
-    }
-
-    if (mainUnit && mainUnit.id === this.id) {
-      this.noaEntityId = 1;
-    } else {
-      this.noaEntityId = this.id;
-    }
+    
     //console.log("mainUnit", BOX.Engine.myPlayer.mainUnit);
     //console.log("mainUnitId", mainUnit.id, "noaEntityId", this.noaEntityId);
     // Adding mesh body in noa
@@ -69,12 +66,7 @@ export class Unit extends Entity {
         offset: [0, 0.5, 0],
       }
     );
-
-    BOX.Engine.entities.push({
-      id: this.noaEntityId,
-      creationTime: false
-    });
-
+    
     // add entityTick
     //BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.entityTick);
 
