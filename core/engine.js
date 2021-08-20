@@ -18,16 +18,12 @@ export class Engine extends Entity {
     super();
     this.noa = new noaEngine(config);
     this.Mesh = noaMesh;
-    this.entities = {};
+    this.entities = [];
     this.myPlayer;
-
-    this.currentTime = 0;
-    this.lastSecond = this.currentTime;
-    this.tickCount = 0;
+    this.engineTime = 0;
+    this.numberOfTicks = 0;
   }
-
   start() {
-    var self = this;
     console.log("starting the noa engine...");
 
     // Generate the world
@@ -58,10 +54,6 @@ export class Engine extends Entity {
       name: "john",
     });
     this.myPlayer.createUnit();
-    
-    this.noa.on('tick', function() {
-      self.engineStep();
-    })
 
     // run unit ticks
     //unit.tick();
@@ -71,39 +63,24 @@ export class Engine extends Entity {
   loadMap(mapData) {}
 
   engineStep() {
-    let tickStart = Date.now();
+    this.noa.on("tick", () => {
+      // Update engine time on each tick
+      this.engineTime = Math.round(new Date() - this.startTime);
+      this.numberOfTicks++;
 
-    if (global.isServer) {
-      // this.serverNetworkComponent.createSnapshot(this.body);
-    }
-
-    // entity tick
-    for (entityId in this.entities) {
-      let entity = this.entities[entityId]
-      entity.tick();
-    }
-
-    let tickDelta = Date.now() - tickStart;
-    this.currentTime += tickDelta;
-    this.tickCount++;
-    if (this.currentTime - this.lastSecond > 1000) {
-      console.log("engineStep", this.tickCount)
-      this.lastSecond = this.currentTime;
-    }
-    
-
+      //Loop over all entities
+      for (let elem in this.entities) {
+        // Call ticks only on player for now (Because it has movement)
+        if (this.entities[elem] === 1) {
+          this.body = this.noa.entities.getPhysicsBody(1);
+          console.log("this is the body", this.noa.entities);
+          this.mesh = this.noa.entities.getMeshData(1).mesh;
+          this.tick();
+        }
+        console.log(this.entities[elem]);
+      }
+    });
   }
-
-  // entityTick(dt, states) {
-  //   for (let elem in states) {
-  //     let noaEntityId = states[elem].__id;
-  //     let body = BOX.Engine.noa.entities.getPhysicsBody(noaEntityId);
-  //     let boxEntity = body.boxEntity;
-  //     if (boxEntity) {
-  //       boxEntity.tick(dt, states);
-  //     }
-  //   }
-  // }
 
   destroyEntity(entityId) {
     delete this.entities[entityId];
@@ -113,7 +90,7 @@ export class Engine extends Entity {
 /**
  //player
 const playerEvent = new Player(noa, player);
-// init event listenerZN
+// init event listener
 playerEvent.playerEvent();
  */
 

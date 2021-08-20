@@ -5,7 +5,6 @@ export class Unit extends Entity {
   constructor(data) {
     // run Entity's constructor
     super();
-    BOX.Engine.entities[this.id] = this;
 
     this.check = 0;
     // Default radius
@@ -71,8 +70,10 @@ export class Unit extends Entity {
       }
     );
 
+    BOX.Engine.entities.push(this.noaEntityId);
+
     // add entityTick
-    BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.entityTick);
+    //BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.entityTick);
 
     this.mesh = mesh;
     this.body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
@@ -82,7 +83,7 @@ export class Unit extends Entity {
     this.body.onCollide(100);
     this.body.friction = 0;
     this.body.linearDamping = 0.5;
-    this.body.boxEntity = this;
+    // this.body.boxEntity = this;
   }
 
   shootBall() {
@@ -111,6 +112,7 @@ export class Unit extends Entity {
       meshOffset,
       doPhysics
     );
+    BOX.Engine.entities.push(id);
     var body = BOX.Engine.noa.entities.getPhysicsBody(id);
     this.lifeSpan(id, 10000000);
 
@@ -144,7 +146,7 @@ export class Unit extends Entity {
     this.body.setPosition([10, 10, 10]);
   }
 
-  tick(dt, states) {
+  tick() {
     super.tick(); // call Entity.tick()
 
     // Checking if the player is not stuck
@@ -153,44 +155,6 @@ export class Unit extends Entity {
       ? (this.body.friction = 0)
       : (this.body.friction = 2);
      */
-
-    // Getting force value from cos sin
-    let angle = BOX.Engine.noa.camera.heading;
-    let force = 2;
-    let y = force * Math.cos(angle);
-    let x = force * Math.sin(angle);
-
-    this.y = y;
-    this.x = x;
-
-    // Increase gravity when the player is against the floor for now until we figure out why the entity player is stuck on jump
-    states[0]["stuck"]
-      ? (this.body.gravityMultiplier = 32)
-      : (this.body.gravityMultiplier = 2);
-
-    // Rotation
-    let current = BOX.Engine.noa.camera.heading;
-    this.mesh.rotation.y = current;
-
-    // console.log("logging the velocity state", this.body.velocity);
-
-    // this has to be fixed
-    if (BOX.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
-      this.body.applyImpulse([0, 10, 0]);
-    }
-
-    if (BOX.inputs.state["move-left"]) {
-      this.body.applyImpulse([-y, 0, x]);
-    }
-    if (BOX.inputs.state["move-right"]) {
-      this.body.applyImpulse([y, 0, -x]);
-    }
-    if (BOX.inputs.state["move-up"]) {
-      this.body.applyImpulse([x, 0, y]);
-    }
-    if (BOX.inputs.state["move-down"]) {
-      this.body.applyImpulse([-x, 0, -y]);
-    }
   }
 }
 

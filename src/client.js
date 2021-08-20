@@ -3,6 +3,7 @@ import { clientNetworking } from "../core/components/network/clientNetworkEvent"
 //console.log("hello", BOX.isClient);
 
 BOX.Engine.start();
+BOX.Engine.engineStep();
 // remove inputs component for player and movement component
 BOX.Engine.noa.entities.deleteComponent("receivesInputs");
 BOX.Engine.noa.entities.deleteComponent("movement");

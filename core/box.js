@@ -82,10 +82,9 @@ export const movementComp = BOX.Engine.noa.entities.createComponent({
 
  */
 
-// create tick event listener inside noa, so it'll trigger tick() inside entity.js
-// export const entityTick = Engine.noa.entities.createComponent({
-//   name: "entityTick",
-//   order: 1,
-//   states: {},
-//   system: Engine.entityTick,
-// });
+export const entityTick = Engine.noa.entities.createComponent({
+  name: "entityTick",
+  order: 1,
+  states: {},
+  system: Engine.entityTick,
+});

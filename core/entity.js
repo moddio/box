@@ -1,5 +1,4 @@
 export class Entity {
-
   constructor() {
     this.components;
     this.body;
@@ -7,7 +6,6 @@ export class Entity {
     this.id = this.generateId();
     this.noaEntityId = undefined;
     this.type = undefined;
-    
     console.log("running entity constructor");
   }
 
@@ -50,10 +48,11 @@ export class Entity {
 
   setStreamMode(mode) {}
 
-  tick(dt, states) {
+  tick() {
+    console.log("running xxxxxxxxxxxxxxxxxxxxxxxxxx");
     // console.log("testing entity tick")
 
-    let pos = this.body.getPosition();
+    //let pos = this.body.getPosition();
 
     // gradually slow down the body to stop using linearDamping
     // console.log(this.body.velocity)
@@ -62,6 +61,38 @@ export class Entity {
       this.body.velocity[0] / (1 + this.body.linearDamping);
     this.body.velocity[2] =
       this.body.velocity[2] / (1 + this.body.linearDamping);
+    // Getting force value from cos sin
+    let angle = BOX.Engine.noa.camera.heading;
+    let force = 2;
+    let y = force * Math.cos(angle);
+    let x = force * Math.sin(angle);
+
+    // Increase gravity when the player is against the floor for now until we figure out why the entity player is stuck on jump
+
+    // Rotation
+    let current = BOX.Engine.noa.camera.heading;
+    //console.log("ttttttttttttttttttttttttttttttttttttttt", this.mesh);
+    this.mesh.rotation.y = current;
+
+    // console.log("logging the velocity state", this.body.velocity);
+
+    // this has to be fixed
+    if (BOX.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
+      this.body.applyImpulse([0, 10, 0]);
+    }
+    console.log("running zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+    if (BOX.inputs.state["move-left"]) {
+      this.body.applyImpulse([-y, 0, x]);
+    }
+    if (BOX.inputs.state["move-right"]) {
+      this.body.applyImpulse([y, 0, -x]);
+    }
+    if (BOX.inputs.state["move-up"]) {
+      this.body.applyImpulse([x, 0, y]);
+    }
+    if (BOX.inputs.state["move-down"]) {
+      this.body.applyImpulse([-x, 0, -y]);
+    }
 
     // this.body.velocity[0] = Math.max(0, this.body.velocity[0] - this.body.linearDamping);
 

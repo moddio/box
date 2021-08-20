@@ -2,6 +2,15 @@ import { savingMap } from "../map/tiledLoader";
 
 class ControlComponent {
   constructor(player) {
+    BOX.inputs.bind("move-up", "W", "<up>");
+    BOX.inputs.bind("move-left", "A", "<left>");
+    BOX.inputs.bind("move-down", "S", "<up>");
+    BOX.inputs.bind("move-right", "D", "<left>");
+    BOX.inputs.bind("jump", "<space>");
+    BOX.inputs.bind("change-material", "P", "<left>");
+    BOX.inputs.bind("add-block", "L", "<left>");
+    BOX.inputs.bind("remove-block", "K", "<left>");
+
     this.player = player;
     this.mouseClick();
     window.addEventListener("keypress", (e) => {
