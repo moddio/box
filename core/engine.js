@@ -16,7 +16,8 @@ export class Engine extends Entity {
   constructor() {
     super();
     this.noa = new noaEngine(config);
-    this.entities = [];
+    this.entityIds = [];
+    this.entities = {}
     this.myPlayer;
     this.numberOfTicks = 0;
     this.startTime = new Date();
@@ -45,11 +46,13 @@ export class Engine extends Entity {
     this.myPlayer.createUnit();
 
     // run unit ticks
-    //unit.tick();
-    //developerModeButton();
+    // unit.tick();
+    // developerModeButton();
   }
 
-  loadMap(mapData) {}
+  loadMap(mapData) {
+    
+  }
 
   engineStep() {
     this.noa.on("tick", () => {
@@ -57,20 +60,32 @@ export class Engine extends Entity {
       this.engineTime = Math.round(new Date() - this.startTime);
       this.numberOfTicks++;
 
-      //Loop over all entities
-      for (let elem in this.entities) {
-        // Call ticks only on player for now (Because it has movement)
+      for (let entity in this.entities) {
         if (this.entities[elem].id === 1) {
           this.body = this.noa.entities.getPhysicsBody(1);
           this.mesh = this.noa.entities.getMeshData(1).mesh;
-          this.tick();
+          entity.tick();
         }
       }
     });
   }
 
-  destroyEntity(entityId) {
-    delete this.entities[entityId];
+  getEntity(id) {
+    return 
+  }
+
+  addEntity(data) {
+    let entityType = data.type
+    if (entityType) {      
+      let entity = new BOX[entityType](data);
+      this.entities[entity.id] = entity;
+    } else {
+      error("entity type not defined");
+    }
+  }
+
+  removeEntity(id) {
+    delete this.entityIds[id];
   }
 }
 
