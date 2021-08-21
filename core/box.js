@@ -11,10 +11,10 @@ import {
 export var isClient = window ? true : false;
 export const Mesh = noaMesh;
 export var isServer = !isClient;
-export const Projectile = importProjectile;
 export const Engine = new boxEngine();
 export const Player = importedPlayer;
 export const Unit = importedUnit;
+export const Projectile = importProjectile;
 export const edgeMap = {
   maxWidth: 20,
   maxHeight: 20,
@@ -23,6 +23,8 @@ export const edgeMap = {
 };
 export const control = {};
 
+
+// This shouldn't be inside box.js...
 export const collision = (id, otherEntsId) => {
   let entityOne = BOX.Engine.noa.entities.getPosition(id);
   let entityTwo = BOX.Engine.noa.entities.getPosition(otherEntsId);

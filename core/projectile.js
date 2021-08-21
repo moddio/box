@@ -8,5 +8,11 @@ export class Projectile extends Entity {
 
     this.width = data.width * this.radius;
     this.height = data.height * this.radius;
+
+    
+    if (data.body) {
+      this.body = this.createBody(data.body);
+    }
+    
   }
 }

@@ -45,6 +45,7 @@ class ControlComponent {
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.position;
 
+          // add comment here~!
           if (
             pos[0] <= 0 ||
             pos[0] >= 20 ||

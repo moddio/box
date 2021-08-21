@@ -16,7 +16,6 @@ export class Engine extends Entity {
   constructor() {
     super();
     this.noa = new noaEngine(config);
-    this.entityIds = [];
     this.entities = {}
     this.myPlayer;
     this.numberOfTicks = 0;
@@ -39,7 +38,7 @@ export class Engine extends Entity {
       new BABYLON.AmmoJSPlugin()
     );
 
-    // setting the player Unit as main unit
+    // create my own unit by default
     this.myPlayer = new BOX.Player({
       name: "john",
     });
@@ -76,6 +75,7 @@ export class Engine extends Entity {
     if (entityType) {      
       let entity = new BOX[entityType](data);
       this.entities[entity.id] = entity;
+      return entity;
     } else {
       error("entity type not defined");
     }
