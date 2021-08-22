@@ -52,7 +52,6 @@ export class Unit extends Entity {
 
     console.log("myPlayer", BOX.Engine.myPlayer);
 
-    
     //console.log("mainUnit", BOX.Engine.myPlayer.mainUnit);
     //console.log("mainUnitId", mainUnit.id, "noaEntityId", this.noaEntityId);
     // Adding mesh body in noa
@@ -66,7 +65,7 @@ export class Unit extends Entity {
         offset: [0, 0.5, 0],
       }
     );
-    
+
     // add entityTick
     //BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.entityTick);
 
@@ -107,8 +106,12 @@ export class Unit extends Entity {
       meshOffset,
       doPhysics
     );
+    this.noaEntityId = noaId;
 
     var body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
+
+    // on milisencond
+    this.lifeSpan = BOX.Engine.engineTime + 4000;
 
     body.restitution = 0.8;
     body.friction = 0.7;
@@ -141,12 +144,12 @@ export class Unit extends Entity {
   }
 
   destroy() {
-    super.destroy()
+    super.destroy();
   }
 
   tick() {
     super.tick(); // call Entity.tick()
-    
+
     this.body.velocity[0] =
       this.body.velocity[0] / (1 + this.body.linearDamping);
     this.body.velocity[2] =
@@ -161,7 +164,6 @@ export class Unit extends Entity {
 
     // Rotation
     let current = BOX.Engine.noa.camera.heading;
-    //console.log("ttttttttttttttttttttttttttttttttttttttt", this.mesh);
     this.mesh.rotation.y = current;
 
     // console.log("logging the velocity state", this.body.velocity);

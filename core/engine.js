@@ -17,7 +17,7 @@ export class Engine extends Entity {
     super();
     this.noa = new noaEngine(config);
     this.entityIds = [];
-    this.entities = {}
+    this.entities = {};
     this.myPlayer;
     this.numberOfTicks = 0;
     this.startTime = new Date();
@@ -43,6 +43,7 @@ export class Engine extends Entity {
     this.myPlayer = new BOX.Player({
       name: "john",
     });
+
     this.myPlayer.createUnit();
 
     // run unit ticks
@@ -50,9 +51,7 @@ export class Engine extends Entity {
     // developerModeButton();
   }
 
-  loadMap(mapData) {
-
-  }
+  loadMap(mapData) {}
 
   engineStep() {
     this.noa.on("tick", () => {
@@ -60,20 +59,23 @@ export class Engine extends Entity {
       this.engineTime = Math.round(new Date() - this.startTime);
       this.numberOfTicks++;
 
+      // Call player ticks
+      this.myPlayer.tick();
+
       for (let id in this.entities) {
-        let entity = this.entities[id]
+        let entity = this.entities[id];
         entity.tick();
       }
     });
   }
 
   getEntity(id) {
-    return 
+    return;
   }
 
   addEntity(data) {
-    let entityType = data.type
-    if (entityType) {      
+    let entityType = data.type;
+    if (entityType) {
       let entity = new BOX[entityType](data);
       this.entities[entity.id] = entity;
     } else {
@@ -81,7 +83,8 @@ export class Engine extends Entity {
     }
   }
 
-  removeEntity(id) {
+  removeEntity(id, noaID) {
+    this.noa.entities.deleteEntity(noaID);
     delete this.entityIds[id];
   }
 }

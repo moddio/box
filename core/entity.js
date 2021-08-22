@@ -4,7 +4,7 @@ export class Entity {
     this.body;
     this.mesh;
     this.id = this.generateId();
-    this.noaEntityId = data.noaEntityId;
+    //this.noaEntityId = data.noaEntityId;
     this.type = undefined;
     this.lifeSpan = undefined;
     this.createdAt = Date.now();
@@ -13,7 +13,6 @@ export class Entity {
   }
 
   createBody(data) {
-
     // Creating a player mesh
     const mesh = BOX.Mesh[data.type](
       data.unitName,
@@ -38,13 +37,9 @@ export class Entity {
         this.components[0].ControlComponent
       );
   }
-  
-  destroy() {
-    BOX.Engine.removeEntity(this.id)
-  }
 
-  lifeSpan(time) {
-    this.lifeSpan = time;
+  destroy() {
+    BOX.Engine.removeEntity(this.id, this.noaEntityId);
   }
 
   removeComponent(componentName) {}
@@ -65,7 +60,8 @@ export class Entity {
   setStreamMode(mode) {}
 
   tick() {
-    if (this.lifeSpan != undefined && this.lifeSpan + this.createdAt > Date.now()) {
+    // console.log(this.lifeSpan);
+    if (this.lifeSpan != undefined && this.lifeSpan <= BOX.Engine.engineTime) {
       this.destroy();
     }
 
