@@ -92,9 +92,9 @@ export class Entity {
       id: this.id,
     });
     if (componentName === "DeveloperMode")
-      this.components[1].DeveloperMode.developerModeButton(
+      this.components[1].DeveloperMode.controlComponent = this.components[0].ControlComponent;/*developerModeButton(
         this.components[0].ControlComponent
-      );
+      );*/
   }
 
   destroy() {
