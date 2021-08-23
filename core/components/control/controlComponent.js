@@ -8,15 +8,20 @@ class ControlComponent {
     BOX.inputs.bind("move-right", "D", "<left>");
     BOX.inputs.bind("jump", "<space>");
     BOX.inputs.bind("change-material", "P", "<left>");
-    BOX.inputs.bind("add-block", "L", "<left>");
+    BOX.inputs.bind("add-block", "<mouse 1>");
     BOX.inputs.bind("remove-block", "K", "<left>");
 
     this.player = player;
-    this.mouseClick();
+    this.materialType = 1;
+    //this.mouseClick();
+
     window.addEventListener("keypress", (e) => {
       this.keyPress(e.key);
     });
-    this.materialType = 1;
+    window.addEventListener("click", (e) => {
+      this.mouseClick(e.button);
+    });
+    
   }
 
   mouseMove() {
@@ -24,24 +29,21 @@ class ControlComponent {
   }
 
   // Simple demo of removing blocks and adding blocks we don't want to do this here
-  mouseClick() {}
-
-  keyPress(key) {
-    //var materialType = 1;
-    // BOX.inputs.state["move-left"])
-    switch (key) {
-      // shoot the ball
-      case "b":
-        let unit = BOX.Engine.myPlayer.mainUnit;
-        if (unit) {
-          unit.shootBall();
-        }
-        break;
-      case "c":
-        this.materialType === 1 ? (this.materialType = 2) : (this.materialType = 1);
-        break;
-      case "l":
+  mouseClick(button) {
+    //check if mouse pointer is locked
+    if (BOX.Engine.noa.container.hasPointerLock) {
+    switch (button) {
+      case 0:
         // add block
+        if (BOX.Engine.noa.targetedBlock) {
+          var pos = BOX.Engine.noa.targetedBlock.adjacent;
+          BOX.Engine.noa.addBlock(this.materialType, pos[0], pos[1], pos[2]);
+          savingMap.saveBlock(pos[0], pos[1], pos[2], this.materialType);
+        }
+        
+        break;
+      case 2:
+        // remove block
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.position;
 
@@ -61,16 +63,27 @@ class ControlComponent {
           }
         }
         break;
-      case "k":
-        // remove block
-        if (BOX.Engine.noa.targetedBlock) {
-          var pos = BOX.Engine.noa.targetedBlock.adjacent;
-          BOX.Engine.noa.addBlock(this.materialType, pos[0], pos[1], pos[2]);
-          savingMap.saveBlock(pos[0], pos[1], pos[2], this.materialType);
+      }
+    }
+  }
+
+  keyPress(key) {
+    // BOX.inputs.state["move-left"])
+    switch (key) {
+      // shoot the ball
+      case "b":
+        let unit = BOX.Engine.myPlayer.mainUnit;
+        if (unit) {
+          unit.shootBall();
         }
         break;
 
-      // change the material type
+        // change the material type - if we need it? we can change material in developer mode, may be improve this some way?
+      case "c":
+        this.materialType === 1 ? (this.materialType = 2) : (this.materialType = 1);
+        break;
+
+      
     }
   }
 
