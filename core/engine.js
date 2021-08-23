@@ -2,10 +2,6 @@
 import * as BABYLON from "@babylonjs/core";
 import { Engine as noaEngine } from "noa-engine";
 import config from "../config/config.json";
-import { movementComp } from "../core/components/movement";
-
-import SaveMapButton from "./components/editor/ui/mapSaver";
-import developerModeButton from "./components/editor/ui/developerMode";
 
 // Files
 import "./utils/state.min.js";
@@ -13,13 +9,15 @@ import generateWorld from "./world.js";
 import { Entity } from "./entity.js";
 
 export class Engine extends Entity {
+
   constructor() {
     super();
     this.noa = new noaEngine(config);
     this.entities = {};
-    this.myPlayer;
-    this.numberOfTicks = 0;
+    this.clients = {};
+    this.myPlayer;    
     this.currentTime = 0;
+
   }
   start() {
     console.log("starting the noa engine...");
@@ -39,10 +37,7 @@ export class Engine extends Entity {
     );
 
     // create my own unit by default
-    this.myPlayer = new BOX.Player({
-      name: "john",
-    });
-
+    this.myPlayer = this.addEntity({type:"Player", isHuman: true, name: "john"})
     this.myPlayer.createUnit();
 
     // run unit ticks
@@ -55,11 +50,10 @@ export class Engine extends Entity {
   engineStep() {
     this.noa.on("tick", () => {
       // Update engine time on each tick
-      this.numberOfTicks++;
+      
       this.tickStart = Date.now();
       // Call player ticks
-      this.myPlayer.tick(); // this is a terrible implementation. it should be ticked along with other entities below.
-
+      
       for (let id in this.entities) {
         let entity = this.entities[id];
         entity.tick();

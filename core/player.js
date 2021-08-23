@@ -6,14 +6,20 @@ export class Player extends Entity {
     this.name = data.name;
     this.clientId = undefined; // socketId
     this.type = "player";
-
+    
+    this.addComponent("ControlComponent");      
     //console.log("global", global.ControlComponent);
+    
     if (BOX.isServer) {
+      // if human player, add to the list of clients
+      if (data.isHuman) {
+        BOX.Engine.clients[this.id] = this;
+      }      
       // add other player controls
     } else {
-      this.addComponent("ControlComponent");
       this.addComponent("DeveloperMode");
-    }   
+    }
+    
   }
 
   createUnit() {
@@ -29,6 +35,11 @@ export class Player extends Entity {
                       friction: 0
                     }
                 })
+  }
+
+  destroy() {
+    delete BOX.Engine.clients[this.id];
+    super.destroy();
   }
 
   tick() {

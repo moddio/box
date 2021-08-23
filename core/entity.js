@@ -8,6 +8,7 @@ export class Entity {
     this.type = undefined;
     this.lifeSpan = undefined;
     this.createdAt = Date.now();
+    this.streamMode(1)
   }
 
   createBody(bodyData) {
@@ -102,7 +103,9 @@ export class Entity {
 
   removeComponent(componentName) {}
 
-  setState(stateId) {}
+  state(state) {
+
+  }
 
   generateId() {
     return Math.random()
@@ -115,7 +118,32 @@ export class Entity {
       .substr(2, 8);
   }
 
-  setStreamMode(mode) {}
+  /*
+      set how this entity will be streamed to all clients
+      default mode = {
+        enabled: true,
+        stateChange: true,
+        attributes: true,
+        movement: true,
+        csp: false // client-side prediction. if enabled, the unit/item's owner player will ignore the streaming he has received for his own unit/item.
+        // when both movement & csp are enabled, then we will perform server-side reconciliation
+      }
+      
+      examples:
+        regions - {enabled: true, stateChange: false, attributes: false, movement: false}
+        players - {enabled: true, stateChange: true, attributes: true, movement: false}
+        units (player units) - {enabled: true, stateChange: true, attributes: true, movement: true, csp: true}
+        units (furnitures/monsters) - {enabled: true, stateChange: true, attributes: true, movement: true, csp: false}
+        item - {enabled: true, stateChange: true, attributes: true, movement: false, csp: true}
+        projectiles (bullets) - {enabled: false, stateChange: false, attributes: false, movement: false, csp: true}
+        projectiles (grenades) - {enabled: true, stateChange: true, attributes: true, movement: true, csp: false}
+  */
+  streamMode(mode) {
+    if (mode != undefined) {
+      this.streamMode = mode;
+    }
+    return this.streamMode;
+  }
 
   tick() {
     // console.log(this.lifeSpan);
