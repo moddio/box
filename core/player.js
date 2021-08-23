@@ -5,7 +5,7 @@ export class Player extends Entity {
     super();
     this.name = data.name;
     this.clientId = undefined; // socketId
-    this.type = 'player';
+    this.type = "player";
 
     //console.log("global", global.ControlComponent);
     if (BOX.isServer) {
@@ -15,7 +15,7 @@ export class Player extends Entity {
       this.addComponent("DeveloperMode");
     }   
   }
-  
+
   createUnit() {
     BOX.Engine.addEntity({
                     type:'Unit', 
@@ -33,6 +33,6 @@ export class Player extends Entity {
 
   tick() {
     super.tick(); // call Entity.tick()
-    console.log("this isn't running")
+    // console.log("this is running now");
   }
 }

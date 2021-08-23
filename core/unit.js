@@ -79,7 +79,7 @@ export class Unit extends Entity {
   }
 
   destroy() {
-    super.destroy()
+    super.destroy();
   }
 
   tick() {

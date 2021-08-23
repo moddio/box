@@ -16,10 +16,10 @@ export class Engine extends Entity {
   constructor() {
     super();
     this.noa = new noaEngine(config);
-    this.entities = {}
+    this.entities = {};
     this.myPlayer;
     this.numberOfTicks = 0;
-    this.startTime = new Date();
+    this.currentTime = 0;
   }
   start() {
     console.log("starting the noa engine...");
@@ -42,6 +42,7 @@ export class Engine extends Entity {
     this.myPlayer = new BOX.Player({
       name: "john",
     });
+
     this.myPlayer.createUnit();
 
     // run unit ticks
@@ -49,30 +50,33 @@ export class Engine extends Entity {
     // developerModeButton();
   }
 
-  loadMap(mapData) {
-
-  }
+  loadMap(mapData) {}
 
   engineStep() {
     this.noa.on("tick", () => {
       // Update engine time on each tick
-      this.engineTime = Math.round(new Date() - this.startTime);
       this.numberOfTicks++;
+      this.tickStart = Date.now();
+      // Call player ticks
+      this.myPlayer.tick(); // this is a terrible implementation. it should be ticked along with other entities below.
 
       for (let id in this.entities) {
-        let entity = this.entities[id]
+        let entity = this.entities[id];
         entity.tick();
       }
+
+      this.tickDelta = Date.now() - this.tickStart;
+      this.currentTime += this.tickDelta;
     });
   }
 
   getEntity(id) {
-    return 
+    return;
   }
 
   addEntity(data) {
-    let entityType = data.type
-    if (entityType) {      
+    let entityType = data.type;
+    if (entityType) {
       let entity = new BOX[entityType](data);
       this.entities[entity.id] = entity;
       return entity;
@@ -81,7 +85,8 @@ export class Engine extends Entity {
     }
   }
 
-  removeEntity(id) {
+  removeEntity(id, noaID) {
+    this.noa.entities.deleteEntity(noaID);
     delete this.entityIds[id];
   }
 }
