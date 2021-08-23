@@ -37,19 +37,8 @@ export class Entity {
         }
       );
     } else {
-      alert("working");
-
       console.log("creating body for projectile", this);
       this.noaEntityId = this.id;
-      // adding component for collision
-      BOX.Engine.noa.entities.addComponent(
-        this.noaEntityId,
-        BOX.Engine.noa.entities.names.collideEntities,
-        {
-          cylinder: true,
-          callback: (otherEntsId) => BOX.collision(noaId, otherEntsId),
-        }
-      );
 
       // syntatic sugar for creating a default entity
       var playPos = BOX.Engine.noa.entities.getPosition(1);
@@ -61,7 +50,7 @@ export class Entity {
       var meshOffset = [0, 0.2, 0];
       var doPhysics = true;
 
-      var noaId = BOX.Engine.noa.entities.add(
+      this.noaEntityId = BOX.Engine.noa.entities.add(
         pos,
         width,
         height, // required
@@ -69,10 +58,13 @@ export class Entity {
         meshOffset,
         doPhysics
       );
+      console.log("111111");
     }
+    console.log("222222222");
 
     this.mesh = mesh;
     let body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
+    console.log("33333333");
     body.linearDamping = bodyData.linearDamping;
     body.friction = bodyData.friction;
 
@@ -89,10 +81,9 @@ export class Entity {
       id: this.id,
     });
     if (componentName === "DeveloperMode")
-      this.components[1].DeveloperMode.controlComponent =
-        this.components[0].ControlComponent; /*developerModeButton(
+      this.components[1].DeveloperMode.developerModeButton(
         this.components[0].ControlComponent
-      );*/
+      );
   }
 
   destroy() {

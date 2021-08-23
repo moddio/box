@@ -1,7 +1,5 @@
 import { Entity } from "./entity";
-
 import * as BABYLON from "@babylonjs/core";
-//import * as OIMO from "@babylonjs/core/Physics/Plugins/oimoJSPlugin";
 
 export class Unit extends Entity {
   constructor(data) {
@@ -35,11 +33,7 @@ export class Unit extends Entity {
 
     this.body.onCollide(100);
     // this.body.boxEntity = this;
-
-    this.haveGround = false;
   }
-
-
 
   spawnBox() {
     //console.log(new BABYLON.AmmoJSPlugin());
@@ -56,7 +50,7 @@ export class Unit extends Entity {
     //var mesh = ballMesh.createInstance("ball_instance");
     var meshOffset = [0, 0.5, 0];
     var doPhysics = true;
-    var shadow = true;
+    var shadow = false;
 
     var noaId = BOX.Engine.noa.entities.add(
       pos,
@@ -68,11 +62,17 @@ export class Unit extends Entity {
     );
     this.noaEntityId = noaId;
 
-    var body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
+    let body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
 
-    console.log('body', body);
+    console.log("logging the body", body);
+
     scene.enablePhysics(undefined, new BABYLON.AmmoJSPlugin());
-    mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0.9 }, scene);
+    mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
+      mesh,
+      BABYLON.PhysicsImpostor.BoxImpostor,
+      { ...body },
+      scene
+    );
 
     //body.restitution = 0.8;
     //console.log("logging the body of the player", body);
@@ -125,6 +125,40 @@ export class Unit extends Entity {
     }
     projectile.body.applyImpulse(impulse);
     */
+  }
+
+  shootBall() {
+    let projectile = BOX.Engine.addEntity({
+      type: "Projectile",
+      body: {
+        offset: [0, 0.5, 0],
+        type: "CreateSphere",
+        unitName: "ball",
+        roundShap: [6, 0.4],
+        restitution: 0.8,
+        friction: 0.7,
+      },
+    });
+
+    // // adding component for collision
+    // BOX.Engine.noa.entities.addComponent(
+    //   noaId,
+    //   BOX.Engine.noa.entities.names.collideEntities,
+    //   {
+    //     cylinder: true,
+    //     callback: (otherEntsId) => BOX.collision(noaId, otherEntsId),
+    //   }
+    // );
+
+    // var body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
+
+    const direction = BOX.Engine.noa.camera.getDirection();
+    var impulse = [];
+    for (let i = 0; i < 3; i++) {
+      impulse[i] = 2 * direction[i];
+      impulse[1] += 1;
+    }
+    projectile.body.applyImpulse(impulse);
   }
 
   getOwnerPlayer() {

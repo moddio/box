@@ -3,11 +3,9 @@ import map from "/config/map/map.json";
 class DeveloperMode {
   constructor(number) {
     this.test = 'hello developer'
-    this.controlComponent = {};
-    this.developerModeButton();
 
   }
-  developerModeButton (/*ControlComponent*/) {
+  developerModeButton (ControlComponent) {
     //go through map.json textures and make interface image for each type of block
     Object.values(map.textures).forEach((texture, index) => {
       const img = new Image();
@@ -18,7 +16,7 @@ class DeveloperMode {
       // Player Event on mouse click 
       const imageClick = document.querySelector(".block_" + index.toString());
       imageClick.addEventListener("click", () => {
-        this.controlComponent.materialType = index + 1;
+        ControlComponent.materialType = index + 1;
   
       });
     })
