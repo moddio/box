@@ -23,36 +23,13 @@ export const edgeMap = {
 };
 export const control = {};
 
-
 // This shouldn't be inside box.js...
 export const collision = (id, otherEntsId) => {
   let entityOne = BOX.Engine.noa.entities.getPosition(id);
   let entityTwo = BOX.Engine.noa.entities.getPosition(otherEntsId);
   let bodyPlayer = BOX.Engine.noa.entities.getPhysicsBody(1);
   let bodyBall = BOX.Engine.noa.entities.getPhysicsBody(id);
-  var check;
-
-  console.log("ball velocity", bodyBall.velocity);
-
-  // checking the speed of the player and the ball
-  if (
-    Math.abs(bodyPlayer.velocity[2]) + Math.abs(bodyBall.velocity[2]) > 7 ||
-    Math.abs(bodyPlayer.velocity[1]) + Math.abs(bodyBall.velocity[1]) > 7 ||
-    Math.abs(bodyPlayer.velocity[0]) + Math.abs(bodyBall.velocity[0]) > 7
-  ) {
-    check = 20;
-  } else {
-    // cheking the speed of the player and applying bigger impulse on higher speed
-    Math.abs(bodyPlayer.velocity[0]) > 6 ||
-    Math.abs(bodyPlayer.velocity[1]) > 6 ||
-    Math.abs(bodyPlayer.velocity[2]) > 6
-      ? (check =
-          7 *
-          (bodyPlayer.velocity[0] +
-            bodyPlayer.velocity[1] +
-            bodyPlayer.velocity[2]))
-      : (check = 7);
-  }
+  var check = 10;
 
   let impulse = [];
   for (let i = 0; i < 3; i++) {

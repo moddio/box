@@ -27,26 +27,68 @@ export class Unit extends Entity {
     if (data.body) {
       this.body = this.createBody(data.body);
     }
-    
+
     this.resetPosition();
 
     this.body.onCollide(100);
     // this.body.boxEntity = this;
   }
 
-  shootBall() {
+  spawnBox() {
+    const mesh = BOX.Mesh["CreateBox"]("Box");
+    // syntatic sugar for creating a default entity
+    var playPos = BOX.Engine.noa.entities.getPosition(1);
+    var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
+    var width = 0.7;
+    var height = 0.7;
 
+    //var mesh = ballMesh.createInstance("ball_instance");
+    var meshOffset = [0, 0.5, 0];
+    var doPhysics = true;
+    var shadow = true;
+
+    var noaId = BOX.Engine.noa.entities.add(
+      pos,
+      width,
+      height, // required
+      mesh,
+      meshOffset,
+      doPhysics
+    );
+    this.noaEntityId = noaId;
+
+    var body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
+
+    //body.restitution = 0.8;
+    console.log("logging the body of the player", body);
+    body.friction = 10;
+    body.onCollide = () => alert("body is collide");
+
+    const direction = BOX.Engine.noa.camera.getDirection();
+
+    // adding component for collision
+    BOX.Engine.noa.entities.addComponent(
+      noaId,
+      BOX.Engine.noa.entities.names.collideEntities,
+      {
+        cylinder: true,
+        callback: (otherEntsId) => BOX.collision(noaId, otherEntsId),
+      }
+    );
+    /** 
     let projectile = BOX.Engine.addEntity({
-                                      type: "Projectile",
-                                      body: {
-                                        offset: [0, 0.5, 0],
-                                        type: "CreateSphere",
-                                        unitName: "ball",
-                                        roundShap: [6, 0.4],                                                                            
-                                        restitution: 0.8,
-                                        friction: 0.7
-                                      }
-                                    })
+      type: "Projectile",
+      body: {
+        offset: [0, 0.5, 0],
+        type: "CreateSphere",
+        unitName: "ball",
+        roundShap: [6, 0.4],
+        restitution: 0.8,
+        friction: 0.7,
+      },
+    });
+
+    
 
     // // adding component for collision
     // BOX.Engine.noa.entities.addComponent(
@@ -67,7 +109,7 @@ export class Unit extends Entity {
       impulse[1] += 1;
     }
     projectile.body.applyImpulse(impulse);
-   
+    */
   }
 
   getOwnerPlayer() {
@@ -84,10 +126,12 @@ export class Unit extends Entity {
 
   tick() {
     super.tick(); // call Entity.tick()
-    
+
     // apply linear damping
-    this.body.velocity[0] = this.body.velocity[0] / (1 + this.body.linearDamping);
-    this.body.velocity[2] = this.body.velocity[2] / (1 + this.body.linearDamping);
+    this.body.velocity[0] =
+      this.body.velocity[0] / (1 + this.body.linearDamping);
+    this.body.velocity[2] =
+      this.body.velocity[2] / (1 + this.body.linearDamping);
 
     // Getting force value from cos sin
     let angle = BOX.Engine.noa.camera.heading;

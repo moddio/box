@@ -21,7 +21,6 @@ class ControlComponent {
     window.addEventListener("click", (e) => {
       this.mouseClick(e.button);
     });
-    
   }
 
   mouseMove() {
@@ -32,37 +31,37 @@ class ControlComponent {
   mouseClick(button) {
     //check if mouse pointer is locked
     if (BOX.Engine.noa.container.hasPointerLock) {
-    switch (button) {
-      case 0:
-        // add block
-        if (BOX.Engine.noa.targetedBlock) {
-          var pos = BOX.Engine.noa.targetedBlock.adjacent;
-          BOX.Engine.noa.addBlock(this.materialType, pos[0], pos[1], pos[2]);
-          savingMap.saveBlock(pos[0], pos[1], pos[2], this.materialType);
-        }
-        
-        break;
-      case 2:
-        // remove block
-        if (BOX.Engine.noa.targetedBlock) {
-          var pos = BOX.Engine.noa.targetedBlock.position;
-
-          // add comment here~!
-          if (
-            pos[0] <= 0 ||
-            pos[0] >= 20 ||
-            pos[1] <= 0 ||
-            pos[1] >= 20 ||
-            pos[2] <= 0 ||
-            pos[2] >= 20
-          ) {
-            ("");
-          } else {
-            BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
-            savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
+      switch (button) {
+        case 0:
+          // add block
+          if (BOX.Engine.noa.targetedBlock) {
+            var pos = BOX.Engine.noa.targetedBlock.adjacent;
+            BOX.Engine.noa.addBlock(this.materialType, pos[0], pos[1], pos[2]);
+            savingMap.saveBlock(pos[0], pos[1], pos[2], this.materialType);
           }
-        }
-        break;
+
+          break;
+        case 2:
+          // remove block
+          if (BOX.Engine.noa.targetedBlock) {
+            var pos = BOX.Engine.noa.targetedBlock.position;
+
+            // add comment here~!
+            if (
+              pos[0] <= 0 ||
+              pos[0] >= 20 ||
+              pos[1] <= 0 ||
+              pos[1] >= 20 ||
+              pos[2] <= 0 ||
+              pos[2] >= 20
+            ) {
+              ("");
+            } else {
+              BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
+              savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
+            }
+          }
+          break;
       }
     }
   }
@@ -74,16 +73,16 @@ class ControlComponent {
       case "b":
         let unit = BOX.Engine.myPlayer.mainUnit;
         if (unit) {
-          unit.shootBall();
+          unit.spawnBox();
         }
         break;
 
-        // change the material type - if we need it? we can change material in developer mode, may be improve this some way?
+      // change the material type - if we need it? we can change material in developer mode, may be improve this some way?
       case "c":
-        this.materialType === 1 ? (this.materialType = 2) : (this.materialType = 1);
+        this.materialType === 1
+          ? (this.materialType = 2)
+          : (this.materialType = 1);
         break;
-
-      
     }
   }
 

@@ -8,27 +8,25 @@ export class Entity {
     this.type = undefined;
     this.lifeSpan = undefined;
     this.createdAt = Date.now();
-    this.streamMode(1)
+    this.streamMode(1);
   }
 
   createBody(bodyData) {
-    
     // Creating a player mesh
     const mesh = BOX.Mesh[bodyData.type](
       bodyData.unitName,
       bodyData.roundShap[0],
       bodyData.roundShap[1]
     );
-    
-    if (bodyData.scaling) {      
+
+    if (bodyData.scaling) {
       mesh.scaling.x = bodyData.scaling.x;
       mesh.scaling.y = bodyData.scaling.y;
       mesh.scaling.z = bodyData.scaling.z;
-    }   
+    }
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
-
-      console.log("creating body for my unit", this)
+      console.log("creating body for my unit", this);
       this.noaEntityId = 1;
       BOX.Engine.noa.entities.addComponent(
         1,
@@ -38,10 +36,10 @@ export class Entity {
           offset: [0, 0.5, 0],
         }
       );
-
     } else {
+      alert("working");
 
-      console.log("creating body for projectile", this)
+      console.log("creating body for projectile", this);
       this.noaEntityId = this.id;
       // adding component for collision
       BOX.Engine.noa.entities.addComponent(
@@ -52,7 +50,7 @@ export class Entity {
           callback: (otherEntsId) => BOX.collision(noaId, otherEntsId),
         }
       );
-      
+
       // syntatic sugar for creating a default entity
       var playPos = BOX.Engine.noa.entities.getPosition(1);
       var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
@@ -71,7 +69,6 @@ export class Entity {
         meshOffset,
         doPhysics
       );
-
     }
 
     this.mesh = mesh;
@@ -92,7 +89,8 @@ export class Entity {
       id: this.id,
     });
     if (componentName === "DeveloperMode")
-      this.components[1].DeveloperMode.controlComponent = this.components[0].ControlComponent;/*developerModeButton(
+      this.components[1].DeveloperMode.controlComponent =
+        this.components[0].ControlComponent; /*developerModeButton(
         this.components[0].ControlComponent
       );*/
   }
@@ -103,9 +101,7 @@ export class Entity {
 
   removeComponent(componentName) {}
 
-  state(state) {
-
-  }
+  state(state) {}
 
   generateId() {
     return Math.random()
@@ -147,7 +143,10 @@ export class Entity {
 
   tick() {
     // console.log(this.lifeSpan);
-    if (this.lifeSpan != undefined && this.lifeSpan + this.createdAt > BOX.Engine.currentTime) {
+    if (
+      this.lifeSpan != undefined &&
+      this.lifeSpan + this.createdAt > BOX.Engine.currentTime
+    ) {
       this.destroy();
     }
 
