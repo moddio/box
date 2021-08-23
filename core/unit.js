@@ -1,5 +1,8 @@
 import { Entity } from "./entity";
 
+import * as BABYLON from "@babylonjs/core";
+//import * as OIMO from "@babylonjs/core/Physics/Plugins/oimoJSPlugin";
+
 export class Unit extends Entity {
   constructor(data) {
     // run Entity's constructor
@@ -32,9 +35,17 @@ export class Unit extends Entity {
 
     this.body.onCollide(100);
     // this.body.boxEntity = this;
+
+    this.haveGround = false;
   }
 
+
+
   spawnBox() {
+    //console.log(new BABYLON.AmmoJSPlugin());
+    const scene = BOX.Engine.noa.rendering.getScene();
+    //var plugin = new BABYLON.OimoJSPlugin(undefined, OIMO);
+
     const mesh = BOX.Mesh["CreateBox"]("Box");
     // syntatic sugar for creating a default entity
     var playPos = BOX.Engine.noa.entities.getPosition(1);
@@ -59,9 +70,13 @@ export class Unit extends Entity {
 
     var body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
 
+    console.log('body', body);
+    scene.enablePhysics(undefined, new BABYLON.AmmoJSPlugin());
+    mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0.9 }, scene);
+
     //body.restitution = 0.8;
-    console.log("logging the body of the player", body);
-    body.friction = 10;
+    //console.log("logging the body of the player", body);
+    /*body.friction = 10;
     body.onCollide = () => alert("body is collide");
 
     const direction = BOX.Engine.noa.camera.getDirection();
@@ -74,7 +89,7 @@ export class Unit extends Entity {
         cylinder: true,
         callback: (otherEntsId) => BOX.collision(noaId, otherEntsId),
       }
-    );
+    );*/
     /** 
     let projectile = BOX.Engine.addEntity({
       type: "Projectile",
