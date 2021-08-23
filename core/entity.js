@@ -1,3 +1,4 @@
+import * as BABYLON from "@babylonjs/core";
 export class Entity {
   constructor(data = {}) {
     this.components = [];
@@ -47,8 +48,8 @@ export class Entity {
       var height = 0.7;
 
       //var mesh = ballMesh.createInstance("ball_instance");
-      var meshOffset = [0, 0.2, 0];
-      var doPhysics = true;
+      var meshOffset = [0, 0.5, 0];
+      var doPhysics = false;
 
       this.noaEntityId = BOX.Engine.noa.entities.add(
         pos,
@@ -58,13 +59,17 @@ export class Entity {
         meshOffset,
         doPhysics
       );
-      console.log("111111");
-    }
-    console.log("222222222");
 
+      scene.enablePhysics(undefined, new BABYLON.AmmoJSPlugin());
+      mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
+        mesh,
+        BABYLON.PhysicsImpostor.BoxImpostor,
+        { mass: 1 },
+        scene
+      );
+    }
     this.mesh = mesh;
     let body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
-    console.log("33333333");
     body.linearDamping = bodyData.linearDamping;
     body.friction = bodyData.friction;
 

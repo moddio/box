@@ -1,5 +1,4 @@
 import { Entity } from "./entity";
-import * as BABYLON from "@babylonjs/core";
 
 export class Unit extends Entity {
   constructor(data) {
@@ -36,7 +35,19 @@ export class Unit extends Entity {
   }
 
   spawnBox() {
-    //console.log(new BABYLON.AmmoJSPlugin());
+    let projectile = BOX.Engine.addEntity({
+      type: "Projectile",
+      body: {
+        offset: [0, 0.5, 0],
+        type: "CreateBox",
+        unitName: "ball",
+        roundShap: [null, null],
+        restitution: 0,
+        friction: 0.7,
+      },
+    });
+    /**
+     //console.log(new BABYLON.AmmoJSPlugin());
     const scene = BOX.Engine.noa.rendering.getScene();
     //var plugin = new BABYLON.OimoJSPlugin(undefined, OIMO);
 
@@ -73,58 +84,8 @@ export class Unit extends Entity {
       { ...body },
       scene
     );
-
-    //body.restitution = 0.8;
-    //console.log("logging the body of the player", body);
-    /*body.friction = 10;
-    body.onCollide = () => alert("body is collide");
-
-    const direction = BOX.Engine.noa.camera.getDirection();
-
-    // adding component for collision
-    BOX.Engine.noa.entities.addComponent(
-      noaId,
-      BOX.Engine.noa.entities.names.collideEntities,
-      {
-        cylinder: true,
-        callback: (otherEntsId) => BOX.collision(noaId, otherEntsId),
-      }
-    );*/
-    /** 
-    let projectile = BOX.Engine.addEntity({
-      type: "Projectile",
-      body: {
-        offset: [0, 0.5, 0],
-        type: "CreateSphere",
-        unitName: "ball",
-        roundShap: [6, 0.4],
-        restitution: 0.8,
-        friction: 0.7,
-      },
-    });
-
     
-
-    // // adding component for collision
-    // BOX.Engine.noa.entities.addComponent(
-    //   noaId,
-    //   BOX.Engine.noa.entities.names.collideEntities,
-    //   {
-    //     cylinder: true,
-    //     callback: (otherEntsId) => BOX.collision(noaId, otherEntsId),
-    //   }
-    // );
-
-    // var body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
-
-    const direction = BOX.Engine.noa.camera.getDirection();
-    var impulse = [];
-    for (let i = 0; i < 3; i++) {
-      impulse[i] = 2 * direction[i];
-      impulse[1] += 1;
-    }
-    projectile.body.applyImpulse(impulse);
-    */
+     */
   }
 
   shootBall() {
@@ -177,10 +138,8 @@ export class Unit extends Entity {
     super.tick(); // call Entity.tick()
 
     // apply linear damping
-    this.body.velocity[0] =
-      this.body.velocity[0] / (1 + this.body.linearDamping);
-    this.body.velocity[2] =
-      this.body.velocity[2] / (1 + this.body.linearDamping);
+    this.body.velocity[0] = this.body.velocity[0] / (1 + this.body.linearDamping);
+    this.body.velocity[2] = this.body.velocity[2] / (1 + this.body.linearDamping);
 
     // Getting force value from cos sin
     let angle = BOX.Engine.noa.camera.heading;
