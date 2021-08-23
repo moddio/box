@@ -147,7 +147,7 @@ export class Entity {
 
   tick() {
     // console.log(this.lifeSpan);
-    if (this.lifeSpan != undefined && this.lifeSpan + this.createdAt <= BOX.Engine.currentTime) {
+    if (this.lifeSpan != undefined && this.lifeSpan + this.createdAt > BOX.Engine.currentTime) {
       this.destroy();
     }
 
