@@ -37,6 +37,15 @@ export class Entity {
           offset: [0, 0.5, 0],
         }
       );
+      /*mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, {
+        mass: 80,
+        friction: 0.5,
+        restitution: 0.5,
+        nativeOptions: {
+            noSleep: true,
+            move: true
+        }}, scene);*/
+      
     } else {
       console.log("creating body for projectile", this);
       this.noaEntityId = this.id;
@@ -60,13 +69,12 @@ export class Entity {
         doPhysics
       );
 
-      scene.enablePhysics(undefined, new BABYLON.AmmoJSPlugin());
-      mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
+      /*mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
         mesh,
         BABYLON.PhysicsImpostor.BoxImpostor,
         { mass: 1 },
         scene
-      );
+      );*/
     }
     this.mesh = mesh;
     let body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);

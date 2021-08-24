@@ -70,12 +70,19 @@ class ControlComponent {
   keyPress(key) {
     //var materialType = 1;
     // BOX.inputs.state["move-left"])
+    let unit = BOX.Engine.myPlayer.mainUnit;
     switch (key) {
       // shoot the ball
       case "b":
-        let unit = BOX.Engine.myPlayer.mainUnit;
+        //let unit = BOX.Engine.myPlayer.mainUnit;
         if (unit) {
           unit.spawnBox();
+        }
+        break;
+        case "n":
+        //let unit1 = BOX.Engine.myPlayer.mainUnit;
+        if (unit) {
+          unit.spawnPlane();
         }
         break;
       case "c":
