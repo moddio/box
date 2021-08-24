@@ -12,11 +12,15 @@ class ControlComponent {
     BOX.inputs.bind("remove-block", "K", "<left>");
 
     this.player = player;
-    this.mouseClick();
+    this.materialType = 1;
+    //this.mouseClick();
+
     window.addEventListener("keypress", (e) => {
       this.keyPress(e.key);
     });
-    this.materialType = 1;
+    window.addEventListener("click", (e) => {
+      this.mouseClick(e.button);
+    });
   }
 
   mouseMove() {
@@ -24,7 +28,44 @@ class ControlComponent {
   }
 
   // Simple demo of removing blocks and adding blocks we don't want to do this here
-  mouseClick() {}
+  // Simple demo of removing blocks and adding blocks we don't want to do this here
+  mouseClick(button) {
+    //check if mouse pointer is locked
+    if (BOX.Engine.noa.container.hasPointerLock) {
+      switch (button) {
+        case 0:
+          // add block
+          if (BOX.Engine.noa.targetedBlock) {
+            var pos = BOX.Engine.noa.targetedBlock.adjacent;
+            BOX.Engine.noa.addBlock(this.materialType, pos[0], pos[1], pos[2]);
+            savingMap.saveBlock(pos[0], pos[1], pos[2], this.materialType);
+          }
+
+          break;
+        case 2:
+          // remove block
+          if (BOX.Engine.noa.targetedBlock) {
+            var pos = BOX.Engine.noa.targetedBlock.position;
+
+            // add comment here~!
+            if (
+              pos[0] <= 0 ||
+              pos[0] >= 20 ||
+              pos[1] <= 0 ||
+              pos[1] >= 20 ||
+              pos[2] <= 0 ||
+              pos[2] >= 20
+            ) {
+              ("");
+            } else {
+              BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
+              savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
+            }
+          }
+          break;
+      }
+    }
+  }
 
   keyPress(key) {
     //var materialType = 1;
@@ -42,7 +83,7 @@ class ControlComponent {
           ? (this.materialType = 2)
           : (this.materialType = 1);
         break;
-      case "l":
+      /*case "l":
         // add block
         if (BOX.Engine.noa.targetedBlock) {
           var pos = BOX.Engine.noa.targetedBlock.position;
@@ -72,7 +113,7 @@ class ControlComponent {
         }
         break;
 
-      // change the material type
+      // change the material type*/
     }
   }
 
@@ -95,3 +136,5 @@ class ControlComponent {
 }
 
 export default ControlComponent;
+
+
