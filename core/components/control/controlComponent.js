@@ -28,7 +28,6 @@ class ControlComponent {
   }
 
   // Simple demo of removing blocks and adding blocks we don't want to do this here
-  // Simple demo of removing blocks and adding blocks we don't want to do this here
   mouseClick(button) {
     //check if mouse pointer is locked
     if (BOX.Engine.noa.container.hasPointerLock) {
@@ -50,11 +49,11 @@ class ControlComponent {
             // add comment here~!
             if (
               pos[0] <= 0 ||
-              pos[0] >= 20 ||
+              pos[0] >= 50 ||
               pos[1] <= 0 ||
-              pos[1] >= 20 ||
+              pos[1] >= 50 ||
               pos[2] <= 0 ||
-              pos[2] >= 20
+              pos[2] >= 50
             ) {
               ("");
             } else {
@@ -79,48 +78,6 @@ class ControlComponent {
           unit.spawnBox();
         }
         break;
-        case "n":
-        //let unit1 = BOX.Engine.myPlayer.mainUnit;
-        if (unit) {
-          unit.spawnPlane();
-        }
-        break;
-      case "c":
-        this.materialType === 1
-          ? (this.materialType = 2)
-          : (this.materialType = 1);
-        break;
-      /*case "l":
-        // add block
-        if (BOX.Engine.noa.targetedBlock) {
-          var pos = BOX.Engine.noa.targetedBlock.position;
-
-          // add comment here~!
-          if (
-            pos[0] <= 0 ||
-            pos[0] >= 20 ||
-            pos[1] <= 0 ||
-            pos[1] >= 20 ||
-            pos[2] <= 0 ||
-            pos[2] >= 20
-          ) {
-            ("");
-          } else {
-            BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
-            savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
-          }
-        }
-        break;
-      case "k":
-        // remove block
-        if (BOX.Engine.noa.targetedBlock) {
-          var pos = BOX.Engine.noa.targetedBlock.adjacent;
-          BOX.Engine.noa.addBlock(this.materialType, pos[0], pos[1], pos[2]);
-          savingMap.saveBlock(pos[0], pos[1], pos[2], this.materialType);
-        }
-        break;
-
-      // change the material type*/
     }
   }
 

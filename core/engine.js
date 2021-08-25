@@ -1,5 +1,4 @@
 // Engine
-import * as BABYLON from "@babylonjs/core";
 import { Engine as noaEngine } from "noa-engine";
 import config from "../config/config.json";
 
@@ -29,12 +28,6 @@ export class Engine extends Entity {
 
     this.noa.camera.sensitivityX = 5;
     this.noa.camera.sensitivityY = 5;
-
-    // Enable physics in the scene
-    scene.enablePhysics(
-      new BABYLON.Vector3(0, -9.8, 0),
-      new BABYLON.AmmoJSPlugin()
-    );
 
     // create my own unit by default
     this.myPlayer = this.addEntity({type:"Player", isHuman: true, name: "john"})
