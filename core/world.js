@@ -74,7 +74,7 @@ const generateWorld = () => {
   invisibleMaterial.diffuseTexture = null;
   invisibleMaterial._alpha = 0;
   BOX.Engine.noa.registry.registerMaterial("invisible", null, null, false, invisibleMaterial);
-  const invisibleBlock = BOX.Engine.noa.registry.registerBlock(255, {
+  const invisibleBlock = BOX.Engine.noa.registry.registerBlock(1000, {
     material: "invisible",
   });
 

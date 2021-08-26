@@ -45,16 +45,8 @@ class ControlComponent {
           // remove block
           if (BOX.Engine.noa.targetedBlock) {
             var pos = BOX.Engine.noa.targetedBlock.position;
-
-            // add comment here~!
-            if (
-              pos[0] <= 0 ||
-              pos[0] >= 50 ||
-              pos[1] <= 0 ||
-              pos[1] >= 50 ||
-              pos[2] <= 0 ||
-              pos[2] >= 50
-            ) {
+            //check if target block is invisible material
+            if (BOX.Engine.noa.targetedBlock.blockID === 1000) {
               ("");
             } else {
               BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
@@ -67,7 +59,6 @@ class ControlComponent {
   }
 
   keyPress(key) {
-    //var materialType = 1;
     // BOX.inputs.state["move-left"])
     let unit = BOX.Engine.myPlayer.mainUnit;
     switch (key) {
