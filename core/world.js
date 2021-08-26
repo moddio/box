@@ -1,6 +1,3 @@
-import { water, blocks } from "./utils/textures";
-import * as BABYLON from "@babylonjs/core";
-import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { io } from "socket.io-client";
 import map from "../config/map/map.json";
 import loadMap from "./components/map/tiledLoader";
@@ -17,12 +14,7 @@ socket.on("mapBlockState", (removedBlocks) => {
 // Function that return random material using a sin and cos graph
 const getVoxelID = (x, y, z, { waterBlock, grassBlock }) => {
   for (let elem in blocksState) {
-    if (
-      blocksState[elem][0] === x &&
-      blocksState[elem][1] === y &&
-      blocksState[elem][2] === z
-    )
-      return false;
+    if (blocksState[elem][0] === x && blocksState[elem][1] === y && blocksState[elem][2] === z) return false;
   }
   if (y < -3) return waterBlock;
   var height = 2 * Math.sin(x / 10) + 3 * Math.cos(z / 20);
@@ -31,14 +23,14 @@ const getVoxelID = (x, y, z, { waterBlock, grassBlock }) => {
 };
 
 const generateWorld = () => {
-  const scene = BOX.Engine.noa.rendering.getScene();
-  const createAtlas = require("babylon-atlas");
+  //const scene = BOX.Engine.noa.rendering.getScene();
+  /*const createAtlas = require("babylon-atlas");
   const atlas = createAtlas(
     "tilesheet_complete.png",
     "tilesheet_complete.json",
     scene,
     BABYLON
-  );
+  );*/
 
   // 3D person perspective camera
   BOX.Engine.noa.camera.zoomDistance = 8;
@@ -47,31 +39,14 @@ const generateWorld = () => {
   const textures = map.textures;
   let tiles = {};
 
+  //for each texture in map.json file create top, buttom and side materials and register blocks
   Object.values(textures).forEach((texture, index) => {
     index = index + 1;
-
-    var topMaterial = BOX.Engine.noa.registry.registerMaterial(
-      "material_top_" + index.toString(),
-      null,
-      texture.top
-    );
-    const bottomMaterial = BOX.Engine.noa.registry.registerMaterial(
-      "material_bottom_" + index.toString(),
-      null,
-      texture.bottom
-    );
-    const sideMaterial = BOX.Engine.noa.registry.registerMaterial(
-      "material_side_" + index.toString(),
-      null,
-      texture.side
-    );
-
+    const topMaterial = BOX.Engine.noa.registry.registerMaterial("material_top_" + index.toString(), null, texture.top);
+    const bottomMaterial = BOX.Engine.noa.registry.registerMaterial("material_bottom_" + index.toString(), null, texture.bottom);
+    const sideMaterial = BOX.Engine.noa.registry.registerMaterial("material_side_" + index.toString(), null, texture.side);
     tiles[index.toString()] = BOX.Engine.noa.registry.registerBlock(index, {
-      material: [
-        "material_top_" + index.toString(),
-        "material_bottom_" + index.toString(),
-        "material_side_" + index.toString(),
-      ],
+      material: ["material_top_" + index.toString(), "material_bottom_" + index.toString(), "material_side_" + index.toString()],
     });
   });
 
@@ -95,16 +70,13 @@ const generateWorld = () => {
     tiles[tileIndex.toString()] = box.Engine.noa.registry.registerBlock(tileIndex, { material: "material_" + tileIndexString });
   }*/
 
-  const invisibleMaterial =
-    BOX.Engine.noa.rendering.makeStandardMaterial("invisible");
-  invisibleMaterial.diffuseTexture = atlas.makeSpriteTexture("frame_000");
-  BOX.Engine.noa.registry.registerMaterial(
-    "invisible",
-    null,
-    null,
-    false,
-    invisibleMaterial
-  );
+  const invisibleMaterial = BOX.Engine.noa.rendering.makeStandardMaterial("invisible");
+  invisibleMaterial.diffuseTexture = null;
+  invisibleMaterial._alpha = 0;
+  BOX.Engine.noa.registry.registerMaterial("invisible", null, null, false, invisibleMaterial);
+  const invisibleBlock = BOX.Engine.noa.registry.registerBlock(255, {
+    material: "invisible",
+  });
 
   // attempt to load materials from tile sheet
   /*const tileMaterial = BOX.Engine.noa.rendering.makeStandardMaterial("tile");
@@ -130,11 +102,6 @@ const generateWorld = () => {
   //c * 1/6, r * 1/4, (c + 1) * 1/6, (r + 1) * 1/4
   //var mat = myExistingMesh.material
 
-  // Save texture inside register Block
-  const invisibleBlock = BOX.Engine.noa.registry.registerBlock(255, {
-    material: "invisible",
-  });
-
   // Generate the map randomly
   /*BOX.Engine.noa.world.on("worldDataNeeded", (id, data, x, y, z) => {
     for (let i = 0; i < data.shape[0]; i++) {
@@ -157,16 +124,7 @@ const generateWorld = () => {
     if (check > 0) return;
     check++;
     loadMap(map, data, tiles, invisibleBlock);
-
     BOX.Engine.noa.world.setChunkData(id, data);
-
-    //for testing
-    //BOX.Engine.noa.setBlock(tiles[33], 20, 5, 10);  //118 119 145 146
-
-    /*box.Engine.noa.setBlock(tiles[118], 10, 5, 10);
-    box.Engine.noa.setBlock(tiles[119], 11, 5, 10);
-    box.Engine.noa.setBlock(tiles[119], 10, 5, 9);
-    box.Engine.noa.setBlock(tiles[118], 11, 5, 9);*/
     return;
   });
 };
