@@ -4,5 +4,6 @@
   "chunkSize": 64,
   "chunkAddDistance": 2.5,
   "chunkRemoveDistance": 3.5,
+  "tickRate": 200,
   "map": "./map/map.json"
 }
