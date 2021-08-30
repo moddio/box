@@ -1,16 +1,20 @@
 import * as BABYLON from "@babylonjs/core";
 export class Entity {
   constructor(data = {}) {
+    this.type = data.type;
+    this.name = data.name;
     this.components = [];
-    this.body;
     this.mesh;
     this.id = this.generateId();
     //this.noaEntityId = data.noaEntityId;
     this.type = undefined;
     this.lifeSpan = undefined;
     this.createdAt = Date.now();
-
+    this.isMyUnit = data.isMyUnit;
     
+    if (data.body) {
+      this.body = this.createBody(data.body);
+    }
   }
 
   createBody(bodyData) {
@@ -20,14 +24,15 @@ export class Entity {
       bodyData.roundShap[0],
       bodyData.roundShap[1]
     );
-
+      
     if (bodyData.scaling) {
       mesh.scaling.x = bodyData.scaling.x;
       mesh.scaling.y = bodyData.scaling.y;
       mesh.scaling.z = bodyData.scaling.z;
     }
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
-    if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
+    // if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
+    if (this.isMyUnit) {
       console.log("creating body for my unit", this);
       this.noaEntityId = 1;
       BOX.Engine.noa.entities.addComponent(
@@ -54,17 +59,15 @@ export class Entity {
       // syntatic sugar for creating a default entity
       var playPos = BOX.Engine.noa.entities.getPosition(1);
       var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
-      var width = 0.7;
-      var height = 0.7;
-
+      
       //var mesh = ballMesh.createInstance("ball_instance");
       var meshOffset = [0, 0.5, 0];
       var doPhysics = false;
 
       this.noaEntityId = BOX.Engine.noa.entities.add(
         pos,
-        width,
-        height, // required
+        bodyData.width,
+        bodyData.height, // required
         mesh,
         meshOffset,
         doPhysics

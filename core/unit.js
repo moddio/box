@@ -3,21 +3,16 @@ import { Entity } from "./entity";
 
 export class Unit extends Entity {
   constructor(data) {
-    // run Entity's constructor
-    super(data);
+    data.type = "unit"
+    super(data); // run Entity's constructor
 
     this.check = 0;
     // Default radius
-    this.radius = 0.2;
     this.val = 0;
-    this.type = "unit";
 
-    this.width = 5 * this.radius;
-    this.height = 8 * this.radius;
     this.moveDirection; // x, y, z rotations
 
     this.ownerPlayer = data.ownerPlayer;
-
     // a player's 1st unit will automatically be assigned as the main unit
     if (this.ownerPlayer) {
       if (this.ownerPlayer.mainUnit == undefined) {
@@ -25,13 +20,9 @@ export class Unit extends Entity {
       }
     }
 
-    if (data.body) {
-      this.body = this.createBody(data.body);
-    }
-
     this.resetPosition();
 
-    this.body.onCollide(100);
+    // this.body.onCollide(100);
     // this.body.boxEntity = this;
 
     this.showNameLabel();
@@ -45,7 +36,6 @@ export class Unit extends Entity {
         csp: true // this unit's owner player will ignore the server streaming received for his own unit
       };
     }
-    
   }
 
   showNameLabel() {
@@ -160,6 +150,9 @@ export class Unit extends Entity {
         offset: [0, 0.5, 0],
         type: "CreateSphere",
         unitName: "ball",
+        width: 1,
+        height: 1, 
+        radius: 0.2,
         roundShap: [6, 0.4],
         restitution: 0.8,
         friction: 0.7,

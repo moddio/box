@@ -2,17 +2,14 @@ import { Entity } from "./entity";
 
 export class Item extends Entity {
   constructor(data) {
-    super();
+    data.type = "item";
+    super(data);
+
     // Default radius
     this.radius = 0.2;
 
     this.width = data.width * this.radius;
     this.height = data.height * this.radius;
-
-    
-    if (data.body) {
-      this.body = this.createBody(data.body);
-    }
     
     if (data.streamMode == undefined) {
         this.streamMode = {
@@ -22,5 +19,7 @@ export class Item extends Entity {
             movement: false
         };
     }
+    
+    
   }
 }

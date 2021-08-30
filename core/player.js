@@ -2,10 +2,9 @@ import { Entity } from "./entity";
 
 export class Player extends Entity {
   constructor(data) {
-    super();
-    this.name = data.name;
-    this.clientId = undefined; // socketId
-    this.type = "player";
+    data.type = "player";
+    super(data);
+    this.clientId = undefined; // socketId    
 
     this.addComponent("ControlComponent");
     //console.log("global", global.ControlComponent);
@@ -34,10 +33,14 @@ export class Player extends Entity {
   createUnit() {
     BOX.Engine.addEntity({
       type: "Unit",
+      isMyUnit: true,
       ownerPlayer: this,
       body: {
         type: "CreateBox",
         offset: [0, 0.5, 0],
+        radius: 0.2,
+        width: 5,
+        height: 8,
         roundShap: [null, null],
         scaling: { x: 0.6, y: 1, z: 0.6 },
         linearDamping: 0.5,
