@@ -14,5 +14,11 @@ export class Projectile extends Entity {
       this.body = this.createBody(data.body);
     }
     
+    if (data.streamMode == undefined) {
+      this.streamMode = {
+        enabled: false      
+      };
+    }
+    
   }
 }

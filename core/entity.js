@@ -9,7 +9,8 @@ export class Entity {
     this.type = undefined;
     this.lifeSpan = undefined;
     this.createdAt = Date.now();
-    this.streamMode(1);
+
+    
   }
 
   createBody(bodyData) {

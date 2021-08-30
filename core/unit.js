@@ -35,6 +35,17 @@ export class Unit extends Entity {
     // this.body.boxEntity = this;
 
     this.showNameLabel();
+
+    if (data.streamMode == undefined) {
+      this.streamMode = {
+        enabled: true,
+        stateChange: true,
+        attributes: true,
+        movement: true,
+        csp: true // this unit's owner player will ignore the server streaming received for his own unit
+      };
+    }
+    
   }
 
   showNameLabel() {

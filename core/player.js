@@ -19,6 +19,16 @@ export class Player extends Entity {
     } else {
       this.addComponent("DeveloperMode");
     }
+
+    if (data.streamMode == undefined) {
+      this.streamMode = {
+        enabled: true,
+        stateChange: true,
+        attributes: true,
+        movement: false,
+        csp: false // client-side prediction. if enabled, the unit/item's owner player will ignore the streaming he has received for his own unit/item.
+      };
+    }
   }
 
   createUnit() {
