@@ -66,7 +66,8 @@ class ControlComponent {
       case "b":
         //let unit = BOX.Engine.myPlayer.mainUnit;
         if (unit) {
-          unit.spawnBox();
+          unit.shootBall();
+          //unit.showCrosshair();
         }
         break;
     }
