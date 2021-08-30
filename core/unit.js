@@ -41,7 +41,7 @@ export class Unit extends Entity {
     this.label = BOX.Mesh["CreatePlane"]("Label");
 
     var playPos = BOX.Engine.noa.entities.getPosition(1);
-    var pos = [playPos[0], playPos[1] + 1.5 , playPos[2]];
+    var pos = [playPos[0], playPos[1] + 1.5, playPos[2]];
     var width = 0;
     var height = 0;
 
@@ -52,7 +52,7 @@ export class Unit extends Entity {
     var noaId = BOX.Engine.noa.entities.add(
       pos,
       width,
-      height, 
+      height,
       this.label,
       meshOffset,
       doPhysics
@@ -60,10 +60,22 @@ export class Unit extends Entity {
     this.noaEntityId = noaId;
 
     //Create dynamic texture
-    let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", { width: 200, height: 200 }, scene);
+    let dynamicTexture = new BABYLON.DynamicTexture(
+      "DynamicTexture",
+      { width: 200, height: 200 },
+      scene
+    );
 
     //Draw text
-    dynamicTexture.drawText("Player name", null, null, "36px Arial", "black", "transparent", true);
+    dynamicTexture.drawText(
+      "Player name",
+      null,
+      null,
+      "36px Arial",
+      "black",
+      "transparent",
+      true
+    );
     dynamicTexture.hasAlpha = true;
 
     //create material
@@ -76,6 +88,10 @@ export class Unit extends Entity {
     mat.diffuseTexture = dynamicTexture;
     this.label.material = mat;
 
+    BOX.Engine.noa.ents.addComponent(noaId, "followsEntity", {
+      entity: 1,
+      offset: [0, 2, 0],
+    });
   }
 
   /*showCrosshair() {
@@ -174,10 +190,12 @@ export class Unit extends Entity {
 
   tick() {
     super.tick(); // call Entity.tick()
-    
+
     // apply linear damping
-    this.body.velocity[0] = this.body.velocity[0] / (1 + this.body.linearDamping);
-    this.body.velocity[2] = this.body.velocity[2] / (1 + this.body.linearDamping);
+    this.body.velocity[0] =
+      this.body.velocity[0] / (1 + this.body.linearDamping);
+    this.body.velocity[2] =
+      this.body.velocity[2] / (1 + this.body.linearDamping);
 
     // Getting force value from cos sin
     let angle = BOX.Engine.noa.camera.heading;
@@ -206,8 +224,6 @@ export class Unit extends Entity {
     }
 
     if (this.label) {
-      var playPos = BOX.Engine.noa.entities.getPosition(1);
-      BOX.Engine.noa.entities.setPosition(3, [playPos[0], playPos[1] + 1.5 , playPos[2]])
       this.label.rotation = this.mesh.rotation;
     }
   }
