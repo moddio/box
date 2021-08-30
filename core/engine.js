@@ -10,7 +10,7 @@ import { Entity } from "./entity.js";
 export class Engine extends Entity {
 
   constructor() {
-    super();
+    super({}, true);
     this.noa = new noaEngine(config);
     this.entities = {};
     this.clients = {};
@@ -23,8 +23,9 @@ export class Engine extends Entity {
 
     // Generate the world
     generateWorld();
-
     const scene = this.noa.rendering.getScene();
+
+    // this.addComponent("NetworkComponent")
 
     this.noa.camera.sensitivityX = 5;
     this.noa.camera.sensitivityY = 5;
@@ -65,7 +66,6 @@ export class Engine extends Entity {
     let entityType = data.type;
     if (entityType) {
       let entity = new BOX[entityType](data);
-      this.entities[entity.id] = entity;
       return entity;
     } else {
       error("entity type not defined");

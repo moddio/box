@@ -1,20 +1,32 @@
 import * as BABYLON from "@babylonjs/core";
+
 export class Entity {
-  constructor(data = {}) {
+
+  constructor(data = {}, isEngine) {
+    this.data = data;
     this.type = data.type;
     this.name = data.name;
     this.components = [];
     this.mesh;
-    this.id = this.generateId();
+    this.id = data.id || this.generateId();
     //this.noaEntityId = data.noaEntityId;
     this.type = undefined;
     this.lifeSpan = undefined;
     this.createdAt = Date.now();
     this.isMyUnit = data.isMyUnit;
-    
+
+    if (!isEngine)
+        BOX.Engine.entities[this.id] = this;
+
     if (data.body) {
       this.body = this.createBody(data.body);
     }
+
+    if (BOX.isServer) {
+      if (this.streamMode && this.streamMode.enabled) {
+        BOX.Engine.components['NetworkComponent'].broadcast('createEntity', this.data) // use this.data because it contains id
+      }
+    }    
   }
 
   createBody(bodyData) {
@@ -104,6 +116,12 @@ export class Entity {
   }
 
   destroy() {
+    if (BOX.isServer) {
+      if (this.streamMode && this.streamMode.enabled) {
+        BOX.Engine.components['NetworkComponent'].broadcast('destroyEntity', this.id())
+      }
+    }    
+
     BOX.Engine.removeEntity(this.id, this.noaEntityId);
   }
 

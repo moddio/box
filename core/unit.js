@@ -48,8 +48,7 @@ export class Unit extends Entity {
 
     var meshOffset = [0, 0, 0];
     var doPhysics = false;
-    var shadow = false;
-
+    
     var noaId = BOX.Engine.noa.entities.add(
       pos,
       width,
