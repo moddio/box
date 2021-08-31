@@ -1,11 +1,12 @@
 import map from "/config/map/map.json";
-import { Component } from "../component";
+import { Component } from "../../component";
 
 class DeveloperMode extends Component {
+  constructor() {
+    super();
 
-  constructor(parent) {
-    super(parent);
-    
+    console.log("xxxxxxxx", this.parent);
+
     this.test = "hello developer";
     this.developerModeButton();
   }
@@ -38,8 +39,6 @@ class DeveloperMode extends Component {
       }
     });
   }
-
-
 }
 
 export default DeveloperMode;

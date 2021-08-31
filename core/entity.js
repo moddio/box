@@ -29,8 +29,6 @@ export class Entity {
     if (data.body) {
       this.body = this.createBody(data.body);
     }
-
-    
   }
 
   createBody(bodyData) {
@@ -108,12 +106,13 @@ export class Entity {
       [componentName]: new loader.loadedComponents[componentName](),
       id: this.id,
     };
+    console.log("all component", this.components);
   }
 
   hasComponent(componentName) {
-    return this.components[componentName] != undefined
+    return this.components[componentName] != undefined;
   }
-  
+
   destroy() {
     if (BOX.isServer) {
       if (this.streamMode && this.streamMode.enabled) {
@@ -177,12 +176,13 @@ export class Entity {
     ) {
       this.destroy();
     }
-
-    // execute all added components' tick
+    /**
+       // execute all added components' tick
     for (let id in this.components) {
       let component = this.components[id];
       component.tick();
     }
+     */
 
     // console.log("testing entity tick")
 

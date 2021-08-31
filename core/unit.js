@@ -4,7 +4,7 @@ import { Entity } from "./entity";
 
 export class Unit extends Entity {
   constructor(data) {
-    data.type = "unit"
+    data.type = "unit";
     super(data); // run Entity's constructor
 
     this.check = 0;
@@ -27,8 +27,8 @@ export class Unit extends Entity {
     // this.body.boxEntity = this;
 
     //this will change when change components
-    this.addComponent("NameLabelComponent");
-    this.NameLabel = BOX.components["NameLabelComponent"].NameLabelComponent;
+    //this.addComponent("NameLabelComponent");
+    //  this.NameLabel = BOX.components["NameLabelComponent"].NameLabelComponent;
 
     if (data.streamMode == undefined) {
       this.streamMode = {
@@ -36,12 +36,10 @@ export class Unit extends Entity {
         stateChange: true,
         attributes: true,
         movement: true,
-        csp: true // this unit's owner player will ignore the server streaming received for his own unit
+        csp: true, // this unit's owner player will ignore the server streaming received for his own unit
       };
     }
   }
-
-  
 
   /*showCrosshair() {
 
@@ -99,7 +97,7 @@ export class Unit extends Entity {
         type: "CreateSphere",
         unitName: "ball",
         width: 1,
-        height: 1, 
+        height: 1,
         radius: 0.2,
         roundShap: [6, 0.4],
         restitution: 0.8,

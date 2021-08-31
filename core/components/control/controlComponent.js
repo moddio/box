@@ -2,8 +2,9 @@ import { savingMap } from "../map/tiledLoader"; // <- get rid of this
 import { Component } from "../component";
 
 class ControlComponent extends Component {
-  constructor(parent) {
-    super(parent);
+  constructor() {
+    super();
+    console.log("test", this.parent);
 
     BOX.inputs.bind("move-up", "W", "<up>");
     BOX.inputs.bind("move-left", "A", "<left>");
@@ -33,22 +34,30 @@ class ControlComponent extends Component {
   // Simple demo of removing blocks and adding blocks we don't want to do this here
   mouseClick(button) {
     //check if mouse pointer is locked
-    if (BOX.Engine.noa.container.hasPointerLock && this.parent && this.parent.isDeveloper) {
+    if (
+      BOX.Engine.noa.container.hasPointerLock &&
+      this.parent &&
+      this.parent.isDeveloper
+    ) {
       // let devComponentExists = this.parent.hasComponent("DeveloperComponent");
-      let devComponent = this.parent.components["DeveloperComponent"]
+      let devComponent = this.parent.components["DeveloperComponent"];
       if (devComponent) {
         switch (button) {
           case 0:
             // add block
             if (BOX.Engine.noa.targetedBlock) {
-
               // devComponent.magic()
 
               var pos = BOX.Engine.noa.targetedBlock.adjacent;
-              BOX.Engine.noa.addBlock(this.materialType, pos[0], pos[1], pos[2]);
+              BOX.Engine.noa.addBlock(
+                this.materialType,
+                pos[0],
+                pos[1],
+                pos[2]
+              );
               savingMap.saveBlock(pos[0], pos[1], pos[2], this.materialType);
             }
-  
+
             break;
           case 2:
             // remove block
@@ -64,7 +73,7 @@ class ControlComponent extends Component {
             }
             break;
         }
-      }      
+      }
     }
   }
 

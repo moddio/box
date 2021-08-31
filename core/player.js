@@ -4,8 +4,8 @@ export class Player extends Entity {
   constructor(data) {
     data.type = "player";
     super(data);
-    this.clientId = undefined; // socketId        
-    
+    this.clientId = undefined; // socketId
+
     this.isDeveloper = true; // can this player modify this game?
     this.devToolsEnabled = false; // show/hide dev tools. only developer can do this
 
@@ -19,9 +19,8 @@ export class Player extends Entity {
       }
       // add other player controls
     } else {
-      if (this.data.isDeveloper) {
-        this.addComponent("DeveloperMode");
-      }
+      this.addComponent("DeveloperMode");
+      this.addComponent("NameLabelComponent");
     }
 
     if (data.streamMode == undefined) {
@@ -30,7 +29,7 @@ export class Player extends Entity {
         stateChange: true,
         attributes: true,
         movement: false,
-        csp: false // client-side prediction. if enabled, the unit/item's owner player will ignore the streaming he has received for his own unit/item.
+        csp: false, // client-side prediction. if enabled, the unit/item's owner player will ignore the streaming he has received for his own unit/item.
       };
     }
   }

@@ -1,10 +1,12 @@
 import * as BABYLON from "@babylonjs/core";
 
-import { Component } from "../component";
+import { Component } from "./component";
 
 class NameLabel extends Component {
-  constructor(parent) {
-    super(parent)
+  constructor() {
+    super();
+
+    console.log("xxxxxxxx", this.parent);
 
     this.label = {};
     this.ownerId = 1; //owner of  name label
@@ -27,14 +29,33 @@ class NameLabel extends Component {
     var meshOffset = [0, 0, 0];
     var doPhysics = false;
 
-    var noaId = BOX.Engine.noa.entities.add(pos, width, height, this.label, meshOffset, doPhysics);
+    var noaId = BOX.Engine.noa.entities.add(
+      pos,
+      width,
+      height,
+      this.label,
+      meshOffset,
+      doPhysics
+    );
     this.noaEntityId = noaId;
 
     //Create dynamic texture
-    let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", { width: 200, height: 200 }, scene);
+    let dynamicTexture = new BABYLON.DynamicTexture(
+      "DynamicTexture",
+      { width: 200, height: 200 },
+      scene
+    );
 
     //Draw text
-    dynamicTexture.drawText(this.ownerName, null, null, "36px Arial", "black", "transparent", true);
+    dynamicTexture.drawText(
+      this.ownerName,
+      null,
+      null,
+      "36px Arial",
+      "black",
+      "transparent",
+      true
+    );
     dynamicTexture.hasAlpha = true;
 
     //create material
