@@ -3,6 +3,10 @@ class NetworkComponent {
         this.snapshot = []
     }
 
+    broadcast(msgType, data) {
+        
+    }
+
     addEntity() {
         // broadcast creation of this entity to all clients
         for (let id in BOX.Engine.clients) {

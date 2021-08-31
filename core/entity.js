@@ -197,6 +197,12 @@ export class Entity {
       this.destroy();
     }
 
+    // execute all added components' tick
+    for (let id in this.components) {
+      let component = this.components[id];
+      component.tick();
+    }
+
     // console.log("testing entity tick")
 
     //let pos = this.body.getPosition();
