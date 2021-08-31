@@ -75,6 +75,7 @@ class NameLabel extends Component {
 
   tick() {
     this.label.rotation.y = BOX.Engine.noa.camera.heading;
+    this.label.rotation.x = BOX.Engine.noa.camera.pitch;
   }
 }
 
