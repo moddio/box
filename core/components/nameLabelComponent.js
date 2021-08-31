@@ -6,11 +6,10 @@ class NameLabel extends Component {
   constructor(parent) {
     super(parent);
 
-    console.log("xxxxxxxx", this.parent);
-
+    console.log('11111111', parent.isMyUnit)
     this.label = {};
-    this.ownerId = 1; //owner of  name label
-    this.ownerName = "Player Name";
+    this.ownerId = 1; //owner of name label need to get from parent !!!
+    this.ownerName = parent.name;
 
     this.showNameLabel();
   }

@@ -1,11 +1,8 @@
-import { savingMap } from "../map/tiledLoader"; // <- get rid of this
 import { Component } from "../component";
 
 class ControlComponent extends Component {
   constructor(parent) {
     super(parent);
-
-    console.log("test", this.parent);
 
     BOX.inputs.bind("move-up", "W", "<up>");
     BOX.inputs.bind("move-left", "A", "<left>");
@@ -35,42 +32,20 @@ class ControlComponent extends Component {
   // Simple demo of removing blocks and adding blocks we don't want to do this here
   mouseClick(button) {
     //check if mouse pointer is locked
-    if (
-      BOX.Engine.noa.container.hasPointerLock &&
-      this.parent &&
-      this.parent.isDeveloper
-    ) {
-      // let devComponentExists = this.parent.hasComponent("DeveloperComponent");
-      let devComponent = this.parent.components["DeveloperComponent"];
-      if (devComponent) {
+    if (BOX.Engine.noa.container.hasPointerLock && this.parent && this.parent.isDeveloper) {
+      let devComponent = this.parent.components["DeveloperMode"].DeveloperMode;
+      if (devComponent && devComponent.status) {
         switch (button) {
           case 0:
             // add block
             if (BOX.Engine.noa.targetedBlock) {
-              // devComponent.magic()
-
-              var pos = BOX.Engine.noa.targetedBlock.adjacent;
-              BOX.Engine.noa.addBlock(
-                this.materialType,
-                pos[0],
-                pos[1],
-                pos[2]
-              );
-              savingMap.saveBlock(pos[0], pos[1], pos[2], this.materialType);
+              devComponent.addBlock();
             }
-
             break;
           case 2:
             // remove block
             if (BOX.Engine.noa.targetedBlock) {
-              var pos = BOX.Engine.noa.targetedBlock.position;
-              //check if target block is invisible material
-              if (BOX.Engine.noa.targetedBlock.blockID === 1000) {
-                ("");
-              } else {
-                BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
-                savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
-              }
+              devComponent.removeBlock();
             }
             break;
         }

@@ -28,7 +28,10 @@ export class Unit extends Entity {
 
     //this will change when change components
     //this.addComponent("NameLabelComponent");
-    //  this.NameLabel = BOX.components["NameLabelComponent"].NameLabelComponent;
+
+    console.log('components111111' ,this.components); //need to access components !!!
+    
+    //this.NameLabel = this.components["NameLabelComponent"].NameLabelComponent;
 
     if (data.streamMode == undefined) {
       this.streamMode = {

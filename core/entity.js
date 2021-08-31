@@ -106,7 +106,6 @@ export class Entity {
       [componentName]: new loader.loadedComponents[componentName](this),
       id: this.id,
     };
-    console.log("all component", this.components);
   }
 
   hasComponent(componentName) {
