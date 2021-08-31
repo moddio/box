@@ -26,9 +26,9 @@ export class Unit extends Entity {
     // this.body.onCollide(100);
     // this.body.boxEntity = this;
 
+    //this will change when change components
     this.addComponent("NameLabelComponent");
     this.NameLabel = BOX.components["NameLabelComponent"].NameLabelComponent;
-    console.log('namelabel', BOX.components["NameLabelComponent"].NameLabelComponent.label);
 
     if (data.streamMode == undefined) {
       this.streamMode = {

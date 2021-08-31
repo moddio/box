@@ -3,11 +3,9 @@ import map from "/config/map/map.json";
 class DeveloperMode {
   constructor(number) {
     this.test = "hello developer";
-    console.log("tweeewew", BOX.Engine.components);
     this.developerModeButton();
   }
   developerModeButton() {
-    console.log('components', BOX.components["ControlComponent"]);
     //go through map.json textures and make interface image for each type of block
     Object.values(map.textures).forEach((texture, index) => {
       const img = new Image();
