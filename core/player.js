@@ -9,16 +9,18 @@ export class Player extends Entity {
     this.isDeveloper = true; // can this player modify this game?
     this.devToolsEnabled = false; // show/hide dev tools. only developer can do this
 
-    this.addComponent("ControlComponent");
+    
     //console.log("global", global.ControlComponent);
 
     if (BOX.isServer) {
       // if human player, add to the list of clients
       if (data.isHuman) {
         BOX.Engine.clients[this.id] = this;
+        this.addComponent("ControlComponent");
       }
       // add other player controls
     } else {
+      this.addComponent("ControlComponent");
       this.addComponent("DeveloperMode");
       this.addComponent("NameLabelComponent");
     }

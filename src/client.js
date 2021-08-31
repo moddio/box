@@ -1,25 +1,13 @@
-import { clientNetworking } from "../core/components/network/clientNetworkEvent";
+var engine = BOX.Engine;
 
-//console.log("hello", BOX.isClient);
+engine.start();
 
-BOX.Engine.start();
-BOX.Engine.engineStep();
-// remove inputs component for player and movement component
-BOX.Engine.noa.entities.deleteComponent("receivesInputs");
-BOX.Engine.noa.entities.deleteComponent("movement");
+// create my own unit by default
+engine.myPlayer = engine.addEntity({
+        type: "Player",
+        isHuman: true,
+        name: "john",
+    });
 
-// USE THIS ON DEBUG MODE ONLY NOT IN PRODUCTION
-global.BOX = BOX;
+engine.myPlayer.createUnit();
 
-// start client networking
-console.log("player has joined the game");
-clientNetworking();
-
-console.log("this the data of the player online", BOX.playerData);
-
-// when player joins the game, create a unit, and assign that unit to that player.
-// BOX.onEvent("playerJoin", function (player) {
-
-// Adding ticks to player component
-
-// creating tick inside entity of the player

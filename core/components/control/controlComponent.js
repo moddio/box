@@ -31,22 +31,24 @@ class ControlComponent extends Component {
   // Simple demo of removing blocks and adding blocks we don't want to do this here
   mouseClick(button) {
     //check if mouse pointer is locked
-    if (BOX.Engine.noa.container.hasPointerLock && this.parent && this.parent.isDeveloper) {
-      let devComponent = this.parent.components["DeveloperMode"].DeveloperMode; //need to fix this !!!
-      if (devComponent && devComponent.status) {
-        switch (button) {
-          case 0:
-            // add block
-            if (BOX.Engine.noa.targetedBlock) {
-              devComponent.addBlock();
-            }
-            break;
-          case 2:
-            // remove block
-            if (BOX.Engine.noa.targetedBlock) {
-              devComponent.removeBlock();
-            }
-            break;
+    if (BOX.Engine.noa.container.hasPointerLock) {
+      if (this.parent && this.parent.isDeveloper) {
+        let devComponent = this.parent.components["DeveloperMode"].DeveloperMode; //need to fix this !!!
+        if (devComponent && devComponent.status) {
+          switch (button) {
+            case 0:
+              // add block
+              if (BOX.Engine.noa.targetedBlock) {
+                devComponent.addBlock();
+              }
+              break;
+            case 2:
+              // remove block
+              if (BOX.Engine.noa.targetedBlock) {
+                devComponent.removeBlock();
+              }
+              break;
+          }
         }
       }
     }
@@ -54,17 +56,18 @@ class ControlComponent extends Component {
 
   keyPress(key) {
     // BOX.inputs.state["move-left"])
-    let unit = BOX.Engine.myPlayer.mainUnit;
-    switch (key) {
-      // shoot the ball
-      case "b":
-        //let unit = BOX.Engine.myPlayer.mainUnit;
-        if (unit) {
-          unit.shootBall();
-          //unit.showCrosshair();
-        }
-        break;
-    }
+    let unit = this.parent.mainUnit;
+    if (unit) {
+      switch (key) {
+        // shoot the ball
+        case "b":
+          if (unit) {
+            unit.shootBall();
+            //unit.showCrosshair();
+          }
+          break;
+      }
+    }    
   }
 
   keyRelease(key) {
