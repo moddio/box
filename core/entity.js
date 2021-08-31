@@ -14,20 +14,23 @@ export class Entity {
     this.createdAt = Date.now();
     this.isMyUnit = data.isMyUnit;
 
-    if (!isEngine) BOX.Engine.entities[this.id] = this;
+    if (!isEngine) {
+      BOX.Engine.entities[this.id] = this;
+      if (BOX.isServer) {
+        if (this.streamMode && this.streamMode.enabled) {
+          BOX.Engine.components["NetworkComponent"].broadcast(
+            "createEntity",
+            this.data
+          ); // use this.data because it contains id
+        }
+      }
+    }
 
     if (data.body) {
       this.body = this.createBody(data.body);
     }
 
-    if (BOX.isServer) {
-      if (this.streamMode && this.streamMode.enabled) {
-        BOX.Engine.components["NetworkComponent"].broadcast(
-          "createEntity",
-          this.data
-        ); // use this.data because it contains id
-      }
-    }
+    
   }
 
   createBody(bodyData) {
@@ -101,38 +104,16 @@ export class Entity {
   }
 
   addComponent(componentName) {
-    // this.components = {};
-    console.log("check ooooooooooooo", this.components);
-    /*this.components = {
-      [componentName]: new loader.loadedComponents[componentName](1),
-      id: this.id,
-    };*/
-
-    /*this.components[componentName] = {
-      [componentName]: new loader.loadedComponents[componentName](),
-      id: this.id,
-    };*/
-
-    /*this.components[componentName] = {
-      [componentName]: new loader.loadedComponents[componentName](),
-      id: this.id,
-    };*/
-
-
-    BOX.components[componentName] = {
+    this.components[componentName] = {
       [componentName]: new loader.loadedComponents[componentName](),
       id: this.id,
     };
-
-
-    /**
-     if (componentName === "DeveloperMode")
-      this.components[1].DeveloperMode.developerModeButton(
-        this.components[0].ControlComponent
-      );
-     */
   }
 
+  hasComponent(componentName) {
+    return this.components[componentName] != undefined
+  }
+  
   destroy() {
     if (BOX.isServer) {
       if (this.streamMode && this.streamMode.enabled) {

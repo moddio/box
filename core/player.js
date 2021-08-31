@@ -4,7 +4,10 @@ export class Player extends Entity {
   constructor(data) {
     data.type = "player";
     super(data);
-    this.clientId = undefined; // socketId    
+    this.clientId = undefined; // socketId        
+    
+    this.isDeveloper = true; // can this player modify this game?
+    this.devToolsEnabled = false; // show/hide dev tools. only developer can do this
 
     this.addComponent("ControlComponent");
     //console.log("global", global.ControlComponent);
@@ -16,7 +19,9 @@ export class Player extends Entity {
       }
       // add other player controls
     } else {
-      this.addComponent("DeveloperMode");
+      if (this.data.isDeveloper) {
+        this.addComponent("DeveloperMode");
+      }
     }
 
     if (data.streamMode == undefined) {

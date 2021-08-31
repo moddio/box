@@ -1,7 +1,11 @@
 import * as BABYLON from "@babylonjs/core";
 
-class NameLabel {
-  constructor() {
+import { Component } from "../component";
+
+class NameLabel extends Component {
+  constructor(parent) {
+    super(parent)
+
     this.label = {};
     this.ownerId = 1; //owner of  name label
     this.ownerName = "Player Name";

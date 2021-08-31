@@ -1,7 +1,11 @@
 import map from "/config/map/map.json";
+import { Component } from "../component";
 
-class DeveloperMode {
-  constructor(number) {
+class DeveloperMode extends Component {
+
+  constructor(parent) {
+    super(parent);
+    
     this.test = "hello developer";
     this.developerModeButton();
   }
@@ -34,6 +38,8 @@ class DeveloperMode {
       }
     });
   }
+
+
 }
 
 export default DeveloperMode;
