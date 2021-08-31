@@ -8,15 +8,13 @@ import generateWorld from "./world.js";
 import { Entity } from "./entity.js";
 
 export class Engine extends Entity {
-
   constructor() {
     super({}, true);
     this.noa = new noaEngine(config);
     this.entities = {};
     this.clients = {};
-    this.myPlayer;    
+    this.myPlayer;
     this.currentTime = 0;
-
   }
   start() {
     console.log("starting the noa engine...");
@@ -31,7 +29,11 @@ export class Engine extends Entity {
     this.noa.camera.sensitivityY = 5;
 
     // create my own unit by default
-    this.myPlayer = this.addEntity({type:"Player", isHuman: true, name: "john"})
+    this.myPlayer = this.addEntity({
+      type: "Player",
+      isHuman: true,
+      name: "john",
+    });
     this.myPlayer.createUnit();
 
     // run unit ticks
@@ -44,10 +46,10 @@ export class Engine extends Entity {
   engineStep() {
     this.noa.on("tick", () => {
       // Update engine time on each tick
-      
+
       this.tickStart = Date.now();
       // Call player ticks
-      
+
       for (let id in this.entities) {
         let entity = this.entities[id];
         entity.tick();

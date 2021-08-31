@@ -9,6 +9,8 @@ import {
 } from "../core/components/movement";
 
 export var isClient = window ? true : false;
+export const components = [];
+export var developerMode = {};
 export const Mesh = noaMesh;
 export var isServer = !isClient;
 export const Engine = new boxEngine();
@@ -22,7 +24,6 @@ export const edgeMap = {
   minWidth: 0,
 };
 export const control = {};
-
 
 // This shouldn't be inside box.js...
 export const collision = (id, otherEntsId) => {

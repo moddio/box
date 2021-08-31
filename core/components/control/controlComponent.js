@@ -1,7 +1,7 @@
 import { savingMap } from "../map/tiledLoader";
 
 class ControlComponent {
-  constructor(player) {
+  constructor() {
     BOX.inputs.bind("move-up", "W", "<up>");
     BOX.inputs.bind("move-left", "A", "<left>");
     BOX.inputs.bind("move-down", "S", "<up>");
@@ -11,7 +11,7 @@ class ControlComponent {
     BOX.inputs.bind("add-block", "L", "<left>");
     BOX.inputs.bind("remove-block", "K", "<left>");
 
-    this.player = player;
+    //this.player = player;
     this.materialType = 1;
     //this.mouseClick();
 
@@ -30,7 +30,7 @@ class ControlComponent {
   // Simple demo of removing blocks and adding blocks we don't want to do this here
   mouseClick(button) {
     //check if mouse pointer is locked
-    if (BOX.Engine.noa.container.hasPointerLock) {
+    if (BOX.Engine.noa.container.hasPointerLock && BOX.developerMode.status) {
       switch (button) {
         case 0:
           // add block
@@ -92,5 +92,3 @@ class ControlComponent {
 }
 
 export default ControlComponent;
-
-

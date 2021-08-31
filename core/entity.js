@@ -1,12 +1,11 @@
 import * as BABYLON from "@babylonjs/core";
 
 export class Entity {
-
   constructor(data = {}, isEngine) {
     this.data = data;
     this.type = data.type;
     this.name = data.name;
-    this.components = [];
+    this.components = {};
     this.mesh;
     this.id = data.id || this.generateId();
     //this.noaEntityId = data.noaEntityId;
@@ -15,8 +14,7 @@ export class Entity {
     this.createdAt = Date.now();
     this.isMyUnit = data.isMyUnit;
 
-    if (!isEngine)
-        BOX.Engine.entities[this.id] = this;
+    if (!isEngine) BOX.Engine.entities[this.id] = this;
 
     if (data.body) {
       this.body = this.createBody(data.body);
@@ -24,9 +22,12 @@ export class Entity {
 
     if (BOX.isServer) {
       if (this.streamMode && this.streamMode.enabled) {
-        BOX.Engine.components['NetworkComponent'].broadcast('createEntity', this.data) // use this.data because it contains id
+        BOX.Engine.components["NetworkComponent"].broadcast(
+          "createEntity",
+          this.data
+        ); // use this.data because it contains id
       }
-    }    
+    }
   }
 
   createBody(bodyData) {
@@ -36,7 +37,7 @@ export class Entity {
       bodyData.roundShap[0],
       bodyData.roundShap[1]
     );
-      
+
     if (bodyData.scaling) {
       mesh.scaling.x = bodyData.scaling.x;
       mesh.scaling.y = bodyData.scaling.y;
@@ -63,7 +64,6 @@ export class Entity {
             noSleep: true,
             move: true
         }}, scene);*/
-      
     } else {
       console.log("creating body for projectile", this);
       this.noaEntityId = this.id;
@@ -71,7 +71,7 @@ export class Entity {
       // syntatic sugar for creating a default entity
       var playPos = BOX.Engine.noa.entities.getPosition(1);
       var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
-      
+
       //var mesh = ballMesh.createInstance("ball_instance");
       var meshOffset = [0, 0.5, 0];
       var doPhysics = false;
@@ -101,26 +101,44 @@ export class Entity {
   }
 
   addComponent(componentName) {
+    // this.components = {};
+    console.log("check ooooooooooooo", this.components);
     /*this.components = {
       [componentName]: new loader.loadedComponents[componentName](1),
       id: this.id,
     };*/
-    this.components.push({
-      [componentName]: new loader.loadedComponents[componentName](1),
+
+    this.components[componentName] = {
+      [componentName]: new loader.loadedComponents[componentName](),
+      id: this.id,
+    };
+
+    BOX.components.push({
+      [componentName]: new loader.loadedComponents[componentName](),
       id: this.id,
     });
-    if (componentName === "DeveloperMode")
+
+    console.log("hello", {
+      [componentName]: new loader.loadedComponents[componentName](),
+      id: this.id,
+    });
+    /**
+     if (componentName === "DeveloperMode")
       this.components[1].DeveloperMode.developerModeButton(
         this.components[0].ControlComponent
       );
+     */
   }
 
   destroy() {
     if (BOX.isServer) {
       if (this.streamMode && this.streamMode.enabled) {
-        BOX.Engine.components['NetworkComponent'].broadcast('destroyEntity', this.id())
+        BOX.Engine.components["NetworkComponent"].broadcast(
+          "destroyEntity",
+          this.id()
+        );
       }
-    }    
+    }
 
     BOX.Engine.removeEntity(this.id, this.noaEntityId);
   }

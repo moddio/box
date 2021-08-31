@@ -2,41 +2,39 @@ import map from "/config/map/map.json";
 
 class DeveloperMode {
   constructor(number) {
-    this.test = 'hello developer'
-
+    this.test = "hello developer";
+    console.log("tweeewew", BOX.Engine.components);
+    this.developerModeButton();
   }
-  developerModeButton (ControlComponent) {
+  developerModeButton() {
     //go through map.json textures and make interface image for each type of block
     Object.values(map.textures).forEach((texture, index) => {
       const img = new Image();
       img.src = texture.side;
-      document.querySelector('.game_build_textures').appendChild(img);
+      document.querySelector(".game_build_textures").appendChild(img);
       img.classList.add("block_" + index.toString());
-  
-      // Player Event on mouse click 
+
+      // Player Event on mouse click
       const imageClick = document.querySelector(".block_" + index.toString());
       imageClick.addEventListener("click", () => {
-        ControlComponent.materialType = index + 1;
-  
+        BOX.components[1].materialType = index + 1;
       });
-    })
-  
+    });
+
     document.querySelector(".game_build").style.display = "none";
-    
+
     //show block menu in developer mode and hide without developer mode
     const developerModeEvent = document.getElementById("developer-mode-button");
     developerModeEvent.addEventListener("click", () => {
       if (developerModeEvent.checked) {
         document.querySelector(".game_build").style.display = "block";
-
-        const reticle = document.getElementById("reticle");
-        console.log(reticle.style);
-
+        BOX.developerMode.status = true;
       } else {
         document.querySelector(".game_build").style.display = "none";
+        BOX.developerMode.status = false;
       }
     });
-  };
+  }
 }
 
 export default DeveloperMode;
