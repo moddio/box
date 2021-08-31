@@ -108,20 +108,23 @@ export class Entity {
       id: this.id,
     };*/
 
-    this.components[componentName] = {
+    /*this.components[componentName] = {
+      [componentName]: new loader.loadedComponents[componentName](),
+      id: this.id,
+    };*/
+
+    /*this.components[componentName] = {
+      [componentName]: new loader.loadedComponents[componentName](),
+      id: this.id,
+    };*/
+
+
+    BOX.components[componentName] = {
       [componentName]: new loader.loadedComponents[componentName](),
       id: this.id,
     };
 
-    BOX.components.push({
-      [componentName]: new loader.loadedComponents[componentName](),
-      id: this.id,
-    });
 
-    console.log("hello", {
-      [componentName]: new loader.loadedComponents[componentName](),
-      id: this.id,
-    });
     /**
      if (componentName === "DeveloperMode")
       this.components[1].DeveloperMode.developerModeButton(

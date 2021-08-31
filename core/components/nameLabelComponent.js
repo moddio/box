@@ -2,6 +2,7 @@ import * as BABYLON from "@babylonjs/core";
 
 class NameLabel {
   constructor() {
+    this.label = {};
     this.ownerId = 1; //owner of  name label
     this.ownerName = "Player Name";
 

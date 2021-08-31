@@ -9,7 +9,7 @@ import {
 } from "../core/components/movement";
 
 export var isClient = window ? true : false;
-export const components = [];
+export const components = {};
 export var developerMode = {};
 export const Mesh = noaMesh;
 export var isServer = !isClient;
