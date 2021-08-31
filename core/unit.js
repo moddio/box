@@ -1,4 +1,5 @@
 import * as BABYLON from "@babylonjs/core";
+import NameLabel from "./components/nameLabelComponent";
 import { Entity } from "./entity";
 
 export class Unit extends Entity {
@@ -25,7 +26,7 @@ export class Unit extends Entity {
     // this.body.onCollide(100);
     // this.body.boxEntity = this;
 
-    this.showNameLabel();
+    this.NameLabel = new NameLabel();
 
     if (data.streamMode == undefined) {
       this.streamMode = {
@@ -38,7 +39,7 @@ export class Unit extends Entity {
     }
   }
 
-  showNameLabel() {
+  /*showNameLabel() {
     this.label = BOX.Mesh["CreatePlane"]("Label");
 
     var playPos = BOX.Engine.noa.entities.getPosition(1);
@@ -92,7 +93,7 @@ export class Unit extends Entity {
       entity: 1,
       offset: [0, 2, 0],
     });
-  }
+  }*/
 
   /*showCrosshair() {
 
@@ -226,8 +227,8 @@ export class Unit extends Entity {
       this.body.applyImpulse([-x, 0, -y]);
     }
 
-    if (this.label) {
-      this.label.rotation = this.mesh.rotation;
+    if (this.NameLabel) {
+      this.NameLabel.label.rotation.y = BOX.Engine.noa.camera.heading;
     }
   }
 }

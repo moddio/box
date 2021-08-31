@@ -1,0 +1,52 @@
+import * as BABYLON from "@babylonjs/core";
+
+class NameLabel {
+  constructor() {
+    this.ownerId = 1; //owner of  name label
+    this.ownerName = "Player Name";
+
+    this.showNameLabel();
+  }
+
+  showNameLabel() {
+    console.log('camera direction' , BOX.Engine.noa.camera)
+
+    this.label = BOX.Mesh["CreatePlane"]("Label");
+
+    var ownerPos = BOX.Engine.noa.entities.getPosition(this.ownerId);
+
+    var pos = [ownerPos[0], ownerPos[1] + 1.5, ownerPos[2]];
+    var width = 0;
+    var height = 0;
+
+    var meshOffset = [0, 0, 0];
+    var doPhysics = false;
+
+    var noaId = BOX.Engine.noa.entities.add(pos, width, height, this.label, meshOffset, doPhysics);
+    this.noaEntityId = noaId;
+
+    //Create dynamic texture
+    let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", { width: 200, height: 200 }, scene);
+
+    //Draw text
+    dynamicTexture.drawText(this.ownerName, null, null, "36px Arial", "black", "transparent", true);
+    dynamicTexture.hasAlpha = true;
+
+    //create material
+    let mat = new BABYLON.StandardMaterial("mat", scene);
+    mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    mat.disableLighting = true;
+    mat.backFaceCulling = false;
+
+    //apply material
+    mat.diffuseTexture = dynamicTexture;
+    this.label.material = mat;
+
+    BOX.Engine.noa.ents.addComponent(noaId, "followsEntity", {
+      entity: this.ownerId,
+      offset: [0, 2, 0],
+    });
+  }
+}
+
+export default NameLabel;

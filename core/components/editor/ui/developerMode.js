@@ -28,6 +28,10 @@ class DeveloperMode {
     developerModeEvent.addEventListener("click", () => {
       if (developerModeEvent.checked) {
         document.querySelector(".game_build").style.display = "block";
+
+        const reticle = document.getElementById("reticle");
+        console.log(reticle.style);
+
       } else {
         document.querySelector(".game_build").style.display = "none";
       }
