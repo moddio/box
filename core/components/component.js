@@ -1,6 +1,6 @@
 export class Component {
   constructor(parent) {
-    this.parent = "test";
+    this.parent = parent;
   }
 
   tick() {}

@@ -3,8 +3,8 @@ import * as BABYLON from "@babylonjs/core";
 import { Component } from "./component";
 
 class NameLabel extends Component {
-  constructor() {
-    super();
+  constructor(parent) {
+    super(parent);
 
     console.log("xxxxxxxx", this.parent);
 

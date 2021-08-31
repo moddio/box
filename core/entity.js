@@ -103,7 +103,7 @@ export class Entity {
 
   addComponent(componentName) {
     this.components[componentName] = {
-      [componentName]: new loader.loadedComponents[componentName](),
+      [componentName]: new loader.loadedComponents[componentName](this),
       id: this.id,
     };
     console.log("all component", this.components);

@@ -2,8 +2,8 @@ import map from "/config/map/map.json";
 import { Component } from "../../component";
 
 class DeveloperMode extends Component {
-  constructor() {
-    super();
+  constructor(parent) {
+    super(parent);
 
     console.log("xxxxxxxx", this.parent);
 

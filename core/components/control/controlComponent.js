@@ -2,8 +2,9 @@ import { savingMap } from "../map/tiledLoader"; // <- get rid of this
 import { Component } from "../component";
 
 class ControlComponent extends Component {
-  constructor() {
-    super();
+  constructor(parent) {
+    super(parent);
+
     console.log("test", this.parent);
 
     BOX.inputs.bind("move-up", "W", "<up>");
