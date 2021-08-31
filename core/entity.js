@@ -1,5 +1,3 @@
-import * as BABYLON from "@babylonjs/core";
-
 export class Entity {
   constructor(data = {}, isEngine) {
     this.data = data;
