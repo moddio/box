@@ -39,61 +39,7 @@ export class Unit extends Entity {
     }
   }
 
-  /*showNameLabel() {
-    this.label = BOX.Mesh["CreatePlane"]("Label");
-
-    var playPos = BOX.Engine.noa.entities.getPosition(1);
-    var pos = [playPos[0], playPos[1] + 1.5, playPos[2]];
-    var width = 0;
-    var height = 0;
-
-    var meshOffset = [0, 0, 0];
-    var doPhysics = false;
-    
-    var noaId = BOX.Engine.noa.entities.add(
-      pos,
-      width,
-      height,
-      this.label,
-      meshOffset,
-      doPhysics
-    );
-    this.noaEntityId = noaId;
-
-    //Create dynamic texture
-    let dynamicTexture = new BABYLON.DynamicTexture(
-      "DynamicTexture",
-      { width: 200, height: 200 },
-      scene
-    );
-
-    //Draw text
-    dynamicTexture.drawText(
-      "Player name",
-      null,
-      null,
-      "36px Arial",
-      "black",
-      "transparent",
-      true
-    );
-    dynamicTexture.hasAlpha = true;
-
-    //create material
-    let mat = new BABYLON.StandardMaterial("mat", scene);
-    mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
-    mat.disableLighting = true;
-    mat.backFaceCulling = false;
-
-    //apply material
-    mat.diffuseTexture = dynamicTexture;
-    this.label.material = mat;
-
-    BOX.Engine.noa.ents.addComponent(noaId, "followsEntity", {
-      entity: 1,
-      offset: [0, 2, 0],
-    });
-  }*/
+  
 
   /*showCrosshair() {
 
@@ -227,6 +173,7 @@ export class Unit extends Entity {
       this.body.applyImpulse([-x, 0, -y]);
     }
 
+    //calculate rotation of name label
     if (this.NameLabel) {
       this.NameLabel.label.rotation.y = BOX.Engine.noa.camera.heading;
     }

@@ -9,13 +9,13 @@ class NameLabel {
   }
 
   showNameLabel() {
-    console.log('camera direction' , BOX.Engine.noa.camera)
-
     this.label = BOX.Mesh["CreatePlane"]("Label");
 
+    //position of the owner of label
     var ownerPos = BOX.Engine.noa.entities.getPosition(this.ownerId);
 
-    var pos = [ownerPos[0], ownerPos[1] + 1.5, ownerPos[2]];
+    //calculate position for label
+    var pos = [ownerPos[0], ownerPos[1] + 2, ownerPos[2]];
     var width = 0;
     var height = 0;
 
