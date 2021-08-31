@@ -6,7 +6,7 @@ class NameLabel extends Component {
   constructor(parent) {
     super(parent);
 
-    console.log('11111111', parent.isMyUnit)
+    console.log('NAME LABLE PARENT!!!', parent)
     this.label = {};
     this.ownerId = 1; //owner of name label need to get from parent !!!
     this.ownerName = parent.name;
@@ -71,6 +71,10 @@ class NameLabel extends Component {
       entity: this.ownerId,
       offset: [0, 2, 0],
     });
+  }
+
+  tick() {
+    this.label.rotation.y = BOX.Engine.noa.camera.heading;
   }
 }
 

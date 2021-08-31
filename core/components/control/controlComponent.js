@@ -14,7 +14,6 @@ class ControlComponent extends Component {
     BOX.inputs.bind("remove-block", "K", "<left>");
 
     //this.player = player;
-    this.materialType = 1;
     //this.mouseClick();
 
     window.addEventListener("keypress", (e) => {
@@ -33,7 +32,7 @@ class ControlComponent extends Component {
   mouseClick(button) {
     //check if mouse pointer is locked
     if (BOX.Engine.noa.container.hasPointerLock && this.parent && this.parent.isDeveloper) {
-      let devComponent = this.parent.components["DeveloperMode"].DeveloperMode;
+      let devComponent = this.parent.components["DeveloperMode"].DeveloperMode; //need to fix this !!!
       if (devComponent && devComponent.status) {
         switch (button) {
           case 0:

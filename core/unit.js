@@ -1,5 +1,3 @@
-import * as BABYLON from "@babylonjs/core";
-import NameLabel from "./components/nameLabelComponent";
 import { Entity } from "./entity";
 
 export class Unit extends Entity {
@@ -25,13 +23,6 @@ export class Unit extends Entity {
 
     // this.body.onCollide(100);
     // this.body.boxEntity = this;
-
-    //this will change when change components
-    //this.addComponent("NameLabelComponent");
-
-    console.log('components111111' ,this.components); //need to access components !!!
-    
-    //this.NameLabel = this.components["NameLabelComponent"].NameLabelComponent;
 
     if (data.streamMode == undefined) {
       this.streamMode = {
@@ -174,11 +165,6 @@ export class Unit extends Entity {
     }
     if (BOX.inputs.state["move-down"]) {
       this.body.applyImpulse([-x, 0, -y]);
-    }
-
-    //calculate rotation of name label
-    if (this.NameLabel) {
-      this.NameLabel.label.rotation.y = BOX.Engine.noa.camera.heading;
     }
   }
 }

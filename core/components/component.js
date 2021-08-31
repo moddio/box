@@ -3,5 +3,7 @@ export class Component {
     this.parent = parent;
   }
 
-  tick() {}
+  tick() {
+    //console.log('tick called')
+  }
 }

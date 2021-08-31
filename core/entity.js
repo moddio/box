@@ -18,10 +18,7 @@ export class Entity {
       BOX.Engine.entities[this.id] = this;
       if (BOX.isServer) {
         if (this.streamMode && this.streamMode.enabled) {
-          BOX.Engine.components["NetworkComponent"].broadcast(
-            "createEntity",
-            this.data
-          ); // use this.data because it contains id
+          BOX.Engine.components["NetworkComponent"].broadcast("createEntity", this.data); // use this.data because it contains id
         }
       }
     }
@@ -33,11 +30,7 @@ export class Entity {
 
   createBody(bodyData) {
     // Creating a player mesh
-    const mesh = BOX.Mesh[bodyData.type](
-      bodyData.unitName,
-      bodyData.roundShap[0],
-      bodyData.roundShap[1]
-    );
+    const mesh = BOX.Mesh[bodyData.type](bodyData.unitName, bodyData.roundShap[0], bodyData.roundShap[1]);
 
     if (bodyData.scaling) {
       mesh.scaling.x = bodyData.scaling.x;
@@ -49,14 +42,10 @@ export class Entity {
     if (this.isMyUnit) {
       console.log("creating body for my unit", this);
       this.noaEntityId = 1;
-      BOX.Engine.noa.entities.addComponent(
-        1,
-        BOX.Engine.noa.entities.names.mesh,
-        {
-          mesh,
-          offset: [0, 0.5, 0],
-        }
-      );
+      BOX.Engine.noa.entities.addComponent(1, BOX.Engine.noa.entities.names.mesh, {
+        mesh,
+        offset: [0, 0.5, 0],
+      });
       /*mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, {
         mass: 80,
         friction: 0.5,
@@ -115,10 +104,7 @@ export class Entity {
   destroy() {
     if (BOX.isServer) {
       if (this.streamMode && this.streamMode.enabled) {
-        BOX.Engine.components["NetworkComponent"].broadcast(
-          "destroyEntity",
-          this.id()
-        );
+        BOX.Engine.components["NetworkComponent"].broadcast("destroyEntity", this.id());
       }
     }
 
@@ -169,19 +155,23 @@ export class Entity {
 
   tick() {
     // console.log(this.lifeSpan);
-    if (
-      this.lifeSpan != undefined &&
-      this.lifeSpan + this.createdAt > BOX.Engine.currentTime
-    ) {
+    if (this.lifeSpan != undefined && this.lifeSpan + this.createdAt > BOX.Engine.currentTime) {
       this.destroy();
     }
-    /**
-       // execute all added components' tick
-    for (let id in this.components) {
+
+    // execute all added components' tick
+    Object.values(this.components).forEach((component) => {
+      //component.tick()
+      //console.log(component[Object.keys(component)[0]])
+
+      component[Object.keys(component)[0]].tick();
+
+    });
+
+    /*for (let id in this.components) {
       let component = this.components[id];
       component.tick();
-    }
-     */
+    }*/
 
     // console.log("testing entity tick")
 
