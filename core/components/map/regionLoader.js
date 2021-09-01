@@ -1,10 +1,11 @@
 function loadRegions(map) {
-    const regions = map.regions
+    const regions = []
 
-    Object.values(map.regions).forEach(element => {
+    Object.values(map.regions).forEach(value => {
         const region = BOX.Engine.addEntity({
             type: 'Region',
-            position: element.position,
+            name: value.name,
+            position: value.position,
             doPhysics: false,
             body: {
               offset: [0, 0.5, 0],
@@ -14,13 +15,13 @@ function loadRegions(map) {
               width: 5,
               height: 8,
               roundShap: [null, null],
-              scaling: element.scaling,
+              scaling: value.scaling,
               linearDamping: 0.5,
               friction: 0
             }
           });
         
-          console.log('CREATING REGION', region);
+          console.log('CREATING REGION', region.name);
           region.mesh.visibility = 0.6;
         
           // // adding component for collision

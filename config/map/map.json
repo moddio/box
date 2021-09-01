@@ -36,10 +36,12 @@
   },
   "regions": {
     "playerspawn": {
+      "name": "player_spawn",
       "position": { "x": 10, "y": 2.5, "z": 10 },
       "scaling": { "x": 3, "y": 3, "z": 3 }
     },
     "itemspawn": {
+      "name": "item_spawn",
       "position": { "x": 30, "y": 2, "z": 30 },
       "scaling": { "x": 2, "y": 2, "z": 2 }
     }
