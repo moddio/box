@@ -12,6 +12,9 @@ export class Entity {
     this.createdAt = Date.now();
     this.isMyUnit = data.isMyUnit;
 
+    this.doPhysics = data.doPhysics;
+    console.log('DO PHYSICS', this.doPhysics)
+
     if (!isEngine) {
       BOX.Engine.entities[this.id] = this;
       if (BOX.isServer) {
@@ -31,11 +34,12 @@ export class Entity {
     // Creating a player mesh
     const mesh = BOX.Mesh[bodyData.type](bodyData.unitName, bodyData.roundShap[0], bodyData.roundShap[1]);
 
-    /*if (bodyData.scaling) {
+    if (bodyData.scaling) {
       mesh.scaling.x = bodyData.scaling.x;
       mesh.scaling.y = bodyData.scaling.y;
       mesh.scaling.z = bodyData.scaling.z;
-    }*/
+    }
+    
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     // if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
    if (this.isMyUnit) {
@@ -45,16 +49,7 @@ export class Entity {
         mesh,
         offset: [0, 0.5, 0]
       });
-      /*mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, {
-        mass: 80,
-        friction: 0.5,
-        restitution: 0.5,
-        nativeOptions: {
-            noSleep: true,
-            move: true
-        }}, scene);*/
     } else {
-      console.log('we GET HERER')
       console.log('creating body for projectile', this);
       this.noaEntityId = this.id;
       
@@ -66,7 +61,9 @@ export class Entity {
 
       //var mesh = ballMesh.createInstance("ball_instance");
       var meshOffset = [0, 0.5, 0];
-      var doPhysics = false;
+
+      //if(this.doPhysics) {
+        //var doPhysics = false;
 
       this.noaEntityId = BOX.Engine.noa.entities.add(
         pos,
@@ -74,22 +71,24 @@ export class Entity {
         bodyData.height, // required
         mesh,
         meshOffset,
-        doPhysics
+        this.doPhysics
       );
+      //}
 
-      /*mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
-        mesh,
-        BABYLON.PhysicsImpostor.BoxImpostor,
-        { mass: 1 },
-        scene
-      );*/
     }
+
     this.mesh = mesh;
+    if(this.doPhysics) {
+    
     let body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
     body.linearDamping = bodyData.linearDamping;
     body.friction = bodyData.friction;
 
     return body;
+    }
+    else {
+      return mesh;
+    }
   }
 
   getEntityID() {

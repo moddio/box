@@ -86,6 +86,7 @@ export class Unit extends Entity {
   shootBall() {
     let projectile = BOX.Engine.addEntity({
       type: 'Projectile',
+      doPhysics: true,
       body: {
         offset: [0, 0.5, 0],
         type: 'CreateSphere',
@@ -123,9 +124,10 @@ export class Unit extends Entity {
   createRegion() {
     let region = BOX.Engine.addEntity({
       type: 'Region',
+      doPhysics: false,
       body: {
         offset: [0, 0.5, 0],
-        type: 'CreateBox',
+        type: 'CreateSphere',
         unitName: 'region0',
         width: 1,
         height: 1,

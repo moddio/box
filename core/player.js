@@ -39,6 +39,7 @@ export class Player extends Entity {
       type: 'Unit',
       isMyUnit: true,
       ownerPlayer: this,
+      doPhysics: true,
       body: {
         type: 'CreateBox',
         offset: [0, 0.5, 0],
