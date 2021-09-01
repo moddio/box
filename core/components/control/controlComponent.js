@@ -33,7 +33,8 @@ class ControlComponent extends Component {
     //check if mouse pointer is locked
     if (BOX.Engine.noa.container.hasPointerLock) {
       if (this.parent && this.parent.isDeveloper) {
-        let devComponent = this.parent.components["DeveloperMode"].DeveloperMode; //need to fix this !!!
+        let devComponent =
+          this.parent.components["DeveloperMode"].DeveloperMode; //need to fix this !!!
         if (devComponent && devComponent.status) {
           switch (button) {
             case 0:
@@ -67,7 +68,7 @@ class ControlComponent extends Component {
           }
           break;
       }
-    }    
+    }
   }
 
   keyRelease(key) {

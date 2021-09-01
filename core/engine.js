@@ -19,10 +19,10 @@ export class Engine extends Entity {
     // remove inputs component for player and movement component
     this.noa.entities.deleteComponent("receivesInputs");
     this.noa.entities.deleteComponent("movement");
-
   }
   start() {
     console.log("starting the noa engine...");
+    let x = 0;
 
     // Generate the world
     generateWorld();

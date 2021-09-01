@@ -1,8 +1,8 @@
-import { Entity } from "./entity";
+import { Entity } from './entity';
 
 export class Unit extends Entity {
   constructor(data) {
-    data.type = "unit";
+    data.type = 'unit';
     super(data); // run Entity's constructor
 
     this.check = 0;
@@ -30,7 +30,7 @@ export class Unit extends Entity {
         stateChange: true,
         attributes: true,
         movement: true,
-        csp: true, // this unit's owner player will ignore the server streaming received for his own unit
+        csp: true // this unit's owner player will ignore the server streaming received for his own unit
       };
     }
   }
@@ -85,18 +85,18 @@ export class Unit extends Entity {
 
   shootBall() {
     let projectile = BOX.Engine.addEntity({
-      type: "Projectile",
+      type: 'Projectile',
       body: {
         offset: [0, 0.5, 0],
-        type: "CreateSphere",
-        unitName: "ball",
+        type: 'CreateSphere',
+        unitName: 'ball',
         width: 1,
         height: 1,
         radius: 0.2,
         roundShap: [6, 0.4],
         restitution: 0.8,
-        friction: 0.7,
-      },
+        friction: 0.7
+      }
     });
 
     // // adding component for collision
@@ -136,10 +136,8 @@ export class Unit extends Entity {
     super.tick(); // call Entity.tick()
 
     // apply linear damping
-    this.body.velocity[0] =
-      this.body.velocity[0] / (1 + this.body.linearDamping);
-    this.body.velocity[2] =
-      this.body.velocity[2] / (1 + this.body.linearDamping);
+    this.body.velocity[0] = this.body.velocity[0] / (1 + this.body.linearDamping);
+    this.body.velocity[2] = this.body.velocity[2] / (1 + this.body.linearDamping);
 
     // Getting force value from cos sin
     let angle = BOX.Engine.noa.camera.heading;
@@ -151,19 +149,19 @@ export class Unit extends Entity {
     this.mesh.rotation.y = BOX.Engine.noa.camera.heading;
 
     // this has to be fixed
-    if (BOX.inputs.state["jump"] && Math.abs(this.body.velocity[1]) <= 0) {
+    if (BOX.inputs.state['jump'] && Math.abs(this.body.velocity[1]) <= 0) {
       this.body.applyImpulse([0, 10, 0]);
     }
-    if (BOX.inputs.state["move-left"]) {
+    if (BOX.inputs.state['move-left']) {
       this.body.applyImpulse([-y, 0, x]);
     }
-    if (BOX.inputs.state["move-right"]) {
+    if (BOX.inputs.state['move-right']) {
       this.body.applyImpulse([y, 0, -x]);
     }
-    if (BOX.inputs.state["move-up"]) {
+    if (BOX.inputs.state['move-up']) {
       this.body.applyImpulse([x, 0, y]);
     }
-    if (BOX.inputs.state["move-down"]) {
+    if (BOX.inputs.state['move-down']) {
       this.body.applyImpulse([-x, 0, -y]);
     }
   }
