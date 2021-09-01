@@ -36,8 +36,12 @@
   },
   "regions": {
     "playerspawn": {
-      "position": { "x": 10, "y": 10, "z": 10 },
-      "scale": { "x": 3, "y": 3, "z": 3 }
+      "position": { "x": 10, "y": 2.5, "z": 10 },
+      "scaling": { "x": 3, "y": 3, "z": 3 }
+    },
+    "itemspawn": {
+      "position": { "x": 30, "y": 2, "z": 30 },
+      "scaling": { "x": 2, "y": 2, "z": 2 }
     }
   }
 }

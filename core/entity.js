@@ -13,7 +13,12 @@ export class Entity {
     this.isMyUnit = data.isMyUnit;
 
     this.doPhysics = data.doPhysics;
-    console.log('DO PHYSICS', this.doPhysics)
+    //console.log('DO PHYSICS', this.doPhysics)
+
+    if (data.position) {
+      this.startPosition = data.position;
+    }
+    
 
     if (!isEngine) {
       BOX.Engine.entities[this.id] = this;
@@ -43,27 +48,31 @@ export class Entity {
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     // if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
    if (this.isMyUnit) {
-      console.log('creating body for my unit', this);
+      //console.log('creating body for my unit', this);
       this.noaEntityId = 1;
       BOX.Engine.noa.entities.addComponent(1, BOX.Engine.noa.entities.names.mesh, {
         mesh,
         offset: [0, 0.5, 0]
       });
     } else {
-      console.log('creating body for projectile', this);
+      //console.log('creating body for projectile', this);
       this.noaEntityId = this.id;
       
       var noaEntityId = this.noaEntityId;
 
+      if (this.startPosition) {
+        pos = [this.startPosition.x, this.startPosition.y, this.startPosition.z]
+      }
+
+      else {
+        var playPos = BOX.Engine.noa.entities.getPosition(1);
+        var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
+      }
+
       // syntatic sugar for creating a default entity
-      var playPos = BOX.Engine.noa.entities.getPosition(1);
-      var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
+      
 
-      //var mesh = ballMesh.createInstance("ball_instance");
-      var meshOffset = [0, 0.5, 0];
-
-      //if(this.doPhysics) {
-        //var doPhysics = false;
+      var meshOffset = [0, 0, 0];
 
       this.noaEntityId = BOX.Engine.noa.entities.add(
         pos,
@@ -73,8 +82,6 @@ export class Entity {
         meshOffset,
         this.doPhysics
       );
-      //}
-
     }
 
     this.mesh = mesh;

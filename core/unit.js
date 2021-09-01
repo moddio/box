@@ -121,36 +121,6 @@ export class Unit extends Entity {
     projectile.body.applyImpulse(impulse);
   }
 
-  createRegion() {
-    let region = BOX.Engine.addEntity({
-      type: 'Region',
-      doPhysics: false,
-      body: {
-        offset: [0, 0.5, 0],
-        type: 'CreateSphere',
-        unitName: 'region0',
-        width: 1,
-        height: 1,
-        radius: 0.2,
-        roundShap: [6, 0.4],
-        restitution: 0.8,
-        friction: 0.7
-      }
-    });
-
-    // // adding component for collision
-    // BOX.Engine.noa.entities.addComponent(
-    //   noaId,
-    //   BOX.Engine.noa.entities.names.collideEntities,
-    //   {
-    //     cylinder: true,
-    //     callback: (otherEntsId) => BOX.collision(noaId, otherEntsId),
-    //   }
-    // );
-
-    // var body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
-  }
-
   getOwnerPlayer() {
     return this.ownerPlayer;
   }

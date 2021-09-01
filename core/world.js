@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
 import map from "../config/map/map.json";
 import loadMap from "./components/map/tiledLoader";
+import loadRegions from "./components/map/regionLoader";
 
 const socket = io("http://localhost:3000");
 
@@ -127,6 +128,9 @@ const generateWorld = () => {
     BOX.Engine.noa.world.setChunkData(id, data);
     return;
   });
+
+  loadRegions (map);
+
 };
 
 export default generateWorld;

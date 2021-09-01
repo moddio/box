@@ -48,11 +48,6 @@ function loadMap(map, data, tiles, invisibleBlock) {
       }
     });
   });
-
-  /*savingMap.saveBlock(0, 0, 0, 0);
-  savingMap.saveBlock(0, 0, 1, 0);
-  savingMap.saveBlock(0, 0, 2, 0);
-  savingMap.saveBlock(0, 0, 3, 0);*/
 }
 
 export default loadMap;
