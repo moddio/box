@@ -1,25 +1,25 @@
-import { Component } from "../component";
+import { Component } from '../component';
 
 class ControlComponent extends Component {
   constructor(parent) {
     super(parent);
 
-    BOX.inputs.bind("move-up", "W", "<up>");
-    BOX.inputs.bind("move-left", "A", "<left>");
-    BOX.inputs.bind("move-down", "S", "<up>");
-    BOX.inputs.bind("move-right", "D", "<left>");
-    BOX.inputs.bind("jump", "<space>");
-    BOX.inputs.bind("change-material", "P", "<left>");
-    BOX.inputs.bind("add-block", "L", "<left>");
-    BOX.inputs.bind("remove-block", "K", "<left>");
+    BOX.inputs.bind('move-up', 'W', '<up>');
+    BOX.inputs.bind('move-left', 'A', '<left>');
+    BOX.inputs.bind('move-down', 'S', '<up>');
+    BOX.inputs.bind('move-right', 'D', '<left>');
+    BOX.inputs.bind('jump', '<space>');
+    BOX.inputs.bind('change-material', 'P', '<left>');
+    BOX.inputs.bind('add-block', 'L', '<left>');
+    BOX.inputs.bind('remove-block', 'K', '<left>');
 
     //this.player = player;
     //this.mouseClick();
 
-    window.addEventListener("keypress", (e) => {
+    window.addEventListener('keypress', e => {
       this.keyPress(e.key);
     });
-    window.addEventListener("click", (e) => {
+    window.addEventListener('click', e => {
       this.mouseClick(e.button);
     });
   }
@@ -32,9 +32,9 @@ class ControlComponent extends Component {
   mouseClick(button) {
     //check if mouse pointer is locked
     if (BOX.Engine.noa.container.hasPointerLock) {
+      console.log('hellozzzzzzzzzzzzz', this.parent.components['DeveloperMode']);
       if (this.parent && this.parent.isDeveloper) {
-        let devComponent =
-          this.parent.components["DeveloperMode"].DeveloperMode; //need to fix this !!!
+        let devComponent = this.parent.components['DeveloperMode']; //need to fix this !!!
         if (devComponent && devComponent.status) {
           switch (button) {
             case 0:
@@ -61,7 +61,7 @@ class ControlComponent extends Component {
     if (unit) {
       switch (key) {
         // shoot the ball
-        case "b":
+        case 'b':
           if (unit) {
             unit.shootBall();
             //unit.showCrosshair();
@@ -73,17 +73,17 @@ class ControlComponent extends Component {
 
   keyRelease(key) {
     switch (key) {
-      case "w":
-        console.log("kepress", "w");
+      case 'w':
+        console.log('kepress', 'w');
         break;
-      case "s":
-        console.log("kepress", "s");
+      case 's':
+        console.log('kepress', 's');
         break;
-      case "d":
-        console.log("kepress", "d");
+      case 'd':
+        console.log('kepress', 'd');
         break;
-      case "a":
-        console.log("kepress", "a");
+      case 'a':
+        console.log('kepress', 'a');
         break;
     }
   }

@@ -1,24 +1,24 @@
-import * as BABYLON from "@babylonjs/core";
+import * as BABYLON from '@babylonjs/core';
 
-import { Component } from "./component";
+import { Component } from './component';
 
 class NameLabel extends Component {
   constructor(parent) {
     super(parent);
-
-    console.log('NAME LABLE PARENT!!!', parent)
     this.label = {};
-    this.ownerId = 1; //owner of name label need to get from parent !!!
+
+    //ownerID has noa entity id and id of the entity given by us
+    this.ownerId = { noaID: parent.mainUnit.noaEntityId, id: parent.id };
     this.ownerName = parent.name;
 
     this.showNameLabel();
   }
 
   showNameLabel() {
-    this.label = BOX.Mesh["CreatePlane"]("Label");
+    this.label = BOX.Mesh['CreatePlane']('Label');
 
     //position of the owner of label
-    var ownerPos = BOX.Engine.noa.entities.getPosition(this.ownerId);
+    var ownerPos = BOX.Engine.noa.entities.getPosition(this.ownerId.noaID);
 
     //calculate position for label
     var pos = [ownerPos[0], ownerPos[1] + 2, ownerPos[2]];
@@ -28,37 +28,18 @@ class NameLabel extends Component {
     var meshOffset = [0, 0, 0];
     var doPhysics = false;
 
-    var noaId = BOX.Engine.noa.entities.add(
-      pos,
-      width,
-      height,
-      this.label,
-      meshOffset,
-      doPhysics
-    );
+    var noaId = BOX.Engine.noa.entities.add(pos, width, height, this.label, meshOffset, doPhysics);
     this.noaEntityId = noaId;
 
     //Create dynamic texture
-    let dynamicTexture = new BABYLON.DynamicTexture(
-      "DynamicTexture",
-      { width: 200, height: 200 },
-      scene
-    );
+    let dynamicTexture = new BABYLON.DynamicTexture('DynamicTexture', { width: 200, height: 200 }, scene);
 
     //Draw text
-    dynamicTexture.drawText(
-      this.ownerName,
-      null,
-      null,
-      "36px Arial",
-      "black",
-      "transparent",
-      true
-    );
+    dynamicTexture.drawText(this.ownerName, null, null, '36px Arial', 'black', 'transparent', true);
     dynamicTexture.hasAlpha = true;
 
     //create material
-    let mat = new BABYLON.StandardMaterial("mat", scene);
+    let mat = new BABYLON.StandardMaterial('mat', scene);
     mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
     mat.disableLighting = true;
     mat.backFaceCulling = false;
@@ -67,9 +48,9 @@ class NameLabel extends Component {
     mat.diffuseTexture = dynamicTexture;
     this.label.material = mat;
 
-    BOX.Engine.noa.ents.addComponent(noaId, "followsEntity", {
-      entity: this.ownerId,
-      offset: [0, 2, 0],
+    BOX.Engine.noa.ents.addComponent(noaId, 'followsEntity', {
+      entity: this.ownerId.noaID,
+      offset: [0, 2, 0]
     });
   }
 

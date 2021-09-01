@@ -1,8 +1,8 @@
-import { Entity } from "./entity";
+import { Entity } from './entity';
 
 export class Player extends Entity {
   constructor(data) {
-    data.type = "player";
+    data.type = 'player';
     super(data);
     this.clientId = undefined; // socketId
 
@@ -15,13 +15,12 @@ export class Player extends Entity {
       // if human player, add to the list of clients
       if (data.isHuman) {
         BOX.Engine.clients[this.id] = this;
-        this.addComponent("ControlComponent");
+        this.addComponent('ControlComponent');
       }
       // add other player controls
     } else {
-      this.addComponent("ControlComponent");
-      this.addComponent("DeveloperMode");
-      this.addComponent("NameLabelComponent");
+      this.addComponent('ControlComponent');
+      this.addComponent('DeveloperMode');
     }
 
     if (data.streamMode == undefined) {
@@ -30,18 +29,18 @@ export class Player extends Entity {
         stateChange: true,
         attributes: true,
         movement: false,
-        csp: false, // client-side prediction. if enabled, the unit/item's owner player will ignore the streaming he has received for his own unit/item.
+        csp: false // client-side prediction. if enabled, the unit/item's owner player will ignore the streaming he has received for his own unit/item.
       };
     }
   }
 
   createUnit() {
     BOX.Engine.addEntity({
-      type: "Unit",
+      type: 'Unit',
       isMyUnit: true,
       ownerPlayer: this,
       body: {
-        type: "CreateBox",
+        type: 'CreateBox',
         offset: [0, 0.5, 0],
         radius: 0.2,
         width: 5,
@@ -49,9 +48,11 @@ export class Player extends Entity {
         roundShap: [null, null],
         scaling: { x: 0.6, y: 1, z: 0.6 },
         linearDamping: 0.5,
-        friction: 0,
-      },
+        friction: 0
+      }
     });
+
+    this.addComponent('NameLabelComponent');
   }
 
   destroy() {

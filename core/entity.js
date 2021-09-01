@@ -16,7 +16,7 @@ export class Entity {
       BOX.Engine.entities[this.id] = this;
       if (BOX.isServer) {
         if (this.streamMode && this.streamMode.enabled) {
-          BOX.Engine.components["NetworkComponent"].broadcast("createEntity", this.data); // use this.data because it contains id
+          BOX.Engine.components['NetworkComponent'].broadcast('createEntity', this.data); // use this.data because it contains id
         }
       }
     }
@@ -38,11 +38,11 @@ export class Entity {
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     // if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
     if (this.isMyUnit) {
-      console.log("creating body for my unit", this);
+      console.log('creating body for my unit', this);
       this.noaEntityId = 1;
       BOX.Engine.noa.entities.addComponent(1, BOX.Engine.noa.entities.names.mesh, {
         mesh,
-        offset: [0, 0.5, 0],
+        offset: [0, 0.5, 0]
       });
       /*mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, {
         mass: 80,
@@ -53,8 +53,9 @@ export class Entity {
             move: true
         }}, scene);*/
     } else {
-      console.log("creating body for projectile", this);
+      console.log('creating body for projectile', this);
       this.noaEntityId = this.id;
+      var noaEntityId = this.noaEntityId;
 
       // syntatic sugar for creating a default entity
       var playPos = BOX.Engine.noa.entities.getPosition(1);
@@ -88,11 +89,13 @@ export class Entity {
     return body;
   }
 
+  getEntityID() {
+    let id = this.noaEntityId;
+    return noaEntityId;
+  }
+
   addComponent(componentName) {
-    this.components[componentName] = {
-      [componentName]: new loader.loadedComponents[componentName](this),
-      id: this.id,
-    };
+    this.components[componentName] = new loader.loadedComponents[componentName](this);
   }
 
   hasComponent(componentName) {
@@ -102,7 +105,7 @@ export class Entity {
   destroy() {
     if (BOX.isServer) {
       if (this.streamMode && this.streamMode.enabled) {
-        BOX.Engine.components["NetworkComponent"].broadcast("destroyEntity", this.id());
+        BOX.Engine.components['NetworkComponent'].broadcast('destroyEntity', this.id());
       }
     }
 
@@ -116,11 +119,11 @@ export class Entity {
   generateId() {
     return Math.random()
       .toString(36)
-      .split("")
+      .split('')
       .filter((value, index, self) => {
         return self.indexOf(value) === index;
       })
-      .join("")
+      .join('')
       .substr(2, 8);
   }
 
@@ -158,7 +161,7 @@ export class Entity {
     }
 
     // execute all added components' tick
-    Object.values(this.components).forEach((component) => {
+    Object.values(this.components).forEach(component => {
       component[Object.keys(component)[0]].tick();
     });
 
