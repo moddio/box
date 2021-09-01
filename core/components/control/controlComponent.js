@@ -63,7 +63,8 @@ class ControlComponent extends Component {
         // shoot the ball
         case 'b':
           if (unit) {
-            unit.shootBall();
+            unit.createRegion();
+            //unit.shootBall();
             //unit.showCrosshair();
           }
           break;

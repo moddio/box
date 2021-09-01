@@ -27,17 +27,18 @@ export class Entity {
   }
 
   createBody(bodyData) {
+    
     // Creating a player mesh
     const mesh = BOX.Mesh[bodyData.type](bodyData.unitName, bodyData.roundShap[0], bodyData.roundShap[1]);
 
-    if (bodyData.scaling) {
+    /*if (bodyData.scaling) {
       mesh.scaling.x = bodyData.scaling.x;
       mesh.scaling.y = bodyData.scaling.y;
       mesh.scaling.z = bodyData.scaling.z;
-    }
+    }*/
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     // if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
-    if (this.isMyUnit) {
+   if (this.isMyUnit) {
       console.log('creating body for my unit', this);
       this.noaEntityId = 1;
       BOX.Engine.noa.entities.addComponent(1, BOX.Engine.noa.entities.names.mesh, {
@@ -53,8 +54,10 @@ export class Entity {
             move: true
         }}, scene);*/
     } else {
+      console.log('we GET HERER')
       console.log('creating body for projectile', this);
       this.noaEntityId = this.id;
+      
       var noaEntityId = this.noaEntityId;
 
       // syntatic sugar for creating a default entity
