@@ -162,7 +162,7 @@ export class Entity {
 
     // execute all added components' tick
     Object.values(this.components).forEach(component => {
-      component[Object.keys(component)[0]].tick();
+      component.tick();
     });
 
     /*for (let id in this.components) {
