@@ -38,7 +38,7 @@
     "playerspawn": {
       "name": "player_spawn",
       "position": { "x": 10, "y": 2.5, "z": 10 },
-      "scaling": { "x": 3, "y": 3, "z": 3 }
+      "scaling": { "x": 6, "y": 3, "z": 6 }
     },
     "itemspawn": {
       "name": "item_spawn",

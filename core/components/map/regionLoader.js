@@ -1,5 +1,5 @@
 function loadRegions(map) {
-    const regions = []
+    //const regions = []
 
     Object.values(map.regions).forEach(value => {
         const region = BOX.Engine.addEntity({
@@ -21,8 +21,8 @@ function loadRegions(map) {
             }
           });
         
-          console.log('CREATING REGION', region.name);
-          region.mesh.visibility = 0.6;
+          //console.log('CREATING REGION', region.name);
+          region.mesh.visibility = 0;
         
           // // adding component for collision
           // BOX.Engine.noa.entities.addComponent(
@@ -37,7 +37,7 @@ function loadRegions(map) {
           // var body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
       });
 
-
+      //console.log('FIND ENTITY BY NAME' , BOX.Engine.getEntityByName("player_spawn"));
     
   }
   

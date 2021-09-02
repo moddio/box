@@ -19,7 +19,7 @@ export class Unit extends Entity {
       }
     }
 
-    this.resetPosition();
+    //this.resetPosition();
 
     // this.body.onCollide(100);
     // this.body.boxEntity = this;

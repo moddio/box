@@ -57,6 +57,15 @@ export class Engine extends Entity {
     return;
   }
 
+  getEntityByName(name) {
+    let entityByName
+    Object.values(this.entities).forEach(entity => {
+      if (entity.name == name)
+      entityByName = entity;
+    });
+    return entityByName;
+  }
+
   addEntity(data) {
     let entityType = data.type;
     if (entityType) {

@@ -33,9 +33,19 @@ class DeveloperMode extends Component {
     developerModeEvent.addEventListener("click", () => {
       if (developerModeEvent.checked) {
         document.querySelector(".game_build").style.display = "block";
+        Object.values(BOX.Engine.entities).forEach(entity => {
+          if (entity.type == 'region') {
+            entity.mesh.visibility = 0.6;
+          }
+        });
         this.status = true;
       } else {
         document.querySelector(".game_build").style.display = "none";
+        Object.values(BOX.Engine.entities).forEach(entity => {
+          if (entity.type == 'region') {
+            entity.mesh.visibility = 0;
+          }
+        });
         this.status = false;
       }
     });
