@@ -122,10 +122,12 @@ export class Unit extends Entity {
   }
 
   createItem () {
+    let spawnRegion = BOX.Engine.getEntityByName("item_spawn");
+    let spawnPosition = spawnRegion.getRandomPosition();
       const item = BOX.Engine.addEntity({
           type: 'Item',
           //name: ,
-          position: {x: 20, y: 5, z: 20},
+          position: spawnPosition,
           doPhysics: true,
           body: {
             offset: [0, 0, 0],
