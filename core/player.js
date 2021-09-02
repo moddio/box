@@ -38,8 +38,12 @@ export class Player extends Entity {
   }
 
   createUnit() {
+    let spawnRegion = BOX.Engine.getEntityByName("player_spawn");
+    let spawnPosition = spawnRegion.getRandomPosition();
+
     BOX.Engine.addEntity({
       type: 'Unit',
+      position: spawnPosition,
       isMyUnit: true,
       ownerPlayer: this,
       doPhysics: true,

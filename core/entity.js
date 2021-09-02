@@ -7,7 +7,7 @@ export class Entity {
     this.mesh;
     this.id = data.id || this.generateId();
     //this.noaEntityId = data.noaEntityId;
-    this.type = undefined;
+    //this.type = undefined;
     this.lifeSpan = undefined;
     this.createdAt = Date.now();
     this.isMyUnit = data.isMyUnit;
@@ -18,7 +18,6 @@ export class Entity {
     if (data.position) {
       this.startPosition = data.position;
     }
-    
 
     if (!isEngine) {
       BOX.Engine.entities[this.id] = this;
@@ -35,7 +34,6 @@ export class Entity {
   }
 
   createBody(bodyData) {
-    
     // Creating a player mesh
     const mesh = BOX.Mesh[bodyData.type](bodyData.unitName, bodyData.roundShap[0], bodyData.roundShap[1]);
 
@@ -44,10 +42,10 @@ export class Entity {
       mesh.scaling.y = bodyData.scaling.y;
       mesh.scaling.z = bodyData.scaling.z;
     }
-    
+
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     // if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
-   if (this.isMyUnit) {
+    if (this.isMyUnit) {
       //console.log('creating body for my unit', this);
       this.noaEntityId = 1;
       BOX.Engine.noa.entities.addComponent(1, BOX.Engine.noa.entities.names.mesh, {
@@ -58,17 +56,17 @@ export class Entity {
       //console.log('creating body for projectile', this);
       this.noaEntityId = this.id;
       
-      if (this.startPosition) {
-        pos = [this.startPosition.x, this.startPosition.y, this.startPosition.z]
-      }
 
-      else {
+      var noaEntityId = this.noaEntityId;
+
+      if (this.startPosition) {
+        pos = [this.startPosition.x, this.startPosition.y, this.startPosition.z];
+      } else {
         var playPos = BOX.Engine.noa.entities.getPosition(1);
         var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
       }
 
       // syntatic sugar for creating a default entity
-      
 
       var meshOffset = [0, 0, 0];
 
@@ -83,15 +81,17 @@ export class Entity {
     }
 
     this.mesh = mesh;
-    if(this.doPhysics) {
-    
-    let body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
-    body.linearDamping = bodyData.linearDamping;
-    body.friction = bodyData.friction;
+    if (this.doPhysics) {
+      let body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
+      body.linearDamping = bodyData.linearDamping;
+      body.friction = bodyData.friction;
 
-    return body;
-    }
-    else {
+      if (this.startPosition && this.isMyUnit) {
+        body.setPosition([this.startPosition.x, this.startPosition.y, this.startPosition.z]);
+      }
+
+      return body;
+    } else {
       return mesh;
     }
   }
