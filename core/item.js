@@ -37,6 +37,12 @@ export class Item extends Entity {
 
       this.mesh.rotation = this.attachedTo.mesh.rotation;
     }
+    else { //NEED TO CHANGE LATER
+      this.mesh.rotation.x = 0;
+      this.mesh.rotation.y = 0;
+      this.mesh.rotation.z = 0;
+
+    }
 
   }
 
