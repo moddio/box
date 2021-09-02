@@ -4,7 +4,7 @@ export class Player extends Entity {
   constructor(data) {
     data.type = 'player';
     super(data);
-    this.clientId = undefined; // socketId
+    this.clientId = data.socketId; // socketId
 
     this.isDeveloper = true; // can this player modify this game?
     this.devToolsEnabled = false; // show/hide dev tools. only developer can do this
@@ -15,6 +15,8 @@ export class Player extends Entity {
       // if human player, add to the list of clients
       if (data.isHuman) {
         BOX.Engine.clients[this.id] = this;
+        // send 
+        BOX.Engine.components['NetworkComponent'].broadcast('gameState', BOX.Engine.getGameState(), this.clientId);
         this.addComponent('ControlComponent');
       }
       // add other player controls

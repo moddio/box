@@ -57,6 +57,16 @@ export class Engine extends Entity {
     return;
   }
 
+  getGameState() {
+    state = [];
+    for (let id in this.entities) {
+      let entity = this.entities[id];
+      state.push(entity.data)
+    }
+
+    return state;
+  }
+
   addEntity(data) {
     let entityType = data.type;
     if (entityType) {

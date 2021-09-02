@@ -58,8 +58,6 @@ export class Entity {
       //console.log('creating body for projectile', this);
       this.noaEntityId = this.id;
       
-      var noaEntityId = this.noaEntityId;
-
       if (this.startPosition) {
         pos = [this.startPosition.x, this.startPosition.y, this.startPosition.z]
       }
