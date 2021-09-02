@@ -32,7 +32,6 @@ class ControlComponent extends Component {
   mouseClick(button) {
     //check if mouse pointer is locked
     if (BOX.Engine.noa.container.hasPointerLock) {
-      console.log('hellozzzzzzzzzzzzz', this.parent.components['DeveloperMode']);
       if (this.parent && this.parent.isDeveloper) {
         let devComponent = this.parent.components['DeveloperMode']; //need to fix this !!!
         if (devComponent && devComponent.status) {
