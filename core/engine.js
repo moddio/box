@@ -20,7 +20,10 @@ export class Engine extends Entity {
     this.noa.entities.deleteComponent("receivesInputs");
     this.noa.entities.deleteComponent("movement");
   }
+  
   start() {
+    var self = this;
+
     console.log("starting the noa engine...");
     let x = 0;
 
@@ -32,25 +35,26 @@ export class Engine extends Entity {
 
     this.noa.camera.sensitivityX = 5;
     this.noa.camera.sensitivityY = 5;
+
+    this.noa.on("tick", () => {
+      // Update engine time on each tick
+      self.engineStep();
+    });
   }
 
   loadMap(mapData) {}
 
   engineStep() {
-    this.noa.on("tick", () => {
-      // Update engine time on each tick
+    this.tickStart = Date.now();
+    // Call player ticks
 
-      this.tickStart = Date.now();
-      // Call player ticks
+    for (let id in this.entities) {
+      let entity = this.entities[id];
+      entity.tick();
+    }
 
-      for (let id in this.entities) {
-        let entity = this.entities[id];
-        entity.tick();
-      }
-
-      this.tickDelta = Date.now() - this.tickStart;
-      this.currentTime += this.tickDelta;
-    });
+    this.tickDelta = Date.now() - this.tickStart;
+    this.currentTime += this.tickDelta;
   }
 
   getEntity(id) {
