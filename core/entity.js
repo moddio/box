@@ -68,7 +68,7 @@ export class Entity {
 
       // syntatic sugar for creating a default entity
 
-      var meshOffset = [0, 0, 0];
+      var meshOffset = bodyData.offset;
 
       this.noaEntityId = BOX.Engine.noa.entities.add(
         pos,

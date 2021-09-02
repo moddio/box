@@ -62,7 +62,14 @@ class ControlComponent extends Component {
         // shoot the ball
         case 'b':
           if (unit) {
-            unit.shootBall();
+            //unit.shootBall();
+            unit.createItem();
+          }
+          break;
+          case 'n':
+          if (unit) {
+            //unit.shootBall();
+            unit.unattachItem();
           }
           break;
       }

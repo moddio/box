@@ -4,6 +4,7 @@ import { Unit as importedUnit } from "./unit";
 import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
 import { Projectile as importProjectile } from "./projectile";
 import { Region as importRegion } from "./region";
+import { Item as importItem } from "./item";
 import {
   MovementState,
   applyMovementPhysics,
@@ -19,6 +20,7 @@ export const Player = importedPlayer;
 export const Unit = importedUnit;
 export const Projectile = importProjectile;
 export const Region = importRegion;
+export const Item = importItem;
 export const edgeMap = {
   maxWidth: 20,
   maxHeight: 20,

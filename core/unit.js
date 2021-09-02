@@ -121,6 +121,51 @@ export class Unit extends Entity {
     projectile.body.applyImpulse(impulse);
   }
 
+  createItem () {
+      const item = BOX.Engine.addEntity({
+          type: 'Item',
+          //name: ,
+          position: {x: 20, y: 5, z: 20},
+          doPhysics: true,
+          body: {
+            offset: [0, 0, 0],
+            type: 'CreateBox',
+            offset: [0, 0, 0],
+            radius: 0.2,
+            width: 5,
+            height: 8,
+            roundShap: [null, null],
+            scaling: { "x": 0.1, "y": 0.1, "z": 1.5 },
+            linearDamping: 0.5,
+            friction: 0
+          }
+        });
+        this.attachItem(item)
+    }
+  
+    attachItem (item) {
+      if (!item.attachedTo) {
+        // make item following the unit
+        BOX.Engine.noa.ents.addComponent(item.noaEntityId, 'followsEntity', {
+          entity: this.noaEntityId,
+          offset: [0, 0.5, 0]
+        });
+        item.attachedTo = this;
+        this.attachedItem = item;
+        console.log('attached to', this)
+      }
+    }
+
+    unattachItem () {
+      if (this.attachedItem) {
+        // make item stop following the unit
+        noa.ents.removeComponent(this.attachedItem.noaEntityId, 'followsEntity');
+        this.attachedItem.attachedTo = null;
+        this.attachedItem = null;
+        console.log('unattached item', this)
+      }
+    }
+
   getOwnerPlayer() {
     return this.ownerPlayer;
   }

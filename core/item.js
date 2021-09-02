@@ -5,6 +5,8 @@ export class Item extends Entity {
     data.type = "item";
     super(data);
 
+    this.attachedTo = null;
+
     // Default radius
     this.radius = 0.2;
 
@@ -22,4 +24,20 @@ export class Item extends Entity {
     
     
   }
+
+  tick() {
+    super.tick();
+    
+    if (this.attachedTo) {
+      console.log('attached');
+      
+      //var playPos = BOX.Engine.noa.entities.getPosition(1);
+      //var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
+      //this.body.setPosition([playPos[0], playPos[1] + 0.5, playPos[2] + 2]);
+
+      this.mesh.rotation = this.attachedTo.mesh.rotation;
+    }
+
+  }
+
 }
