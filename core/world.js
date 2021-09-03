@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import map from "../config/map/map.json";
+import map from "../src/map/map.json";
 import loadMap from "./components/map/tiledLoader";
 import loadRegions from "./components/map/regionLoader";
 

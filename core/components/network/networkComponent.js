@@ -6,6 +6,14 @@ class NetworkComponent extends Component {
         this.snapshot = []
     }
 
+    connectToServer(serverAddress) {
+        // send callback once successful connection
+        if (BOX.isClient) {
+            // socket.connect(serverAddress)
+            
+        }
+    }
+
     broadcast(msgType, data) {
         // broadcast creation of this entity to all clients
         for (let id in BOX.Engine.clients) {
@@ -22,8 +30,6 @@ class NetworkComponent extends Component {
     removeEntity() {
         // broadcast removal of this entity to all clients
     }
-    // create snapshot
-
-    
+    // create snapshot    
 }
 

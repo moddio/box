@@ -12,10 +12,10 @@ module.exports = (env) => ({
     }),
   ],
 
-  entry: ["./src/client.js"],
+  entry: ["./src/game.js"],
   output: {
     path: buildPath,
-    filename: "client.js",
+    filename: "game.js",
   },
 
   resolve: {
