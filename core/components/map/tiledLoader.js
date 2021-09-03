@@ -8,7 +8,7 @@ function loadMap(map, data, tiles, invisibleBlock) {
   let width = map.width;
   let layers = map.layers.length;
 
-  savingMap = new tiledSaver(height, width, map.textures); //map data storage
+  savingMap = new tiledSaver(height, width, map.textures, map.regions); //map data storage
   saveMapButton();
 
   // Border generation
