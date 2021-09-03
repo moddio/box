@@ -1,4 +1,4 @@
-import map from '/config/map/map.json';
+import map from '/src/map/map.json';
 import { savingMap } from '/core/components/map/tiledLoader'; // <- get rid of this
 import { Component } from '../../component';
 
