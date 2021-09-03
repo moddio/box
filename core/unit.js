@@ -121,7 +121,7 @@ export class Unit extends Entity {
     projectile.body.applyImpulse(impulse);
   }
 
-  createItem () {
+  /*createItem () {
     let spawnRegion = BOX.Engine.getEntityByName("item_spawn");
     let spawnPosition = spawnRegion.getRandomPosition();
       const item = BOX.Engine.addEntity({
@@ -157,7 +157,7 @@ export class Unit extends Entity {
         });*/
 
         //this.attachItem(item)
-    }
+    //}
   
     equipItem (item) {
       if (!item.attachedTo) {

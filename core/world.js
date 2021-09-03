@@ -131,6 +131,29 @@ const generateWorld = () => {
 
   loadRegions (map);
 
+  let spawnRegion = BOX.Engine.getEntityByName("item_spawn");
+    let spawnPosition = spawnRegion.getRandomPosition();
+      const item = BOX.Engine.addEntity({
+          type: 'Item',
+          //name: ,
+          position: spawnPosition,
+          doPhysics: true,
+          body: {
+            offset: [0, 0, 0],
+            type: 'CreateBox',
+            offset: [0, 0, 0],
+            radius: 0.2,
+            width: 5,
+            height: 8,
+            roundShap: [null, null],
+            scaling: { "x": 0.1, "y": 0.1, "z": 1.5 },
+            linearDamping: 0.5,
+            friction: 0
+          }
+        });
+
+        item.allowPickUp();
+
 };
 
 export default generateWorld;
