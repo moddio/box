@@ -69,7 +69,7 @@ class ControlComponent extends Component {
           case 'n':
           if (unit) {
             //unit.shootBall();
-            unit.unattachItem();
+            unit.unequipItem();
           }
           break;
       }

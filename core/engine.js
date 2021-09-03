@@ -80,6 +80,15 @@ export class Engine extends Entity {
     return entityByName;
   }
 
+  getEntityByNoaID(id) {
+    let entityByNoaID
+    Object.values(this.entities).forEach(entity => {
+      if (entity.noaEntityId == id)
+      entityByNoaID = entity;
+    });
+    return entityByNoaID;
+  }
+
   addEntity(data) {
     let entityType = data.type;
     if (entityType) {

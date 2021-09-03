@@ -29,11 +29,14 @@ export class Item extends Entity {
       cylinder: true,
       callback: otherEntsId => { 
         
-        let player = BOX.Engine.getEntityByName("john"); //TEMPORARY - need to find unit by noaId
-        console.log('item collide unit', this.noaEntityId, otherEntsId, player) 
-        player.unit.equipItem(this);
-        //disable pick up after collision with unit
-        BOX.Engine.noa.entities.removeComponent(this.noaEntityId, BOX.Engine.noa.entities.names.collideEntities);
+        let player = BOX.Engine.getEntityByNoaID(otherEntsId); //TEMPORARY - need to find unit by noaId
+        if (player.data.ownerPlayer) {
+          console.log('item collide unit', this.noaEntityId, otherEntsId, player) 
+          player.equipItem(this);
+          //disable pick up after collision with unit
+          BOX.Engine.noa.entities.removeComponent(this.noaEntityId, BOX.Engine.noa.entities.names.collideEntities);
+        }
+        
       }
     });
   }
