@@ -12,7 +12,9 @@ class ControlComponent extends Component {
     BOX.inputs.bind('change-material', 'P', '<left>');
     BOX.inputs.bind('add-block', 'L', '<left>');
     BOX.inputs.bind('remove-block', 'K', '<left>');
-    noa.inputs.bind('debug', 'D');
+
+    var scene = BOX.Engine.noa.rendering.getScene();
+    this.debug = false;
 
     //this.player = player;
     //this.mouseClick();
@@ -73,6 +75,16 @@ class ControlComponent extends Component {
             unit.unequipItem();
           }
           break;
+        case 'v':
+          // dynamic import because the library is very heavy
+          import('@babylonjs/inspector').then(data => {
+            console.log('show the debug layer', scene.debugLayer);
+            this.debug = !this.debug;
+            //embedMode: true
+            if (this.debug) scene.debugLayer.show();
+            else scene.debugLayer.hide();
+          });
+          break;
       }
     }
   }
@@ -85,7 +97,7 @@ class ControlComponent extends Component {
       case 's':
         console.log('kepress', 's');
         break;
-      case 'd':
+      case 'v':
         console.log('kepress', 'd');
         break;
       case 'a':
