@@ -1,11 +1,11 @@
 // Engine
-import { Engine as noaEngine } from "noa-engine";
-import config from "../config/config.json";
+import { Engine as noaEngine } from 'noa-engine';
+import config from '../config/config.json';
 
 // Files
-import "./utils/state.min.js";
-import generateWorld from "./world.js";
-import { Entity } from "./entity.js";
+import './utils/state.min.js';
+import generateWorld from './world.js';
+import { Entity } from './entity.js';
 
 export class Engine extends Entity {
   constructor() {
@@ -17,26 +17,30 @@ export class Engine extends Entity {
     this.currentTime = 0;
 
     // remove inputs component for player and movement component
-    this.noa.entities.deleteComponent("receivesInputs");
-    this.noa.entities.deleteComponent("movement");
+    this.noa.entities.deleteComponent('receivesInputs');
+    this.noa.entities.deleteComponent('movement');
   }
-  
+
   start() {
     var self = this;
 
-    console.log("starting the noa engine...");
-    let x = 0;
+    console.log('starting the noa engine...');
 
     // Generate the world
     generateWorld();
     const scene = this.noa.rendering.getScene();
+
+    console.log('logging out the container', this.noa.container);
+    setTimeout(() => {
+      this.noa.setPaused(true);
+    }, 10000);
 
     // this.addComponent("NetworkComponent")
 
     this.noa.camera.sensitivityX = 5;
     this.noa.camera.sensitivityY = 5;
 
-    this.noa.on("tick", () => {
+    this.noa.on('tick', () => {
       // Update engine time on each tick
       self.engineStep();
     });
@@ -65,17 +69,16 @@ export class Engine extends Entity {
     state = [];
     for (let id in this.entities) {
       let entity = this.entities[id];
-      state.push(entity.data)
+      state.push(entity.data);
     }
 
     return state;
   }
-  
+
   getEntityByName(name) {
-    let entityByName
+    let entityByName;
     Object.values(this.entities).forEach(entity => {
-      if (entity.name == name)
-      entityByName = entity;
+      if (entity.name == name) entityByName = entity;
     });
     return entityByName;
   }
@@ -86,7 +89,7 @@ export class Engine extends Entity {
       let entity = new BOX[entityType](data);
       return entity;
     } else {
-      error("entity type not defined");
+      error('entity type not defined');
     }
   }
 

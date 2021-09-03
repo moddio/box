@@ -1,6 +1,6 @@
-import map from "/config/map/map.json";
-import { savingMap } from "/core/components/map/tiledLoader"; // <- get rid of this
-import { Component } from "../../component";
+import map from '/config/map/map.json';
+import { savingMap } from '/core/components/map/tiledLoader'; // <- get rid of this
+import { Component } from '../../component';
 
 class DeveloperMode extends Component {
   constructor(parent) {
@@ -8,6 +8,7 @@ class DeveloperMode extends Component {
 
     this.currentMaterial = 1;
     this.status = false;
+    this.paused = false;
 
     this.developerModeButton();
   }
@@ -16,23 +17,31 @@ class DeveloperMode extends Component {
     Object.values(map.textures).forEach((texture, index) => {
       const img = new Image();
       img.src = texture.side;
-      document.querySelector(".game_build_textures").appendChild(img);
-      img.classList.add("block_" + index.toString());
+      document.querySelector('.game_build_textures').appendChild(img);
+      img.classList.add('block_' + index.toString());
 
       // Player Event on mouse click
-      const imageClick = document.querySelector(".block_" + index.toString());
-      imageClick.addEventListener("click", () => {
+      const imageClick = document.querySelector('.block_' + index.toString());
+      imageClick.addEventListener('click', () => {
         this.currentMaterial = index + 1;
       });
     });
 
-    document.querySelector(".game_build").style.display = "none";
+    //Play Pause
+    const pausePlay = document.querySelector('.pause-play');
+    pausePlay.addEventListener('click', () => {
+      //console.log('logging out the paused state', !this.paused);
+      this.paused = !this.paused;
+      BOX.Engine.noa.setPaused(this.paused);
+    });
+
+    document.querySelector('.game_build').style.display = 'none';
 
     //show block menu in developer mode and hide without developer mode
-    const developerModeEvent = document.getElementById("developer-mode-button");
-    developerModeEvent.addEventListener("click", () => {
+    const developerModeEvent = document.getElementById('developer-mode-button');
+    developerModeEvent.addEventListener('click', () => {
       if (developerModeEvent.checked) {
-        document.querySelector(".game_build").style.display = "block";
+        document.querySelector('.game_build').style.display = 'block';
         Object.values(BOX.Engine.entities).forEach(entity => {
           if (entity.type == 'region') {
             entity.mesh.visibility = 0.6;
@@ -40,7 +49,7 @@ class DeveloperMode extends Component {
         });
         this.status = true;
       } else {
-        document.querySelector(".game_build").style.display = "none";
+        document.querySelector('.game_build').style.display = 'none';
         Object.values(BOX.Engine.entities).forEach(entity => {
           if (entity.type == 'region') {
             entity.mesh.visibility = 0;
@@ -52,7 +61,7 @@ class DeveloperMode extends Component {
   }
 
   addBlock() {
-    console.log('placing block')
+    console.log('placing block');
     const pos = BOX.Engine.noa.targetedBlock.adjacent;
     BOX.Engine.noa.addBlock(this.currentMaterial, pos[0], pos[1], pos[2]);
     savingMap.saveBlock(pos[0], pos[1], pos[2], this.currentMaterial);
@@ -62,7 +71,7 @@ class DeveloperMode extends Component {
     const pos = BOX.Engine.noa.targetedBlock.position;
     //check if target block is invisible material
     if (BOX.Engine.noa.targetedBlock.blockID === 1000) {
-      ("");
+      ('');
     } else {
       BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
       savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
