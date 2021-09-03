@@ -9,6 +9,7 @@ class DeveloperMode extends Component {
     this.currentMaterial = 1;
     this.status = false;
     this.paused = false;
+    this.debug = false;
 
     this.developerModeButton();
   }
@@ -40,8 +41,19 @@ class DeveloperMode extends Component {
     //show block menu in developer mode and hide without developer mode
     const developerModeEvent = document.getElementById('developer-mode-button');
     developerModeEvent.addEventListener('click', () => {
+      var scene = BOX.Engine.noa.rendering.getScene();
+
+      // dynamic import because the library is very heavy
+      import('@babylonjs/inspector').then(data => {
+        console.log('show the debug layer', scene.debugLayer);
+        this.debug = !this.debug;
+        //embedMode: true
+        if (this.debug) scene.debugLayer.show();
+        else scene.debugLayer.hide();
+      });
       if (developerModeEvent.checked) {
         document.querySelector('.game_build').style.display = 'block';
+
         Object.values(BOX.Engine.entities).forEach(entity => {
           if (entity.type == 'region') {
             entity.mesh.visibility = 0.6;

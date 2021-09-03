@@ -12,6 +12,7 @@ class ControlComponent extends Component {
     BOX.inputs.bind('change-material', 'P', '<left>');
     BOX.inputs.bind('add-block', 'L', '<left>');
     BOX.inputs.bind('remove-block', 'K', '<left>');
+    noa.inputs.bind('debug', 'D');
 
     //this.player = player;
     //this.mouseClick();
@@ -66,7 +67,7 @@ class ControlComponent extends Component {
             unit.createItem();
           }
           break;
-          case 'n':
+        case 'n':
           if (unit) {
             //unit.shootBall();
             unit.unattachItem();

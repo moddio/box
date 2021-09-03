@@ -31,9 +31,6 @@ export class Engine extends Entity {
     const scene = this.noa.rendering.getScene();
 
     console.log('logging out the container', this.noa.container);
-    setTimeout(() => {
-      this.noa.setPaused(true);
-    }, 10000);
 
     // this.addComponent("NetworkComponent")
 
