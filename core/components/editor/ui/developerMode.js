@@ -14,6 +14,9 @@ class DeveloperMode extends Component {
     this.developerModeButton();
   }
   developerModeButton() {
+    // Lock the mouse on debug mode
+    var devMoode = document.querySelector('.dev-mode');
+
     //go through map.json textures and make interface image for each type of block
     Object.values(map.textures).forEach((texture, index) => {
       const img = new Image();
@@ -25,6 +28,7 @@ class DeveloperMode extends Component {
       const imageClick = document.querySelector('.block_' + index.toString());
       imageClick.addEventListener('click', () => {
         this.currentMaterial = index + 1;
+        devMoode.style.position = null;
       });
     });
 
@@ -42,6 +46,9 @@ class DeveloperMode extends Component {
     const developerModeEvent = document.getElementById('developer-mode-button');
     developerModeEvent.addEventListener('click', () => {
       var scene = BOX.Engine.noa.rendering.getScene();
+
+      // Lock the mouse on debug mode
+      devMoode.style.position = !this.debug ? 'absolute' : null;
 
       // dynamic import because the library is very heavy
       import('@babylonjs/inspector').then(data => {

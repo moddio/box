@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
 
 body {
   background-color: white;
@@ -9,6 +9,12 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.dev-mode {
+  position: null;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
 }
 .game_build {
   position: absolute;
@@ -44,7 +50,7 @@ body {
 
 .player_table {
   position: absolute;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   top: 0;
   right: 0;
   padding: 1rem;
