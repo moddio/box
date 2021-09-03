@@ -23,6 +23,21 @@ export class Item extends Entity {
     }
   }
 
+  // activate colliding with unit, so unit can pick up item
+  allowPickUp () {
+    BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.Engine.noa.entities.names.collideEntities, {
+      cylinder: true,
+      callback: otherEntsId => { 
+        
+        let player = BOX.Engine.getEntityByName("john"); //TEMPORARY - need to find unit by noaId
+        console.log('item collide unit', this.noaEntityId, otherEntsId, player) 
+        player.unit.equipItem(this);
+        //disable pick up after collision with unit
+        BOX.Engine.noa.entities.removeComponent(this.noaEntityId, BOX.Engine.noa.entities.names.collideEntities);
+      }
+    });
+  }
+
   tick() {
     super.tick();
 
@@ -35,8 +50,7 @@ export class Item extends Entity {
 
       this.mesh.rotation = this.attachedTo.mesh.rotation;
     } 
-    else 
-    { //NEED TO CHANGE LATER
+    else { //NEED TO CHANGE LATER
       this.mesh.rotation.x = 0;
       this.mesh.rotation.y = 0;
       this.mesh.rotation.z = 0;

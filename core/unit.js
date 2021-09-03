@@ -142,10 +142,24 @@ export class Unit extends Entity {
             friction: 0
           }
         });
-        this.attachItem(item)
+
+        item.allowPickUp();
+
+        /*BOX.Engine.noa.entities.addComponent(item.noaEntityId, BOX.Engine.noa.entities.names.collideEntities, {
+          cylinder: true,
+          callback: otherEntsId => { 
+            
+            let player = BOX.Engine.getEntityByName("john"); //TEMPORARY - need to find unit by noaId
+            console.log('item collide unit', item.noaEntityId, otherEntsId, player) 
+            player.unit.attachItem(item);
+            BOX.Engine.noa.entities.removeComponent(item.noaEntityId, BOX.Engine.noa.entities.names.collideEntities);
+          }
+        });*/
+
+        //this.attachItem(item)
     }
   
-    attachItem (item) {
+    equipItem (item) {
       if (!item.attachedTo) {
         // make item following the unit
         BOX.Engine.noa.ents.addComponent(item.noaEntityId, 'followsEntity', {
@@ -153,18 +167,18 @@ export class Unit extends Entity {
           offset: [0, 0.5, 0]
         });
         item.attachedTo = this;
-        this.attachedItem = item;
+        this.equipedItem = item;
         console.log('attached to', this)
       }
     }
 
-    unattachItem () {
-      if (this.attachedItem) {
+    unequipItem () {
+      if (this.equipedItem) {
         // make item stop following the unit
-        noa.ents.removeComponent(this.attachedItem.noaEntityId, 'followsEntity');
-        this.attachedItem.attachedTo = null;
-        this.attachedItem = null;
-        console.log('unattached item', this)
+        noa.ents.removeComponent(this.equipedItem.noaEntityId, 'followsEntity');
+        this.equipedItem.allowPickUp();
+        this.equipedItem.attachedTo = null;
+        this.equipedItem = null;
       }
     }
 
