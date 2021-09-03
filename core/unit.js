@@ -164,7 +164,7 @@ export class Unit extends Entity {
         // make item following the unit
         BOX.Engine.noa.ents.addComponent(item.noaEntityId, 'followsEntity', {
           entity: this.noaEntityId,
-          offset: [0, 0.5, 0]
+          offset: [0, 1.15, 0]
         });
         item.attachedTo = this;
         this.equipedItem = item;

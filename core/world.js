@@ -146,7 +146,7 @@ const generateWorld = () => {
             width: 5,
             height: 8,
             roundShap: [null, null],
-            scaling: { "x": 0.1, "y": 0.1, "z": 1.5 },
+            scaling: { "x": 0.3, "y": 0.3, "z": 0.3 },
             linearDamping: 0.5,
             friction: 0
           }
