@@ -9,7 +9,7 @@ class NameLabel extends Component {
     console.log('kkkkkkkkkkkkkkk', parent);
 
     //ownerID has noa entity id and id of the entity given by us
-    this.ownerId = { noaID: parent.mainUnit.noaEntityId || parent.noaEntityId, id: parent.id };
+    this.ownerId = { noaID: parent.noaEntityId, id: parent.id };
     this.ownerName = parent.name;
 
     this.showNameLabel();
