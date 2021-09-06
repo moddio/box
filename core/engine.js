@@ -136,9 +136,10 @@ export class Engine extends Entity {
     }
   }
 
-  removeEntity(id, noaID) {
+  removeEntity(id) {
     if (BOX.isClient) {
-      this.noa.entities.deleteEntity(noaID);
+      let entity = this.entityIds[id];      
+      this.noa.entities.deleteEntity(entity.noaEntityId);
     }
     delete this.entityIds[id];
   }

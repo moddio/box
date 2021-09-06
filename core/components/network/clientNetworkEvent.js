@@ -10,6 +10,10 @@ export class clientNetworking extends NetworkComponent {
       // BOX.socket.on('addEntity', data => {
       //   BOX.Engine.addEntity(data)
       // });
+      
+      // BOX.socket.on('removeEntity', data => {
+      //   BOX.Engine.addEntity(data)
+      // });
 
       // BOX.socket.on('gameState', data => {
       //   for (id in data) {
