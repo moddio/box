@@ -66,8 +66,8 @@ class ControlComponent extends Component {
         case 'b':
           if (unit) {
             unit.shootBall();
-            BOX.socket.emit('new-unit', unit.data.ownerPlayer.name);
-            console.log('this is the unit', unit.data.ownerPlayer.name);
+            BOX.socket.emit('new-unit', { owner: unit.data.ownerPlayer.name, position: unit.data.position, type: 'ball' });
+            console.log('this is the unit', unit);
             //unit.createItem();
           }
           break;
@@ -75,7 +75,7 @@ class ControlComponent extends Component {
           if (unit) {
             //unit.shootBall();
             unit.unequipItem();
-            BOX.socket.emit('new-unit', unit.data.ownerPlayer.name);
+            BOX.socket.emit('new-unit', { owner: unit.data.ownerPlayer.name, position: unit.data.position, type: 'item' });
             console.log('this is the unit', unit.data.ownerPlayer.name);
           }
           break;

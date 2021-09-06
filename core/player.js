@@ -4,7 +4,7 @@ export class Player extends Entity {
   constructor(data) {
     data.type = 'player';
     super(data);
-    this.clientId = data.socketId; // socketId
+    this.clientId = data.socketId;
 
     this.isDeveloper = true; // can this player modify this game?
     this.devToolsEnabled = false; // show/hide dev tools. only developer can do this
@@ -17,8 +17,9 @@ export class Player extends Entity {
         BOX.Engine.clients[this.id] = this;
         // send the entire game's state data (all entites) to this player
         BOX.Engine.components['NetworkComponent'].broadcast('gameState', BOX.Engine.getGameState(), this.clientId);
-        
+
         this.addComponent('ControlComponent');
+        this.addComponent('NetworkComponent');
       }
       // add other player controls
     } else {
@@ -38,7 +39,7 @@ export class Player extends Entity {
   }
 
   createUnit() {
-    let spawnRegion = BOX.Engine.getEntityByName("player_spawn");
+    let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
     let spawnPosition = spawnRegion.getRandomPosition();
 
     this.unit = BOX.Engine.addEntity({
@@ -59,6 +60,8 @@ export class Player extends Entity {
         friction: 0
       }
     });
+
+    this.noaEntityId = this.unit.noaEntityId;
 
     this.addComponent('NameLabelComponent');
   }

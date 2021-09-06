@@ -29,6 +29,7 @@ export class Entity {
     }
 
     if (data.body) {
+      console.log('ttttttttttt', data);
       this.body = this.createBody(data.body);
     }
   }
@@ -55,7 +56,6 @@ export class Entity {
     } else {
       //console.log('creating body for projectile', this);
       this.noaEntityId = this.id;
-      
 
       var noaEntityId = this.noaEntityId;
 

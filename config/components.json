@@ -2,5 +2,7 @@
   "ControlComponent": "./components/control/controlComponent.js",
   "DeveloperMode": "./components/editor/ui/developerMode.js",
   "NameLabelComponent": "./components/nameLabelComponent.js",
+  "NetworkComponent": "./components/network/networkComponent.js",
+  "networkComponnt": "./components/network/networkComponent.js",
   "networkComponent": "./components/network/networkComponent.js"
 }

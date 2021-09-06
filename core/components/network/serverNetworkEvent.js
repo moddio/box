@@ -1,6 +1,7 @@
 class ServerNetworkEvents {
   constructor(io) {
     this.playerConnected = [];
+    this.units = [];
     io.on('connection', socket => {
       // Getting the player data on first connection
       socket.on('player-entity', data => {
@@ -21,7 +22,11 @@ class ServerNetworkEvents {
 
       //listen for new unit created
       socket.on('new-unit', data => {
-        console.log('new unit created', data);
+        this.units.push(data);
+        console.log('new unit created', this.units);
+
+        // Socket emit to online player new unit data
+        socket.broadcast.emit('new-unit', data);
       });
     });
 
