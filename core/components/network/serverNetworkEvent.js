@@ -18,6 +18,11 @@ class ServerNetworkEvents {
 
       // On new connection the player will get all connected players
       socket.emit('players', this.playerConnected);
+
+      //listen for new unit created
+      socket.on('new-unit', data => {
+        console.log('new unit created', data);
+      });
     });
 
     // implement the below.

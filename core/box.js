@@ -1,16 +1,15 @@
-import { Engine as boxEngine } from "./engine";
-import { Player as importedPlayer } from "./player";
-import { Unit as importedUnit } from "./unit";
-import { Mesh as noaMesh } from "@babylonjs/core/Meshes/mesh";
-import { Projectile as importProjectile } from "./projectile";
-import { Region as importRegion } from "./region";
-import { Item as importItem } from "./item";
-import {
-  MovementState,
-  applyMovementPhysics,
-} from "../core/components/movement";
+import { Engine as boxEngine } from './engine';
+import { io } from 'socket.io-client';
+import { Player as importedPlayer } from './player';
+import { Unit as importedUnit } from './unit';
+import { Mesh as noaMesh } from '@babylonjs/core/Meshes/mesh';
+import { Projectile as importProjectile } from './projectile';
+import { Region as importRegion } from './region';
+import { Item as importItem } from './item';
+import { MovementState, applyMovementPhysics } from '../core/components/movement';
 
 export var isClient = window ? true : false;
+export const socket = io('http://localhost:3001');
 export const components = {};
 export var developerMode = {};
 export const Mesh = noaMesh;
@@ -25,7 +24,7 @@ export const edgeMap = {
   maxWidth: 20,
   maxHeight: 20,
   minHeight: 0,
-  minWidth: 0,
+  minWidth: 0
 };
 export const control = {};
 
@@ -37,26 +36,14 @@ export const collision = (id, otherEntsId) => {
   let bodyBall = BOX.Engine.noa.entities.getPhysicsBody(id);
   var check;
 
-  console.log("ball velocity", bodyBall.velocity);
+  console.log('ball velocity', bodyBall.velocity);
 
   // checking the speed of the player and the ball
-  if (
-    Math.abs(bodyPlayer.velocity[2]) + Math.abs(bodyBall.velocity[2]) > 7 ||
-    Math.abs(bodyPlayer.velocity[1]) + Math.abs(bodyBall.velocity[1]) > 7 ||
-    Math.abs(bodyPlayer.velocity[0]) + Math.abs(bodyBall.velocity[0]) > 7
-  ) {
+  if (Math.abs(bodyPlayer.velocity[2]) + Math.abs(bodyBall.velocity[2]) > 7 || Math.abs(bodyPlayer.velocity[1]) + Math.abs(bodyBall.velocity[1]) > 7 || Math.abs(bodyPlayer.velocity[0]) + Math.abs(bodyBall.velocity[0]) > 7) {
     check = 20;
   } else {
     // cheking the speed of the player and applying bigger impulse on higher speed
-    Math.abs(bodyPlayer.velocity[0]) > 6 ||
-    Math.abs(bodyPlayer.velocity[1]) > 6 ||
-    Math.abs(bodyPlayer.velocity[2]) > 6
-      ? (check =
-          7 *
-          (bodyPlayer.velocity[0] +
-            bodyPlayer.velocity[1] +
-            bodyPlayer.velocity[2]))
-      : (check = 7);
+    Math.abs(bodyPlayer.velocity[0]) > 6 || Math.abs(bodyPlayer.velocity[1]) > 6 || Math.abs(bodyPlayer.velocity[2]) > 6 ? (check = 7 * (bodyPlayer.velocity[0] + bodyPlayer.velocity[1] + bodyPlayer.velocity[2])) : (check = 7);
   }
 
   let impulse = [];
@@ -67,7 +54,7 @@ export const collision = (id, otherEntsId) => {
   body.applyImpulse(impulse);
 };
 
-export const inputs = require("game-inputs")();
+export const inputs = require('game-inputs')();
 /**
 
 export const movementComp = BOX.Engine.noa.entities.createComponent({
@@ -93,8 +80,8 @@ export const movementComp = BOX.Engine.noa.entities.createComponent({
  */
 
 export const entityTick = Engine.noa.entities.createComponent({
-  name: "entityTick",
+  name: 'entityTick',
   order: 1,
   states: {},
-  system: Engine.entityTick,
+  system: Engine.entityTick
 });

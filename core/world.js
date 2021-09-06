@@ -1,16 +1,8 @@
-import { io } from "socket.io-client";
-import map from "../config/map/map.json";
-import loadMap from "./components/map/tiledLoader";
-import loadRegions from "./components/map/regionLoader";
-
-const socket = io("http://localhost:3000");
+import map from '../config/map/map.json';
+import loadMap from './components/map/tiledLoader';
+import loadRegions from './components/map/regionLoader';
 
 var blocksState;
-
-socket.on("mapBlockState", (removedBlocks) => {
-  blocksState = removedBlocks;
-  console.log("blockState", blocksState);
-});
 
 // Function that return random material using a sin and cos graph
 const getVoxelID = (x, y, z, { waterBlock, grassBlock }) => {
@@ -43,11 +35,11 @@ const generateWorld = () => {
   //for each texture in map.json file create top, buttom and side materials and register blocks
   Object.values(textures).forEach((texture, index) => {
     index = index + 1;
-    const topMaterial = BOX.Engine.noa.registry.registerMaterial("material_top_" + index.toString(), null, texture.top);
-    const bottomMaterial = BOX.Engine.noa.registry.registerMaterial("material_bottom_" + index.toString(), null, texture.bottom);
-    const sideMaterial = BOX.Engine.noa.registry.registerMaterial("material_side_" + index.toString(), null, texture.side);
+    const topMaterial = BOX.Engine.noa.registry.registerMaterial('material_top_' + index.toString(), null, texture.top);
+    const bottomMaterial = BOX.Engine.noa.registry.registerMaterial('material_bottom_' + index.toString(), null, texture.bottom);
+    const sideMaterial = BOX.Engine.noa.registry.registerMaterial('material_side_' + index.toString(), null, texture.side);
     tiles[index.toString()] = BOX.Engine.noa.registry.registerBlock(index, {
-      material: ["material_top_" + index.toString(), "material_bottom_" + index.toString(), "material_side_" + index.toString()],
+      material: ['material_top_' + index.toString(), 'material_bottom_' + index.toString(), 'material_side_' + index.toString()]
     });
   });
 
@@ -71,12 +63,12 @@ const generateWorld = () => {
     tiles[tileIndex.toString()] = box.Engine.noa.registry.registerBlock(tileIndex, { material: "material_" + tileIndexString });
   }*/
 
-  const invisibleMaterial = BOX.Engine.noa.rendering.makeStandardMaterial("invisible");
+  const invisibleMaterial = BOX.Engine.noa.rendering.makeStandardMaterial('invisible');
   invisibleMaterial.diffuseTexture = null;
   invisibleMaterial._alpha = 0;
-  BOX.Engine.noa.registry.registerMaterial("invisible", null, null, false, invisibleMaterial);
+  BOX.Engine.noa.registry.registerMaterial('invisible', null, null, false, invisibleMaterial);
   const invisibleBlock = BOX.Engine.noa.registry.registerBlock(1000, {
-    material: "invisible",
+    material: 'invisible'
   });
 
   // attempt to load materials from tile sheet
@@ -121,7 +113,7 @@ const generateWorld = () => {
 
   let check = 0;
   // Loading tiled map from map.json
-  BOX.Engine.noa.world.on("worldDataNeeded", (id, data) => {
+  BOX.Engine.noa.world.on('worldDataNeeded', (id, data) => {
     if (check > 0) return;
     check++;
     loadMap(map, data, tiles, invisibleBlock);
@@ -129,31 +121,30 @@ const generateWorld = () => {
     return;
   });
 
-  loadRegions (map);
+  loadRegions(map);
 
-  let spawnRegion = BOX.Engine.getEntityByName("item_spawn");
-    let spawnPosition = spawnRegion.getRandomPosition();
-      const item = BOX.Engine.addEntity({
-          type: 'Item',
-          //name: ,
-          position: spawnPosition,
-          doPhysics: true,
-          body: {
-            offset: [0, 0, 0],
-            type: 'CreateBox',
-            offset: [0, 0, 0],
-            radius: 0.2,
-            width: 5,
-            height: 8,
-            roundShap: [null, null],
-            scaling: { "x": 0.1, "y": 0.1, "z": 1.5 },
-            linearDamping: 0.5,
-            friction: 0
-          }
-        });
+  let spawnRegion = BOX.Engine.getEntityByName('item_spawn');
+  let spawnPosition = spawnRegion.getRandomPosition();
+  const item = BOX.Engine.addEntity({
+    type: 'Item',
+    //name: ,
+    position: spawnPosition,
+    doPhysics: true,
+    body: {
+      offset: [0, 0, 0],
+      type: 'CreateBox',
+      offset: [0, 0, 0],
+      radius: 0.2,
+      width: 5,
+      height: 8,
+      roundShap: [null, null],
+      scaling: { x: 0.1, y: 0.1, z: 1.5 },
+      linearDamping: 0.5,
+      friction: 0
+    }
+  });
 
-        item.allowPickUp();
-
+  item.allowPickUp();
 };
 
 export default generateWorld;
