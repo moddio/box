@@ -12,7 +12,8 @@ class ServerNetworkEvents {
       socket.on('disconnect', () => {
         // Filter out the connected players
         this.playerConnected = this.playerConnected.filter(({ data }) => data.socketID !== socket.id);
-        console.log('player-disconnected', this.playerConnected);
+        console.log('player-disconnected', socket.id);
+        console.log('this is the player entity data', this.playerConnected);
       });
 
       // On new connection the player will get all connected players
