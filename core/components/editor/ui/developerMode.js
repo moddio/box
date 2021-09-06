@@ -1,4 +1,4 @@
-import map from '/src/map/map.json';
+import map from '/config/map/map.json';
 import { savingMap } from '/core/components/map/tiledLoader'; // <- get rid of this
 import { Component } from '../../component';
 
@@ -80,12 +80,9 @@ class DeveloperMode extends Component {
   removeBlock() {
     const pos = BOX.Engine.noa.targetedBlock.position;
     //check if target block is invisible material
-    if (BOX.Engine.noa.targetedBlock.blockID === 1000) {
-      ('');
-    } else {
-      BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
-      savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
-    }
+
+    BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
+    savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
   }
 }
 

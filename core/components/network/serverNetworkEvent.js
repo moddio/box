@@ -1,52 +1,38 @@
-// make this into a class
-
 class ServerNetworkEvents {
-
-  constructor() {
-    io.on("connection", (socket) => {
-         
-      // create my own unit by default
-      engine.myPlayer = engine.addEntity({
-        type: "Player",
-        isHuman: true,
-        name: "john",
+  constructor(io) {
+    this.playerConnected = [];
+    io.on('connection', socket => {
+      // Getting the player data on first connection
+      socket.on('player-entity', data => {
+        this.playerConnected.push(data);
+        console.log('this is the player entity data', this.playerConnected);
       });
 
-      engine.myPlayer.createUnit();
+      // Handling diconnect of the players
+      socket.on('disconnect', () => {
+        // Filter out the connected players
+        this.playerConnected = this.playerConnected.filter(({ data }) => data.socketID !== socket.id);
+        console.log('player-disconnected', this.playerConnected);
+      });
 
-
-      // socket.on("new-player", ({ id }) => {
-      //   playersData.push({ id, socketID: socket.id });
-      //   console.log("new player with the id", playersData, "is connected");
-      // });
-      // // Emit to connected players
-      // socket.broadcast.emit("online-players", playersData);
-      // // Emit to the new connected players
-      // socket.emit("online-players", playersData);
+      // On new connection the player will get all connected players
+      socket.emit('players', this.playerConnected);
     });
-    
+
     // implement the below.
     // io.on("keyPress", data, function() {
     //   let player = BOX.Engine.players[socket.id];
     //   player.components['ControlComponent'].keyPress(key)
     // })
   }
+  broadcast(msgType, data) {
+    // broadcast creation of this entity to all clients
+    for (let id in BOX.Engine.clients) {
+      // stream entity creation with entity data
+      let client = BOX.Engine.clients[id];
+      // socket.emit(data, client.socketId)
+    }
+  }
 }
 
-// get rid of below
-var playersData = [];
-
-const serverNetworking = (io) => {
-  io.on("connection", (socket) => {
-    socket.on("new-player", ({ id }) => {
-      playersData.push({ id, socketID: socket.id });
-      console.log("new player with the id", playersData, "is connected");
-    });
-    // Emit to connected players
-    socket.broadcast.emit("online-players", playersData);
-    // Emit to the new connected players
-    socket.emit("online-players", playersData);
-  });
-};
-
-module.exports = { serverNetworking };
+module.exports = { ServerNetworkEvents };

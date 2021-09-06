@@ -12,7 +12,7 @@ export class Engine extends Entity {
     super({}, true);
     this.noa = new noaEngine(config);
     this.entities = {};
-    this.players = {};
+    this.clients = {};
     this.myPlayer;
     this.currentTime = 0;
 

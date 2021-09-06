@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import map from "../src/map/map.json";
+import map from "../config/map/map.json";
 import loadMap from "./components/map/tiledLoader";
 import loadRegions from "./components/map/regionLoader";
 
@@ -146,7 +146,7 @@ const generateWorld = () => {
             width: 5,
             height: 8,
             roundShap: [null, null],
-            scaling: { "x": 0.3, "y": 0.3, "z": 0.3 },
+            scaling: { "x": 0.1, "y": 0.1, "z": 1.5 },
             linearDamping: 0.5,
             friction: 0
           }

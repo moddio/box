@@ -1,12 +1,11 @@
 export class tiledSaver {
-    constructor (height, width, textures, regions) {
+    constructor (height, width, textures) {
         this.currentBlocks = [];
         this.currentMap = {
             height: height,
             width: width,
             layers: [],
-            textures: textures,
-            regions: regions
+            textures: textures
         };
     }
 

@@ -1,24 +1,22 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const { Server } = require("socket.io");
-const http = require("http");
+const { Server } = require('socket.io');
+const http = require('http');
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
-  },
+    origin: '*'
+  }
 });
-const {
-  serverNetworking,
-} = require("../core/components/network/serverNetworkEvent");
+const { ServerNetworkEvents } = require('../core/components/network/serverNetworkEvent');
 
-server.listen(3000, () => {
-  console.log("listening on *:3000");
+server.listen(3001, () => {
+  console.log('listening on *:3001');
 });
 
 // start server networking
-console.log("start");
-serverNetworking(io);
+console.log('start');
+const network = new ServerNetworkEvents(io);
 /**
  var BABYLON = require("babylonjs");
 
