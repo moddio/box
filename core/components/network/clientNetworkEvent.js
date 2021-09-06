@@ -1,9 +1,24 @@
 import { NetworkComponent } from './networkComponent';
 
 export class clientNetworking extends NetworkComponent {
+  
   constructor() {
     super();
     BOX.socket.on('connect', () => {
+
+      
+      // BOX.socket.on('addEntity', data => {
+      //   BOX.Engine.addEntity(data)
+      // });
+
+      // BOX.socket.on('gameState', data => {
+      //   for (id in data) {
+      //     BOX.Engine.addEntity(data[id])
+      //   }
+      // });
+
+      // DELETE EVERYTHING BELOW!!
+
       // creating the player entity on first connection
       let data = {
         type: 'Player',

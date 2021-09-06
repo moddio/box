@@ -10,11 +10,27 @@ import { Entity } from './entity.js';
 export class Engine extends Entity {
   constructor() {
     super({}, true);
-    this.noa = new noaEngine(config);
+
+    if (BOX.isClient) {
+      this.noa = new noaEngine(config);
+    }
+    
     this.entities = {};
     this.clients = {};
     this.myPlayer;
     this.currentTime = 0;
+
+    /**
+    Length of a tick in milliseconds. The denominator is your desired framerate.
+    e.g. 1000 / 20 = 20 fps,  1000 / 60 = 60 fps
+    */
+    this.tickLengthMs = 1000 / 20
+
+    /* gameLoop related variables */
+    // timestamp of each loop
+    this.previousTick = Date.now()
+    // number of times gameLoop gets called
+    this.actualTicks = 0
 
     // remove inputs component for player and movement component
     this.noa.entities.deleteComponent('receivesInputs');
@@ -34,13 +50,34 @@ export class Engine extends Entity {
 
     // this.addComponent("NetworkComponent")
 
+    // MOVE THIS TO CONTROLCOMPONENT OR SOMEWHERE ELSE BUT NOT HERE!!
     this.noa.camera.sensitivityX = 5;
     this.noa.camera.sensitivityY = 5;
 
-    this.noa.on('tick', () => {
-      // Update engine time on each tick
-      self.engineStep();
-    });
+    if (BOX.isServer) {
+      var now = Date.now()
+      this.actualTicks++
+      if (this.previousTick + this.tickLengthMs <= now) {
+        var delta = (now - this.previousTick) / 1000
+        this.previousTick = now
+
+        self.engineStep();
+
+        console.log('delta', delta, '(target: ' + this.tickLengthMs +' ms)', 'node ticks', this.actualTicks)
+        this.actualTicks = 0
+      }
+
+      if (Date.now() - this.previousTick < this.tickLengthMs - 16) {
+        setTimeout(gameLoop)
+      } else {
+        setImmediate(gameLoop)
+      }
+    } else if (BOX.isClient) {
+      this.noa.on('tick', () => {
+        // Update engine time on each tick
+        self.engineStep();
+      });
+    }    
   }
 
   loadMap(mapData) {}
@@ -100,7 +137,9 @@ export class Engine extends Entity {
   }
 
   removeEntity(id, noaID) {
-    this.noa.entities.deleteEntity(noaID);
+    if (BOX.isClient) {
+      this.noa.entities.deleteEntity(noaID);
+    }
     delete this.entityIds[id];
   }
 }

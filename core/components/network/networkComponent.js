@@ -7,6 +7,19 @@ export class NetworkComponent extends Component {
     this.clients = {};
   }
 
+  broadcast(msgType, data) {
+    // broadcast creation of this entity to all clients
+    for (let id in BOX.Engine.clients) {
+      // stream entity creation with entity data
+      let client = BOX.Engine.clients[id];
+      // socket.emit(data, client.socketId)
+    }
+  }
+
+  
+
+  // DELETE EVERYTHING BELOW!
+  
   addEntity(data) {
     // Create my own unit by default
     let myPlayer = BOX.Engine.addEntity(data);
@@ -37,6 +50,8 @@ export class NetworkComponent extends Component {
     console.log('unit', unit);
   }
 
+
+  
   removeEntity() {
     // broadcast removal of this entity to all clients
   }
