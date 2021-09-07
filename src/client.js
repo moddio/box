@@ -1,4 +1,5 @@
-import { clientNetworking } from '../core/components/network/clientNetworkEvent';
+import { clientNetworking } from '../core/components/network/clientNetworkEvent.js';
+global.isServer = false;
 // USE THIS ON DEBUG MODE ONLY NOT IN PRODUCTION
 global.BOX = BOX;
 

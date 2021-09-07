@@ -1,6 +1,6 @@
 import * as BABYLON from '@babylonjs/core';
 
-import { Component } from './component';
+import { Component } from './component.js';
 
 class NameLabel extends Component {
   constructor(parent) {

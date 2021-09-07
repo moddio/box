@@ -1,4 +1,4 @@
-import { Entity } from './entity';
+import { Entity } from './entity.js';
 
 export class Region extends Entity {
   constructor(data) {
@@ -16,25 +16,21 @@ export class Region extends Entity {
     }*/
 
     //this.getRandomPosition();
-    
   }
 
   //get random position in region
-  getRandomPosition () {
-    
+  getRandomPosition() {
     let Xrandom = Math.random() * this.mesh.scaling.x;
     let Yrandom = Math.random() * this.mesh.scaling.y;
     let Zrandom = Math.random() * this.mesh.scaling.z;
 
-    
-
     let position = {
-        x: this.mesh.position.x + Xrandom - (this.mesh.scaling.x / 2),
-        y: this.mesh.position.y + Yrandom - (this.mesh.scaling.y / 2),
-        z: this.mesh.position.z + Zrandom - (this.mesh.scaling.z / 2)
+      x: this.mesh.position.x + Xrandom - this.mesh.scaling.x / 2,
+      y: this.mesh.position.y + Yrandom - this.mesh.scaling.y / 2,
+      z: this.mesh.position.z + Zrandom - this.mesh.scaling.z / 2
     };
 
-    console.log('Random position', position)
+    console.log('Random position', position);
 
     return position;
   }
@@ -45,7 +41,6 @@ export class Region extends Entity {
 
   tick() {
     super.tick(); // call Entity.tick()
-
   }
 }
 

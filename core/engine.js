@@ -1,5 +1,8 @@
 // Engine
-import { Engine as noaEngine } from 'noa-engine';
+if (!global.isServer) {
+  import { Engine as noaEngine } from 'noa-engine';
+}
+
 import config from '../config/config.json';
 
 // Files
@@ -14,7 +17,7 @@ export class Engine extends Entity {
     if (BOX.isClient) {
       this.noa = new noaEngine(config);
     }
-    
+
     this.entities = {};
     this.clients = {};
     this.myPlayer;
@@ -24,13 +27,13 @@ export class Engine extends Entity {
     Length of a tick in milliseconds. The denominator is your desired framerate.
     e.g. 1000 / 20 = 20 fps,  1000 / 60 = 60 fps
     */
-    this.tickLengthMs = 1000 / 20
+    this.tickLengthMs = 1000 / 20;
 
     /* gameLoop related variables */
     // timestamp of each loop
-    this.previousTick = Date.now()
+    this.previousTick = Date.now();
     // number of times gameLoop gets called
-    this.actualTicks = 0
+    this.actualTicks = 0;
 
     // remove inputs component for player and movement component
     this.noa.entities.deleteComponent('receivesInputs');
@@ -55,29 +58,29 @@ export class Engine extends Entity {
     this.noa.camera.sensitivityY = 5;
 
     if (BOX.isServer) {
-      var now = Date.now()
-      this.actualTicks++
+      var now = Date.now();
+      this.actualTicks++;
       if (this.previousTick + this.tickLengthMs <= now) {
-        var delta = (now - this.previousTick) / 1000
-        this.previousTick = now
+        var delta = (now - this.previousTick) / 1000;
+        this.previousTick = now;
 
         self.engineStep();
 
-        console.log('delta', delta, '(target: ' + this.tickLengthMs +' ms)', 'node ticks', this.actualTicks)
-        this.actualTicks = 0
+        console.log('delta', delta, '(target: ' + this.tickLengthMs + ' ms)', 'node ticks', this.actualTicks);
+        this.actualTicks = 0;
       }
 
       if (Date.now() - this.previousTick < this.tickLengthMs - 16) {
-        setTimeout(gameLoop)
+        setTimeout(gameLoop);
       } else {
-        setImmediate(gameLoop)
+        setImmediate(gameLoop);
       }
     } else if (BOX.isClient) {
       this.noa.on('tick', () => {
         // Update engine time on each tick
         self.engineStep();
       });
-    }    
+    }
   }
 
   loadMap(mapData) {}
@@ -118,10 +121,9 @@ export class Engine extends Entity {
   }
 
   getEntityByNoaID(id) {
-    let entityByNoaID
+    let entityByNoaID;
     Object.values(this.entities).forEach(entity => {
-      if (entity.noaEntityId == id)
-      entityByNoaID = entity;
+      if (entity.noaEntityId == id) entityByNoaID = entity;
     });
     return entityByNoaID;
   }
@@ -138,7 +140,7 @@ export class Engine extends Entity {
 
   removeEntity(id) {
     if (BOX.isClient) {
-      let entity = this.entityIds[id];      
+      let entity = this.entityIds[id];
       this.noa.entities.deleteEntity(entity.noaEntityId);
     }
     delete this.entityIds[id];

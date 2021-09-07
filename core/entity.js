@@ -20,7 +20,7 @@ export class Entity {
     }
 
     if (!isEngine) {
-      BOX.Engine.entities[this.id] = this;
+      global.isServer ? (BOX.Engine.entities[this.id] = this) : '';
       if (BOX.isServer) {
         if (this.streamMode && this.streamMode.enabled) {
           BOX.Engine.components['NetworkComponent'].broadcast('createEntity', this.data); // use this.data because it contains id

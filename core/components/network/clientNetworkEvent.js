@@ -1,16 +1,13 @@
-import { NetworkComponent } from './networkComponent';
+import { NetworkComponent } from './networkComponent.js';
 
 export class clientNetworking extends NetworkComponent {
-  
   constructor() {
     super();
     BOX.socket.on('connect', () => {
-
-      
       // BOX.socket.on('addEntity', data => {
       //   BOX.Engine.addEntity(data)
       // });
-      
+
       // BOX.socket.on('removeEntity', data => {
       //   BOX.Engine.addEntity(data)
       // });

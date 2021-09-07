@@ -1,6 +1,6 @@
 import map from '/config/map/map.json';
-import { savingMap } from '/core/components/map/tiledLoader'; // <- get rid of this
-import { Component } from '../../component';
+import { savingMap } from '/core/components/map/tiledLoader.js'; // <- get rid of this
+import { Component } from '../../component.js';
 
 class DeveloperMode extends Component {
   constructor(parent) {

@@ -1,14 +1,16 @@
-const express = require('express');
+import express from 'express';
 const app = express();
-const { Server } = require('socket.io');
-const http = require('http');
+import { Server } from 'socket.io';
+import http from 'http';
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: '*'
   }
 });
-const { ServerNetworkEvents } = require('../core/components/network/serverNetworkEvent');
+import { ServerNetworkEvents } from '../core/components/network/serverNetworkEvent.js';
+
+global.isServer = true;
 
 server.listen(3001, () => {
   console.log('listening on *:3001');

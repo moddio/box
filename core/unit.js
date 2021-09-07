@@ -1,4 +1,4 @@
-import { Entity } from './entity';
+import { Entity } from './entity.js';
 
 export class Unit extends Entity {
   constructor(data) {
@@ -156,31 +156,31 @@ export class Unit extends Entity {
           }
         });*/
 
-        //this.attachItem(item)
-    //}
-  
-    equipItem (item) {
-      if (!item.attachedTo) {
-        // make item following the unit
-        BOX.Engine.noa.ents.addComponent(item.noaEntityId, 'followsEntity', {
-          entity: this.noaEntityId,
-          offset: [0, 0.5, 0]
-        });
-        item.attachedTo = this;
-        this.equipedItem = item;
-        console.log('attached to', this)
-      }
-    }
+  //this.attachItem(item)
+  //}
 
-    unequipItem () {
-      if (this.equipedItem) {
-        // make item stop following the unit
-        noa.ents.removeComponent(this.equipedItem.noaEntityId, 'followsEntity');
-        this.equipedItem.allowPickUp();
-        this.equipedItem.attachedTo = null;
-        this.equipedItem = null;
-      }
+  equipItem(item) {
+    if (!item.attachedTo) {
+      // make item following the unit
+      BOX.Engine.noa.ents.addComponent(item.noaEntityId, 'followsEntity', {
+        entity: this.noaEntityId,
+        offset: [0, 0.5, 0]
+      });
+      item.attachedTo = this;
+      this.equipedItem = item;
+      console.log('attached to', this);
     }
+  }
+
+  unequipItem() {
+    if (this.equipedItem) {
+      // make item stop following the unit
+      noa.ents.removeComponent(this.equipedItem.noaEntityId, 'followsEntity');
+      this.equipedItem.allowPickUp();
+      this.equipedItem.attachedTo = null;
+      this.equipedItem = null;
+    }
+  }
 
   getOwnerPlayer() {
     return this.ownerPlayer;

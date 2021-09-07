@@ -1,4 +1,4 @@
-import { Component } from '../component';
+import { Component } from '../component.js';
 
 export class NetworkComponent extends Component {
   constructor(parent) {
@@ -16,10 +16,8 @@ export class NetworkComponent extends Component {
     }
   }
 
-  
-
   // DELETE EVERYTHING BELOW!
-  
+
   addEntity(data) {
     // Create my own unit by default
     let myPlayer = BOX.Engine.addEntity(data);
@@ -50,8 +48,6 @@ export class NetworkComponent extends Component {
     console.log('unit', unit);
   }
 
-
-  
   removeEntity() {
     // broadcast removal of this entity to all clients
   }

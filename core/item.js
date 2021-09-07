@@ -1,4 +1,4 @@
-import { Entity } from './entity';
+import { Entity } from './entity.js';
 
 export class Item extends Entity {
   constructor(data) {
@@ -24,19 +24,17 @@ export class Item extends Entity {
   }
 
   // activate colliding with unit, so unit can pick up item
-  allowPickUp () {
+  allowPickUp() {
     BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.Engine.noa.entities.names.collideEntities, {
       cylinder: true,
-      callback: otherEntsId => { 
-        
+      callback: otherEntsId => {
         let player = BOX.Engine.getEntityByNoaID(otherEntsId); //TEMPORARY - need to find unit by noaId
         if (player.data.ownerPlayer) {
-          console.log('item collide unit', this.noaEntityId, otherEntsId, player) 
+          console.log('item collide unit', this.noaEntityId, otherEntsId, player);
           player.equipItem(this);
           //disable pick up after collision with unit
           BOX.Engine.noa.entities.removeComponent(this.noaEntityId, BOX.Engine.noa.entities.names.collideEntities);
         }
-        
       }
     });
   }
@@ -52,13 +50,11 @@ export class Item extends Entity {
       //this.body.setPosition([playPos[0], playPos[1] + 0.5, playPos[2] + 2]);
 
       this.mesh.rotation = this.attachedTo.mesh.rotation;
-    } 
-    else { //NEED TO CHANGE LATER
+    } else {
+      //NEED TO CHANGE LATER
       this.mesh.rotation.x = 0;
       this.mesh.rotation.y = 0;
       this.mesh.rotation.z = 0;
-
     }
-
   }
 }

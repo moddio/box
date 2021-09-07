@@ -1,4 +1,4 @@
-import { Entity } from './entity';
+import { Entity } from './entity.js';
 
 export class Player extends Entity {
   constructor(data) {
@@ -67,8 +67,10 @@ export class Player extends Entity {
   }
 
   destroy() {
-    delete BOX.Engine.clients[this.id];
-    super.destroy();
+    if (window) {
+      delete BOX.Engine.clients[this.id];
+      super.destroy();
+    }
   }
 
   tick() {

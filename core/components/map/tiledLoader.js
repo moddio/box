@@ -1,5 +1,5 @@
-import { tiledSaver } from "./tiledSaver";
-import saveMapButton from "../editor/ui/mapSaver";
+import { tiledSaver } from './tiledSaver.js';
+import saveMapButton from '../editor/ui/mapSaver.js';
 
 export let savingMap = {};
 

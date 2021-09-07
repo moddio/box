@@ -1,18 +1,14 @@
-import { Engine as boxEngine } from './engine';
-import { io } from 'socket.io-client';
-import { Player as importedPlayer } from './player';
-import { Unit as importedUnit } from './unit';
-import { Mesh as noaMesh } from '@babylonjs/core/Meshes/mesh';
-import { Projectile as importProjectile } from './projectile';
-import { Region as importRegion } from './region';
-import { Item as importItem } from './item';
-import { MovementState, applyMovementPhysics } from '../core/components/movement';
+import { Engine as boxEngine } from './engine.js';
+import { Player as importedPlayer } from './player.js';
+import { Unit as importedUnit } from './unit.js';
+import { Projectile as importProjectile } from './projectile.js';
+import { Region as importRegion } from './region.js';
+import { Item as importItem } from './item.js';
 
-export var isClient = window ? true : false;
-export const socket = io('http://localhost:3001');
+export var isClient = !global.isServer ? true : false;
 export const components = {};
 export var developerMode = {};
-export const Mesh = noaMesh;
+export const Mesh = noaMesh ? Mesh : false;
 export var isServer = !isClient;
 export const Engine = new boxEngine();
 export const Player = importedPlayer;

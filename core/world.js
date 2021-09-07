@@ -1,6 +1,6 @@
 import map from '../config/map/map.json';
-import loadMap from './components/map/tiledLoader';
-import loadRegions from './components/map/regionLoader';
+import loadMap from './components/map/tiledLoader.js';
+import loadRegions from './components/map/regionLoader.js';
 
 var blocksState;
 
