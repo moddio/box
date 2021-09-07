@@ -1,4 +1,5 @@
 import { Entity } from './entity';
+import * as BABYLON from '@babylonjs/core';
 
 export class Unit extends Entity {
   constructor(data) {
@@ -158,6 +159,44 @@ export class Unit extends Entity {
 
         //this.attachItem(item)
     //}
+
+    /*shoot () {
+      //const target = noa.pick(pos, vec, dist, blockTestFunction);
+      /*const target = noa.pick();
+      console.log(target);*/
+      /*this.mesh.isPickable = false;
+
+      const scene = BOX.Engine.noa.rendering.getScene();
+
+      var origin = this.mesh.position;
+	
+	    var forward = new BABYLON.Vector3(0,0,1);		
+	    forward = this.vecToLocal(forward, this.mesh);
+	
+	    var direction = forward.subtract(origin);
+	    direction = BABYLON.Vector3.Normalize(direction);
+	
+	    var length = 100;
+	
+	    var ray = new BABYLON.Ray(origin, direction);
+
+		  let rayHelper = new BABYLON.RayHelper(ray);		
+		  rayHelper.show(scene);		
+
+        var hit = scene.pickWithRay(ray);
+        console.log(hit)*/
+
+        /*if (hit.pickedMesh){
+		   
+	    }*/
+    //}
+
+    vecToLocal(vector, mesh){
+      var m = mesh.getWorldMatrix();
+      var v = BABYLON.Vector3.TransformCoordinates(vector, m);
+  return v;		 
+  }
+  
   
     equipItem (item) {
       if (!item.attachedTo) {

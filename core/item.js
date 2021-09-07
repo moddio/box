@@ -45,7 +45,7 @@ export class Item extends Entity {
     super.tick();
 
     if (this.attachedTo) {
-      console.log('attached');
+      //console.log('attached');
 
       //var playPos = BOX.Engine.noa.entities.getPosition(1);
       //var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
