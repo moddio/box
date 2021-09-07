@@ -7,6 +7,9 @@ var buildPath = path.resolve('src');
 
 export default env => ({
   mode: env && env.prod ? 'production' : 'development',
+  experiments: {
+    topLevelAwait: true
+  },
 
   plugins: [
     new webpack.ProvidePlugin({

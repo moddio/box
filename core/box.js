@@ -1,14 +1,15 @@
 import { Engine as boxEngine } from './engine.js';
 import { Player as importedPlayer } from './player.js';
 import { Unit as importedUnit } from './unit.js';
+import { Mesh as noaMesh } from '@babylonjs/core/Meshes/mesh.js';
 import { Projectile as importProjectile } from './projectile.js';
 import { Region as importRegion } from './region.js';
 import { Item as importItem } from './item.js';
 
-export var isClient = !global.isServer ? true : false;
+export var isClient = window ? true : false;
 export const components = {};
 export var developerMode = {};
-export const Mesh = noaMesh ? Mesh : false;
+export const Mesh = noaMesh;
 export var isServer = !isClient;
 export const Engine = new boxEngine();
 export const Player = importedPlayer;

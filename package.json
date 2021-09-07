@@ -1,5 +1,6 @@
 {
   "name": "mode3d",
+  "experiments.topLevelAwait": true,
   "type": "module",
   "module": "modules",
   "version": "0.0.0",

@@ -11,6 +11,7 @@ const io = new Server(server, {
 import { ServerNetworkEvents } from '../core/components/network/serverNetworkEvent.js';
 
 global.isServer = true;
+global.isClient = false;
 
 server.listen(3001, () => {
   console.log('listening on *:3001');

@@ -1,6 +1,8 @@
-// Engine
-if (!global.isServer) {
-  import { Engine as noaEngine } from 'noa-engine';
+// import noa in a condition if only server
+var noaEngine = false;
+if (global.isClient) {
+  var module = await import('noa-engine');
+  noaEngine = module.noaEngine;
 }
 
 import config from '../config/config.json';
