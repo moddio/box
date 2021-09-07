@@ -86,6 +86,16 @@ class ControlComponent extends Component {
             else scene.debugLayer.hide();
           });
           break;
+          case 't':
+            if (unit) {
+              unit.components.Attribute.recieveDamage(10);
+            }
+          break;
+          case 'y':
+            if (unit) {
+              unit.components.Attribute.recieveHeal(15);
+            }
+          break;
       }
     }
   }

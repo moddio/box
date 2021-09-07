@@ -1,4 +1,5 @@
 import { Entity } from './entity';
+import { } from '../core/components/attribute'
 import * as BABYLON from '@babylonjs/core';
 
 export class Unit extends Entity {
@@ -34,6 +35,8 @@ export class Unit extends Entity {
         csp: true // this unit's owner player will ignore the server streaming received for his own unit
       };
     }
+
+    this.addComponent('Attribute');
   }
 
   /*showCrosshair() {
@@ -227,6 +230,10 @@ export class Unit extends Entity {
 
   resetPosition() {
     this.body.setPosition([10, 10, 10]);
+  }
+
+  die () {
+
   }
 
   destroy() {
