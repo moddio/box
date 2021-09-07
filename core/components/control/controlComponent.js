@@ -88,12 +88,12 @@ class ControlComponent extends Component {
           break;
           case 't':
             if (unit) {
-              unit.components.Attribute.recieveDamage(10);
+              unit.components.Attribute.receiveDamage(10);
             }
           break;
           case 'y':
             if (unit) {
-              unit.components.Attribute.recieveHeal(15);
+              unit.components.Attribute.receiveHeal(15);
             }
           break;
       }

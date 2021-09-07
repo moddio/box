@@ -8,10 +8,10 @@ class Attribute extends Component {
     this.hp = this.maxHp;
   }
 
-  recieveDamage(damage) {
+  receiveDamage(damage) {
     if (this.hp > 0) {
       this.hp = this.hp - damage;
-      console.log(this.parent.id, 'recieve', damage, 'damage, total hp: ', this.hp);
+      console.log(this.parent.id, 'receive', damage, 'damage, total hp: ', this.hp);
       if (this.hp <= 0) {
         console.log(this.parent.id, 'is dead');
         this.parent.die();
@@ -19,7 +19,7 @@ class Attribute extends Component {
     }
   }
 
-  recieveHeal(heal) {
+  receiveHeal(heal) {
     if (this.maxHp < this.hp + heal) this.hp = this.maxHp;
     else this.hp = this.hp + heal;
     console.log(this.parent.id, 'gain', heal, 'hp, total hp: ', this.hp);
