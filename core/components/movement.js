@@ -8,8 +8,6 @@ const state = {
 var checker = 0;
 
 const system = (dt, states) => {
-
-
   // var bodyPlayer = BOX.Engine.noa.entities.getPhysicsBody(1);
   // var meshData = BOX.Engine.noa.entities.getMeshData(1);
   // var playerPos = BOX.Engine.noa.entities.getPosition(1);
@@ -21,15 +19,12 @@ const system = (dt, states) => {
   //   Math.abs(bodyPlayer.velocity[2]) > states[elem]["maxVelocity"]
   //     ? (states[elem]["faster"] = true)
   //     : (states[elem]["faster"] = false);
-
   //   states[elem]["jumpping"] = bodyPlayer.atRestY() < 0 ? true : false;
-
   //   /**
   //       states[elem]["jumpping"]
   //     ? (states[elem]["maxVelocity"] = 7)
   //     : (states[elem]["maxVelocity"] = 0.5);
   //    */
-
   //   if (states[elem]["__id"] === 1) {
   //     bodyPlayer.gravityMultiplier = 2;
   //     if (BOX.inputs.state["shoot-ball"]) {
@@ -37,10 +32,8 @@ const system = (dt, states) => {
   //       this.shootProjectile();
   //       **/
   //     }
-
   //     let current = BOX.Engine.noa.camera.heading;
   //     // console.log("logging state ", BOX.Engine.noa.entities);
-
   //     if (checker > current) {
   //       // ------------- rotation LOG ---------------------
   //       console.log("log the issue", checker - current);
@@ -54,16 +47,12 @@ const system = (dt, states) => {
   //       // meshData.mesh.rotation.y = current;
   //     }
   //     checker = current;
-
   //     //idex--;
-
   //     // handle physics boundary
-
   //     let angle = BOX.Engine.noa.camera.heading;
   //     let force = 2;
   //     let y = force * Math.cos(angle);
   //     let x = force * Math.sin(angle);
-
   //     //console.log("player position", meshData.mesh.rotatePOV(0, current, 0));
   //     if (playerPos[0] <= 0.9 && states[elem]["velocity"] > 3) {
   //       bodyPlayer.friction = 1000;
@@ -82,13 +71,14 @@ const system = (dt, states) => {
   //       bodyPlayer.friction = 1000;
   //       bodyPlayer.gravityMultiplier = 1000;
   //     }
-
   //   }
   // }
 };
 
-export const movementComp = {
-  name: "entityMovement",
+const movementComp = {
+  name: 'entityMovement',
   state: state,
-  system: system,
+  system: system
 };
+
+module.exports = { movementComp };

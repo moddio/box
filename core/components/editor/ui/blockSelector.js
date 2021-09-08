@@ -1,4 +1,4 @@
-import { diamond, gold, tree, dirt } from '../../../utils/textures.js';
+const { diamond, gold, tree, dirt } = require('../../../utils/textures');
 
 //Socket import
 //import { playersDataEvent } from "../../../networking/clientNetworkEvent";
@@ -94,4 +94,4 @@ const blockSelector = (noa, socket) => {
   });
 };
 
-export default blockSelector;
+module.exports = blockSelector;

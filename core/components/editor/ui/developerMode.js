@@ -1,6 +1,6 @@
-import map from '/config/map/map.json';
-import { savingMap } from '/core/components/map/tiledLoader.js'; // <- get rid of this
-import { Component } from '../../component.js';
+const map = require('/config/map/map.json');
+const { savingMap } = require('/core/components/map/tiledLoader'); // <- get rid of this
+const { Component } = require('../../component');
 
 class DeveloperMode extends Component {
   constructor(parent) {
@@ -86,4 +86,4 @@ class DeveloperMode extends Component {
   }
 }
 
-export default DeveloperMode;
+module.exports = DeveloperMode;

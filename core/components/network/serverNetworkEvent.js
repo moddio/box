@@ -1,5 +1,4 @@
-import BOX from '../../box.js';
-export class ServerNetworkEvents {
+class ServerNetworkEvents {
   constructor(io) {
     this.playerConnected = [];
     this.units = [];
@@ -46,3 +45,5 @@ export class ServerNetworkEvents {
     }
   }
 }
+
+module.exports = { ServerNetworkEvents };

@@ -1,4 +1,4 @@
-export class Entity {
+class Entity {
   constructor(data = {}, isEngine) {
     this.data = data;
     this.type = data.type;
@@ -20,7 +20,7 @@ export class Entity {
     }
 
     if (!isEngine) {
-      global.isServer ? (BOX.Engine.entities[this.id] = this) : '';
+      BOX.Engine.entities[this.id] = this;
       if (BOX.isServer) {
         if (this.streamMode && this.streamMode.enabled) {
           BOX.Engine.components['NetworkComponent'].broadcast('createEntity', this.data); // use this.data because it contains id
@@ -202,3 +202,5 @@ export class Entity {
   //
   // } else {
 }
+
+module.exports = { Entity };

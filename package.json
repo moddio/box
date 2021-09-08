@@ -1,13 +1,10 @@
 {
   "name": "mode3d",
-  "experiments.topLevelAwait": true,
-  "type": "module",
-  "module": "modules",
   "version": "0.0.0",
   "description": "Starter code",
   "scripts": {
     "client": " webpack serve",
-    "server": "nodemon --experimental-json-modules server/server.js",
+    "server": "nodemon server/server.js",
     "build": "rm -f docs/core/*.js*; cd src/core && webpack --env prod"
   },
   "author": "mod3d",

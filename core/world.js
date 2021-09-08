@@ -1,6 +1,6 @@
-import map from '../config/map/map.json';
-import loadMap from './components/map/tiledLoader.js';
-import loadRegions from './components/map/regionLoader.js';
+const map = require('../config/map/map.json');
+const loadMap = require('./components/map/tiledLoader');
+const loadRegions = require('./components/map/regionLoader');
 
 var blocksState;
 
@@ -26,6 +26,7 @@ const generateWorld = () => {
   );*/
 
   // 3D person perspective camera
+  console.log('cheking box inside engine', BOX);
   BOX.Engine.noa.camera.zoomDistance = 8;
 
   //generate material for each texture in tile sheet
@@ -147,4 +148,4 @@ const generateWorld = () => {
   item.allowPickUp();
 };
 
-export default generateWorld;
+module.exports = generateWorld;

@@ -1,4 +1,4 @@
-import * as components from '../config/components.json';
+const components = require('../config/components.json');
 
 // Getting data from json
 var loading = {};
@@ -12,5 +12,6 @@ for (let elem in loading) {
   loadedComponents[elem] = require(loading[elem] + '').default;
 }
 
-// Loading all component in components.json file
-export { loadedComponents };
+module.exports = {
+  loadedComponents: { loadedComponents }
+};

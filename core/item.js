@@ -1,6 +1,6 @@
-import { Entity } from './entity.js';
+const { Entity } = require('./entity');
 
-export class Item extends Entity {
+class Item extends Entity {
   constructor(data) {
     data.type = 'item';
     super(data);
@@ -58,3 +58,5 @@ export class Item extends Entity {
     }
   }
 }
+
+module.exports = { Item };

@@ -1,6 +1,6 @@
-import { Entity } from './entity.js';
+const { Entity } = require('./entity');
 
-export class Region extends Entity {
+class Region extends Entity {
   constructor(data) {
     data.type = 'region';
     super(data); // run Entity's constructor
@@ -44,4 +44,4 @@ export class Region extends Entity {
   }
 }
 
-export default Region;
+module.exports = Region;

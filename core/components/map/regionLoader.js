@@ -45,4 +45,4 @@ function loadRegions(map) {
   //console.log('FIND ENTITY BY NAME' , BOX.Engine.getEntityByName("player_spawn"));
 }
 
-export default loadRegions;
+module.exports = loadRegions;

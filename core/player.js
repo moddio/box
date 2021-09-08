@@ -1,6 +1,6 @@
-import { Entity } from './entity.js';
+const { Entity } = require('./entity');
 
-export class Player extends Entity {
+class Player extends Entity {
   constructor(data) {
     data.type = 'player';
     super(data);
@@ -67,10 +67,8 @@ export class Player extends Entity {
   }
 
   destroy() {
-    if (window) {
-      delete BOX.Engine.clients[this.id];
-      super.destroy();
-    }
+    delete BOX.Engine.clients[this.id];
+    super.destroy();
   }
 
   tick() {
@@ -78,3 +76,5 @@ export class Player extends Entity {
     // console.log("this is running now");
   }
 }
+
+module.exports = { Player };

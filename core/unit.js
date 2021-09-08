@@ -1,6 +1,6 @@
-import { Entity } from './entity.js';
+const { Entity } = require('./entity');
 
-export class Unit extends Entity {
+class Unit extends Entity {
   constructor(data) {
     data.type = 'unit';
     super(data); // run Entity's constructor
@@ -229,4 +229,4 @@ export class Unit extends Entity {
   }
 }
 
-export default Unit;
+module.exports = Unit;

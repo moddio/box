@@ -1,60 +1,64 @@
-import { Engine as boxEngine } from './engine.js';
-import { Player as importedPlayer } from './player.js';
-import { Unit as importedUnit } from './unit.js';
-import { Mesh as noaMesh } from '@babylonjs/core/Meshes/mesh.js';
-import { Projectile as importProjectile } from './projectile.js';
-import { Region as importRegion } from './region.js';
-import { Item as importItem } from './item.js';
+const { Engine: boxEngine } = require('./engine');
+const { io } = require('socket.io-client');
+const { Player: importedPlayer } = require('./player');
+const { Unit: importedUnit } = require('./unit');
+const { Mesh: noaMesh } = require('@babylonjs/core/Meshes/mesh');
+const { Projectile: importProjectile } = require('./projectile');
+const { Region: importRegion } = require('./region');
+const { Item: importItem } = require('./item');
 
-export var isClient = window ? true : false;
-export const components = {};
-export var developerMode = {};
-export const Mesh = noaMesh;
-export var isServer = !isClient;
-export const Engine = new boxEngine();
-export const Player = importedPlayer;
-export const Unit = importedUnit;
-export const Projectile = importProjectile;
-export const Region = importRegion;
-export const Item = importItem;
-export const edgeMap = {
-  maxWidth: 20,
-  maxHeight: 20,
-  minHeight: 0,
-  minWidth: 0
-};
-export const control = {};
+module.exports = BOX = {
+  isClient: window ? true : false,
 
-// This shouldn't be inside box.js...
-export const collision = (id, otherEntsId) => {
-  let entityOne = BOX.Engine.noa.entities.getPosition(id);
-  let entityTwo = BOX.Engine.noa.entities.getPosition(otherEntsId);
-  let bodyPlayer = BOX.Engine.noa.entities.getPhysicsBody(1);
-  let bodyBall = BOX.Engine.noa.entities.getPhysicsBody(id);
-  var check;
+  socket: io('http://localhost:3001'),
+  components: {},
+  developerMode: {},
+  Mesh: noaMesh,
+  isServer: !BOX.isClient,
+  Engine: boxEngine,
+  Player: importedPlayer,
+  Unit: importedUnit,
+  Projectile: importProjectile,
+  Region: importRegion,
+  Item: importItem,
+  edgeMap: {
+    maxWidth: 20,
+    maxHeight: 20,
+    minHeight: 0,
+    minWidth: 0
+  },
+  control: {},
 
-  console.log('ball velocity', bodyBall.velocity);
+  // This shouldn't be inside box.js...
+  collision: (id, otherEntsId) => {
+    let entityOne = BOX.Engine.noa.entities.getPosition(id);
+    let entityTwo = BOX.Engine.noa.entities.getPosition(otherEntsId);
+    let bodyPlayer = BOX.Engine.noa.entities.getPhysicsBody(1);
+    let bodyBall = BOX.Engine.noa.entities.getPhysicsBody(id);
+    var check;
 
-  // checking the speed of the player and the ball
-  if (Math.abs(bodyPlayer.velocity[2]) + Math.abs(bodyBall.velocity[2]) > 7 || Math.abs(bodyPlayer.velocity[1]) + Math.abs(bodyBall.velocity[1]) > 7 || Math.abs(bodyPlayer.velocity[0]) + Math.abs(bodyBall.velocity[0]) > 7) {
-    check = 20;
-  } else {
-    // cheking the speed of the player and applying bigger impulse on higher speed
-    Math.abs(bodyPlayer.velocity[0]) > 6 || Math.abs(bodyPlayer.velocity[1]) > 6 || Math.abs(bodyPlayer.velocity[2]) > 6 ? (check = 7 * (bodyPlayer.velocity[0] + bodyPlayer.velocity[1] + bodyPlayer.velocity[2])) : (check = 7);
-  }
+    console.log('ball velocity', bodyBall.velocity);
 
-  let impulse = [];
-  for (let i = 0; i < 3; i++) {
-    impulse[i] = check * (entityOne[i] - entityTwo[i]);
-  }
-  let body = BOX.Engine.noa.entities.getPhysicsBody(id);
-  body.applyImpulse(impulse);
-};
+    // checking the speed of the player and the ball
+    if (Math.abs(bodyPlayer.velocity[2]) + Math.abs(bodyBall.velocity[2]) > 7 || Math.abs(bodyPlayer.velocity[1]) + Math.abs(bodyBall.velocity[1]) > 7 || Math.abs(bodyPlayer.velocity[0]) + Math.abs(bodyBall.velocity[0]) > 7) {
+      check = 20;
+    } else {
+      // cheking the speed of the player and applying bigger impulse on higher speed
+      Math.abs(bodyPlayer.velocity[0]) > 6 || Math.abs(bodyPlayer.velocity[1]) > 6 || Math.abs(bodyPlayer.velocity[2]) > 6 ? (check = 7 * (bodyPlayer.velocity[0] + bodyPlayer.velocity[1] + bodyPlayer.velocity[2])) : (check = 7);
+    }
 
-export const inputs = require('game-inputs')();
-/**
+    let impulse = [];
+    for (let i = 0; i < 3; i++) {
+      impulse[i] = check * (entityOne[i] - entityTwo[i]);
+    }
+    let body = BOX.Engine.noa.entities.getPhysicsBody(id);
+    body.applyImpulse(impulse);
+  },
 
-export const movementComp = BOX.Engine.noa.entities.createComponent({
+  inputs: require('game-inputs')()
+  /**
+
+ const movementComp = BOX.Engine.noa.entities.createComponent({
   name: "movemen",
   order: 30,
 
@@ -75,10 +79,4 @@ export const movementComp = BOX.Engine.noa.entities.createComponent({
 });
 
  */
-
-export const entityTick = Engine.noa.entities.createComponent({
-  name: 'entityTick',
-  order: 1,
-  states: {},
-  system: Engine.entityTick
-});
+};

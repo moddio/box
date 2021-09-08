@@ -1,6 +1,6 @@
-import * as BABYLON from '@babylonjs/core';
+const BABYLON = require('@babylonjs/core');
 
-import { Component } from './component.js';
+const { Component } = require('./component');
 
 class NameLabel extends Component {
   constructor(parent) {
@@ -9,7 +9,7 @@ class NameLabel extends Component {
     console.log('kkkkkkkkkkkkkkk', parent);
 
     //ownerID has noa entity id and id of the entity given by us
-    this.ownerId = { noaID: parent.noaEntityId, id: parent.id };
+    this.ownerId = { noaID: parent.mainUnit.noaEntityId || parent.noaEntityId, id: parent.id };
     this.ownerName = parent.name;
 
     this.showNameLabel();
@@ -61,4 +61,4 @@ class NameLabel extends Component {
   }
 }
 
-export default NameLabel;
+module.exports = NameLabel;

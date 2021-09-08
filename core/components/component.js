@@ -1,4 +1,4 @@
-export class Component {
+class Component {
   constructor(parent) {
     this.parent = parent;
   }
@@ -7,3 +7,5 @@ export class Component {
     //console.log('tick called')
   }
 }
+
+module.exports = { Component };

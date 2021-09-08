@@ -1,25 +1,15 @@
-import express from 'express';
+const express = require('express');
 const app = express();
-import { Server } from 'socket.io';
-import http from 'http';
+const { Server } = require('socket.io');
+const http = require('http');
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: '*'
   }
 });
-import { ServerNetworkEvents } from '../core/components/network/serverNetworkEvent.js';
-
-global.isServer = true;
-global.isClient = false;
-
-server.listen(3001, () => {
-  console.log('listening on *:3001');
-});
-
-// start server networking
-console.log('start');
-const network = new ServerNetworkEvents(io);
+const hello = require('../src/client');
+console.log('oooooooooooo', hello);
 /**
  var BABYLON = require("babylonjs");
 

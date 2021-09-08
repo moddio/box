@@ -1,12 +1,12 @@
-import { clientNetworking } from '../core/components/network/clientNetworkEvent.js';
+console.log('logging the box', BOX);
+const { clientNetworking } = require('../core/components/network/clientNetworkEvent');
 
-global.isServer = false;
-global.isClient = true;
-// USE THIS ON DEBUG MODE ONLY NOT IN PRODUCTION
-global.BOX = BOX;
+console.log('logging the box', BOX.Engine.noa);
 
-var engine = BOX.Engine;
-engine.start();
+let start = new BOX.Engine();
+BOX.Engine = start;
+
+start.start();
 
 // BOX.Engine.components['NetworkComponent'].connect(serverIP, function(data) {
 

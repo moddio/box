@@ -1,4 +1,4 @@
-import { savingMap } from '../../map/tiledLoader.js';
+const { savingMap } = require('../../map/tiledLoader');
 
 const saveMapButton = () => {
   const saveMapEvent = document.querySelector('.save-map-button');
@@ -32,4 +32,4 @@ const saveMapButton = () => {
   });
 };
 
-export default saveMapButton;
+module.exports = saveMapButton;

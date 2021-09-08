@@ -34,7 +34,7 @@ class ServerNetworkComponent {
             playerPositionChecker = [...playerPosition];
             // update the snapshot with new player position
             this.snapshot[0].position = [...playerPosition];
-            console.log("the player of the entity with id === 1 has moved");
+            console.log('the player of the entity with id === 1 has moved');
           }
         }
       }
@@ -42,4 +42,4 @@ class ServerNetworkComponent {
   }
 }
 
-export default ServerNetworkComponent;
+module.exports = ServerNetworkComponent;

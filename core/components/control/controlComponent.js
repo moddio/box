@@ -1,4 +1,4 @@
-import { Component } from '../component.js';
+const { Component } = require('../component');
 
 class ControlComponent extends Component {
   constructor(parent) {
@@ -111,4 +111,4 @@ class ControlComponent extends Component {
   }
 }
 
-export default ControlComponent;
+module.exports = ControlComponent;

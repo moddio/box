@@ -1,7 +1,7 @@
-import { tiledSaver } from './tiledSaver.js';
-import saveMapButton from '../editor/ui/mapSaver.js';
+const { tiledSaver } = require('./tiledSaver');
+const saveMapButton = require('../editor/ui/mapSaver');
 
-export let savingMap = {};
+let savingMap = {};
 
 function loadMap(map, data, tiles, invisibleBlock) {
   let height = map.height;
@@ -50,4 +50,6 @@ function loadMap(map, data, tiles, invisibleBlock) {
   });
 }
 
-export default loadMap;
+// exports node modules
+module.exports = { savingMap };
+module.exports = loadMap;
