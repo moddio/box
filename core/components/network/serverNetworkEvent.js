@@ -3,6 +3,7 @@ class ServerNetworkEvents {
     this.playerConnected = [];
     this.units = [];
     io.on('connection', socket => {
+      console.log('vvvvvvvvvvvvvvv');
       // Getting the player data on first connection
       socket.on('player-entity', data => {
         this.playerConnected.push(data);

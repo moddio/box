@@ -42,4 +42,4 @@ class ServerNetworkComponent {
   }
 }
 
-module.exports = ServerNetworkComponent;
+module.exports = { ServerNetworkComponent };

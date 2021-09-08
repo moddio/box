@@ -1,12 +1,10 @@
-console.log('logging the box', BOX);
+require('../core/box');
 const { clientNetworking } = require('../core/components/network/clientNetworkEvent');
 
-console.log('logging the box', BOX.Engine.noa);
+let engine = new BOX.Engine();
+BOX.Engine = engine;
 
-let start = new BOX.Engine();
-BOX.Engine = start;
-
-start.start();
+engine.start();
 
 // BOX.Engine.components['NetworkComponent'].connect(serverIP, function(data) {
 

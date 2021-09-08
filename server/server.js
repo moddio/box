@@ -1,3 +1,4 @@
+global.isServer = true;
 const express = require('express');
 const app = express();
 const { Server } = require('socket.io');
@@ -8,8 +9,16 @@ const io = new Server(server, {
     origin: '*'
   }
 });
-const hello = require('../src/client');
-console.log('oooooooooooo', hello);
+
+const { ServerNetworkEvents } = require('../core/components/network/serverNetworkEvent');
+
+server.listen(3000, () => {
+  console.log('listening on *:3000');
+});
+
+// start server networking
+console.log('start');
+const network = new ServerNetworkEvents(io);
 /**
  var BABYLON = require("babylonjs");
 

@@ -10,21 +10,20 @@ const { Entity } = require('./entity.js');
 class Engine extends Entity {
   constructor() {
     super({}, true);
-    this.noa = new noaEngine(config);
+    if (BOX.isClient) {
+      this.noa = new noaEngine(config);
+      // remove inputs component for player and movement component
+      this.noa.entities.deleteComponent('receivesInputs');
+      this.noa.entities.deleteComponent('movement');
+    }
     this.entities = {};
     this.clients = {};
     this.myPlayer;
     this.currentTime = 0;
-
-    // remove inputs component for player and movement component
-    this.noa.entities.deleteComponent('receivesInputs');
-    this.noa.entities.deleteComponent('movement');
   }
 
   start() {
     var self = this;
-
-    console.log('check box', BOX);
 
     console.log('starting the noa engine...');
 
@@ -35,7 +34,7 @@ class Engine extends Entity {
 
     console.log('logging out the container', this.noa.container);
 
-    // this.addComponent("NetworkComponent")
+    this.addComponent('NetworkComponent');
 
     this.noa.camera.sensitivityX = 5;
     this.noa.camera.sensitivityY = 5;
@@ -44,6 +43,7 @@ class Engine extends Entity {
       // Update engine time on each tick
       self.engineStep();
     });
+    //this.addComponent('NetworkComponent');
   }
 
   loadMap(mapData) {}
@@ -94,6 +94,7 @@ class Engine extends Entity {
   addEntity(data) {
     let entityType = data.type;
     if (entityType) {
+      console.log('entity type pppppppppppppppppppppp', entityType);
       let entity = new BOX[entityType](data);
       return entity;
     } else {

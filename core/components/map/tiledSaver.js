@@ -42,4 +42,4 @@ class tiledSaver {
   }
 }
 
-module.exports = tiledSaver;
+module.exports = { tiledSaver };

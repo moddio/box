@@ -44,4 +44,4 @@ class Region extends Entity {
   }
 }
 
-module.exports = Region;
+module.exports = { Region };

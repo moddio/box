@@ -229,4 +229,4 @@ class Unit extends Entity {
   }
 }
 
-module.exports = Unit;
+module.exports = { Unit };

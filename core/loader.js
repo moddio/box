@@ -9,9 +9,9 @@ for (let elem in components) {
 // Loading modules from component data
 var loadedComponents = {};
 for (let elem in loading) {
-  loadedComponents[elem] = require(loading[elem] + '').default;
+  loadedComponents[elem] = require(loading[elem] + '');
 }
 
-module.exports = {
-  loadedComponents: { loadedComponents }
-};
+console.log('gggggggggggxxxxxxxxxxxxx', loadedComponents);
+
+module.exports = { ...loadedComponents };

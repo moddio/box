@@ -1,20 +1,27 @@
-const { Engine: boxEngine } = require('./engine');
-const { io } = require('socket.io-client');
+if (!global.isServer) {
+  var { Engine: boxEngine } = require('./engine');
+  var { Mesh: noaMesh } = require('@babylonjs/core/Meshes/mesh');
+  var { io } = require('socket.io-client');
+  var inputs = require('game-inputs')();
+} else {
+  var boxEngine = false;
+  var noaMesh = false;
+  var io = () => false;
+  var inputs = false;
+}
 const { Player: importedPlayer } = require('./player');
 const { Unit: importedUnit } = require('./unit');
-const { Mesh: noaMesh } = require('@babylonjs/core/Meshes/mesh');
 const { Projectile: importProjectile } = require('./projectile');
 const { Region: importRegion } = require('./region');
 const { Item: importItem } = require('./item');
 
 module.exports = BOX = {
-  isClient: window ? true : false,
-
+  isClient: !global.isServer ? true : false,
+  isServer: global.isServer ? true : false,
   socket: io('http://localhost:3001'),
   components: {},
   developerMode: {},
   Mesh: noaMesh,
-  isServer: !BOX.isClient,
   Engine: boxEngine,
   Player: importedPlayer,
   Unit: importedUnit,
@@ -55,28 +62,5 @@ module.exports = BOX = {
     body.applyImpulse(impulse);
   },
 
-  inputs: require('game-inputs')()
-  /**
-
- const movementComp = BOX.Engine.noa.entities.createComponent({
-  name: "movemen",
-  order: 30,
-
-  state: new MovementState(),
-
-  onAdd: null,
-
-  onRemove: null,
-
-  system: function movementProcessor(dt, states) {
-    var ents = BOX.Engine.noa.entities;
-    for (var i = 0; i < states.length; i++) {
-      var state = states[i];
-      var phys = BOX.Engine.noa.entities.getPhysics(state.__id);
-      applyMovementPhysics(dt, state, phys.body);
-    }
-  },
-});
-
- */
+  inputs
 };
