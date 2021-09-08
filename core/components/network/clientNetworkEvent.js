@@ -34,7 +34,6 @@ class clientNetworking extends NetworkComponent {
 
       // Getting all connected player data on first connection
       BOX.socket.on('players', data => {
-        console.log('this the players connected', data);
         data.forEach(element => {
           let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
           let spawnPosition = spawnRegion.getRandomPosition();

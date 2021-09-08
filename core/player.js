@@ -9,9 +9,6 @@ class Player extends Entity {
     this.isDeveloper = true; // can this player modify this game?
     this.devToolsEnabled = false; // show/hide dev tools. only developer can do this
 
-    //console.log("global", global.ControlComponent);
-    console.log(1);
-
     if (BOX.isServer) {
       console.log(2);
       // if human player, add to the list of clients
@@ -25,7 +22,6 @@ class Player extends Entity {
       }
       // add other player controls
     } else {
-      console.log(3);
       this.addComponent('ControlComponent');
       this.addComponent('DeveloperMode');
     }
@@ -42,7 +38,6 @@ class Player extends Entity {
   }
 
   createUnit() {
-    console.log('unit on progress');
     let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
     let spawnPosition = spawnRegion.getRandomPosition();
 

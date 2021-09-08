@@ -90,7 +90,6 @@ class Engine extends Entity {
   addEntity(data) {
     let entityType = data.type;
     if (entityType) {
-      console.log('entity type pppppppppppppppppppppp', entityType);
       let entity = new BOX[entityType](data);
       return entity;
     } else {

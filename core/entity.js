@@ -29,7 +29,6 @@ class Entity {
     }
 
     if (data.body) {
-      console.log('ttttttttttt', data);
       this.body = this.createBody(data.body);
     }
   }
@@ -102,8 +101,6 @@ class Entity {
   }
 
   addComponent(componentName) {
-    console.log('componentnameccccccccccccccccccc', componentName);
-    console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', loader[componentName]);
     this.components[componentName] = new loader[componentName](this);
   }
 

@@ -12,6 +12,4 @@ for (let elem in loading) {
   loadedComponents[elem] = require(loading[elem] + '');
 }
 
-console.log('gggggggggggxxxxxxxxxxxxx', loadedComponents);
-
 module.exports = { ...loadedComponents };

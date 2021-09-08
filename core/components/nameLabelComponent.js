@@ -6,7 +6,6 @@ class NameLabel extends Component {
   constructor(parent) {
     super(parent);
     this.label = {};
-    console.log('kkkkkkkkkkkkkkk', parent);
 
     //ownerID has noa entity id and id of the entity given by us
     this.ownerId = { noaID: parent.mainUnit.noaEntityId || parent.noaEntityId, id: parent.id };

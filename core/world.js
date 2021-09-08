@@ -26,7 +26,6 @@ const generateWorld = () => {
   );*/
 
   // 3D person perspective camera
-  console.log('cheking box inside engine', BOX);
   BOX.Engine.noa.camera.zoomDistance = 8;
 
   //generate material for each texture in tile sheet
