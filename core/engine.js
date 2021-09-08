@@ -27,14 +27,10 @@ class Engine extends Entity {
 
     console.log('starting the noa engine...');
 
-    // Generate the world
-    console.log('chekcing the noa object', BOX);
     generateWorld();
     const scene = this.noa.rendering.getScene();
 
-    console.log('logging out the container', this.noa.container);
-
-    this.addComponent('NetworkComponent');
+    // this.addComponent('NetworkComponent');
 
     this.noa.camera.sensitivityX = 5;
     this.noa.camera.sensitivityY = 5;

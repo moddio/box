@@ -3,9 +3,7 @@ const { NetworkComponent } = require('./networkComponent');
 class clientNetworking extends NetworkComponent {
   constructor() {
     super();
-    console.log('lllllllllllllllll', BOX.socket);
-    BOX.socket.io('connect', () => {
-      alert('hello');
+    BOX.socket.on('connect', () => {
       // BOX.socket.on('addEntity', data => {
       //   BOX.Engine.addEntity(data)
       // });

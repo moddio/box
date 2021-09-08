@@ -18,7 +18,7 @@ class Player extends Entity {
       if (data.isHuman) {
         BOX.Engine.clients[this.id] = this;
         // send the entire game's state data (all entites) to this player
-        BOX.Engine.components['NetworkComponent'].broadcast('gameState', BOX.Engine.getGameState(), this.clientId);
+        //BOX.Engine.components['NetworkComponent'].broadcast('gameState', BOX.Engine.getGameState(), this.clientId);
 
         this.addComponent('ControlComponent');
         this.addComponent('NetworkComponent');

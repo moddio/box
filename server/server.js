@@ -12,13 +12,13 @@ const io = new Server(server, {
 
 const { ServerNetworkEvents } = require('../core/components/network/serverNetworkEvent');
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+server.listen(3001, () => {
+  console.log('listening on *:3001');
 });
-
 // start server networking
 console.log('start');
 const network = new ServerNetworkEvents(io);
+
 /**
  var BABYLON = require("babylonjs");
 
