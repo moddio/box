@@ -10,8 +10,6 @@ const { Entity } = require('./entity.js');
 class Engine extends Entity {
   constructor() {
     super({}, true);
-    console.log('lllllllllllllllllllllllllllllllllll');
-    console.log('ppppppppppppppppppppppppppppppppppppppppp', BOX);
     if (BOX.isClient) {
       this.noa = new noaEngine(config);
       // remove inputs component for player and movement component
@@ -29,19 +27,20 @@ class Engine extends Entity {
 
     console.log('starting the noa engine...');
 
-    generateWorld();
-    const scene = this.noa.rendering.getScene();
+    if (BOX.isClient) {
+      generateWorld();
+      const scene = this.noa.rendering.getScene();
 
-    // this.addComponent('NetworkComponent');
+      // this.addComponent('NetworkComponent');
 
-    this.noa.camera.sensitivityX = 5;
-    this.noa.camera.sensitivityY = 5;
+      this.noa.camera.sensitivityX = 5;
+      this.noa.camera.sensitivityY = 5;
 
-    this.noa.on('tick', () => {
-      // Update engine time on each tick
-      self.engineStep();
-    });
-    //this.addComponent('NetworkComponent');
+      this.noa.on('tick', () => {
+        // Update engine time on each tick
+        self.engineStep();
+      });
+    }
   }
 
   loadMap(mapData) {}

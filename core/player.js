@@ -23,7 +23,7 @@ class Player extends Entity {
       // add other player controls
     } else {
       this.addComponent('ControlComponent');
-      this.addComponent('DeveloperMode');
+      if (BOX.isClient) { this.addComponent('DeveloperMode'); }
     }
 
     if (data.streamMode == undefined) {

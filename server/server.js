@@ -1,6 +1,7 @@
 global.isServer = true;
 global.isClient = false;
 module.exports = BOX = require('../core/box');
+module.exports = loader = require('../core/loader');
 const express = require('express');
 const app = express();
 const { Server } = require('socket.io');
@@ -19,6 +20,12 @@ server.listen(3001, () => {
 });
 // start server networking
 console.log('start');
+
+let engine = new BOX.Engine();
+BOX.Engine = engine;
+
+engine.start();
+
 const network = new ServerNetworkEvents(io);
 
 /**

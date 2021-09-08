@@ -9,7 +9,11 @@ for (let elem in components) {
 // Loading modules from component data
 var loadedComponents = {};
 for (let elem in loading) {
+ if (global.isServer && loading[elem] !== "./components/editor/ui/developerMode.js") {
   loadedComponents[elem] = require(loading[elem] + '');
+  console.log('LOADER', loading[elem])
+  }
 }
 
-module.exports = { ...loadedComponents };
+
+module.exports = loader = { loadedComponents };

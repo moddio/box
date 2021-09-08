@@ -101,7 +101,8 @@ class Entity {
   }
 
   addComponent(componentName) {
-    this.components[componentName] = new loader[componentName](this);
+    console.log('ADDING COMPONENT', loader)
+    this.components[componentName] = new loader.loadedComponents[componentName](this);
   }
 
   hasComponent(componentName) {

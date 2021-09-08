@@ -1,10 +1,22 @@
 class ServerNetworkEvents {
   constructor(io) {
-    console.log('1111111111111111111111111111111111', BOX);
-    let test = new BOX.Engine();
     this.playerConnected = [];
     this.units = [];
     io.on('connection', socket => {
+      console.log(BOX.Engine)
+      // creating the player entity on first connection
+      console.log('LOADER')
+      let data = {
+        type: 'Player',
+        isHuman: true,
+        name: socket.id,
+        socketID: socket.id
+      };
+
+      // Adding the entity player and unit on the first connection
+      const player = BOX.Engine.addEntity(data);
+      console.log(player);
+
       // Getting the player data on first connection
       socket.on('player-entity', data => {
         this.playerConnected.push(data);

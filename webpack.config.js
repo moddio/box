@@ -5,11 +5,11 @@ var buildPath = path.resolve('src');
 module.exports = env => ({
   mode: env && env.prod ? 'production' : 'development',
 
-  plugins: [
+  /*plugins: [
     new webpack.ProvidePlugin({
       loader: 'loader'
     })
-  ],
+  ],*/
 
   entry: ['./src/client.js'],
   output: {
@@ -20,7 +20,7 @@ module.exports = env => ({
   resolve: {
     alias: {
       '@babylonjs': path.resolve('node_modules/@babylonjs'),
-      loader: path.resolve(__dirname, 'core/loader')
+      //loader: path.resolve(__dirname, 'core/loader')
     }
   },
 
