@@ -1,4 +1,6 @@
 global.isServer = true;
+global.isClient = false;
+module.exports = BOX = require('../core/box');
 const express = require('express');
 const app = express();
 const { Server } = require('socket.io');

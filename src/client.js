@@ -1,3 +1,4 @@
+global.isClient = true;
 require('../core/box');
 const { clientNetworking } = require('../core/components/network/clientNetworkEvent');
 

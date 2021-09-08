@@ -1,15 +1,17 @@
 // Engine
-const { Engine: noaEngine } = require('noa-engine');
+const { Engine: noaEngine } = global.isClient ? require('noa-engine') : false;
+global.isClient ? require('./utils/state.min.js') : false;
 const config = require('../config/config.json');
 
 // Files
-require('./utils/state.min.js');
 const generateWorld = require('./world.js');
 const { Entity } = require('./entity.js');
 
 class Engine extends Entity {
   constructor() {
     super({}, true);
+    console.log('lllllllllllllllllllllllllllllllllll');
+    console.log('ppppppppppppppppppppppppppppppppppppppppp', BOX);
     if (BOX.isClient) {
       this.noa = new noaEngine(config);
       // remove inputs component for player and movement component

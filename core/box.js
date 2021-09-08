@@ -1,14 +1,13 @@
 if (!global.isServer) {
-  var { Engine: boxEngine } = require('./engine');
   var { Mesh: noaMesh } = require('@babylonjs/core/Meshes/mesh');
   var { io } = require('socket.io-client');
   var inputs = require('game-inputs')();
 } else {
-  var boxEngine = false;
   var noaMesh = false;
   var io = () => false;
   var inputs = false;
 }
+var { Engine: boxEngine } = require('./engine');
 const { Player: importedPlayer } = require('./player');
 const { Unit: importedUnit } = require('./unit');
 const { Projectile: importProjectile } = require('./projectile');

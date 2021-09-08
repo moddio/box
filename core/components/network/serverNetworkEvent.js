@@ -1,11 +1,10 @@
-const BOX = require('../../box');
 class ServerNetworkEvents {
   constructor(io) {
-    console.log('ls', BOX);
+    console.log('1111111111111111111111111111111111', BOX);
+    let test = new BOX.Engine();
     this.playerConnected = [];
     this.units = [];
     io.on('connection', socket => {
-      console.log('vvvvvvvvvvvvvvv');
       // Getting the player data on first connection
       socket.on('player-entity', data => {
         this.playerConnected.push(data);
