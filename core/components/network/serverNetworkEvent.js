@@ -3,9 +3,7 @@ class ServerNetworkEvents {
     this.playerConnected = [];
     this.units = [];
     io.on('connection', socket => {
-      console.log(BOX.Engine)
       // creating the player entity on first connection
-      console.log('LOADER')
       let data = {
         type: 'Player',
         isHuman: true,

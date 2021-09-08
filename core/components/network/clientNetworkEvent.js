@@ -4,6 +4,7 @@ class clientNetworking extends NetworkComponent {
   constructor() {
     super();
     BOX.socket.on('connect', () => {
+      console.log('CONNECTION COMPLETE')
       // BOX.socket.on('addEntity', data => {
       //   BOX.Engine.addEntity(data)
       // });

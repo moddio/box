@@ -1,5 +1,6 @@
 global.isClient = true;
 require('../core/box');
+module.exports = loader = require('../core/loader');
 const { clientNetworking } = require('../core/components/network/clientNetworkEvent');
 
 let engine = new BOX.Engine();

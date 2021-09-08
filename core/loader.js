@@ -9,8 +9,10 @@ for (let elem in components) {
 // Loading modules from component data
 var loadedComponents = {};
 for (let elem in loading) {
-  (global.isServer && loading[elem] === './components/control/controlComponent.js') || global.isClient ? (loadedComponents[elem] = require(loading[elem] + '')) : '';
-  console.log('LOADER', loading[elem]);
+ if (global.isClient && loading[elem] === "") {
+  loadedComponents[elem] = require(loading[elem] + '');
+  }
 }
+
 
 module.exports = loader = { loadedComponents };

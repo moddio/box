@@ -27,9 +27,13 @@ class Engine extends Entity {
 
     console.log('starting the noa engine...');
 
+    let scene = {};
+
     if (BOX.isClient) {
+      
       generateWorld();
-      const scene = this.noa.rendering.getScene();
+      
+      scene = this.noa.rendering.getScene();
 
       // this.addComponent('NetworkComponent');
 

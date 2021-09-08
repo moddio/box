@@ -10,19 +10,18 @@ class Player extends Entity {
     this.devToolsEnabled = false; // show/hide dev tools. only developer can do this
 
     if (BOX.isServer) {
-      console.log(2);
       // if human player, add to the list of clients
       if (data.isHuman) {
         BOX.Engine.clients[this.id] = this;
         // send the entire game's state data (all entites) to this player
         //BOX.Engine.components['NetworkComponent'].broadcast('gameState', BOX.Engine.getGameState(), this.clientId);
 
-        this.addComponent('ControlComponent');
-        this.addComponent('NetworkComponent');
+        //this.addComponent('ControlComponent');
+        //this.addComponent('NetworkComponent');
       }
       // add other player controls
     } else {
-      this.addComponent('ControlComponent');
+      if (BOX.isClient) {this.addComponent('ControlComponent'); }
       if (BOX.isClient) { this.addComponent('DeveloperMode'); }
     }
 

@@ -16,6 +16,7 @@ const getVoxelID = (x, y, z, { waterBlock, grassBlock }) => {
 };
 
 const generateWorld = () => {
+  
   //const scene = BOX.Engine.noa.rendering.getScene();
   /*const createAtlas = require("babylon-atlas");
   const atlas = createAtlas(
@@ -113,6 +114,7 @@ const generateWorld = () => {
 
   let check = 0;
   // Loading tiled map from map.json
+
   BOX.Engine.noa.world.on('worldDataNeeded', (id, data) => {
     if (check > 0) return;
     check++;
@@ -121,9 +123,9 @@ const generateWorld = () => {
     return;
   });
 
-  loadRegions(map);
+  //loadRegions(map);
 
-  let spawnRegion = BOX.Engine.getEntityByName('item_spawn');
+  /*let spawnRegion = BOX.Engine.getEntityByName('item_spawn');
   let spawnPosition = spawnRegion.getRandomPosition();
   const item = BOX.Engine.addEntity({
     type: 'Item',
@@ -144,7 +146,7 @@ const generateWorld = () => {
     }
   });
 
-  item.allowPickUp();
+  item.allowPickUp();*/
 };
 
 module.exports = generateWorld;
