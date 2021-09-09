@@ -8,7 +8,23 @@ class clientNetworking extends NetworkComponent {
         BOX.Engine.addEntity(data);
       });
 
+      //NOT WORKING YET
+      BOX.socket.on('removeEntity', entityId => {
+        BOX.Engine.removeEntity(entityId);
+      });
+
+      //MY SUGGESTION FOR CLIENT FIRST CONNECTION - NOT WORKING YET
+      BOX.socket.on('addAllEntities', data => {
+        data.forEach(element => {
+          BOX.Engine.addEntity(element);
+        }); 
+      });
+
       
+
+
+
+      //WILL BE REMOVED
 
       BOX.socket.on('remove-player', socketId => {
         this.removeEntity(socketId);
@@ -51,7 +67,7 @@ class clientNetworking extends NetworkComponent {
       });
 
       // Listen on new player connected
-      BOX.socket.on('newPlayer', playerData => {
+      /*BOX.socket.on('newPlayer', playerData => {
         const player = BOX.Engine.addEntity({
           type: 'Player',
           position: playerData.position,
@@ -71,9 +87,9 @@ class clientNetworking extends NetworkComponent {
             friction: 0
           }
         });
-        this.players[playerData.socketID] = player;
+        this.players[playerData.socketID] = player;*/
         //player.addComponent('NameLabelComponent');
-      });
+      //});
 
       // listen for new unit
       //BOX.socket.on('new-unit', data => {
