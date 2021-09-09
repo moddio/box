@@ -15,7 +15,6 @@ class clientNetworking extends NetworkComponent {
           let isMyUnit;
           if (playerData.socketID === BOX.socket.id) {
             isMyUnit = true;
-            console.log('MY UNIT', isMyUnit);
             const player = BOX.Engine.addEntity(playerData);
             player.createUnit(playerData.position);
           } else {
@@ -47,7 +46,6 @@ class clientNetworking extends NetworkComponent {
 
       // Listen on new player connected
       BOX.socket.on('newPlayer', playerData => {
-        console.log('GET NEW PLAYER', playerData);
         const player = BOX.Engine.addEntity({
           type: 'Player',
           position: playerData.position,

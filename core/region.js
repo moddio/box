@@ -7,8 +7,6 @@ class Region extends Entity {
     this.position = data.position;
     this.scaling = data.scaling;
 
-    console.log(this.position, this.scaling)
-
     /*if (data.streamMode == undefined) {
       this.streamMode = {
         enabled: true,
