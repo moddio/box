@@ -63,6 +63,7 @@ class Player extends Entity {
     this.noaEntityId = this.unit.noaEntityId;
 
     BOX.isClient ? this.addComponent('NameLabelComponent') : '';
+    return this.unit;
   }
 
   destroy() {

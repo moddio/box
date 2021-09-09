@@ -3,8 +3,14 @@ const { NetworkComponent } = require('./networkComponent');
 class clientNetworking extends NetworkComponent {
   constructor() {
     super();
+    this.players = {};
     BOX.socket.on('connect', () => {
       console.log('CONNECTION COMPLETE');
+      BOX.socket.on('remove-player', data => {
+        console.log('a player was removed cccccccccccccccccc', this.players);
+        BOX.Engine.removeEntity(BOX.socket.id, this.players[BOX.socket.id].noaEntityId);
+        delete this.players[BOX.socket.id];
+      });
       // BOX.socket.on('addEntity', data => {
       //   BOX.Engine.addEntity(data)
       // });
@@ -43,11 +49,10 @@ class clientNetworking extends NetworkComponent {
           let isMyUnit;
           if (playerData.socketID === BOX.socket.id) {
             isMyUnit = true;
-          console.log('MY UNIT', isMyUnit)
-          const player = BOX.Engine.addEntity(playerData);
-          player.createUnit(playerData.position);
-          }
-          else {
+            console.log('MY UNIT', isMyUnit);
+            const player = BOX.Engine.addEntity(playerData);
+            let playerUnit = player.createUnit(playerData.position);
+          } else {
             const player = BOX.Engine.addEntity({
               type: 'Player',
               position: playerData.position,
@@ -67,6 +72,7 @@ class clientNetworking extends NetworkComponent {
                 friction: 0
               }
             });
+            this.players[BOX.socket.id] = player;
             //player.addComponent('NameLabelComponent');
           }
 
@@ -91,7 +97,7 @@ class clientNetworking extends NetworkComponent {
           });*/
           //player.addComponent('NameLabelComponent');
 
-        /*data.forEach(element => {
+          /*data.forEach(element => {
           let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
           let spawnPosition = spawnRegion.getRandomPosition();
 
@@ -147,7 +153,7 @@ class clientNetworking extends NetworkComponent {
       });
 
       BOX.socket.on('newPlayer', playerData => {
-        console.log('GET NEW PLAYER', playerData)
+        console.log('GET NEW PLAYER', playerData);
         const player = BOX.Engine.addEntity({
           type: 'Player',
           position: playerData.position,
@@ -172,8 +178,8 @@ class clientNetworking extends NetworkComponent {
 
       // listen for new unit
       //BOX.socket.on('new-unit', data => {
-        //this.addUnit(data.position);
-        //this.addUnit()
+      //this.addUnit(data.position);
+      //this.addUnit()
       //});
     });
   }

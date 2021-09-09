@@ -1,11 +1,18 @@
 class ServerNetworkEvents {
   constructor(io) {
     this.players = {};
-    this.units = {};
+    this.units = [];
 
     io.on('connection', socket => {
+      // Handling diconnect of the players
+      socket.on('disconnect', () => {
+        console.log('loggint the player', this.units);
+        // Remove the player entity in the server
+        delete this.players[socket.id];
+        socket.broadcast.emit('remove-player', socket.id);
+      });
       // creating the player entity on first connection
-      console.log('CONNECTION', socket.id)
+      console.log('CONNECTION', socket.id);
       let data = {
         type: 'Player',
         isHuman: true,
@@ -19,7 +26,9 @@ class ServerNetworkEvents {
       let spawnPosition = spawnRegion.getRandomPosition();
       const unit = player.createUnit(spawnPosition);
 
-       console.log('DATA', data);
+      this.units.push(unit);
+
+      console.log('DATA', data);
       data.position = spawnPosition;
 
       this.players[socket.id] = data;
@@ -27,20 +36,11 @@ class ServerNetworkEvents {
 
       //this.units[socket.id]
 
-
       //console.log('player entity in the server', this.players[socket.id]);
 
       // Getting the player data on first connection
       socket.on('player-entity', data => {
         //this.playerConnected.push(data);
-        //console.log('this is the player entity data', this.playerConnected);
-      });
-
-      // Handling diconnect of the players
-      socket.on('disconnect', () => {
-        // Filter out the connected players
-        //this.playerConnected = this.playerConnected.filter(({ data }) => data.socketID !== socket.id);
-        console.log('player-disconnected', socket.id);
         //console.log('this is the player entity data', this.playerConnected);
       });
 
@@ -53,7 +53,6 @@ class ServerNetworkEvents {
       socket.on('new-unit', data => {
         //this.units.push(data);
         //console.log('new unit created', this.units);
-
         // Socket emit to online player new unit data
         //socket.broadcast.emit('new-unit', data);
       });
