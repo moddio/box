@@ -37,9 +37,9 @@ class Player extends Entity {
   }
 
   createUnit() {
-    //let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
-    //let spawnPosition = spawnRegion.getRandomPosition();
-    let spawnPosition = { x: 10, y: 10, z: 10 }
+    let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
+    let spawnPosition = spawnRegion.getRandomPosition();
+    //let spawnPosition = { x: 10, y: 10, z: 10 }
 
     this.unit = BOX.Engine.addEntity({
       type: 'Unit',

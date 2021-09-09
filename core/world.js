@@ -123,9 +123,9 @@ const generateWorld = () => {
     return;
   });
 
-  //loadRegions(map);
+  loadRegions(map);
 
-  /*let spawnRegion = BOX.Engine.getEntityByName('item_spawn');
+  let spawnRegion = BOX.Engine.getEntityByName('item_spawn');
   let spawnPosition = spawnRegion.getRandomPosition();
   const item = BOX.Engine.addEntity({
     type: 'Item',
@@ -146,7 +146,7 @@ const generateWorld = () => {
     }
   });
 
-  item.allowPickUp();*/
+  item.allowPickUp();
 };
 
 module.exports = generateWorld;
