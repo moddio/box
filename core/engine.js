@@ -7,6 +7,9 @@ const config = require('../config/config.json');
 const generateWorld = require('./world.js');
 const { Entity } = require('./entity.js');
 
+const loadRegions = require('./components/map/regionLoader'); //need to remove - for now its regions for server
+const map = require('../config/map/map.json');
+
 class Engine extends Entity {
   constructor() {
     super({}, true);
@@ -44,6 +47,9 @@ class Engine extends Entity {
         // Update engine time on each tick
         self.engineStep();
       });
+    }
+    else {
+      loadRegions(map);
     }
   }
 

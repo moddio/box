@@ -4,6 +4,10 @@ class Region extends Entity {
   constructor(data) {
     data.type = 'region';
     super(data); // run Entity's constructor
+    this.position = data.position;
+    this.scaling = data.scaling;
+
+    console.log(this.position, this.scaling)
 
     /*if (data.streamMode == undefined) {
       this.streamMode = {
@@ -20,14 +24,14 @@ class Region extends Entity {
 
   //get random position in region
   getRandomPosition() {
-    let Xrandom = Math.random() * this.mesh.scaling.x;
-    let Yrandom = Math.random() * this.mesh.scaling.y;
-    let Zrandom = Math.random() * this.mesh.scaling.z;
+    let Xrandom = Math.random() * this.scaling.x;
+    let Yrandom = Math.random() * this.scaling.y;
+    let Zrandom = Math.random() * this.scaling.z;
 
     let position = {
-      x: this.mesh.position.x + Xrandom - this.mesh.scaling.x / 2,
-      y: this.mesh.position.y + Yrandom - this.mesh.scaling.y / 2,
-      z: this.mesh.position.z + Zrandom - this.mesh.scaling.z / 2
+      x: this.position.x + Xrandom - this.scaling.x / 2,
+      y: this.position.y + Yrandom - this.scaling.y / 2,
+      z: this.position.z + Zrandom - this.scaling.z / 2
     };
 
     console.log('Random position', position);

@@ -28,9 +28,11 @@ class Entity {
       }
     }
 
-    if (data.body) {
-      this.body = this.createBody(data.body);
-    }
+    if(BOX.isClient) {
+      if (data.body) {
+        this.body = this.createBody(data.body);
+      }
+    } 
   }
 
   createBody(bodyData) {

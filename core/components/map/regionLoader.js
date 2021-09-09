@@ -7,6 +7,7 @@ function loadRegions(map) {
       name: value.name,
       position: value.position,
       doPhysics: false,
+      scaling: value.scaling,
       body: {
         offset: [0, 0.5, 0],
         type: 'CreateBox',
@@ -22,7 +23,7 @@ function loadRegions(map) {
     });
 
     //console.log('CREATING REGION', region.name);
-    region.mesh.visibility = 0;
+    if (BOX.isClient) region.mesh.visibility = 0;
 
     /*BOX.Engine.noa.entities.addComponent(region.noaEntityId, BOX.Engine.noa.entities.names.collideEntities, {
       cylinder: true,
