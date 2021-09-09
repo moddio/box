@@ -33,9 +33,8 @@ class Engine extends Entity {
     let scene = {};
 
     if (BOX.isClient) {
-      
       generateWorld();
-      
+
       scene = this.noa.rendering.getScene();
 
       // this.addComponent('NetworkComponent');
@@ -47,8 +46,7 @@ class Engine extends Entity {
         // Update engine time on each tick
         self.engineStep();
       });
-    }
-    else {
+    } else {
       loadRegions(map);
     }
   }
@@ -110,7 +108,7 @@ class Engine extends Entity {
 
   removeEntity(id, noaID) {
     this.noa.entities.deleteEntity(noaID);
-    delete this.entityIds[id];
+    //delete this.entityIds[id];
   }
 }
 

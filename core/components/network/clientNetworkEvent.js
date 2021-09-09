@@ -3,13 +3,11 @@ const { NetworkComponent } = require('./networkComponent');
 class clientNetworking extends NetworkComponent {
   constructor() {
     super();
-    this.players = {};
+    this.playersNetworking = {};
     BOX.socket.on('connect', () => {
-      console.log('CONNECTION COMPLETE');
-      BOX.socket.on('remove-player', data => {
-        console.log('a player was removed cccccccccccccccccc', this.players);
-        BOX.Engine.removeEntity(BOX.socket.id, this.players[BOX.socket.id].noaEntityId);
-        delete this.players[BOX.socket.id];
+      BOX.socket.on('remove-player', socketId => {
+        BOX.Engine.removeEntity(socketId, this.playersNetworking[socketId].noaEntityId);
+        delete this.playersNetworking[socketId];
       });
       // BOX.socket.on('addEntity', data => {
       //   BOX.Engine.addEntity(data)
@@ -52,6 +50,7 @@ class clientNetworking extends NetworkComponent {
             console.log('MY UNIT', isMyUnit);
             const player = BOX.Engine.addEntity(playerData);
             let playerUnit = player.createUnit(playerData.position);
+            //this.playersNetworking[BOX.socket.id] = player;
           } else {
             const player = BOX.Engine.addEntity({
               type: 'Player',
@@ -72,7 +71,7 @@ class clientNetworking extends NetworkComponent {
                 friction: 0
               }
             });
-            this.players[BOX.socket.id] = player;
+            this.playersNetworking[playerData.socketID] = player;
             //player.addComponent('NameLabelComponent');
           }
 
@@ -173,6 +172,7 @@ class clientNetworking extends NetworkComponent {
             friction: 0
           }
         });
+        this.playersNetworking[playerData.socketID] = player;
         //player.addComponent('NameLabelComponent');
       });
 
