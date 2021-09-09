@@ -4,7 +4,7 @@ class clientNetworking extends NetworkComponent {
   constructor() {
     super();
     BOX.socket.on('connect', () => {
-      console.log('CONNECTION COMPLETE')
+      console.log('CONNECTION COMPLETE');
       // BOX.socket.on('addEntity', data => {
       //   BOX.Engine.addEntity(data)
       // });
@@ -30,7 +30,9 @@ class clientNetworking extends NetworkComponent {
       };
 
       // Adding the entity player and unit on the first connection
-      this.addEntity(data);
+      const player = BOX.Engine.addEntity(data);
+      player.createUnit();
+      console.log('client player', player);
       BOX.socket.emit('player-entity', { data });
 
       // Getting all connected player data on first connection

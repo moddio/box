@@ -13,7 +13,9 @@ class ServerNetworkEvents {
 
       // Adding the entity player and unit on the first connection
       const player = BOX.Engine.addEntity(data);
-      console.log(player);
+      player.createUnit();
+
+      console.log('player entity in the server', player);
 
       // Getting the player data on first connection
       socket.on('player-entity', data => {

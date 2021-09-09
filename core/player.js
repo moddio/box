@@ -21,8 +21,12 @@ class Player extends Entity {
       }
       // add other player controls
     } else {
-      if (BOX.isClient) {this.addComponent('ControlComponent'); }
-      if (BOX.isClient) { this.addComponent('DeveloperMode'); }
+      if (BOX.isClient) {
+        this.addComponent('ControlComponent');
+      }
+      if (BOX.isClient) {
+        this.addComponent('DeveloperMode');
+      }
     }
 
     if (data.streamMode == undefined) {
@@ -62,7 +66,7 @@ class Player extends Entity {
 
     this.noaEntityId = this.unit.noaEntityId;
 
-    this.addComponent('NameLabelComponent');
+    BOX.isClient ? this.addComponent('NameLabelComponent') : '';
   }
 
   destroy() {

@@ -21,6 +21,7 @@ class NetworkComponent extends Component {
   addEntity(data) {
     // Create my own unit by default
     let myPlayer = BOX.Engine.addEntity(data);
+    console.log('player entity in the client', myPlayer);
     myPlayer.createUnit();
 
     return myPlayer;
