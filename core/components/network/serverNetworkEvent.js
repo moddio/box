@@ -5,6 +5,7 @@ class ServerNetworkEvents {
 
     io.on('connection', socket => {
       // creating the player entity on first connection
+      console.log('CONNECTION', socket.id)
       let data = {
         type: 'Player',
         isHuman: true,
@@ -12,18 +13,14 @@ class ServerNetworkEvents {
         socketID: socket.id
       };
 
-      console.log(data);
-
       // Adding the entity player and unit on the first connection
       const player = BOX.Engine.addEntity(data);
       let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
       let spawnPosition = spawnRegion.getRandomPosition();
       const unit = player.createUnit(spawnPosition);
 
-       
+       console.log('DATA', data);
       data.position = spawnPosition;
-
-      data.type = 'Player';  //NEED TO FIX
 
       this.players[socket.id] = data;
       //console.log(data, this.players[socket.id])
@@ -31,7 +28,7 @@ class ServerNetworkEvents {
       //this.units[socket.id]
 
 
-      //console.log('player entity in the server', this.players);
+      //console.log('player entity in the server', this.players[socket.id]);
 
       // Getting the player data on first connection
       socket.on('player-entity', data => {
@@ -50,6 +47,7 @@ class ServerNetworkEvents {
       // On new connection the player will get all connected players
       socket.emit('players', this.players);
       //console.log(this.players)
+      socket.broadcast.emit('newPlayer', data);
 
       //listen for new unit created
       socket.on('new-unit', data => {
@@ -57,7 +55,7 @@ class ServerNetworkEvents {
         //console.log('new unit created', this.units);
 
         // Socket emit to online player new unit data
-        socket.broadcast.emit('new-unit', data);
+        //socket.broadcast.emit('new-unit', data);
       });
     });
 

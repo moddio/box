@@ -2,8 +2,8 @@ const { Entity } = require('./entity');
 
 class Player extends Entity {
   constructor(data) {
-    data.type = 'player';
     super(data);
+    data.type = 'Player';
     this.clientId = data.socketId;
 
     this.isDeveloper = true; // can this player modify this game?

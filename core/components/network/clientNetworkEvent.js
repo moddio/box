@@ -40,7 +40,6 @@ class clientNetworking extends NetworkComponent {
       // Getting all connected player data on first connection
       BOX.socket.on('players', playersData => {
         Object.values(playersData).forEach((playerData, index) => {
-          console.log(playerData);
           let isMyUnit;
           if (playerData.socketID === BOX.socket.id) {
             isMyUnit = true;
@@ -147,11 +146,35 @@ class clientNetworking extends NetworkComponent {
         }*/
       });
 
+      BOX.socket.on('newPlayer', playerData => {
+        console.log('GET NEW PLAYER', playerData)
+        const player = BOX.Engine.addEntity({
+          type: 'Player',
+          position: playerData.position,
+          isMyUnit: false,
+          ownerPlayer: null,
+          doPhysics: true,
+          name: playerData.name,
+          body: {
+            type: 'CreateBox',
+            offset: [0, 0.5, 0],
+            radius: 0.2,
+            width: 5,
+            height: 8,
+            roundShap: [null, null],
+            scaling: { x: 0.6, y: 1, z: 0.6 },
+            linearDamping: 0.5,
+            friction: 0
+          }
+        });
+        //player.addComponent('NameLabelComponent');
+      });
+
       // listen for new unit
-      BOX.socket.on('new-unit', data => {
+      //BOX.socket.on('new-unit', data => {
         //this.addUnit(data.position);
         //this.addUnit()
-      });
+      //});
     });
   }
 }
