@@ -3,10 +3,11 @@ const { Component } = require('../component');
 class NetworkComponent extends Component {
   constructor(parent) {
     super(parent);
+    this.players = {};
     this.snapshot = [];
     this.clients = {};
   }
-
+  // <--- We don't need this also ------>
   broadcast(msgType, data) {
     // broadcast creation of this entity to all clients
     for (let id in BOX.Engine.clients) {
@@ -21,7 +22,6 @@ class NetworkComponent extends Component {
   addEntity(data) {
     // Create my own unit by default
     let myPlayer = BOX.Engine.addEntity(data);
-    console.log('player entity in the client', myPlayer);
     myPlayer.createUnit();
 
     return myPlayer;
@@ -46,11 +46,11 @@ class NetworkComponent extends Component {
         friction: 0.7
       }
     });
-    console.log('unit', unit);
   }
 
-  removeEntity() {
-    // broadcast removal of this entity to all clients
+  removeEntity(socketId) {
+    BOX.Engine.removeEntity(socketId, this.players[socketId].noaEntityId);
+    delete this.players[socketId];
   }
   // create snapshot
 }
