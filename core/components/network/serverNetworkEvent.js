@@ -1,7 +1,8 @@
 class ServerNetworkEvents {
   constructor(io) {
-    this.playerConnected = [];
-    this.units = [];
+    this.players = {};
+    this.units = {};
+
     io.on('connection', socket => {
       // creating the player entity on first connection
       let data = {
@@ -12,22 +13,22 @@ class ServerNetworkEvents {
       };
 
       // Adding the entity player and unit on the first connection
-      const player = BOX.Engine.addEntity(data);
-      player.createUnit();
+      this.players[socket.id] = BOX.Engine.addEntity(data);
+      this.units[socket.id] = this.players[socket.id].createUnit();
 
-      console.log('player entity in the server', player);
+      //console.log('player entity in the server', this.players);
 
       // Getting the player data on first connection
       socket.on('player-entity', data => {
-        this.playerConnected.push(data);
+        //this.playerConnected.push(data);
         //console.log('this is the player entity data', this.playerConnected);
       });
 
       // Handling diconnect of the players
       socket.on('disconnect', () => {
         // Filter out the connected players
-        this.playerConnected = this.playerConnected.filter(({ data }) => data.socketID !== socket.id);
-        //console.log('player-disconnected', socket.id);
+        //this.playerConnected = this.playerConnected.filter(({ data }) => data.socketID !== socket.id);
+        console.log('player-disconnected', socket.id);
         //console.log('this is the player entity data', this.playerConnected);
       });
 
@@ -36,7 +37,7 @@ class ServerNetworkEvents {
 
       //listen for new unit created
       socket.on('new-unit', data => {
-        this.units.push(data);
+        //this.units.push(data);
         //console.log('new unit created', this.units);
 
         // Socket emit to online player new unit data
