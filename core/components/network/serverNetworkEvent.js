@@ -12,15 +12,21 @@ class ServerNetworkEvents {
         socketID: socket.id
       };
 
+      console.log(data);
+
       // Adding the entity player and unit on the first connection
       const player = BOX.Engine.addEntity(data);
       let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
       let spawnPosition = spawnRegion.getRandomPosition();
-       const unit = player.createUnit(spawnPosition);
+      const unit = player.createUnit(spawnPosition);
 
+       
       data.position = spawnPosition;
 
+      data.type = 'Player';  //NEED TO FIX
+
       this.players[socket.id] = data;
+      //console.log(data, this.players[socket.id])
 
       //this.units[socket.id]
 
@@ -43,6 +49,7 @@ class ServerNetworkEvents {
 
       // On new connection the player will get all connected players
       socket.emit('players', this.players);
+      //console.log(this.players)
 
       //listen for new unit created
       socket.on('new-unit', data => {
