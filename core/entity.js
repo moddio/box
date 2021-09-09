@@ -12,8 +12,24 @@ class Entity {
     this.createdAt = Date.now();
     this.isMyUnit = data.isMyUnit;
 
-    this.doPhysics = data.doPhysics;
+    this.doPhysics = true; //IF MAKE THIS FALSE WILL BE ERRORS
     //console.log('DO PHYSICS', this.doPhysics)
+
+
+    //body by default - with out body show errors now
+    if (this.data.body === 'default') {    
+      this.data.body = {
+        type: 'CreateBox',
+        offset: [0, 0.5, 0],
+        radius: 0.2,
+        width: 5,
+        height: 8,
+        roundShap: [null, null],
+        scaling: { x: 0.6, y: 1, z: 0.6 },
+        linearDamping: 0.5,
+        friction: 0
+      }
+    }
 
     if (data.position) {
       this.startPosition = data.position;
@@ -29,8 +45,8 @@ class Entity {
     }
 
     if (BOX.isClient) {
-      if (data.body) {
-        this.body = this.createBody(data.body);
+      if (this.data.body) {
+        this.body = this.createBody(this.data.body);
       }
     }
   }

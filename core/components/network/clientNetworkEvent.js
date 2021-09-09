@@ -4,6 +4,12 @@ class clientNetworking extends NetworkComponent {
   constructor() {
     super();
     BOX.socket.on('connect', () => {
+      BOX.socket.on('addEntity', data => {
+        BOX.Engine.addEntity(data);
+      });
+
+      
+
       BOX.socket.on('remove-player', socketId => {
         this.removeEntity(socketId);
       });

@@ -2,7 +2,7 @@ const { Entity } = require('./entity');
 
 class Unit extends Entity {
   constructor(data) {
-    data.type = 'unit';
+    data.type = 'Unit';
     super(data); // run Entity's constructor
 
     this.check = 0;

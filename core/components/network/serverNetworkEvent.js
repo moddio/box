@@ -36,7 +36,10 @@ class ServerNetworkEvents {
       socket.emit('players', this.players);
 
       // Borodcast new entity to the players
-      socket.broadcast.emit('newPlayer', data);
+      //socket.broadcast.emit('newPlayer', data);
+      data.type = 'Unit';
+      data.body = 'default';
+      socket.broadcast.emit('addEntity', data);
 
       //Listen for new unit created
       socket.on('new-unit', data => {});
