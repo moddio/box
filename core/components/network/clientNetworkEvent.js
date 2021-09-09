@@ -30,14 +30,43 @@ class clientNetworking extends NetworkComponent {
       };
 
       // Adding the entity player and unit on the first connection
-      const player = BOX.Engine.addEntity(data);
-      player.createUnit();
+      /*const player = BOX.Engine.addEntity(data);
+      let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
+      let spawnPosition = spawnRegion.getRandomPosition();
+      player.createUnit(spawnPosition);
       console.log('client player', player);
-      BOX.socket.emit('player-entity', { data });
+      BOX.socket.emit('player-entity', { data });*/
 
       // Getting all connected player data on first connection
-      BOX.socket.on('players', data => {
-        data.forEach(element => {
+      BOX.socket.on('players', playersData => {
+        Object.values(playersData).forEach((playerData, index) => {
+          let isMyUnit;
+          if (playerData.socketID === BOX.socket.id) isMyUnit = true;
+          const player = BOX.Engine.addEntity(data);
+          player.createUnit(playerData.position);
+
+          /*let player = BOX.Engine.addEntity({
+            type: 'Player',
+            position: playerData.position,
+            isMyUnit: isMyUnit,
+            ownerPlayer: null,
+            doPhysics: true,
+            name: playerData.name,
+            body: {
+              type: 'CreateBox',
+              offset: [0, 0.5, 0],
+              radius: 0.2,
+              width: 5,
+              height: 8,
+              roundShap: [null, null],
+              scaling: { x: 0.6, y: 1, z: 0.6 },
+              linearDamping: 0.5,
+              friction: 0
+            }
+          });*/
+          //player.addComponent('NameLabelComponent');
+
+        /*data.forEach(element => {
           let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
           let spawnPosition = spawnRegion.getRandomPosition();
 
@@ -60,7 +89,7 @@ class clientNetworking extends NetworkComponent {
               friction: 0
             }
           });
-          player.addComponent('NameLabelComponent');
+          player.addComponent('NameLabelComponent');*/
         });
         /*for (let elem in data) {
           let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
