@@ -39,8 +39,11 @@ class Entity {
     if (!isEngine) {
       BOX.Engine.entities[this.id] = this;
       if (BOX.isServer) {
+        if (BOX.Engine.components['ServerNetworkComponent']) BOX.Engine.components['ServerNetworkComponent'].test(); 
+        if (BOX.Engine.components['ServerNetworkComponent']) BOX.Engine.components['ServerNetworkComponent'].broadcast('addEntity', this.data);
         //this.addComponent('ServerNetworkComponent');
         // BOX.Engine.components['ServerNetworkComponent'].broadcast();
+        
         
         if (this.streamMode && this.streamMode.enabled) {
           BOX.Engine.components['ServerNetworkComponent'].broadcast('addEntity', this.data); // use this.data because it contains id

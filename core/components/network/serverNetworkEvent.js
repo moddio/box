@@ -1,12 +1,12 @@
 class ServerNetworkEvents {
   constructor(io) {
     this.players = {};
-    this.units = [];
+    this.entities = {};
 
+    BOX.Engine.io = io;
     io.on('connection', socket => {
       // Handling disconnect of the players
       socket.on('disconnect', () => {
-        console.log('logging the playerxxxxxxxxxxxxxxxxx', this.players);
         socket.emit('removeEntity', socket.id);
         socket.broadcast.emit('removeEntity', socket.id);
         let idTest = BOX.Engine.getEntityBySocketID(socket.id);
@@ -27,11 +27,10 @@ class ServerNetworkEvents {
       let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
       let spawnPosition = spawnRegion.getRandomPosition();
       const unit = player.createUnit(spawnPosition);
-      this.units.push(unit);
 
       data.position = spawnPosition;
 
-      io.emit('addEntity', data);
+      //io.emit('addEntity', data);
 
       socket.emit('addAllEntities', this.players); //TEMPORARY
 
@@ -46,7 +45,6 @@ class ServerNetworkEvents {
         };
         units[testunit.socketID] = testunit;
       });
-      console.log('check entity data oooooooooooooooooooooooooooooo', BOX.Engine.entities);
       socket.emit('addAllEntities', units); //TEMPORARY
 
       this.players[socket.id] = data;
@@ -59,8 +57,10 @@ class ServerNetworkEvents {
         body: 'default'
       };
       units[testunit.socketID] = testunit;
-      io.emit('addEntity', testunit);
+      //io.emit('addEntity', testunit);
     });
+
+    console.log(BOX.Engine.connection)
 
     // <---TODO :-->
     // implement the below.
