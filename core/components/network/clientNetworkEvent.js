@@ -14,12 +14,12 @@ class clientNetworking extends ServerNetworkComponent {
       });
 
       BOX.socket.on('removeEntity', entityId => {
-        const a = BOX.Engine.getEntityBySocketID(entityId);
+        /*const a = BOX.Engine.getEntityBySocketID(entityId);
         let {
           mainUnit: { noaEntityId }
         } = BOX.Engine.getEntityBySocketID(entityId);
 
-        BOX.Engine.removeEntity(entityId, noaEntityId);
+        BOX.Engine.removeEntity(entityId, noaEntityId);*/
         //BOX.Engine.removeEntity(entityId);
       });
 

@@ -3,8 +3,10 @@ const { Entity } = require('./entity');
 class Player extends Entity {
   constructor(data) {
     super(data);
-    data.type = 'Player';
+    //data.type = 'Player';
     this.socketID = data.socketID;
+
+    this.spawnPosition = data.position;
 
     this.isDeveloper = true; // can this player modify this game?
     this.devToolsEnabled = false; // show/hide dev tools. only developer can do this
@@ -40,10 +42,13 @@ class Player extends Entity {
     }
   }
 
-  createUnit(spawnPosition) {
+  createUnit() {
+
     this.unit = BOX.Engine.addEntity({
       type: 'Unit',
-      position: spawnPosition,
+      position: this.spawnPosition,
+      name: this.socketID,
+      socketID: this.socketID,
       ownerPlayer: this,
       doPhysics: true,
       body: {

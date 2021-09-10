@@ -1,11 +1,16 @@
 class Entity {
   constructor(data = {}, isEngine) {
+    console.log('DATA ON CREATION ENTITY', data)
+    if (BOX.isServer && data.id == undefined) {
+      data.id = this.generateId();
+    }
+    this.id = data.id;
     this.data = data;
     this.type = data.type;
     this.name = data.name;
     this.components = {};
     this.mesh;
-    BOX.isServer ? (this.id = this.generateId()) : (this.id = null);
+    //BOX.isServer ? (this.id = this.generateId()) : (this.id = null);
     //this.noaEntityId = data.noaEntityId;
     //this.type = undefined;
     this.lifeSpan = undefined;
@@ -46,7 +51,7 @@ class Entity {
         
         
         if (this.streamMode && this.streamMode.enabled) {
-          BOX.Engine.components['ServerNetworkComponent'].broadcast('addEntity', this.data); // use this.data because it contains id
+          //BOX.Engine.components['ServerNetworkComponent'].broadcast('addEntity', this.data); // use this.data because it contains id
         }
       }
     }

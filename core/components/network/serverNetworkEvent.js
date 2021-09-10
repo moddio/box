@@ -14,21 +14,23 @@ class ServerNetworkEvents {
         delete this.players[socket.id];
       });
 
+      let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
+      let spawnPosition = spawnRegion.getRandomPosition();
       // Creating the player entity on first connection
       let data = {
         type: 'Player',
         isHuman: true,
         name: socket.id,
-        socketID: socket.id
+        socketID: socket.id,
+        position: spawnPosition
       };
 
       // Adding the entity player and unit on the first connection
       const player = BOX.Engine.addEntity(data);
-      let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
-      let spawnPosition = spawnRegion.getRandomPosition();
-      const unit = player.createUnit(spawnPosition);
+      
+      const unit = player.createUnit();
 
-      data.position = spawnPosition;
+      //data.position = spawnPosition;
 
       //io.emit('addEntity', data);
 
