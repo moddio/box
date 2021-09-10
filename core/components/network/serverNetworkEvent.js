@@ -6,14 +6,12 @@ class ServerNetworkEvents {
     io.on('connection', socket => {
       // Handling disconnect of the players
       socket.on('disconnect', () => {
+        console.log('logging the playerxxxxxxxxxxxxxxxxx', this.players);
         socket.emit('removeEntity', socket.id);
         socket.broadcast.emit('removeEntity', socket.id);
-
-
-        let entity = BOX.Engine.getEntityBySocketID(socket.id);
-        console.log('111111111111111111111111111111111111111111', entity)
-        BOX.Engine.removeEntity(entity.unit.id, false);
-        BOX.Engine.removeEntity(entity.id, false);
+        let idTest = BOX.Engine.getEntityBySocketID(socket.id);
+        BOX.Engine.removeEntity(idTest, false);
+        delete this.players[socket.id];
       });
 
       // Creating the player entity on first connection
@@ -30,9 +28,8 @@ class ServerNetworkEvents {
       let spawnPosition = spawnRegion.getRandomPosition();
       const unit = player.createUnit(spawnPosition);
       this.units.push(unit);
-    
-      data.position = spawnPosition;
 
+      data.position = spawnPosition;
 
       io.emit('addEntity', data);
 
