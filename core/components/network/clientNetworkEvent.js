@@ -23,10 +23,12 @@ class clientNetworking extends ServerNetworkComponent {
 
       BOX.socket.on('addAllEntities', data => {
         Object.values(data).forEach((entity, index) => {
+          console.log('000000000000000000000000000000000000', entity.type);
           BOX.Engine.addEntity(entity);
-          data.type = 'Unit'; // NEED TO FIX
-          data.body = 'default';
-          BOX.Engine.addEntity(entity);
+          //let unit = entity;
+          //unit.type = 'Unit'; // NEED TO FIX
+          //unit.body = 'default';
+          //BOX.Engine.addEntity(unit);
         });
       });
     });

@@ -30,12 +30,23 @@ class ServerNetworkEvents {
 
       io.emit('addEntity', data);
 
+      console.log(this.players)
       socket.emit('addAllEntities', this.players); //TEMPORARY
 
+      let units = {};
+      Object.values(this.players).forEach((elem, index) => {
+        elem.type = 'Unit';
+        elem.body = 'default';
+        units[elem.socketID] = elem;
+      });
+      socket.emit('addAllEntities', units); //TEMPORARY
+
       this.players[socket.id] = data;
-      data.type = 'Unit';
-      data.body = 'default';
-      io.emit('addEntity', data);
+
+      let testunit = data;
+      testunit.type = 'Unit';
+      testunit.body = 'default';
+      io.emit('addEntity', testunit);
 
       // Getting the player data on first connection
       /*socket.on('player-entity', data => {});
