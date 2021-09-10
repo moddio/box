@@ -10,7 +10,12 @@ class Entity {
     //this.type = undefined;
     this.lifeSpan = undefined;
     this.createdAt = Date.now();
-    this.isMyUnit = data.isMyUnit;
+    console.log('SOCKET ID CHECK', data.socketID, BOX.socket.id);
+    if (data.socketID && data.socketID == BOX.socket.id) {
+      this.isMyUnit = true;//data.isMyUnit;
+    }
+    else this.isMyUnit = false;
+    console.log('MY UNIT', this.isMyUnit);
 
     this.doPhysics = true; //IF MAKE THIS FALSE WILL BE ERRORS
     //console.log('DO PHYSICS', this.doPhysics)
@@ -64,7 +69,7 @@ class Entity {
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     // if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
     if (this.isMyUnit) {
-      //console.log('creating body for my unit', this);
+      console.log('creating body for my unit', this);
       this.noaEntityId = 1;
       BOX.Engine.noa.entities.addComponent(1, BOX.Engine.noa.entities.names.mesh, {
         mesh,
