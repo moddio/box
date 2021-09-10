@@ -48,7 +48,10 @@ class Engine extends Entity {
       });
     } else {
       loadRegions(map);
+      this.addComponent('ServerNetworkComponent');
     }
+
+    
   }
 
   loadMap(mapData) {}
