@@ -25,8 +25,6 @@ class ControlComponent extends Component {
     window.addEventListener('click', e => {
       this.mouseClick(e.button);
     });
-
-    console.log('66666666666666666 THIS PLAYER HAVE CONTROL COMPONENT', parent)
   }
 
   mouseMove() {

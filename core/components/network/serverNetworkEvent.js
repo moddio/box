@@ -60,19 +60,6 @@ class ServerNetworkEvents {
       };
       units[testunit.socketID] = testunit;
       io.emit('addEntity', testunit);
-
-      // Getting the player data on first connection
-      /*socket.on('player-entity', data => {});
-
-      // On new connection the player will get all connected players
-      socket.emit('players', this.players);
-      io.emit('addEntity', data);
-
-      // Borodcast new entity to the players
-      //socket.broadcast.emit('newPlayer', data);
-      data.type = 'Unit';
-      data.body = 'default';
-      socket.broadcast.emit('addEntity', data);*/
     });
 
     // <---TODO :-->

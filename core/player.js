@@ -22,7 +22,6 @@ class Player extends Entity {
       // add other player controls
     } else {
       if (BOX.isClient && data.socketID === BOX.socket.id) {
-        console.log('3333333333333333 ADDING CONTROL COMPONENT')
         this.addComponent('ControlComponent');
       }
       if (BOX.isClient) {

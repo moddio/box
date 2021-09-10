@@ -5,7 +5,6 @@ class clientNetworking extends ServerNetworkComponent {
     super();
     BOX.socket.on('connect', () => {
       BOX.socket.on('addEntity', data => {
-        console.log('DATA FROM SERVER', data);
         BOX.Engine.addEntity(data);
       });
 
@@ -22,14 +21,10 @@ class clientNetworking extends ServerNetworkComponent {
       BOX.socket.on('addAllEntities', data => {
         Object.values(data).forEach((entity, index) => {
           BOX.Engine.addEntity(entity);
-          //let unit = entity;
-          //unit.type = 'Unit'; // NEED TO FIX
-          //unit.body = 'default';
-          //BOX.Engine.addEntity(unit);
         });
       });
-    });
-  }
+  });
+}
 }
 
 module.exports = { clientNetworking };

@@ -41,8 +41,9 @@ class Entity {
       if (BOX.isServer) {
         //this.addComponent('ServerNetworkComponent');
         // BOX.Engine.components['ServerNetworkComponent'].broadcast();
-        // use this.data because it contains id
+        
         if (this.streamMode && this.streamMode.enabled) {
+          BOX.Engine.components['ServerNetworkComponent'].broadcast('addEntity', this.data); // use this.data because it contains id
         }
       }
     }
@@ -123,7 +124,6 @@ class Entity {
     if (BOX.isServer) {
       // loading component in the server
       this.components[componentName] = new loader.loadedComponents[componentName][componentName](this);
-      console.log('222222222222222222222',this.components[componentName] )
     } else {
       // loading component in the client
       this.components[componentName] = new loader.loadedComponents[componentName](this);
