@@ -11,12 +11,16 @@ class Unit extends Entity {
 
     this.moveDirection; // x, y, z rotations
 
-    this.ownerPlayer = data.ownerPlayer;
+    //this.ownerPlayer = data.ownerPlayer;
+    this.ownerPlayer = BOX.Engine.getEntityBySocketID(data.socketID);
+    
     // a player's 1st unit will automatically be assigned as the main unit
     if (this.ownerPlayer) {
-      if (this.ownerPlayer.mainUnit == undefined) {
+      
+      //if (this.ownerPlayer.mainUnit == undefined) {
         this.ownerPlayer.mainUnit = this;
-      }
+      //}
+      console.log('4444444444444444444444444444', this.ownerPlayer)
     }
 
     //this.resetPosition();

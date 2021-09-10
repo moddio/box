@@ -96,6 +96,14 @@ class Engine extends Entity {
     return entityByNoaID;
   }
 
+  getEntityBySocketID(id) {
+    let entityBySocketID;
+    Object.values(this.entities).forEach(entity => {
+      if (entity.socketID == id) entityBySocketID = entity;
+    });
+    return entityBySocketID;
+  }
+
   addEntity(data) {
     let entityType = data.type;
     if (entityType) {

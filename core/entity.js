@@ -69,14 +69,14 @@ class Entity {
     // set ID of the entity in NOA as 1 if it's my player's main unit. otherwise we use box entity id.
     // if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
     if (this.isMyUnit) {
-      console.log('creating body for my unit', this);
+      console.log('111111111111111111111111 creating body for my unit', this);
       this.noaEntityId = 1;
       BOX.Engine.noa.entities.addComponent(1, BOX.Engine.noa.entities.names.mesh, {
         mesh,
         offset: [0, 0.5, 0]
       });
     } else {
-      //console.log('creating body for projectile', this);
+      console.log('222222222222222222222222 creating body for other unit', this);
       this.noaEntityId = this.id;
 
       var noaEntityId = this.noaEntityId;

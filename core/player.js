@@ -4,7 +4,7 @@ class Player extends Entity {
   constructor(data) {
     super(data);
     data.type = 'Player';
-    this.clientId = data.socketId;
+    this.socketID = data.socketID;
 
     this.isDeveloper = true; // can this player modify this game?
     this.devToolsEnabled = false; // show/hide dev tools. only developer can do this
@@ -21,7 +21,8 @@ class Player extends Entity {
       }
       // add other player controls
     } else {
-      if (BOX.isClient) {
+      if (BOX.isClient && data.socketID === BOX.socket.id) {
+        console.log('3333333333333333 ADDING CONTROL COMPONENT')
         this.addComponent('ControlComponent');
       }
       if (BOX.isClient) {
@@ -44,7 +45,6 @@ class Player extends Entity {
     this.unit = BOX.Engine.addEntity({
       type: 'Unit',
       position: spawnPosition,
-      isMyUnit: true,
       ownerPlayer: this,
       doPhysics: true,
       body: {
