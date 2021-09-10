@@ -46,6 +46,7 @@ class ServerNetworkEvents {
         };
         units[testunit.socketID] = testunit;
       });
+      console.log('check entity data oooooooooooooooooooooooooooooo', BOX.Engine.entities);
       socket.emit('addAllEntities', units); //TEMPORARY
 
       this.players[socket.id] = data;

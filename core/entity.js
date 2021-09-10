@@ -5,7 +5,7 @@ class Entity {
     this.name = data.name;
     this.components = {};
     this.mesh;
-    this.id = data.id || this.generateId();
+    BOX.isServer ? (this.id = this.generateId()) : (this.id = null);
     //this.noaEntityId = data.noaEntityId;
     //this.type = undefined;
     this.lifeSpan = undefined;
@@ -39,8 +39,10 @@ class Entity {
     if (!isEngine) {
       BOX.Engine.entities[this.id] = this;
       if (BOX.isServer) {
+        this.addComponent('ServerNetworkComponent');
+        // BOX.Engine.components['ServerNetworkComponent'].broadcast();
+        // use this.data because it contains id
         if (this.streamMode && this.streamMode.enabled) {
-          BOX.Engine.components['ServerNetworkComponent'].broadcast('createEntity', this.data); // use this.data because it contains id
         }
       }
     }
@@ -118,7 +120,13 @@ class Entity {
   }
 
   addComponent(componentName) {
-    this.components[componentName] = new loader.loadedComponents[componentName](this);
+    if (BOX.isServer) {
+      // loading component in the server
+      this.components[componentName] = new loader.loadedComponents[componentName][componentName](this);
+    } else {
+      // loading component in the client
+      this.components[componentName] = new loader.loadedComponents[componentName](this);
+    }
   }
 
   hasComponent(componentName) {
@@ -126,6 +134,7 @@ class Entity {
   }
 
   destroy() {
+    console.log('destroy is running..........');
     if (BOX.isServer) {
       if (this.streamMode && this.streamMode.enabled) {
         BOX.Engine.components['NetworkComponent'].broadcast('destroyEntity', this.id());

@@ -9,12 +9,16 @@ class ServerNetworkComponent extends Component {
   }
   // <--- We don't need this also ------>
   broadcast(msgType, data) {
-    // broadcast creation of this entity to all clients
+    /**
+        // broadcast creation of this entity to all clients
     for (let id in BOX.Engine.clients) {
       // stream entity creation with entity data
       let client = BOX.Engine.clients[id];
       // socket.emit(data, client.socketId)
     }
+     */
+
+    console.log('sddsdssdcscfsssdvscdsafacdwaafcwafcewafccxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
   }
 
   // DELETE EVERYTHING BELOW!

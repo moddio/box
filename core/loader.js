@@ -10,6 +10,7 @@ for (let elem in components) {
 var loadedComponents = {};
 for (let elem in loading) {
   !global.isServer ? (loadedComponents[elem] = require(loading[elem] + '')) : '';
+  loading[elem] === './components/network/serverNetworkComponent.js' && global.isServer ? (loadedComponents[elem] = require(loading[elem] + '')) : '';
 }
 
 module.exports = loader = { loadedComponents };
