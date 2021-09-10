@@ -10,9 +10,7 @@ class clientNetworking extends ServerNetworkComponent {
       });
 
       BOX.socket.on('removeEntity', entityId => {
-        console.log('REMOVE CCCCCCCCCCCCCCCCCCCCCCC', BOX.Engine.entities);
         const a = BOX.Engine.getEntityBySocketID(entityId);
-        console.log('REMOVE vvvvvvvvvvvvvvvvvvvvvvvvvvv', a);
         let {
           mainUnit: { noaEntityId }
         } = BOX.Engine.getEntityBySocketID(entityId);
@@ -23,7 +21,6 @@ class clientNetworking extends ServerNetworkComponent {
 
       BOX.socket.on('addAllEntities', data => {
         Object.values(data).forEach((entity, index) => {
-          console.log('000000000000000000000000000000000000', entity.type);
           BOX.Engine.addEntity(entity);
           //let unit = entity;
           //unit.type = 'Unit'; // NEED TO FIX

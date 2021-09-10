@@ -8,6 +8,12 @@ class ServerNetworkEvents {
       socket.on('disconnect', () => {
         socket.emit('removeEntity', socket.id);
         socket.broadcast.emit('removeEntity', socket.id);
+
+
+        let entity = BOX.Engine.getEntityBySocketID(socket.id);
+        console.log('111111111111111111111111111111111111111111', entity)
+        BOX.Engine.removeEntity(entity.unit.id, false);
+        BOX.Engine.removeEntity(entity.id, false);
       });
 
       // Creating the player entity on first connection
@@ -24,28 +30,37 @@ class ServerNetworkEvents {
       let spawnPosition = spawnRegion.getRandomPosition();
       const unit = player.createUnit(spawnPosition);
       this.units.push(unit);
+    
       data.position = spawnPosition;
 
-      console.log('4444444444444444444444', unit);
 
       io.emit('addEntity', data);
 
-      console.log(this.players)
       socket.emit('addAllEntities', this.players); //TEMPORARY
 
       let units = {};
       Object.values(this.players).forEach((elem, index) => {
-        elem.type = 'Unit';
-        elem.body = 'default';
-        units[elem.socketID] = elem;
+        let testunit = {
+          type: 'Unit',
+          name: elem.socketID,
+          socketID: elem.socketID,
+          position: elem.position,
+          body: 'default'
+        };
+        units[testunit.socketID] = testunit;
       });
       socket.emit('addAllEntities', units); //TEMPORARY
 
       this.players[socket.id] = data;
 
-      let testunit = data;
-      testunit.type = 'Unit';
-      testunit.body = 'default';
+      let testunit = {
+        type: 'Unit',
+        name: data.socketID,
+        socketID: data.socketID,
+        position: data.position,
+        body: 'default'
+      };
+      units[testunit.socketID] = testunit;
       io.emit('addEntity', testunit);
 
       // Getting the player data on first connection

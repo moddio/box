@@ -102,7 +102,6 @@ class Engine extends Entity {
     Object.values(this.entities).forEach(entity => {
       if (entity.socketID == id) entityBySocketID = entity;
     });
-    console.log('logging9999999999999999999999999999999999999999999999999999 entities', this.entities);
     return entityBySocketID;
   }
 
@@ -117,8 +116,8 @@ class Engine extends Entity {
   }
 
   removeEntity(id, noaID) {
-    this.noa.entities.deleteEntity(noaID);
-    //delete this.entityIds[id];
+    if (BOX.isClient) this.noa.entities.deleteEntity(noaID);
+    delete this.entities[id];
   }
 }
 
