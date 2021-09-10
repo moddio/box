@@ -62,6 +62,16 @@ class Engine extends Entity {
       entity.tick();
     }
 
+    if (BOX.isServer) {
+      // send all entities position & rotation data to all clients;      
+      let networkComponent = BOX.Engine.components['ServerNetworkComponent'];
+
+      if (netowkrComponent.snapshot != {}) {
+        networkComponent.broadcast("snapshot", networkComponent.snapshot)
+        networkComponent.snapshot = {}
+      }
+    }
+
     this.tickDelta = Date.now() - this.tickStart;
     this.currentTime += this.tickDelta;
   }

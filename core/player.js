@@ -40,28 +40,9 @@ class Player extends Entity {
     }
   }
 
-  createUnit(spawnPosition) {
-    this.unit = BOX.Engine.addEntity({
-      type: 'Unit',
-      position: spawnPosition,
-      isMyUnit: true,
-      ownerPlayer: this,
-      doPhysics: true,
-      body: {
-        type: 'CreateBox',
-        offset: [0, 0.5, 0],
-        radius: 0.2,
-        width: 5,
-        height: 8,
-        roundShap: [null, null],
-        scaling: { x: 0.6, y: 1, z: 0.6 },
-        linearDamping: 0.5,
-        friction: 0
-      }
-    });
-
+  createUnit(data) {
+    this.unit = BOX.Engine.addEntity(data);
     this.noaEntityId = this.unit.noaEntityId;
-
     BOX.isClient ? this.addComponent('NameLabelComponent') : '';
     return this.unit;
   }

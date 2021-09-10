@@ -39,7 +39,7 @@ class Entity {
       BOX.Engine.entities[this.id] = this;
       if (BOX.isServer) {
         if (this.streamMode && this.streamMode.enabled) {
-          BOX.Engine.components['NetworkComponent'].broadcast('createEntity', this.data); // use this.data because it contains id
+          BOX.Engine.components['ServerNetworkComponent'].broadcast('addEntity', this.data); // use this.data because it contains id
         }
       }
     }
@@ -129,7 +129,7 @@ class Entity {
   destroy() {
     if (BOX.isServer) {
       if (this.streamMode && this.streamMode.enabled) {
-        BOX.Engine.components['NetworkComponent'].broadcast('destroyEntity', this.id());
+        BOX.Engine.components['ServerNetworkComponent'].broadcast('removeEntity', this.id());
       }
     }
 
@@ -189,35 +189,16 @@ class Entity {
       component.tick();
     });
 
-    /*for (let id in this.components) {
-      let component = this.components[id];
-      component.tick();
-    }*/
+    if (this.body) {
+      currentPosition = this.body.getPosition();
+      // only enter this entity's data into snapshot if it has moved
+      if (currentPosition != this.lastPosition) { 
+        BOX.Engine.components['ServerNetworkComponent'].queueStreamData(this.id, [currentPosition.x, currentPosition.y, currentPosition.z]);
+      }
+    }
 
-    // console.log("testing entity tick")
-
-    //let pos = this.body.getPosition();
-
-    // gradually slow down the body to stop using linearDamping
-    // console.log(this.body.velocity)
-
-    // this.body.velocity[0] = Math.max(0, this.body.velocity[0] - this.body.linearDamping);
-
-    /**
-      this.body.setPosition([
-      Math.max(1, Math.min(pos[0], 19)),
-      pos[1],
-      Math.max(1, Math.min(pos[2], 19)),
-    ]);
-     */
-
-    //BOX.Engine.noa.setBlock(0, 1, 1);
-
-    // console.log(pos, this.body.getPosition());
   }
 
-  //
-  // } else {
 }
 
 module.exports = { Entity };

@@ -1,4 +1,4 @@
-const { NetworkComponent } = require('./networkComponent');
+const { NetworkComponent } = require('./serverNetworkComponent');
 
 class clientNetworking extends NetworkComponent {
   constructor() {
@@ -19,81 +19,17 @@ class clientNetworking extends NetworkComponent {
           BOX.Engine.addEntity(element);
         }); 
       });
-
       
-
-
-
-      //WILL BE REMOVED
-
-      BOX.socket.on('remove-player', socketId => {
-        this.removeEntity(socketId);
+      BOX.socket.on('snapshot', snapshot => {
+        for (id in snapshot) {
+          let entity = BOX.Engine.entities[id]
+          let snapshotData = snapshot[id];
+          if (entity) {
+            entity.setPosition(snapshotData.x, snapshotData.y, snapshotData.z)
+          }
+        }        
       });
 
-      // Getting all connected player data on first connection
-      BOX.socket.on('players', playersData => {
-        Object.values(playersData).forEach((playerData, index) => {
-          // Create our own players unit
-          let isMyUnit;
-          if (playerData.socketID === BOX.socket.id) {
-            isMyUnit = true;
-            const player = BOX.Engine.addEntity(playerData);
-            player.createUnit(playerData.position);
-          } else {
-            // Create other players unit
-            const player = BOX.Engine.addEntity({
-              type: 'Player',
-              position: playerData.position,
-              isMyUnit: false,
-              ownerPlayer: null,
-              doPhysics: true,
-              name: playerData.name,
-              body: {
-                type: 'CreateBox',
-                offset: [0, 0.5, 0],
-                radius: 0.2,
-                width: 5,
-                height: 8,
-                roundShap: [null, null],
-                scaling: { x: 0.6, y: 1, z: 0.6 },
-                linearDamping: 0.5,
-                friction: 0
-              }
-            });
-            this.players[playerData.socketID] = player;
-            //player.addComponent('NameLabelComponent');
-          }
-        });
-      });
-
-      // Listen on new player connected
-      /*BOX.socket.on('newPlayer', playerData => {
-        const player = BOX.Engine.addEntity({
-          type: 'Player',
-          position: playerData.position,
-          isMyUnit: false,
-          ownerPlayer: null,
-          doPhysics: true,
-          name: playerData.name,
-          body: {
-            type: 'CreateBox',
-            offset: [0, 0.5, 0],
-            radius: 0.2,
-            width: 5,
-            height: 8,
-            roundShap: [null, null],
-            scaling: { x: 0.6, y: 1, z: 0.6 },
-            linearDamping: 0.5,
-            friction: 0
-          }
-        });
-        this.players[playerData.socketID] = player;*/
-        //player.addComponent('NameLabelComponent');
-      //});
-
-      // listen for new unit
-      //BOX.socket.on('new-unit', data => {
-      //});
     });
   }
 }

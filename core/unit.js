@@ -226,6 +226,8 @@ class Unit extends Entity {
     if (BOX.inputs.state['move-down']) {
       this.body.applyImpulse([-x, 0, -y]);
     }
+
+    this.lastPosition = this.body.getPosition();
   }
 }
 
