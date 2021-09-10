@@ -6,9 +6,8 @@ class ServerNetworkEvents {
     io.on('connection', socket => {
       // Handling disconnect of the players
       socket.on('disconnect', () => {
-        // Remove the player entity in the server
-        delete this.players[socket.id];
-        socket.broadcast.emit('remove-player', socket.id);
+        socket.emit('removeEntity', socket.id);
+        socket.broadcast.emit('removeEntity', socket.id);
       });
 
       // Creating the player entity on first connection
@@ -26,17 +25,17 @@ class ServerNetworkEvents {
       const unit = player.createUnit(spawnPosition);
       this.units.push(unit);
       data.position = spawnPosition;
-    
+
+      console.log('4444444444444444444444', unit);
 
       io.emit('addEntity', data);
 
-      socket.emit('addAllEntities', this.players) //TEMPORARY
+      socket.emit('addAllEntities', this.players); //TEMPORARY
 
       this.players[socket.id] = data;
       data.type = 'Unit';
       data.body = 'default';
       io.emit('addEntity', data);
-
 
       // Getting the player data on first connection
       /*socket.on('player-entity', data => {});

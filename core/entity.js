@@ -12,17 +12,15 @@ class Entity {
     this.createdAt = Date.now();
     console.log('SOCKET ID CHECK', data.socketID, BOX.socket.id);
     if (data.socketID && data.socketID == BOX.socket.id) {
-      this.isMyUnit = true;//data.isMyUnit;
-    }
-    else this.isMyUnit = false;
+      this.isMyUnit = true; //data.isMyUnit;
+    } else this.isMyUnit = false;
     console.log('MY UNIT', this.isMyUnit);
 
     this.doPhysics = true; //IF MAKE THIS FALSE WILL BE ERRORS
     //console.log('DO PHYSICS', this.doPhysics)
 
-
     //body by default - with out body show errors now
-    if (this.data.body === 'default') {    
+    if (this.data.body === 'default') {
       this.data.body = {
         type: 'CreateBox',
         offset: [0, 0.5, 0],
@@ -33,7 +31,7 @@ class Entity {
         scaling: { x: 0.6, y: 1, z: 0.6 },
         linearDamping: 0.5,
         friction: 0
-      }
+      };
     }
 
     if (data.position) {
@@ -44,7 +42,7 @@ class Entity {
       BOX.Engine.entities[this.id] = this;
       if (BOX.isServer) {
         if (this.streamMode && this.streamMode.enabled) {
-          BOX.Engine.components['NetworkComponent'].broadcast('createEntity', this.data); // use this.data because it contains id
+          BOX.Engine.components['ServerNetworkComponent'].broadcast('createEntity', this.data); // use this.data because it contains id
         }
       }
     }

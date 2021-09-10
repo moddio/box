@@ -93,6 +93,7 @@ class Engine extends Entity {
     Object.values(this.entities).forEach(entity => {
       if (entity.noaEntityId == id) entityByNoaID = entity;
     });
+
     return entityByNoaID;
   }
 
@@ -101,6 +102,7 @@ class Engine extends Entity {
     Object.values(this.entities).forEach(entity => {
       if (entity.socketID == id) entityBySocketID = entity;
     });
+    console.log('logging9999999999999999999999999999999999999999999999999999 entities', this.entities);
     return entityBySocketID;
   }
 
