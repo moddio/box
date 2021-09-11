@@ -4,27 +4,29 @@ class ControlComponent extends Component {
   constructor(parent) {
     super(parent);
 
-    BOX.inputs.bind('move-up', 'W', '<up>');
-    BOX.inputs.bind('move-left', 'A', '<left>');
-    BOX.inputs.bind('move-down', 'S', '<up>');
-    BOX.inputs.bind('move-right', 'D', '<left>');
-    BOX.inputs.bind('jump', '<space>');
-    BOX.inputs.bind('change-material', 'P', '<left>');
-    BOX.inputs.bind('add-block', 'L', '<left>');
-    BOX.inputs.bind('remove-block', 'K', '<left>');
+    if (BOX.isClient) {
+      BOX.inputs.bind('move-up', 'W', '<up>');
+      BOX.inputs.bind('move-left', 'A', '<left>');
+      BOX.inputs.bind('move-down', 'S', '<up>');
+      BOX.inputs.bind('move-right', 'D', '<left>');
+      BOX.inputs.bind('jump', '<space>');
+      BOX.inputs.bind('change-material', 'P', '<left>');
+      BOX.inputs.bind('add-block', 'L', '<left>');
+      BOX.inputs.bind('remove-block', 'K', '<left>');
 
-    var scene = BOX.Engine.noa.rendering.getScene();
-    this.debug = false;
+      var scene = BOX.Engine.noa.rendering.getScene();
+      this.debug = false;
 
-    //this.player = player;
-    //this.mouseClick();
+      //this.player = player;
+      //this.mouseClick();
 
-    window.addEventListener('keypress', e => {
-      this.keyPress(e.key);
-    });
-    window.addEventListener('click', e => {
-      this.mouseClick(e.button);
-    });
+      window.addEventListener('keypress', e => {
+        this.keyPress(e.key);
+      });
+      window.addEventListener('click', e => {
+        this.mouseClick(e.button);
+      });
+    }
   }
 
   mouseMove() {
@@ -63,6 +65,9 @@ class ControlComponent extends Component {
     if (unit) {
       switch (key) {
         // shoot the ball
+        case 't':
+          BOX.socket.emit('keyPress', { key: 't', unit: unit.id });
+          break;
         case 'b':
           if (unit) {
             unit.shootBall();

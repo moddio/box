@@ -5,6 +5,10 @@ class ServerNetworkEvents {
 
     BOX.io = io;
     io.on('connection', socket => {
+      socket.on('keyPress', data => {
+        console.log('the key', data);
+        console.log('logging the unit', BOX.Engine.entities[data.unit]);
+      });
       // Handling disconnect of the players
       socket.on('disconnect', () => {
         Object.values(BOX.Engine.entities).forEach(entity => {
