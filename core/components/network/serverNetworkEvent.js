@@ -7,11 +7,12 @@ class ServerNetworkEvents {
     io.on('connection', socket => {
       // Handling disconnect of the players
       socket.on('disconnect', () => {
-        socket.emit('removeEntity', socket.id);
-        socket.broadcast.emit('removeEntity', socket.id);
-        let idTest = BOX.Engine.getEntityBySocketID(socket.id);
-        BOX.Engine.removeEntity(idTest, false);
-        delete this.players[socket.id];
+        Object.values(BOX.Engine.entities).forEach(entity => {
+          if (entity.socketID == socket.id) {
+            entity.destroy();
+            delete this.players[socket.id];
+          }
+        });
       });
 
       let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
@@ -27,6 +28,7 @@ class ServerNetworkEvents {
 
       // Adding the entity player and unit on the first connection
       const player = BOX.Engine.addEntity(data);
+
       socket.emit('addAllEntities', this.players);
 
       const unit = player.createUnit();

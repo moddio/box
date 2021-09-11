@@ -8,14 +8,8 @@ class clientNetworking extends ServerNetworkComponent {
         BOX.Engine.addEntity(data);
       });
 
-      BOX.socket.on('removeEntity', entityId => {
-        /*const a = BOX.Engine.getEntityBySocketID(entityId);
-        let {
-          mainUnit: { noaEntityId }
-        } = BOX.Engine.getEntityBySocketID(entityId);
-
-        BOX.Engine.removeEntity(entityId, noaEntityId);*/
-        //BOX.Engine.removeEntity(entityId);
+      BOX.socket.on('destroyEntity', entityId => {
+        BOX.Engine.removeEntity(entityId);
       });
 
       BOX.socket.on('addAllEntities', data => {
@@ -23,8 +17,8 @@ class clientNetworking extends ServerNetworkComponent {
           BOX.Engine.addEntity(entity);
         });
       });
-  });
-}
+    });
+  }
 }
 
 module.exports = { clientNetworking };

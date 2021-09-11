@@ -46,8 +46,7 @@ class Entity {
         if (BOX.Engine.components['ServerNetworkComponent']) BOX.Engine.components['ServerNetworkComponent'].broadcast('addEntity', this.data);
         //this.addComponent('ServerNetworkComponent');
         // BOX.Engine.components['ServerNetworkComponent'].broadcast();
-        
-        
+
         if (this.streamMode && this.streamMode.enabled) {
           //BOX.Engine.components['ServerNetworkComponent'].broadcast('addEntity', this.data); // use this.data because it contains id
         }
@@ -141,14 +140,10 @@ class Entity {
   }
 
   destroy() {
-    console.log('destroy is running..........');
     if (BOX.isServer) {
-      if (this.streamMode && this.streamMode.enabled) {
-        BOX.Engine.components['NetworkComponent'].broadcast('destroyEntity', this.id());
-      }
+      BOX.Engine.removeEntity(this.id);
+      BOX.Engine.components['ServerNetworkComponent'].broadcast('destroyEntity', this.id);
     }
-
-    BOX.Engine.removeEntity(this.id, this.noaEntityId);
   }
 
   removeComponent(componentName) {}

@@ -50,8 +50,6 @@ class Engine extends Entity {
       loadRegions(map);
       this.addComponent('ServerNetworkComponent');
     }
-
-    
   }
 
   loadMap(mapData) {}
@@ -75,7 +73,6 @@ class Engine extends Entity {
       if (entity.id == id) entityByID = entity;
     });
     return entityByID;
-
   }
 
   getGameState() {
@@ -123,9 +120,13 @@ class Engine extends Entity {
     }
   }
 
-  removeEntity(id, noaID) {
-    if (BOX.isClient) this.noa.entities.deleteEntity(noaID);
-    delete this.entities[id];
+  removeEntity(id) {
+    if (BOX.isClient) {
+      this.noa.entities.deleteEntity(this.getEntity(id).mainUnit.noaEntityId);
+      delete this.entities[id];
+    } else {
+      delete this.entities[id];
+    }
   }
 }
 
