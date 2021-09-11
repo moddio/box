@@ -46,6 +46,7 @@ class Engine extends Entity {
         // Update engine time on each tick
         self.engineStep();
       });
+      this.addComponent('ClientNetworkComponent');
     } else {
       loadRegions(map);
       this.addComponent('ServerNetworkComponent');

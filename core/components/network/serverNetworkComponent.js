@@ -7,7 +7,7 @@ class ServerNetworkComponent extends Component {
     this.streamData = {};
     this.snapshot = {};
     this.clients = {};
-    this.io = ''; 
+    this.io = '';
   }
 
   broadcast(msgType, data) {
@@ -15,9 +15,8 @@ class ServerNetworkComponent extends Component {
   }
 
   queueStreamData(id, pos) {
-    this.snapshot[id] = pos
+    this.snapshot[id] = pos;
   }
-
 }
 
 module.exports = { ServerNetworkComponent };

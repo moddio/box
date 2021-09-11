@@ -1,6 +1,6 @@
 const { ServerNetworkComponent } = require('./serverNetworkComponent');
 
-class clientNetworking extends ServerNetworkComponent {
+class ClientNetworkComponent extends ServerNetworkComponent {
   constructor() {
     super();
     BOX.socket.on('connect', () => {
@@ -21,4 +21,4 @@ class clientNetworking extends ServerNetworkComponent {
   }
 }
 
-module.exports = { clientNetworking };
+module.exports = ClientNetworkComponent;

@@ -127,10 +127,10 @@ class Entity {
 
   addComponent(componentName) {
     if (BOX.isServer) {
-      // loading component in the server
+      // Loading component in the server
       this.components[componentName] = new loader.loadedComponents[componentName][componentName](this);
     } else {
-      // loading component in the client
+      // Loading component in the client
       this.components[componentName] = new loader.loadedComponents[componentName](this);
     }
   }
