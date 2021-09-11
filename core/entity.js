@@ -1,6 +1,5 @@
 class Entity {
   constructor(data = {}, isEngine) {
-    console.log('DATA ON CREATION ENTITY', data)
     if (BOX.isServer && data.id == undefined) {
       data.id = this.generateId();
     }
@@ -44,7 +43,6 @@ class Entity {
     if (!isEngine) {
       BOX.Engine.entities[this.id] = this;
       if (BOX.isServer) {
-        if (BOX.Engine.components['ServerNetworkComponent']) BOX.Engine.components['ServerNetworkComponent'].test(); 
         if (BOX.Engine.components['ServerNetworkComponent']) BOX.Engine.components['ServerNetworkComponent'].broadcast('addEntity', this.data);
         //this.addComponent('ServerNetworkComponent');
         // BOX.Engine.components['ServerNetworkComponent'].broadcast();

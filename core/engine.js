@@ -70,7 +70,12 @@ class Engine extends Entity {
   }
 
   getEntity(id) {
-    return;
+    let entityByID;
+    Object.values(this.entities).forEach(entity => {
+      if (entity.id == id) entityByID = entity;
+    });
+    return entityByID;
+
   }
 
   getGameState() {

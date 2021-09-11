@@ -5,12 +5,7 @@ class clientNetworking extends ServerNetworkComponent {
     super();
     BOX.socket.on('connect', () => {
       BOX.socket.on('addEntity', data => {
-        console.log('DATA', data)
         BOX.Engine.addEntity(data);
-      });
-
-      BOX.socket.on('hello', () => {
-        console.log('HELLO');
       });
 
       BOX.socket.on('removeEntity', entityId => {
