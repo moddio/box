@@ -1,7 +1,7 @@
 class ServerNetworkEvents {
   constructor(io) {
     this.players = {};
-    this.entities = {};
+    this.entities = {}; //maybe use BOX.Engine.entities ?
 
     BOX.Engine.io = io;
     io.on('connection', socket => {
@@ -27,15 +27,11 @@ class ServerNetworkEvents {
 
       // Adding the entity player and unit on the first connection
       const player = BOX.Engine.addEntity(data);
-      
+      socket.emit('addAllEntities', this.players);
+
       const unit = player.createUnit();
 
-      //data.position = spawnPosition;
-
-      //io.emit('addEntity', data);
-
-      socket.emit('addAllEntities', this.players); //TEMPORARY
-
+      //We need it for now because we also need to create units for players
       let units = {};
       Object.values(this.players).forEach((elem, index) => {
         let testunit = {
@@ -47,22 +43,28 @@ class ServerNetworkEvents {
         };
         units[testunit.socketID] = testunit;
       });
-      socket.emit('addAllEntities', units); //TEMPORARY
+      socket.emit('addAllEntities', units); //send to new clients all units
 
-      this.players[socket.id] = data;
-
-      let testunit = {
+      this.players[socket.id] = data; //adding new player - may be we dont need this?
+      //my suggestion
+      /*
+      let enititiesData = [];
+      Object.values(BOX.Engine.entities).forEach(entity => { 
+        let entityData = entity.getData();
+        enititiesData.push(entityData);
+      });
+      socket.emit('addAllEntities', enititiesData);
+      */
+      /*let testunit = {
         type: 'Unit',
         name: data.socketID,
         socketID: data.socketID,
         position: data.position,
         body: 'default'
       };
-      units[testunit.socketID] = testunit;
+      units[testunit.socketID] = testunit;*/
       //io.emit('addEntity', testunit);
     });
-
-    console.log(BOX.Engine.connection)
 
     // <---TODO :-->
     // implement the below.
