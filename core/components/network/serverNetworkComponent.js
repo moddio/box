@@ -11,7 +11,7 @@ class ServerNetworkComponent extends Component {
   }
 
   broadcast(msgType, data) {
-    BOX.Engine.io.sockets.emit(msgType, data);
+    BOX.io.sockets.emit(msgType, data);
   }
 
   queueStreamData(id, pos) {

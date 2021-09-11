@@ -3,7 +3,7 @@ class ServerNetworkEvents {
     this.players = {};
     this.entities = {}; //maybe use BOX.Engine.entities ?
 
-    BOX.Engine.io = io;
+    BOX.io = io;
     io.on('connection', socket => {
       // Handling disconnect of the players
       socket.on('disconnect', () => {
