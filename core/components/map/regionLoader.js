@@ -23,7 +23,7 @@ function loadRegions(map) {
     });
 
     //console.log('CREATING REGION', region.name);
-    if (BOX.isClient) region.mesh.visibility = 0;
+    //if (BOX.isClient) region.mesh.visibility = 0;
 
     /*BOX.Engine.noa.entities.addComponent(region.noaEntityId, BOX.Engine.noa.entities.names.collideEntities, {
       cylinder: true,

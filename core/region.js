@@ -2,10 +2,12 @@ const { Entity } = require('./entity');
 
 class Region extends Entity {
   constructor(data) {
-    data.type = 'region';
+    data.type = 'Region';
     super(data); // run Entity's constructor
     this.position = data.position;
     this.scaling = data.scaling;
+
+    if (BOX.isClient) this.mesh.visibility = 0;
 
     /*if (data.streamMode == undefined) {
       this.streamMode = {

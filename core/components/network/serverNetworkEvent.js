@@ -56,7 +56,7 @@ class ServerNetworkEvents {
 
       let enititiesData = {};
       Object.values(BOX.Engine.entities).forEach(entity => {
-        if (entity.data.type !== 'region') enititiesData[entity.id] = entity.data; //region sending cause error
+        enititiesData[entity.id] = entity.data; 
         if (entity.data.ownerPlayer) delete entity.data.ownerPlayer; //UNIT DATA CONTAIN ownerPlayer - object too big too send it
       });
       //console.log('ALL ENTS', enititiesData)

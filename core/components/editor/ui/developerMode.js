@@ -53,7 +53,7 @@ class DeveloperMode extends Component {
         document.querySelector('.game_build').style.display = 'block';
 
         Object.values(BOX.Engine.entities).forEach(entity => {
-          if (entity.type == 'region') {
+          if (entity.type == 'Region') {
             entity.mesh.visibility = 0.6;
           }
         });
@@ -61,7 +61,7 @@ class DeveloperMode extends Component {
       } else {
         document.querySelector('.game_build').style.display = 'none';
         Object.values(BOX.Engine.entities).forEach(entity => {
-          if (entity.type == 'region') {
+          if (entity.type == 'Region') {
             entity.mesh.visibility = 0;
           }
         });
