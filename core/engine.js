@@ -19,8 +19,6 @@ class Engine extends Entity {
       const canvas = document.getElementById('renderCanvas'); // Get the canvas element
       const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 
-      // Add your code here matching the playground format
-
       const scene = new BABYLON.Scene(engine); //Call the createScene function
 
       // Register a render loop to repeatedly render the scene
@@ -32,19 +30,24 @@ class Engine extends Entity {
       // Watch for browser/canvas resize events
       window.addEventListener('resize', function () {
         engine.resize();
+        // TODO ADD MOVEMENT TO THE MESH AND THE MESH SHOULD FOLLOW CAMERA
       });
 
       var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), scene);
       camera.setTarget(BABYLON.Vector3.Zero());
       camera.attachControl(canvas, true);
+
+      // adding key control for camera
+      camera.keysUp.push(87);
+      camera.keysDown.push(83);
+      camera.keysLeft.push(65);
+      camera.keysRight.push(68);
+
       var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
       light.intensity = 0.7;
       var box = BABYLON.Mesh.CreateBox('box1', 1, scene);
       box.position.y = 1;
-      var ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
-
-      // Create utility layer the gizmo will be rendered on
-      var utilLayer = new BABYLON.UtilityLayerRenderer(scene);
+      BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
 
       /**
            var box = BABYLON.MeshBuilder.CreateBox('box', {});
