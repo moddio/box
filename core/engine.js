@@ -34,7 +34,18 @@ class Engine extends Entity {
         engine.resize();
       });
 
-      scene.createDefaultCameraOrLight(true, true, true);
+      var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), scene);
+      camera.setTarget(BABYLON.Vector3.Zero());
+      camera.attachControl(canvas, true);
+      var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
+      light.intensity = 0.7;
+      var box = BABYLON.Mesh.CreateBox('box1', 1, scene);
+      box.position.y = 1;
+      var ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
+
+      // Create utility layer the gizmo will be rendered on
+      var utilLayer = new BABYLON.UtilityLayerRenderer(scene);
+
       /**
            var box = BABYLON.MeshBuilder.CreateBox('box', {});
       var box2 = box.clone(box);
