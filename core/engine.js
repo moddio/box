@@ -132,7 +132,6 @@ class Engine extends Entity {
       // delete the unit entities
       delete this.entities[unitID];
 
-      console.log('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv', this.entities);
     }
   }
 }

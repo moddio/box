@@ -17,7 +17,6 @@ class ServerNetworkEvents {
             delete this.players[socket.id];
           }
         });
-        //console.log('ENTITIES AFTER DELETE', Object.keys(BOX.Engine.entities).length); //Not all entities removed
       });
 
       let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
