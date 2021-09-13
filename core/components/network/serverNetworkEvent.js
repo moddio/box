@@ -17,6 +17,7 @@ class ServerNetworkEvents {
             delete this.players[socket.id];
           }
         });
+        console.log('ENTITIES AFTER DELETE', Object.keys(BOX.Engine.entities).length) //Not all entities removed
       });
 
       let spawnRegion = BOX.Engine.getEntityByName('player_spawn');
@@ -32,13 +33,13 @@ class ServerNetworkEvents {
 
       // Adding the entity player and unit on the first connection
       const player = BOX.Engine.addEntity(data);
+      player.createUnit();
 
-      socket.emit('addAllEntities', this.players);
-
-      const unit = player.createUnit();
+      /*socket.emit('addAllEntities', this.players);
+      const unit = player.createUnit();*/
 
       //We need it for now because we also need to create units for players
-      let units = {};
+      /*let units = {};
       Object.values(this.players).forEach((elem, index) => {
         let testunit = {
           type: 'Unit',
@@ -51,16 +52,17 @@ class ServerNetworkEvents {
       });
       socket.emit('addAllEntities', units); //send to new clients all units
 
-      this.players[socket.id] = data; //adding new player - may be we dont need this?
+      this.players[socket.id] = data;*/ //adding new player - may be we dont need this?
       //my suggestion
-      /*
-      let enititiesData = [];
+      
+      let enititiesData = {};
       Object.values(BOX.Engine.entities).forEach(entity => { 
-        let entityData = entity.getData();
-        enititiesData.push(entityData);
+        if (entity.data.type !== 'region') enititiesData[entity.id] = entity.data;      //region sending cause error
+        if (entity.data.ownerPlayer) delete entity.data.ownerPlayer;           //UNIT DATA CONTAIN ownerPlayer - object too big too send it
       });
+      //console.log('ALL ENTS', enititiesData)
       socket.emit('addAllEntities', enititiesData);
-      */
+      
       /*let testunit = {
         type: 'Unit',
         name: data.socketID,

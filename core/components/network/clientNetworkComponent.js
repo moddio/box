@@ -13,8 +13,15 @@ class ClientNetworkComponent extends ServerNetworkComponent {
       });
 
       BOX.socket.on('addAllEntities', data => {
+        console.log('GETTING ENTITY', data)
         Object.values(data).forEach((entity, index) => {
-          BOX.Engine.addEntity(entity);
+          if ((entity.socketID === BOX.socket.id && entity.type === 'Unit')) { //IF CLIENT WILL CREATE OWN UNIT WILL BE ERROR
+            ''
+          }
+          else {
+            console.log('ADDING ENTITY', entity)
+            BOX.Engine.addEntity(entity);
+          }
         });
       });
     });
