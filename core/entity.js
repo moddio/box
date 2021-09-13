@@ -55,7 +55,7 @@ class Entity {
 
     if (BOX.isClient) {
       if (this.data.body) {
-        this.body = this.createBody(this.data.body);
+        //this.body = this.createBody(this.data.body);
       }
     }
   }
@@ -74,10 +74,10 @@ class Entity {
     // if (BOX.Engine.myPlayer && BOX.Engine.myPlayer.mainUnit == this) {
     if (this.isMyUnit) {
       this.noaEntityId = 1;
-      BOX.Engine.noa.entities.addComponent(1, BOX.Engine.noa.entities.names.mesh, {
+      /*BOX.Engine.noa.entities.addComponent(1, BOX.Engine.noa.entities.names.mesh, {
         mesh,
         offset: [0, 0.5, 0]
-      });
+      });*/
     } else {
       this.noaEntityId = this.id;
 
@@ -86,7 +86,7 @@ class Entity {
       if (this.startPosition) {
         pos = [this.startPosition.x, this.startPosition.y, this.startPosition.z];
       } else {
-        var playPos = BOX.Engine.noa.entities.getPosition(1);
+        //var playPos = BOX.Engine.noa.entities.getPosition(1);
         var pos = [playPos[0], playPos[1] + 0.5, playPos[2] + 2];
       }
 
@@ -94,27 +94,27 @@ class Entity {
 
       var meshOffset = bodyData.offset;
 
-      this.noaEntityId = BOX.Engine.noa.entities.add(
+      /*this.noaEntityId = BOX.Engine.noa.entities.add(
         pos,
         bodyData.width,
         bodyData.height, // required
         mesh,
         meshOffset,
         this.doPhysics
-      );
+      );*/
     }
 
     this.mesh = mesh;
     if (this.doPhysics) {
-      let body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
+      /*let body = BOX.Engine.noa.entities.getPhysicsBody(this.noaEntityId);
       body.linearDamping = bodyData.linearDamping;
       body.friction = bodyData.friction;
 
       if (this.startPosition && this.isMyUnit) {
         body.setPosition([this.startPosition.x, this.startPosition.y, this.startPosition.z]);
-      }
+      }*/
 
-      return body;
+      //return body;
     } else {
       return mesh;
     }

@@ -27,7 +27,7 @@ const generateWorld = () => {
   );*/
 
   // 3D person perspective camera
-  BOX.Engine.noa.camera.zoomDistance = 8;
+  //BOX.Engine.noa.camera.zoomDistance = 8;
 
   //generate material for each texture in tile sheet
   const textures = map.textures;
@@ -36,12 +36,12 @@ const generateWorld = () => {
   //for each texture in map.json file create top, buttom and side materials and register blocks
   Object.values(textures).forEach((texture, index) => {
     index = index + 1;
-    const topMaterial = BOX.Engine.noa.registry.registerMaterial('material_top_' + index.toString(), null, texture.top);
+    /*const topMaterial = BOX.Engine.noa.registry.registerMaterial('material_top_' + index.toString(), null, texture.top);
     const bottomMaterial = BOX.Engine.noa.registry.registerMaterial('material_bottom_' + index.toString(), null, texture.bottom);
     const sideMaterial = BOX.Engine.noa.registry.registerMaterial('material_side_' + index.toString(), null, texture.side);
     tiles[index.toString()] = BOX.Engine.noa.registry.registerBlock(index, {
       material: ['material_top_' + index.toString(), 'material_bottom_' + index.toString(), 'material_side_' + index.toString()]
-    });
+    });*/
   });
 
   /*for (let i = 1; i < 541; i++) {
@@ -64,13 +64,13 @@ const generateWorld = () => {
     tiles[tileIndex.toString()] = box.Engine.noa.registry.registerBlock(tileIndex, { material: "material_" + tileIndexString });
   }*/
 
-  const invisibleMaterial = BOX.Engine.noa.rendering.makeStandardMaterial('invisible');
+  /*const invisibleMaterial = BOX.Engine.noa.rendering.makeStandardMaterial('invisible');
   invisibleMaterial.diffuseTexture = null;
   invisibleMaterial._alpha = 0;
   BOX.Engine.noa.registry.registerMaterial('invisible', null, null, false, invisibleMaterial);
   const invisibleBlock = BOX.Engine.noa.registry.registerBlock(1000, {
     material: 'invisible'
-  });
+  });*/
 
   // attempt to load materials from tile sheet
   /*const tileMaterial = BOX.Engine.noa.rendering.makeStandardMaterial("tile");
@@ -112,16 +112,16 @@ const generateWorld = () => {
     BOX.Engine.noa.world.setChunkData(id, data);
   });*/
 
-  let check = 0;
+  //let check = 0;
   // Loading tiled map from map.json
 
-  BOX.Engine.noa.world.on('worldDataNeeded', (id, data) => {
+  /*BOX.Engine.noa.world.on('worldDataNeeded', (id, data) => {
     if (check > 0) return;
     check++;
     loadMap(map, data, tiles, invisibleBlock);
     BOX.Engine.noa.world.setChunkData(id, data);
     return;
-  });
+  });*/
 
   //loadRegions(map);
 

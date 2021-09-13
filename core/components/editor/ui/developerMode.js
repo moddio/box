@@ -37,7 +37,7 @@ class DeveloperMode extends Component {
     pausePlay.addEventListener('click', () => {
       //console.log('logging out the paused state', !this.paused);
       this.paused = !this.paused;
-      BOX.Engine.noa.setPaused(this.paused);
+      //BOX.Engine.noa.setPaused(this.paused);
     });
 
     document.querySelector('.game_build').style.display = 'none';
@@ -72,16 +72,16 @@ class DeveloperMode extends Component {
 
   addBlock() {
     console.log('placing block');
-    const pos = BOX.Engine.noa.targetedBlock.adjacent;
-    BOX.Engine.noa.addBlock(this.currentMaterial, pos[0], pos[1], pos[2]);
+    /*const pos = BOX.Engine.noa.targetedBlock.adjacent;
+    BOX.Engine.noa.addBlock(this.currentMaterial, pos[0], pos[1], pos[2]);*/
     savingMap.saveBlock(pos[0], pos[1], pos[2], this.currentMaterial);
   }
 
   removeBlock() {
-    const pos = BOX.Engine.noa.targetedBlock.position;
+    //const pos = BOX.Engine.noa.targetedBlock.position;
     //check if target block is invisible material
 
-    BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
+    //BOX.Engine.noa.setBlock(0, pos[0], pos[1], pos[2]);
     savingMap.saveBlock(pos[0], pos[1], pos[2], 0);
   }
 }

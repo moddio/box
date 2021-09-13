@@ -66,12 +66,12 @@ class Unit extends Entity {
 
     // var body = BOX.Engine.noa.entities.getPhysicsBody(noaId);
 
-    const direction = BOX.Engine.noa.camera.getDirection();
+    /*const direction = BOX.Engine.noa.camera.getDirection();
     var impulse = [];
     for (let i = 0; i < 3; i++) {
       impulse[i] = 2 * direction[i];
       impulse[1] += 1;
-    }
+    }*/
     projectile.body.applyImpulse(impulse);
   }
 
@@ -116,10 +116,10 @@ class Unit extends Entity {
   equipItem(item) {
     if (!item.attachedTo) {
       // make item following the unit
-      BOX.Engine.noa.ents.addComponent(item.noaEntityId, 'followsEntity', {
+      /*BOX.Engine.noa.ents.addComponent(item.noaEntityId, 'followsEntity', {
         entity: this.noaEntityId,
         offset: [0, 0.5, 0]
-      });
+      });*/
       item.attachedTo = this;
       this.equipedItem = item;
       console.log('attached to', this);
@@ -129,7 +129,7 @@ class Unit extends Entity {
   unequipItem() {
     if (this.equipedItem) {
       // make item stop following the unit
-      noa.ents.removeComponent(this.equipedItem.noaEntityId, 'followsEntity');
+      //noa.ents.removeComponent(this.equipedItem.noaEntityId, 'followsEntity');
       this.equipedItem.allowPickUp();
       this.equipedItem.attachedTo = null;
       this.equipedItem = null;
@@ -157,13 +157,13 @@ class Unit extends Entity {
       this.body.velocity[2] = this.body.velocity[2] / (1 + this.body.linearDamping);
 
       // Getting force value from cos sin
-      let angle = BOX.Engine.noa.camera.heading;
+      /*let angle = BOX.Engine.noa.camera.heading;
       let force = 2;
       let y = force * Math.cos(angle);
       let x = force * Math.sin(angle);
 
       // Rotation
-      this.mesh.rotation.y = BOX.Engine.noa.camera.heading;
+      this.mesh.rotation.y = BOX.Engine.noa.camera.heading;*/
 
       // this has to be fixed
       if (BOX.inputs.state['jump'] && Math.abs(this.body.velocity[1]) <= 0) {

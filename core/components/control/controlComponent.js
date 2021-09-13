@@ -14,7 +14,7 @@ class ControlComponent extends Component {
       BOX.inputs.bind('add-block', 'L', '<left>');
       BOX.inputs.bind('remove-block', 'K', '<left>');
 
-      var scene = BOX.Engine.noa.rendering.getScene();
+      //var scene = BOX.Engine.noa.rendering.getScene();
       this.debug = false;
 
       //this.player = player;
@@ -36,7 +36,7 @@ class ControlComponent extends Component {
   // Simple demo of removing blocks and adding blocks we don't want to do this here
   mouseClick(button) {
     //check if mouse pointer is locked
-    if (BOX.Engine.noa.container.hasPointerLock) {
+    /*if (BOX.Engine.noa.container.hasPointerLock) {
       if (this.parent && this.parent.isDeveloper) {
         let devComponent = this.parent.components['DeveloperMode']; //need to fix this !!!
         if (devComponent && devComponent.status) {
@@ -56,7 +56,7 @@ class ControlComponent extends Component {
           }
         }
       }
-    }
+    }*/
   }
 
   keyPress(key) {

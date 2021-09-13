@@ -36,7 +36,7 @@ module.exports = BOX = {
   control: {},
 
   // This shouldn't be inside box.js...
-  collision: (id, otherEntsId) => {
+  /*collision: (id, otherEntsId) => {
     let entityOne = BOX.Engine.noa.entities.getPosition(id);
     let entityTwo = BOX.Engine.noa.entities.getPosition(otherEntsId);
     let bodyPlayer = BOX.Engine.noa.entities.getPhysicsBody(1);
@@ -59,7 +59,7 @@ module.exports = BOX = {
     }
     let body = BOX.Engine.noa.entities.getPhysicsBody(id);
     body.applyImpulse(impulse);
-  },
+  },*/
 
   inputs
 };

@@ -7,7 +7,7 @@ class Region extends Entity {
     this.position = data.position;
     this.scaling = data.scaling;
 
-    if (BOX.isClient) this.mesh.visibility = 0;
+    //if (BOX.isClient) this.mesh.visibility = 0;
 
     /*if (data.streamMode == undefined) {
       this.streamMode = {

@@ -1,5 +1,5 @@
 // Engine
-const { Engine: noaEngine } = global.isClient ? require('noa-engine') : false;
+//const { Engine: noaEngine } = global.isClient ? require('noa-engine') : false;
 global.isClient ? require('./utils/state.min.js') : false;
 const config = require('../config/config.json');
 
@@ -14,10 +14,10 @@ class Engine extends Entity {
   constructor() {
     super({}, true);
     if (BOX.isClient) {
-      this.noa = new noaEngine(config);
+      //this.noa = new noaEngine(config);
       // remove inputs component for player and movement component
-      this.noa.entities.deleteComponent('receivesInputs');
-      this.noa.entities.deleteComponent('movement');
+      //this.noa.entities.deleteComponent('receivesInputs');
+      //this.noa.entities.deleteComponent('movement');
     }
     this.entities = {};
     this.clients = {};
@@ -35,17 +35,17 @@ class Engine extends Entity {
     if (BOX.isClient) {
       generateWorld();
 
-      scene = this.noa.rendering.getScene();
+      //scene = this.noa.rendering.getScene();
 
       // this.addComponent('NetworkComponent');
 
-      this.noa.camera.sensitivityX = 5;
-      this.noa.camera.sensitivityY = 5;
+      //this.noa.camera.sensitivityX = 5;
+      //this.noa.camera.sensitivityY = 5;
 
-      this.noa.on('tick', () => {
+      /*this.noa.on('tick', () => {
         // Update engine time on each tick
         self.engineStep();
-      });
+      });*/
       this.addComponent('ClientNetworkComponent');
     } else {
       loadRegions(map);
@@ -123,7 +123,7 @@ class Engine extends Entity {
 
   removeEntity(id) {
     if (BOX.isClient) {
-      this.noa.entities.deleteEntity(this.getEntity(id).mainUnit.noaEntityId);
+      //this.noa.entities.deleteEntity(this.getEntity(id).mainUnit.noaEntityId);
       delete this.entities[id];
     } else {
       let unitID = this.entities[id].mainUnit.id;

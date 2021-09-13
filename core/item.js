@@ -25,7 +25,7 @@ class Item extends Entity {
 
   // activate colliding with unit, so unit can pick up item
   allowPickUp() {
-    BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.Engine.noa.entities.names.collideEntities, {
+    /*BOX.Engine.noa.entities.addComponent(this.noaEntityId, BOX.Engine.noa.entities.names.collideEntities, {
       cylinder: true,
       callback: otherEntsId => {
         let player = BOX.Engine.getEntityByNoaID(otherEntsId); //TEMPORARY - need to find unit by noaId
@@ -36,7 +36,7 @@ class Item extends Entity {
           BOX.Engine.noa.entities.removeComponent(this.noaEntityId, BOX.Engine.noa.entities.names.collideEntities);
         }
       }
-    });
+    });*/
   }
 
   tick() {
