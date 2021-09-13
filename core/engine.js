@@ -1,3 +1,5 @@
+const BABYLON = require('@babylonjs/core');
+
 // Engine
 //const { Engine: noaEngine } = global.isClient ? require('noa-engine') : false;
 global.isClient ? require('./utils/state.min.js') : false;
@@ -14,6 +16,32 @@ class Engine extends Entity {
   constructor() {
     super({}, true);
     if (BOX.isClient) {
+      const canvas = document.getElementById('renderCanvas'); // Get the canvas element
+      const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+
+      // Add your code here matching the playground format
+
+      const scene = new BABYLON.Scene(engine); //Call the createScene function
+
+      // Register a render loop to repeatedly render the scene
+      engine.runRenderLoop(function () {
+        console.log('check render');
+        scene.render();
+      });
+
+      // Watch for browser/canvas resize events
+      window.addEventListener('resize', function () {
+        engine.resize();
+      });
+
+      scene.createDefaultCameraOrLight(true, true, true);
+      /**
+           var box = BABYLON.MeshBuilder.CreateBox('box', {});
+      var box2 = box.clone(box);
+      box2.position.x = 20;
+      box2.position.y = 20;
+      scene.createDefaultEnvironment();
+       */
       //this.noa = new noaEngine(config);
       // remove inputs component for player and movement component
       //this.noa.entities.deleteComponent('receivesInputs');
@@ -131,7 +159,6 @@ class Engine extends Entity {
       delete this.entities[id];
       // delete the unit entities
       delete this.entities[unitID];
-
     }
   }
 }
