@@ -126,7 +126,13 @@ class Engine extends Entity {
       this.noa.entities.deleteEntity(this.getEntity(id).mainUnit.noaEntityId);
       delete this.entities[id];
     } else {
+      let unitID = this.entities[id].mainUnit.id;
+      // delete the player entity
       delete this.entities[id];
+      // delete the unit entities
+      delete this.entities[unitID];
+
+      console.log('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv', this.entities);
     }
   }
 }
