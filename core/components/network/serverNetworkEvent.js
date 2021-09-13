@@ -34,32 +34,11 @@ class ServerNetworkEvents {
       const player = BOX.Engine.addEntity(data);
       player.createUnit();
 
-      /*socket.emit('addAllEntities', this.players);
-      const unit = player.createUnit();*/
-
-      //We need it for now because we also need to create units for players
-      /*let units = {};
-      Object.values(this.players).forEach((elem, index) => {
-        let testunit = {
-          type: 'Unit',
-          name: elem.socketID,
-          socketID: elem.socketID,
-          position: elem.position,
-          body: 'default'
-        };
-        units[testunit.socketID] = testunit;
-      });
-      socket.emit('addAllEntities', units); //send to new clients all units
-
-      this.players[socket.id] = data;*/ //adding new player - may be we dont need this?
-      //my suggestion
 
       let enititiesData = {};
       Object.values(BOX.Engine.entities).forEach(entity => {
         enititiesData[entity.id] = entity.data; 
-        if (entity.data.ownerPlayer) delete entity.data.ownerPlayer; //UNIT DATA CONTAIN ownerPlayer - object too big too send it
       });
-      //console.log('ALL ENTS', enititiesData)
       socket.emit('addAllEntities', enititiesData);
 
       /*let testunit = {

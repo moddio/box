@@ -12,7 +12,7 @@ class Unit extends Entity {
     this.moveDirection; // x, y, z rotations
 
     //this.ownerPlayer = data.ownerPlayer;
-    this.ownerPlayer = BOX.Engine.getEntityBySocketID(data.socketID);
+    this.ownerPlayer = BOX.Engine.getEntity(this.data.ownerPlayerID);
 
     // a player's 1st unit will automatically be assigned as the main unit
     if (this.ownerPlayer) {

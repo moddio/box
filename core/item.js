@@ -29,7 +29,7 @@ class Item extends Entity {
       cylinder: true,
       callback: otherEntsId => {
         let player = BOX.Engine.getEntityByNoaID(otherEntsId); //TEMPORARY - need to find unit by noaId
-        if (player.data.ownerPlayer) {
+        if (player.ownerPlayer) {
           console.log('item collide unit', this.noaEntityId, otherEntsId, player);
           player.equipItem(this);
           //disable pick up after collision with unit

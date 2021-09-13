@@ -49,7 +49,7 @@ class Player extends Entity {
       position: this.spawnPosition,
       name: this.socketID,
       socketID: this.socketID,
-      ownerPlayer: this,
+      ownerPlayerID: this.id,
       doPhysics: true,
       body: {
         type: 'CreateBox',
