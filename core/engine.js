@@ -23,7 +23,7 @@ class Engine extends Entity {
 
       // Register a render loop to repeatedly render the scene
       engine.runRenderLoop(function () {
-        console.log('check render');
+        //console.log('check render');
         scene.render();
       });
 
@@ -33,8 +33,8 @@ class Engine extends Entity {
         // TODO ADD MOVEMENT TO THE MESH AND THE MESH SHOULD FOLLOW CAMERA
       });
 
-      var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), scene);
-      camera.setTarget(BABYLON.Vector3.Zero());
+      var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -7), scene);
+      camera.setTarget(new BABYLON.Vector3(0, 0, 5));
       
 
       var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
@@ -79,6 +79,8 @@ class Engine extends Entity {
         if(inputMap["d"] || inputMap["ArrowRight"]){
           box.position.x+=0.1
         }    
+
+
     })
     
 
