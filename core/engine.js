@@ -83,25 +83,9 @@ class Engine extends Entity {
         })
       );
 
-      // Game/Render loop
-      scene.onBeforeRenderObservable.add(() => {
-        if (inputMap['w'] || inputMap['ArrowUp']) {
-          box1.position.z += 0.1;
-        }
-        if (inputMap['a'] || inputMap['ArrowLeft']) {
-          box1.position.x -= 0.1;
-        }
-        if (inputMap['s'] || inputMap['ArrowDown']) {
-          box1.position.z -= 0.1;
-        }
-        if (inputMap['d'] || inputMap['ArrowRight']) {
-          box1.position.x += 0.1;
-        }
-      });
-
       var sphere = BABYLON.MeshBuilder.CreateSphere('sphere', { diameter: 1, segments: 12 }, scene);
       new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.01, friction: 0, restitution: 0 }, scene);
-      new BABYLON.PhysicsImpostor(box1, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.01, friction: 0.1, restitution: 0 }, scene);
+      const body = new BABYLON.PhysicsImpostor(box1, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.01, friction: 0.1, restitution: 0 }, scene);
       const boxPhysics = new BABYLON.PhysicsImpostor(box2, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.001, friction: 0.1, restitution: 0.9 }, scene);
 
       sphere.position.y = 10;
@@ -125,14 +109,37 @@ class Engine extends Entity {
       scene.enablePhysics();
 
       //add materials
-      var grass = new BABYLON.StandardMaterial("grass", scene);
-	    grass.diffuseTexture = new BABYLON.Texture("textures/grass_top.png", scene);
+      var grass = new BABYLON.StandardMaterial('grass', scene);
+      grass.diffuseTexture = new BABYLON.Texture('textures/grass_top.png', scene);
       ground.material = grass;
 
-      var wood = new BABYLON.StandardMaterial("wood", scene);
-	    wood.diffuseTexture = new BABYLON.Texture("textures/wood.png", scene);
+      var wood = new BABYLON.StandardMaterial('wood', scene);
+      wood.diffuseTexture = new BABYLON.Texture('textures/wood.png', scene);
       box1.material = wood;
       box2.material = wood;
+
+      // Game/Render loop
+      scene.onBeforeRenderObservable.add(() => {
+        if (inputMap['b'] || inputMap['ArrowUp']) {
+          box1.rotate(new BABYLON.Vector3(0, 0.1, 0), 0.1, BABYLON.Space.WORLD);
+        }
+        if (inputMap['n'] || inputMap['ArrowUp']) {
+          box1.rotate(new BABYLON.Vector3(0, -0.1, 0), 0.1, BABYLON.Space.WORLD);
+        }
+
+        if (inputMap['w'] || inputMap['ArrowUp']) {
+          box1.position.z += 0.1;
+        }
+        if (inputMap['a'] || inputMap['ArrowLeft']) {
+          box1.position.x -= 0.1;
+        }
+        if (inputMap['s'] || inputMap['ArrowDown']) {
+          box1.position.z -= 0.1;
+        }
+        if (inputMap['d'] || inputMap['ArrowRight']) {
+          box1.position.x += 0.1;
+        }
+      });
 
       /**
            var box = BABYLON.MeshBuilder.CreateBox('box', {});
