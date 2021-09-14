@@ -51,11 +51,13 @@ class Engine extends Entity {
 
       var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
       light.intensity = 0.7;
-      var box = BABYLON.Mesh.CreateBox('box1', 1, scene);
-      box.position.y = 1;
+      var box1 = BABYLON.Mesh.CreateBox('box1', 1, scene);
+      box1.position.y = 1;
+      var box2 = BABYLON.Mesh.CreateBox('box2', 2, scene);
+      box2.position.y = 1;
 
       //attach camera to box
-      camera.parent = box;
+      camera.parent = box1;
 
       /*
       camera.attachControl(canvas, true);
@@ -84,32 +86,43 @@ class Engine extends Entity {
       // Game/Render loop
       scene.onBeforeRenderObservable.add(() => {
         if (inputMap['w'] || inputMap['ArrowUp']) {
-          box.position.z += 0.1;
+          box1.position.z += 0.1;
         }
         if (inputMap['a'] || inputMap['ArrowLeft']) {
-          box.position.x -= 0.1;
+          box1.position.x -= 0.1;
         }
         if (inputMap['s'] || inputMap['ArrowDown']) {
-          box.position.z -= 0.1;
+          box1.position.z -= 0.1;
         }
         if (inputMap['d'] || inputMap['ArrowRight']) {
-          box.position.x += 0.1;
+          box1.position.x += 0.1;
         }
       });
 
       var sphere = BABYLON.MeshBuilder.CreateSphere('sphere', { diameter: 1, segments: 12 }, scene);
       new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.01, friction: 0, restitution: 0 }, scene);
-      new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.01, friction: 0, restitution: 0 }, scene);
+      new BABYLON.PhysicsImpostor(box1, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.01, friction: 0.1, restitution: 0 }, scene);
+      const boxPhysics = new BABYLON.PhysicsImpostor(box2, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.001, friction: 0.1, restitution: 0.9 }, scene);
 
       sphere.position.y = 10;
       // new BABYLON.PhysicsImpostor({ position: new BABYLON.Vector3(0, 5, -7), rotationQuaternion: null }, 1, null, scene);
 
-      const ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
-      ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene);
+      var ground = BABYLON.MeshBuilder.CreateBox('ground', { width: 80, depth: 80, height: 1 }, scene);
+      ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0 }, scene);
+
+      let joint = new BABYLON.HingeJoint({
+        mainPivot: new BABYLON.Vector3(0, 1, 0),
+        connectedPivot: new BABYLON.Vector3(0, 1, 0),
+        mainAxis: new BABYLON.Vector3(0, 1, 0),
+        connectedAxis: new BABYLON.Vector3(0, 1, 0)
+      });
+
+      // add the main body and joint to the connected axle
+      connectedAxle.physicsImpostor.addJoint(boxPhysics, joint);
+
+      joint.setMotor(1, 1000);
 
       scene.enablePhysics();
-
-      sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 100, 100));
 
       /**
            var box = BABYLON.MeshBuilder.CreateBox('box', {});
