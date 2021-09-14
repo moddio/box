@@ -118,11 +118,21 @@ class Engine extends Entity {
       });
 
       // add the main body and joint to the connected axle
-      connectedAxle.physicsImpostor.addJoint(boxPhysics, joint);
+      //connectedAxle.physicsImpostor.addJoint(boxPhysics, joint);
 
-      joint.setMotor(1, 1000);
+      //joint.setMotor(1, 1000);
 
       scene.enablePhysics();
+
+      //add materials
+      var grass = new BABYLON.StandardMaterial("grass", scene);
+	    grass.diffuseTexture = new BABYLON.Texture("textures/grass_top.png", scene);
+      ground.material = grass;
+
+      var wood = new BABYLON.StandardMaterial("wood", scene);
+	    wood.diffuseTexture = new BABYLON.Texture("textures/wood.png", scene);
+      box1.material = wood;
+      box2.material = wood;
 
       /**
            var box = BABYLON.MeshBuilder.CreateBox('box', {});
