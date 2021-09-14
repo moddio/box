@@ -35,6 +35,17 @@ class Engine extends Entity {
 
       var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), scene);
       camera.setTarget(BABYLON.Vector3.Zero());
+      
+
+      var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
+      light.intensity = 0.7;
+      var box = BABYLON.Mesh.CreateBox('box1', 1, scene);
+      box.position.y = 1;
+
+      //attach camera to box
+      camera.parent = box;
+
+      /*
       camera.attachControl(canvas, true);
 
       // adding key control for camera
@@ -42,11 +53,35 @@ class Engine extends Entity {
       camera.keysDown.push(83);
       camera.keysLeft.push(65);
       camera.keysRight.push(68);
+      */
 
-      var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
-      light.intensity = 0.7;
-      var box = BABYLON.Mesh.CreateBox('box1', 1, scene);
-      box.position.y = 1;
+      // Keyboard events
+    var inputMap ={};
+    scene.actionManager = new BABYLON.ActionManager(scene);
+    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {								
+        inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+    }));
+    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {								
+        inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+    }));
+
+    // Game/Render loop
+    scene.onBeforeRenderObservable.add(()=>{
+        if(inputMap["w"] || inputMap["ArrowUp"]){
+          box.position.z+=0.1
+        } 
+        if(inputMap["a"] || inputMap["ArrowLeft"]){
+          box.position.x-=0.1
+        } 
+        if(inputMap["s"] || inputMap["ArrowDown"]){
+          box.position.z-=0.1
+        } 
+        if(inputMap["d"] || inputMap["ArrowRight"]){
+          box.position.x+=0.1
+        }    
+    })
+    
+
       BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
 
       /**
