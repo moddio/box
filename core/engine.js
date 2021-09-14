@@ -118,26 +118,48 @@ class Engine extends Entity {
       box1.material = wood;
       box2.material = wood;
 
+      // Impulse params
+      var impulseDirection = new BABYLON.Vector3(0, 0.1, 0);
+      var impulseMagnitude = 0.1;
+      var contactLocalRefPoint = BABYLON.Vector3.Zero();
+
       // Game/Render loop
       scene.onBeforeRenderObservable.add(() => {
+        let cameraDirection = camera.getDirection(ground.position);
+
+        let test = box1.getAbsolutePosition();
+
+        console.log('camera direction', cameraDirection);
+        let x = 0.1 * Math.sin(cameraDirection._z);
+        let y = 0.1 * Math.cos(cameraDirection._z);
+
+        // rotation key
         if (inputMap['b'] || inputMap['ArrowUp']) {
           box1.rotate(new BABYLON.Vector3(0, 0.1, 0), 0.1, BABYLON.Space.WORLD);
         }
+        // rotation key
         if (inputMap['n'] || inputMap['ArrowUp']) {
           box1.rotate(new BABYLON.Vector3(0, -0.1, 0), 0.1, BABYLON.Space.WORLD);
         }
-
+        // jump
+        if (inputMap['p']) {
+          body.applyImpulse(impulseDirection.scale(impulseMagnitude), box1.getAbsolutePosition().add(contactLocalRefPoint));
+        }
         if (inputMap['w'] || inputMap['ArrowUp']) {
-          box1.position.z += 0.1;
+          box1.position.x += x;
+          box1.position.z += y;
         }
         if (inputMap['a'] || inputMap['ArrowLeft']) {
-          box1.position.x -= 0.1;
+          box1.position.x += -y;
+          box1.position.z += x;
         }
         if (inputMap['s'] || inputMap['ArrowDown']) {
-          box1.position.z -= 0.1;
+          box1.position.x += -x;
+          box1.position.z += -y;
         }
         if (inputMap['d'] || inputMap['ArrowRight']) {
-          box1.position.x += 0.1;
+          box1.position.x += y;
+          box1.position.z += -x;
         }
       });
 
