@@ -21,6 +21,19 @@ class Engine extends Entity {
 
       const scene = new BABYLON.Scene(engine); //Call the createScene function
 
+      console.log('logging the ammo object', Ammo);
+
+      Ammo().then(() => {
+        scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), new BABYLON.AmmoJSPlugin());
+        console.log('hello');
+      });
+
+      //var gravityVector = new BABYLON.Vector3(0, -9.81, 0);
+      //var physicsPlugin = new BABYLON.CannonJSPlugin();
+      //scene.enablePhysics(gravityVector, physicsPlugin);
+
+      console.log(11111111111111111);
+
       // Register a render loop to repeatedly render the scene
       engine.runRenderLoop(function () {
         //console.log('check render');
@@ -35,7 +48,6 @@ class Engine extends Entity {
 
       var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -7), scene);
       camera.setTarget(new BABYLON.Vector3(0, 0, 5));
-      
 
       var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
       light.intensity = 0.7;
@@ -56,33 +68,40 @@ class Engine extends Entity {
       */
 
       // Keyboard events
-    var inputMap ={};
-    scene.actionManager = new BABYLON.ActionManager(scene);
-    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {								
-        inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-    }));
-    scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {								
-        inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-    }));
+      var inputMap = {};
+      scene.actionManager = new BABYLON.ActionManager(scene);
+      scene.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {
+          inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == 'keydown';
+        })
+      );
+      scene.actionManager.registerAction(
+        new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+          inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == 'keydown';
+        })
+      );
 
-    // Game/Render loop
-    scene.onBeforeRenderObservable.add(()=>{
-        if(inputMap["w"] || inputMap["ArrowUp"]){
-          box.position.z+=0.1
-        } 
-        if(inputMap["a"] || inputMap["ArrowLeft"]){
-          box.position.x-=0.1
-        } 
-        if(inputMap["s"] || inputMap["ArrowDown"]){
-          box.position.z-=0.1
-        } 
-        if(inputMap["d"] || inputMap["ArrowRight"]){
-          box.position.x+=0.1
-        }    
+      // Game/Render loop
+      scene.onBeforeRenderObservable.add(() => {
+        if (inputMap['w'] || inputMap['ArrowUp']) {
+          box.position.z += 0.1;
+        }
+        if (inputMap['a'] || inputMap['ArrowLeft']) {
+          box.position.x -= 0.1;
+        }
+        if (inputMap['s'] || inputMap['ArrowDown']) {
+          box.position.z -= 0.1;
+        }
+        if (inputMap['d'] || inputMap['ArrowRight']) {
+          box.position.x += 0.1;
+        }
+      });
 
+      var sphere = BABYLON.MeshBuilder.CreateSphere('sphere', { diameter: 2, segments: 32 }, scene);
+      new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.1, friction: 1.0, restitution: 0 }, scene);
+      sphere.position.y = 10;
 
-    })
-    
+      // new BABYLON.PhysicsImpostor({ position: new BABYLON.Vector3(0, 5, -7), rotationQuaternion: null }, 1, null, scene);
 
       BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
 
