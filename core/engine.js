@@ -97,13 +97,19 @@ class Engine extends Entity {
         }
       });
 
-      var sphere = BABYLON.MeshBuilder.CreateSphere('sphere', { diameter: 2, segments: 32 }, scene);
-      new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.1, friction: 1.0, restitution: 0 }, scene);
-      sphere.position.y = 10;
+      var sphere = BABYLON.MeshBuilder.CreateSphere('sphere', { diameter: 1, segments: 12 }, scene);
+      new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.01, friction: 0, restitution: 0 }, scene);
+      new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0.01, friction: 0, restitution: 0 }, scene);
 
+      sphere.position.y = 10;
       // new BABYLON.PhysicsImpostor({ position: new BABYLON.Vector3(0, 5, -7), rotationQuaternion: null }, 1, null, scene);
 
-      BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
+      const ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
+      ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene);
+
+      scene.enablePhysics();
+
+      sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 100, 100));
 
       /**
            var box = BABYLON.MeshBuilder.CreateBox('box', {});
