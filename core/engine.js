@@ -79,6 +79,8 @@ class Engine extends Entity {
       //attach camera to box
       //camera.parent = box1;
 
+      //box1.parent = camera
+
       /*
       camera.attachControl(canvas, true);
 
@@ -170,24 +172,19 @@ class Engine extends Entity {
         }
         if (inputMap['w'] || inputMap['ArrowUp']) {
           box1.position.z += Math.abs(x);
-          //camera.position.x += Math.abs(x);
           camera.position.z += Math.abs(x);
         }
         if (inputMap['a'] || inputMap['ArrowLeft']) {
           box1.position.x += -Math.abs(x);
           camera.position.x += -Math.abs(x);
-          //camera.position.x += -Math.abs(x);
         }
         if (inputMap['s'] || inputMap['ArrowDown']) {
           box1.position.z += -Math.abs(x);
-          //camera.position.x += Math.abs(x);
           camera.position.z += -Math.abs(x);
-          //camera.position.x +=
         }
         if (inputMap['d'] || inputMap['ArrowRight']) {
           box1.position.x += Math.abs(x);
           camera.position.x += Math.abs(x);
-          //camera.position.x += Math.abs(x);
         }
       });
 
