@@ -111,8 +111,11 @@ class Engine extends Entity {
       sphere.position.y = 10;
       // new BABYLON.PhysicsImpostor({ position: new BABYLON.Vector3(0, 5, -7), rotationQuaternion: null }, 1, null, scene);
 
-      var ground = BABYLON.MeshBuilder.CreateBox('ground', { width: 80, depth: 80, height: 1 }, scene);
-      ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0 }, scene);
+      //var ground = BABYLON.MeshBuilder.CreateBox('ground', { width: 80, depth: 80, height: 1 }, scene);
+      //ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0 }, scene);
+
+      var ground = BABYLON.Mesh.CreateGround("ground1", 80, 80, 2, scene);
+      ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7 }, scene);
 
       let joint = new BABYLON.HingeJoint({
         mainPivot: new BABYLON.Vector3(0, 1, 0),
@@ -166,21 +169,25 @@ class Engine extends Entity {
           body.applyImpulse(impulseDirection.scale(impulseMagnitude), box1.getAbsolutePosition().add(contactLocalRefPoint));
         }
         if (inputMap['w'] || inputMap['ArrowUp']) {
-          box1.position.x += -Math.abs(x);
+          box1.position.z += Math.abs(x);
+          //camera.position.x += Math.abs(x);
           camera.position.z += Math.abs(x);
         }
         if (inputMap['a'] || inputMap['ArrowLeft']) {
           box1.position.x += -Math.abs(x);
           camera.position.x += -Math.abs(x);
+          //camera.position.x += -Math.abs(x);
         }
         if (inputMap['s'] || inputMap['ArrowDown']) {
-          box1.position.x += Math.abs(x);
+          box1.position.z += -Math.abs(x);
+          //camera.position.x += Math.abs(x);
           camera.position.z += -Math.abs(x);
           //camera.position.x +=
         }
         if (inputMap['d'] || inputMap['ArrowRight']) {
           box1.position.x += Math.abs(x);
           camera.position.x += Math.abs(x);
+          //camera.position.x += Math.abs(x);
         }
       });
 
