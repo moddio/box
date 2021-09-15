@@ -40,6 +40,25 @@ class Engine extends Entity {
         scene.render();
       });
 
+      //Bounding box Geometry
+      var border0 = BABYLON.Mesh.CreateBox('border0', 1, scene);
+      border0.scaling = new BABYLON.Vector3(1, 100, 200);
+      border0.position.x = -100.0;
+      border0.checkCollisions = true;
+      border0.isVisible = false;
+
+      var border1 = BABYLON.Mesh.CreateBox('border1', 1, scene);
+      border1.scaling = new BABYLON.Vector3(1, 100, 200);
+      border1.position.x = 100.0;
+      border1.checkCollisions = true;
+      border1.isVisible = false;
+
+      var border2 = BABYLON.Mesh.CreateBox('border2', 1, scene);
+      border2.scaling = new BABYLON.Vector3(200, 100, 1);
+      border2.position.z = 100.0;
+      border2.checkCollisions = true;
+      border2.isVisible = false;
+
       // Watch for browser/canvas resize events
       window.addEventListener('resize', function () {
         engine.resize();
@@ -48,6 +67,7 @@ class Engine extends Entity {
 
       var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -7), scene);
       camera.setTarget(new BABYLON.Vector3(0, 0, 5));
+      camera.attachControl(canvas);
 
       var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
       light.intensity = 0.7;
@@ -57,7 +77,7 @@ class Engine extends Entity {
       box2.position.y = 1;
 
       //attach camera to box
-      camera.parent = box1;
+      //camera.parent = box1;
 
       /*
       camera.attachControl(canvas, true);
@@ -129,37 +149,38 @@ class Engine extends Entity {
 
         let test = box1.getAbsolutePosition();
 
-        console.log('camera direction', cameraDirection);
-        let x = 0.1 * Math.sin(cameraDirection._z);
-        let y = 0.1 * Math.cos(cameraDirection._z);
+        let x = 0.1;
+        let y = 0.1;
 
         // rotation key
         if (inputMap['b'] || inputMap['ArrowUp']) {
-          box1.rotate(new BABYLON.Vector3(0, 0.1, 0), 0.1, BABYLON.Space.WORLD);
+          // box1.rotate(new BABYLON.Vector3(0, 0.1, 0), 0.1, BABYLON.Space.WORLD);
         }
         // rotation key
         if (inputMap['n'] || inputMap['ArrowUp']) {
-          box1.rotate(new BABYLON.Vector3(0, -0.1, 0), 0.1, BABYLON.Space.WORLD);
+          // alert(1);
+          //box1.rotate(new BABYLON.Vector3(0, -0.1, 0), 0.1, BABYLON.Space.WORLD);
         }
         // jump
         if (inputMap['p']) {
           body.applyImpulse(impulseDirection.scale(impulseMagnitude), box1.getAbsolutePosition().add(contactLocalRefPoint));
         }
         if (inputMap['w'] || inputMap['ArrowUp']) {
-          box1.position.x += x;
-          box1.position.z += y;
+          box1.position.x += -Math.abs(x);
+          camera.position.z += Math.abs(x);
         }
         if (inputMap['a'] || inputMap['ArrowLeft']) {
-          box1.position.x += -y;
-          box1.position.z += x;
+          box1.position.x += -Math.abs(x);
+          camera.position.x += -Math.abs(x);
         }
         if (inputMap['s'] || inputMap['ArrowDown']) {
-          box1.position.x += -x;
-          box1.position.z += -y;
+          box1.position.x += Math.abs(x);
+          camera.position.z += -Math.abs(x);
+          //camera.position.x +=
         }
         if (inputMap['d'] || inputMap['ArrowRight']) {
-          box1.position.x += y;
-          box1.position.z += -x;
+          box1.position.x += Math.abs(x);
+          camera.position.x += Math.abs(x);
         }
       });
 
